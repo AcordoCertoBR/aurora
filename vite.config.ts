@@ -8,9 +8,12 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: [
-          `@import "src/core/tokens/colors.scss";`
-        ]
-      }
-    }
-  }
+          `
+          @import "src/core/tokens/colors.scss";
+          @import "src/core/tokens/layout.scss";
+          @import "src/core/tokens/elements.scss";`,
+        ],
+      },
+    },
+  },
 })

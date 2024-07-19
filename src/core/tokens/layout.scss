@@ -1,0 +1,48 @@
+// SPACING
+$spacing-050: 4px;
+$spacing-100: 8px;
+$spacing-200: 16px;
+$spacing-300: 24px;
+$spacing-400: 32px;
+$spacing-500: 40px;
+$spacing-600: 48px;
+$spacing-700: 56px;
+$spacing-800: 64px;
+$spacing-900: 72px;
+
+// BREAKPOINT
+$breakpoint-xsm: 0px;
+$breakpoint-sm: 320px;
+$breakpoint-md: 600px;
+$breakpoint-lg: 1024px;
+$breakpoint-xlg: 1920px;
+
+// MIXIN BREAKPOINTS
+@mixin aboveXSmall {
+  @media (min-width: $breakpoint-xsm) {
+    @content;
+  }
+}
+@mixin aboveSmall {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin aboveMedium {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin aboveLarge {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin aboveXLarge {
+  @media (min-width: $breakpoint-xlarge) {
+    @content;
+  }
+}
