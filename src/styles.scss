@@ -1,11 +1,11 @@
 .teste {
-  font-family: 'Lexend Deca';
-  font-weight: 700;
+  font-family: $font-lexend-deca;
+  font-size: $font-size-h1;
+  font-weight: $font-weight-bold;
   color: $color-brand-blue-40;
 }
 
 .teste2 {
-  font-family: 'Source Sans 3';
-  font-size: 38px;
-  font-weight: 400;
+  font-family: $font-source-sans-3;
+  font-size: $font-size-h4;
 }

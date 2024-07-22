@@ -10,6 +10,7 @@ export default defineConfig({
         additionalData: [
           `
           @import "src/core/tokens/colors.scss";
+          @import "src/core/tokens/fonts.scss";
           @import "src/core/tokens/layout.scss";
           @import "src/core/tokens/elements.scss";`,
         ],
