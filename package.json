@@ -1,11 +1,13 @@
 {
-  "name": "aurora",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@consumidor-positivo/aurora",
+  "private": false,
+  "version": "0.0.1",
   "type": "module",
+  "main": "dist/aurora.js",
+  "types": "dist/main.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc --p ./tsconfig-build.json && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -13,8 +15,10 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "dotenv": "16.4.5",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "vite-plugin-dts": "4.0.0-beta.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.6.1",

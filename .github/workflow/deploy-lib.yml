@@ -1,0 +1,64 @@
+name: Publish package
+on:
+  # When Release Pull Request is merged
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'lib/**'
+      - 'package.json'
+    types: [closed]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.18.0
+
+      - name: Git Identity
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+
+      - name: Install dependencies
+        run: |
+          rm -rf node_modules
+          npm ci
+
+      - name: Bump version
+        run: npm version patch
+
+      - name: Build lib
+        run: npm run build
+
+      - name: Push Changes
+        run: git push --follow-tags
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::890620372383:role/github-actions-sls
+          aws-region: sa-east-1
+
+      - uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}

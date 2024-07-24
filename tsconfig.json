@@ -7,5 +7,9 @@
     {
       "path": "./tsconfig.node.json"
     }
+  ],
+  "include": [
+    // ...other includes
+    "package.json"
   ]
 }
