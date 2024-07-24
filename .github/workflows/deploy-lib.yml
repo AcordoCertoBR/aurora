@@ -53,12 +53,6 @@ jobs:
       - name: Push Changes
         run: git push --follow-tags
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          role-to-assume: arn:aws:iam::890620372383:role/github-actions-sls
-          aws-region: sa-east-1
-
       - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
