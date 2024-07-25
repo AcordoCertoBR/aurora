@@ -18,10 +18,18 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, './lib/main.ts'),
       name: 'aurora',
+      fileName: 'aurora',
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          'react/jsx-runtime': 'react/jsx-runtime',
+        },
+      },
     },
   },
   css: {
@@ -29,10 +37,10 @@ export default defineConfig({
       scss: {
         additionalData: [
           `
-          @import "src/core/tokens/colors.scss";
-          @import "src/core/tokens/fonts.scss";
-          @import "src/core/tokens/layout.scss";
-          @import "src/core/tokens/elements.scss";`,
+          @import "lib/core/tokens/colors.scss";
+          @import "lib/core/tokens/fonts.scss";
+          @import "lib/core/tokens/layout.scss";
+          @import "lib/core/tokens/elements.scss";`,
         ],
       },
     },

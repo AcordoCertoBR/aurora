@@ -1,3 +1,1 @@
-import { Button } from '../src/stories/Button'
-
-export { Button }
+export { Button } from './components/Button'
