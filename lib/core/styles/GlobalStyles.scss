@@ -1,0 +1,31 @@
+// Supports weights 100-900
+@import '@fontsource-variable/lexend';
+
+// Supports weights 200-900
+@import '@fontsource-variable/source-sans-3';
+
+html {
+  box-sizing: border-box;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+body {
+  font-family: $font-source-sans-3;
+  background-color: $color-neutral-00;
+}

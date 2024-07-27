@@ -64,13 +64,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: [
-          `
-          @import "lib/core/tokens/colors.scss";
-          @import "lib/core/tokens/fonts.scss";
-          @import "lib/core/tokens/layout.scss";
-          @import "lib/core/tokens/elements.scss";`,
-        ],
+        additionalData: [`@import "lib/core/tokens/index.scss";`],
       },
     },
   },

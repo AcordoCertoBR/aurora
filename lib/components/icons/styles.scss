@@ -1,0 +1,21 @@
+.au-icon {
+  &,
+  & > svg {
+    width: 24px;
+    height: 24px;
+    color: $color-brand-blue-40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--size-large,
+  &--size-large svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  &--color-dark > svg {
+    color: $color-neutral-50;
+  }
+}

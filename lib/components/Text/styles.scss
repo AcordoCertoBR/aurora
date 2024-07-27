@@ -1,0 +1,134 @@
+$desk-variation: 'desk-';
+
+@mixin displays($viewport: '') {
+  &--#{$viewport}display-large,
+  &--#{$viewport}display-medium,
+  &--#{$viewport}display-small {
+    font-family: $font-lexend-deca;
+  }
+
+  &--#{$viewport}display-large {
+    font-size: 56px;
+    line-height: 76px;
+  }
+
+  &--#{$viewport}display-medium {
+    font-size: 48px;
+    line-height: 68px;
+  }
+
+  &--#{$viewport}display-small {
+    font-size: 40px;
+    line-height: 60px;
+  }
+}
+
+@mixin headings($viewport: '') {
+  &--#{$viewport}heading-big,
+  &--#{$viewport}heading-large,
+  &--#{$viewport}heading-medium,
+  &--#{$viewport}heading-small {
+    font-family: $font-lexend-deca;
+  }
+
+  &--#{$viewport}heading-big {
+    font-size: 32px;
+    line-height: 52px;
+  }
+
+  &--#{$viewport}heading-large {
+    font-size: 28px;
+    line-height: 48px;
+  }
+
+  &--#{$viewport}heading-medium {
+    font-size: 24px;
+    line-height: 44px;
+  }
+
+  &--#{$viewport}heading-small {
+    font-size: 20px;
+    line-height: 40px;
+  }
+}
+
+@mixin bodyText($viewport: '') {
+  &--#{$viewport}body-big,
+  &--#{$viewport}body-large,
+  &--#{$viewport}body-medium,
+  &--#{$viewport}body-small {
+    font-family: $font-source-sans-3;
+  }
+
+  &--#{$viewport}body-big {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  &--#{$viewport}body-large {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  &--#{$viewport}body-medium {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &--#{$viewport}body-small {
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
+
+@mixin caption($viewport: '') {
+  &--#{$viewport}caption {
+    font-family: $font-source-sans-3;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+.au-text {
+  font-family: $font-source-sans-3;
+  font-weight: 400;
+  &--color {
+    &-common {
+      color: $color-neutral-60;
+    }
+  }
+
+  &--weight {
+    &-bold {
+      font-weight: 700;
+    }
+
+    &-semibold {
+      font-weight: 600;
+    }
+
+    &-medium {
+      font-weight: 500;
+    }
+
+    &-regular {
+      font-weight: 400;
+    }
+
+    &-light {
+      font-weight: 300;
+    }
+  }
+
+  @include displays();
+  @include headings();
+  @include bodyText();
+  @include caption();
+
+  @include aboveSmall {
+    @include displays(#{$desk-variation});
+    @include headings(#{$desk-variation});
+    @include bodyText(#{$desk-variation});
+    @include caption(#{$desk-variation});
+  }
+}
