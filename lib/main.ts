@@ -1,3 +1,8 @@
-export { Button } from './components/Button'
-export { Teste } from './components/Teste'
-export { Novo } from './components/Novo'
+// Components
+export { Text } from './components/Text'
+
+// Utils
+export * as Misc from './components/misc'
+
+// Icons
+export * as Icons from './components/icons'

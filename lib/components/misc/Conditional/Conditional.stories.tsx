@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import Conditional from '../Conditional'
+import { Conditional } from '../Conditional'
 
 const meta: Meta<typeof Conditional> = {
   title: 'Components/Utils/Conditional',

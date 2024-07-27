@@ -4,12 +4,10 @@ export interface ConditionalProps {
   renderElse?: any
 }
 
-const Conditional = ({
+export const Conditional = ({
   condition,
   renderIf,
   renderElse = null,
 }: ConditionalProps) => {
   return condition ? renderIf : renderElse
 }
-
-export default Conditional

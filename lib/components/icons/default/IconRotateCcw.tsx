@@ -1,6 +1,6 @@
 // This file is generated automatically
 // To edit see the file lib/tasks/generateIcons.js
-import Icon from '../index'
+import Icon from '../Icon'
 
 export default function IconRotateCcw(props: any) {
   return (

@@ -12,15 +12,20 @@ dotenv.config()
 
 process.env['VITE_LIB_VERSION'] = pkg.version
 
-function mapComponents(dir) {
+function mapComponents(dir, excludeDirs = []) {
   const componentsDir = resolve(__dirname, dir)
   const components = fs
-    .readdirSync(componentsDir)
-    .filter((file) => fs.statSync(resolve(componentsDir, file)).isDirectory())
-    .reduce((acc, folder) => {
-      acc[folder] = resolve(componentsDir, folder, 'index.tsx')
+    .readdirSync(componentsDir, { withFileTypes: true })
+    .filter(
+      (dirent) => dirent.isDirectory() && !excludeDirs.includes(dirent.name),
+    )
+    .reduce((acc, dirent) => {
+      const componentPath = resolve(componentsDir, dirent.name, 'index.tsx')
+      acc[dirent.name] = componentPath
       return acc
     }, {})
+
+  console.log('components', components)
   return components
 }
 
