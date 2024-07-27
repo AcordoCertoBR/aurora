@@ -22,9 +22,9 @@ O Projeto Aurora é uma abordagem estruturada e abrangente para o Design System 
 ### Sites
 
 > Consumidor Positivo
+
 - [https://www.consumidorpositivo.com.br/](https://www.consumidorpositivo.com.br/)
 
 > Acordo Certo
+
 - [https://www.acordocerto.com.br/](https://www.acordocerto.com.br/)
-
-
