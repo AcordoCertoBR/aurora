@@ -1,5 +1,5 @@
 import './styles.scss'
 
 export function Button() {
-  return <div className="button">My Button Test</div>
+  return <div className="au-btn">Consultar CPF</div>
 }

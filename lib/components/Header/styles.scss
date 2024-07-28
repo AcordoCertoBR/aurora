@@ -1,0 +1,85 @@
+.au-header {
+  & {
+    height: 80px;
+    padding: 16px 0;
+    border-bottom: 1px solid $color-neutral-20;
+    background-color: $color-neutral-00;
+  }
+
+  &__container {
+    @include container();
+    & {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+
+    .au-text {
+      padding-left: 16px;
+      margin-left: 16px;
+      border-left: 1px solid $color-neutral-20;
+    }
+  }
+
+  &__navigation {
+    display: flex;
+
+    > * + .au-btn {
+      margin-left: 24px;
+    }
+  }
+
+  &__navbar {
+    color: $color-neutral-70;
+
+    @include aboveLarge() {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .au-text {
+      color: $color-neutral-70;
+    }
+
+    &-link {
+      cursor: pointer;
+    }
+
+    &-actions {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      border-left: 1px solid $color-neutral-20;
+      padding-left: 24px;
+      margin-left: 24px;
+    }
+
+    &-notifications {
+      cursor: pointer;
+    }
+
+    &-menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    &-letters {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      background-color: $color-brand-blue-20;
+    }
+  }
+}
