@@ -46,6 +46,7 @@
 
     .au-text {
       color: $color-neutral-70;
+      font-family: $font-lexend-deca;
     }
 
     &-link {
@@ -79,7 +80,11 @@
       border-radius: 50%;
       width: 40px;
       height: 40px;
-      background-color: $color-brand-blue-20;
+      background-color: $color-brand-blue-30;
+      font-weight: 500;
+      font-family: $font-lexend-deca;
+      color: $color-neutral-70;
+      font-size: 16px;
     }
   }
 }

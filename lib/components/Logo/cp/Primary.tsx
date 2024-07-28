@@ -1,4 +1,4 @@
-export const Primary = () => {
+export const LogoPrimaryCP = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

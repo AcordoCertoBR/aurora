@@ -22,7 +22,7 @@ export const Primary: StoryObj = {
   },
 }
 
-export const PrimaryLogoWhiteCP: StoryObj = {
+export const PrimaryLogoWhite: StoryObj = {
   render: (args) => {
     return <LogoPrimaryLogoWhiteCP {...args} />
   },
@@ -50,5 +50,4 @@ export const PrimaryFullWhite: StoryObj = {
   render: (args) => {
     return <LogoPrimaryFullWhiteCP {...args} />
   },
-  name: 'LogoPrimaryFullWhiteCP',
 }

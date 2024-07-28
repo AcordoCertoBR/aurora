@@ -1,14 +1,53 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { LogoAC } from '../index'
+import {
+  LogoPrimaryAC,
+  LogoTertiaryAC,
+  LogoPrimaryFillWhiteAC,
+  LogoPrimaryNegativeAC,
+  LogoPrimaryWhiteAC,
+  LogoPrimaryFullWhiteAC,
+} from '../index'
 
-const meta: Meta<typeof LogoAC> = {
+const meta: Meta = {
   title: 'Components/Logos/AC',
-  component: LogoAC,
+  component: () => '',
   tags: ['autodocs'],
 }
 
 export default meta
 
-type Story = StoryObj<typeof LogoAC>
+export const Primary: StoryObj = {
+  render: (args) => {
+    return <LogoPrimaryAC {...args} />
+  },
+}
 
-export const Tertiary: Story = {}
+export const PrimaryFillWhite: StoryObj = {
+  render: (args) => {
+    return <LogoPrimaryFillWhiteAC {...args} />
+  },
+}
+
+export const PrimaryNegative: StoryObj = {
+  render: (args) => {
+    return <LogoPrimaryNegativeAC {...args} />
+  },
+}
+
+export const PrimaryWhite: StoryObj = {
+  render: (args) => {
+    return <LogoPrimaryWhiteAC {...args} />
+  },
+}
+
+export const PrimaryFullWhite: StoryObj = {
+  render: (args) => {
+    return <LogoPrimaryFullWhiteAC {...args} />
+  },
+}
+
+export const Tertiary: StoryObj = {
+  render: (args) => {
+    return <LogoTertiaryAC {...args} />
+  },
+}
