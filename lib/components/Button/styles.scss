@@ -1,3 +1,225 @@
-.button {
-  border: 1px solid gray;
+.au-btn {
+  & {
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: 600;
+    justify-content: center;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-family: $font-source-sans-3;
+    gap: 8px;
+    height: 48px;
+    border-radius: 48px;
+    font-size: 16px;
+    padding: 16px 18px;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $color-brand-blue-50;
+  }
+
+  &:active {
+    background-color: $color-brand-blue-60;
+  }
+
+  .au-icon,
+  .au-icon > svg {
+    width: 16px;
+    height: 16px;
+    color: $color-neutral-00;
+
+    @include aboveMedium() {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &--size-large {
+    @include aboveMedium() {
+      height: 64px;
+      border-radius: 60px;
+      font-size: 20px;
+      padding: 16px 30px;
+    }
+  }
+
+  &--size-medium {
+    height: 48px;
+    border-radius: 48px;
+    font-size: 16px;
+    padding: 16px 18px;
+  }
+
+  &--color-default {
+    background-color: $color-brand-blue-40;
+    color: $color-neutral-00;
+  }
+
+  &--type-outlined {
+    color: $color-brand-blue-40;
+    border: 1px solid $color-brand-blue-40;
+    background-color: transparent;
+
+    .au-icon,
+    .au-icon > svg {
+      color: $color-brand-blue-40;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $color-brand-blue-10;
+      border-color: $color-brand-blue-40;
+    }
+
+    &:active {
+      background-color: $color-brand-blue-10;
+      border-color: $color-brand-blue-50;
+      color: $color-brand-blue-50;
+    }
+  }
+
+  &--type-ghost {
+    background-color: transparent;
+    border: 0;
+    color: $color-brand-blue-40;
+
+    .au-icon,
+    .au-icon > svg {
+      color: $color-brand-blue-40;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $color-neutral-10;
+      border-color: 0;
+    }
+
+    &:active {
+      background-color: $color-neutral-10;
+      border: 1px solid $color-neutral-40;
+    }
+  }
+
+  &--expand-x {
+    width: 100%;
+  }
+
+  &--disabled {
+    background-color: $color-neutral-20;
+    color: $color-neutral-40;
+    cursor: not-allowed;
+
+    .au-icon svg {
+      color: $color-neutral-40;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $color-neutral-20;
+    }
+
+    &.au-btn--type-outlined {
+      background-color: $color-neutral-00;
+      color: $color-neutral-40;
+      border-color: $color-neutral-40;
+
+      &:hover,
+      &:focus {
+        background-color: $color-neutral-00;
+      }
+    }
+
+    &.au-btn--type-ghost {
+      background-color: $color-neutral-00;
+      color: $color-neutral-40;
+
+      &:hover,
+      &:focus {
+        background-color: $color-neutral-00;
+      }
+
+      &:active {
+        border: 0;
+      }
+    }
+  }
+
+  &--loading {
+    background-color: $color-brand-blue-50;
+    color: $color-neutral-00;
+    cursor: progress;
+
+    .au-icon[class*='loading'],
+    .au-icon[class*='loading'] > svg,
+    .au-icon[class*='loader'],
+    .au-icon[class*='loader'] > svg {
+      animation: spin 2s infinite linear;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $color-brand-blue-50;
+    }
+
+    &.au-btn--type-outlined {
+      background-color: $color-neutral-00;
+      color: $color-brand-blue-40;
+      border-color: $color-brand-blue-40;
+
+      &:hover,
+      &:focus {
+        background-color: $color-neutral-00;
+        color: $color-brand-blue-40;
+
+        .au-icon,
+        .au-icon svg {
+          color: $color-brand-blue-40;
+        }
+      }
+    }
+
+    &.au-btn--type-ghost {
+      background-color: transparent;
+      color: $color-neutral-40;
+
+      .au-icon,
+      .au-icon svg {
+        color: $color-neutral-40;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: transparent;
+        color: $color-neutral-40;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-text {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  color: $color-brand-blue-40;
+  font-weight: 600;
+
+  .au-icon svg {
+    color: $color-brand-blue-40;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+  }
 }

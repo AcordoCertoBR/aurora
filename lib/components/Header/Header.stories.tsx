@@ -71,7 +71,7 @@ export const Organic: Story = {
               )
             }}
           />
-          <Button />
+          <Button>Consultar CPF</Button>
         </HeaderRoot.Navigation>
       </Header>
     )
@@ -119,7 +119,7 @@ export const Blog: Story = {
               )
             }}
           />
-          <Button />
+          <Button>Consultar CPF</Button>
         </HeaderRoot.Navigation>
       </Header>
     )
@@ -287,7 +287,7 @@ export const OrganicSubMenu: Story = {
               )
             }}
           />
-          <Button />
+          <Button>Consultar CPF</Button>
         </HeaderRoot.Navigation>
       </Header>
     )
