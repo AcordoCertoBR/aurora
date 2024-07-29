@@ -33,10 +33,10 @@
     height: 16px;
     color: $color-neutral-00;
 
-    @include aboveMedium() {
-      width: 24px;
-      height: 24px;
-    }
+    // @include aboveMedium() {
+    //   width: 24px;
+    //   height: 24px;
+    // }
   }
 
   &--size-large {
