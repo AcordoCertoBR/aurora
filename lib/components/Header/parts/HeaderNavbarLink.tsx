@@ -1,19 +1,46 @@
+import classNames from 'classnames'
 import { Text } from '../../Text'
+import { IconChevronDown } from '../../icons/default'
+import { Conditional } from '../../misc'
+import { NavbarDataProps } from '../types'
 
-type HeaderNavbarLinkProps = {
-  name: string
-  onClick?: () => void
-}
-
-export const HeaderNavbarLink = ({ name, onClick }: HeaderNavbarLinkProps) => {
+export const HeaderNavbarLink = ({
+  name,
+  onClick,
+  dropdown,
+}: NavbarDataProps) => {
   return (
     <Text
       as="a"
       variant="body-medium"
       weight="light"
       onClick={onClick}
-      className="au-header__navbar-link">
+      className={classNames('au-header__navbar-link', {
+        'is-dropdown': dropdown,
+      })}>
       {name}
+
+      <Conditional
+        condition={!!dropdown?.length}
+        renderIf={
+          <>
+            <IconChevronDown />
+            <div className="au-header__dropdown">
+              {dropdown?.map((item) => {
+                return (
+                  <Text
+                    as="a"
+                    variant="body-medium"
+                    weight="light"
+                    className="au-header__dropdown-link">
+                    {item.name}
+                  </Text>
+                )
+              })}
+            </div>
+          </>
+        }
+      />
     </Text>
   )
 }

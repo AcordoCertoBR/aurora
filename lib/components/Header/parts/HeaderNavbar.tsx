@@ -1,13 +1,9 @@
 import { ReactNode } from 'react'
-
-type DataProps = {
-  name: string
-  onClick?: () => void
-}
+import { NavbarDataProps } from '../types'
 
 type HeaderNavbarProps = {
-  data: DataProps[]
-  renderItem: (item: DataProps) => ReactNode
+  data: NavbarDataProps[]
+  renderItem: (item: NavbarDataProps) => ReactNode
 }
 
 export const HeaderNavbar = ({ data, renderItem }: HeaderNavbarProps) => {

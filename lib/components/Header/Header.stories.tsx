@@ -226,3 +226,70 @@ export const Dashboard: Story = {
     )
   },
 }
+
+export const OrganicSubMenu: Story = {
+  render: (args) => {
+    return (
+      <Header {...args}>
+        <HeaderRoot.Logo>
+          <LogoPrimaryCP />
+        </HeaderRoot.Logo>
+        <HeaderRoot.Navigation>
+          <HeaderRoot.Navbar
+            data={[
+              {
+                name: 'Inicio',
+                onClick: () => (window.location.href = '/'),
+              },
+              {
+                name: 'Sobre Nós',
+                onClick: () => (window.location.href = '/sobre-nos'),
+              },
+              {
+                name: 'Serviços',
+                onClick: () => (window.location.href = '/score'),
+                dropdown: [
+                  {
+                    name: 'Consultar Score',
+                    onClick: () => (window.location.href = '/consultar'),
+                  },
+                  {
+                    name: 'Sobre Meu CPF',
+                    onClick: () => (window.location.href = '/Sobre'),
+                  },
+                  {
+                    name: 'Monitorar CPF',
+                    onClick: () => (window.location.href = '/monitorar'),
+                  },
+                ],
+              },
+              {
+                name: 'Desenrola Brasil',
+                onClick: () => (window.location.href = '/cadastro-positivo'),
+              },
+              {
+                name: 'Parceiros',
+                onClick: () => (window.location.href = '/partners'),
+              },
+              {
+                name: 'Blog',
+                onClick: () => (window.location.href = '/blog'),
+              },
+            ]}
+            renderItem={(item) => {
+              console.log(item)
+              return (
+                <HeaderRoot.NavbarLink
+                  name={item.name}
+                  onClick={item.onClick}
+                  dropdown={item.dropdown}
+                />
+              )
+            }}
+          />
+          <Button />
+        </HeaderRoot.Navigation>
+      </Header>
+    )
+  },
+}
