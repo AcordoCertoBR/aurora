@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { IconDownload, IconSlash } from '../icons/default'
 import { Button } from './index'
-import { IconDownload, IconHelpCircle, IconSlash } from '../icons/default'
-// import { IconHelpCircle } from '../icons/default'
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
