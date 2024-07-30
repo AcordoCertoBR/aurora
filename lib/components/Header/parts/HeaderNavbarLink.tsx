@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { Text } from '../../Text'
-import { IconChevronDown } from '../../icons/default'
+import { IconChevronDown, IconChevronLeft } from '../../icons/default'
 import { Conditional } from '../../misc'
 import { NavbarDataProps } from '../types'
 
@@ -8,6 +8,7 @@ export const HeaderNavbarLink = ({
   name,
   onClick,
   dropdown,
+  active,
 }: NavbarDataProps) => {
   return (
     <Text
@@ -15,8 +16,10 @@ export const HeaderNavbarLink = ({
       variant="body-medium"
       weight="light"
       onClick={onClick}
+      title={name}
       className={classNames('au-header__navbar-link', {
         'is-dropdown': dropdown,
+        'is-active': active,
       })}>
       {name}
 
@@ -32,9 +35,15 @@ export const HeaderNavbarLink = ({
                     as="a"
                     variant="body-medium"
                     weight="light"
-                    className="au-header__dropdown-link"
+                    className={classNames('au-header__dropdown-link', {
+                      'is-active': item.active,
+                    })}
                     title={item.name}>
                     {item.name}
+                    <Conditional
+                      condition={!!item.active}
+                      renderIf={<IconChevronLeft />}
+                    />
                   </Text>
                 )
               })}

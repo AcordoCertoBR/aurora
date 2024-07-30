@@ -64,33 +64,23 @@
         gap: 8px;
       }
 
+      &.is-active,
       &:hover,
       &:focus {
         font-weight: 700;
         color: $color-brand-blue-40;
-
-        // text-shadow: 0 0 .1px $color-brand-blue-40, 0 0 .1px $color-brand-blue-40;
         letter-spacing: -0.6px;
       }
-
-      // &::before {
-      //   display: block;
-      //   content: attr(title);
-      //   font-weight: bold;
-      //   height: 0;
-      //   overflow: hidden;
-      //   visibility: hidden;
-      // }
     }
 
     &-link.is-dropdown {
-      .au-icon {
+      > .au-icon {
         transition: transform 0.3s ease;
       }
 
       &:hover,
       &:focus {
-        .au-icon {
+        > .au-icon {
           transform: rotate(-180deg);
         }
       }
@@ -128,10 +118,20 @@
     &-link {
       display: inline-block;
       padding: 16px 24px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
 
+      &.is-active,
       &:hover,
       &:focus {
         font-weight: 700;
+      }
+
+      &.is-active {
+        color: $color-brand-blue-40;
+        background-color: $color-brand-blue-10;
+        border-top: 1px solid $color-neutral-20;
       }
     }
   }

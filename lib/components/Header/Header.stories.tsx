@@ -203,6 +203,7 @@ export const Dashboard: Story = {
               {
                 name: 'Meus Acordos',
                 onClick: () => (window.location.href = '/acordos'),
+                active: true,
               },
               {
                 name: 'Minhas Ofertas',
@@ -219,7 +220,11 @@ export const Dashboard: Story = {
             ]}
             renderItem={(item) => {
               return (
-                <Header.NavbarLink name={item.name} onClick={item.onClick} />
+                <Header.NavbarLink
+                  name={item.name}
+                  onClick={item.onClick}
+                  active={item.active}
+                />
               )
             }}
           />
@@ -261,6 +266,7 @@ export const OrganicSubMenu: Story = {
                   {
                     name: 'Sobre Meu CPF',
                     onClick: () => (window.location.href = '/Sobre'),
+                    active: true,
                   },
                   {
                     name: 'Monitorar CPF',
