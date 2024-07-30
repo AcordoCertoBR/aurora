@@ -12,7 +12,7 @@ type DrawerProps = {
 export const Drawer = ({
   renderHeader,
   renderContent,
-  isOpen,
+  isOpen = false,
 }: DrawerProps) => {
   const [open, toggleOpen] = useState<Boolean>(isOpen)
 
