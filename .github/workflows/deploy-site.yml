@@ -35,7 +35,7 @@ jobs:
           node-version: 18.20.0
 
       - name: Install dependencies
-        run: rm -rf node_modules && npm ci
+        run: rm -rf node_modules && npm i
 
       - name: Build project
         run: npm run build-storybook
@@ -63,17 +63,19 @@ jobs:
           role-to-assume: arn:aws:iam::890620372383:role/github-actions-sls
           aws-region: us-east-1
 
-      - name: Deploy static site to S3 bucket (Root)
+      - name: Deploy static site to S3 bucket
         run: |
           aws s3 sync dist/apps/ac/ s3://cp-aurora-ui-production-sa-east-1/ \
           --exclude '*.gitkeep' \
           --exclude '*.html' \
-          --cache-control 'max-age=3888000'
+          --cache-control 'max-age=3888000' \ 
+          --delete
 
           aws s3 sync dist/apps/ac/ s3://cp-aurora-ui-production-sa-east-1/ \
           --exclude '*' \
           --include '*.html' \
-          --cache-control 'no-cache, no-store'
+          --cache-control 'no-cache, no-store' \ 
+          --delete
 
       - name: Invalidate CloudFront cache
         run: |
