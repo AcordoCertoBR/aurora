@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-type HeaderNavigationProps = {
+export type HeaderNavigationProps = {
   children: ReactNode
 }
 

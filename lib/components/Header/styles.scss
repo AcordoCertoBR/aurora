@@ -27,10 +27,14 @@
     }
   }
 
+  &__link {
+    cursor: pointer;
+  }
+
   &__navigation {
     display: flex;
 
-    > * + .au-btn {
+    > * + * {
       margin-left: 24px;
     }
   }
@@ -64,41 +68,32 @@
       &:focus {
         font-weight: 700;
         color: $color-brand-blue-40;
+
+        // text-shadow: 0 0 .1px $color-brand-blue-40, 0 0 .1px $color-brand-blue-40;
+        letter-spacing: -0.6px;
       }
+
+      // &::before {
+      //   display: block;
+      //   content: attr(title);
+      //   font-weight: bold;
+      //   height: 0;
+      //   overflow: hidden;
+      //   visibility: hidden;
+      // }
     }
 
-    &-actions {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      border-left: 1px solid $color-neutral-20;
-      padding-left: 24px;
-      margin-left: 24px;
-    }
+    &-link.is-dropdown {
+      .au-icon {
+        transition: transform 0.3s ease;
+      }
 
-    &-notifications {
-      cursor: pointer;
-    }
-
-    &-menu {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-
-    &-letters {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      background-color: $color-brand-blue-30;
-      font-weight: 500;
-      font-family: $font-lexend-deca;
-      color: $color-neutral-70;
-      font-size: 16px;
+      &:hover,
+      &:focus {
+        .au-icon {
+          transform: rotate(-180deg);
+        }
+      }
     }
   }
 
@@ -131,7 +126,7 @@
     }
 
     &-link {
-      display: block;
+      display: inline-block;
       padding: 16px 24px;
 
       &:hover,
@@ -141,16 +136,42 @@
     }
   }
 
-  &__navbar-link.is-dropdown {
-    .au-icon {
-      transition: transform 0.3s ease;
+  &__actions {
+    &--divider {
+      border-left: 1px solid $color-neutral-20;
+      padding-left: 24px;
+      margin-left: 24px;
+    }
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    &-notifications {
+      cursor: pointer;
     }
 
-    &:hover,
-    &:focus {
-      .au-icon {
-        transform: rotate(-180deg);
-      }
+    &-menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    &-letters {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      background-color: $color-brand-blue-30;
+      font-weight: 500;
+      font-family: $font-lexend-deca;
+      color: $color-neutral-70;
+      font-size: 16px;
     }
   }
 }

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { NavbarDataProps } from '../types'
 
-type HeaderNavbarProps = {
+export type HeaderNavbarProps = {
   data: NavbarDataProps[]
   renderItem: (item: NavbarDataProps) => ReactNode
 }

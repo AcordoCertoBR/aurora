@@ -3,26 +3,26 @@ import { Button } from '../Button'
 import { LogoPrimaryCP } from '../Logo'
 import { Text } from '../Text'
 import { IconChevronLeft, IconX } from '../icons/default'
-import HeaderRoot, { Header } from './index'
+import Header from './index'
 
-const meta: Meta<typeof Header> = {
+const meta: Meta<typeof Header.Root> = {
   title: 'Components/Header',
-  component: Header,
+  component: Header.Root,
   tags: ['autodocs'],
 }
 
 export default meta
 
-type Story = StoryObj<typeof Header>
+type Story = StoryObj<typeof Header.Root>
 
 export const Admission: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <HeaderRoot.Logo>
+      <Header.Root {...args}>
+        <Header.Logo>
           <LogoPrimaryCP />
-        </HeaderRoot.Logo>
-      </Header>
+        </Header.Logo>
+      </Header.Root>
     )
   },
 }
@@ -30,12 +30,12 @@ export const Admission: Story = {
 export const Organic: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <HeaderRoot.Logo>
+      <Header.Root {...args}>
+        <Header.Logo>
           <LogoPrimaryCP />
-        </HeaderRoot.Logo>
-        <HeaderRoot.Navigation>
-          <HeaderRoot.Navbar
+        </Header.Logo>
+        <Header.Navigation>
+          <Header.Navbar
             data={[
               {
                 name: 'Inicio',
@@ -64,16 +64,15 @@ export const Organic: Story = {
             ]}
             renderItem={(item) => {
               return (
-                <HeaderRoot.NavbarLink
-                  name={item.name}
-                  onClick={item.onClick}
-                />
+                <Header.NavbarLink name={item.name} onClick={item.onClick} />
               )
             }}
           />
-          <Button>Consultar CPF</Button>
-        </HeaderRoot.Navigation>
-      </Header>
+          <Header.Actions>
+            <Button>Consultar CPF</Button>
+          </Header.Actions>
+        </Header.Navigation>
+      </Header.Root>
     )
   },
 }
@@ -81,13 +80,13 @@ export const Organic: Story = {
 export const Blog: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <HeaderRoot.Logo>
+      <Header.Root {...args}>
+        <Header.Logo>
           <LogoPrimaryCP />
           <Text variant="body-medium">Blog</Text>
-        </HeaderRoot.Logo>
-        <HeaderRoot.Navigation>
-          <HeaderRoot.Navbar
+        </Header.Logo>
+        <Header.Navigation>
+          <Header.Navbar
             data={[
               {
                 name: 'Inicio',
@@ -112,16 +111,15 @@ export const Blog: Story = {
             ]}
             renderItem={(item) => {
               return (
-                <HeaderRoot.NavbarLink
-                  name={item.name}
-                  onClick={item.onClick}
-                />
+                <Header.NavbarLink name={item.name} onClick={item.onClick} />
               )
             }}
           />
-          <Button>Consultar CPF</Button>
-        </HeaderRoot.Navigation>
-      </Header>
+          <Header.Actions>
+            <Button>Consultar CPF</Button>
+          </Header.Actions>
+        </Header.Navigation>
+      </Header.Root>
     )
   },
 }
@@ -129,10 +127,12 @@ export const Blog: Story = {
 export const FunilBack: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <IconChevronLeft />
+      <Header.Root {...args}>
+        <Header.Link onClick={() => ''}>
+          <IconChevronLeft />
+        </Header.Link>
         <LogoPrimaryCP />
-      </Header>
+      </Header.Root>
     )
   },
 }
@@ -140,13 +140,15 @@ export const FunilBack: Story = {
 export const FunilClose: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <IconChevronLeft />
-        <HeaderRoot.Logo>
-          <LogoPrimaryCP />
-        </HeaderRoot.Logo>
-        <IconX />
-      </Header>
+      <Header.Root {...args}>
+        <Header.Link onClick={() => ''}>
+          <IconChevronLeft />
+        </Header.Link>
+        <LogoPrimaryCP />
+        <Header.Link onClick={() => ''}>
+          <IconX />
+        </Header.Link>
+      </Header.Root>
     )
   },
 }
@@ -154,13 +156,15 @@ export const FunilClose: Story = {
 export const FunilPartnerBack: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <IconChevronLeft />
-        <HeaderRoot.Logo>
+      <Header.Root {...args}>
+        <Header.Link onClick={() => ''}>
+          <IconChevronLeft />
+        </Header.Link>
+        <Header.Logo>
           <LogoPrimaryCP />
           <LogoPrimaryCP />
-        </HeaderRoot.Logo>
-      </Header>
+        </Header.Logo>
+      </Header.Root>
     )
   },
 }
@@ -168,14 +172,16 @@ export const FunilPartnerBack: Story = {
 export const FunilPartnerClose: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <IconChevronLeft />
-        <HeaderRoot.Logo>
+      <Header.Root {...args}>
+        <Header.Link onClick={() => ''}>
+          <IconChevronLeft />
+        </Header.Link>
+        <Header.Logo>
           <LogoPrimaryCP />
           <LogoPrimaryCP />
-        </HeaderRoot.Logo>
+        </Header.Logo>
         <IconX />
-      </Header>
+      </Header.Root>
     )
   },
 }
@@ -183,12 +189,12 @@ export const FunilPartnerClose: Story = {
 export const Dashboard: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <HeaderRoot.Logo>
+      <Header.Root {...args}>
+        <Header.Logo>
           <LogoPrimaryCP />
-        </HeaderRoot.Logo>
-        <HeaderRoot.Navigation>
-          <HeaderRoot.Navbar
+        </Header.Logo>
+        <Header.Navigation>
+          <Header.Navbar
             data={[
               {
                 name: 'Inicio',
@@ -213,16 +219,15 @@ export const Dashboard: Story = {
             ]}
             renderItem={(item) => {
               return (
-                <HeaderRoot.NavbarLink
-                  name={item.name}
-                  onClick={item.onClick}
-                />
+                <Header.NavbarLink name={item.name} onClick={item.onClick} />
               )
             }}
           />
-          <HeaderRoot.NavbarActions />
-        </HeaderRoot.Navigation>
-      </Header>
+          <Header.Actions divider={true}>
+            <Header.HeaderProfile />
+          </Header.Actions>
+        </Header.Navigation>
+      </Header.Root>
     )
   },
 }
@@ -230,12 +235,12 @@ export const Dashboard: Story = {
 export const OrganicSubMenu: Story = {
   render: (args) => {
     return (
-      <Header {...args}>
-        <HeaderRoot.Logo>
+      <Header.Root {...args}>
+        <Header.Logo>
           <LogoPrimaryCP />
-        </HeaderRoot.Logo>
-        <HeaderRoot.Navigation>
-          <HeaderRoot.Navbar
+        </Header.Logo>
+        <Header.Navigation>
+          <Header.Navbar
             data={[
               {
                 name: 'Inicio',
@@ -279,7 +284,7 @@ export const OrganicSubMenu: Story = {
             renderItem={(item) => {
               console.log(item)
               return (
-                <HeaderRoot.NavbarLink
+                <Header.NavbarLink
                   name={item.name}
                   onClick={item.onClick}
                   dropdown={item.dropdown}
@@ -287,9 +292,11 @@ export const OrganicSubMenu: Story = {
               )
             }}
           />
-          <Button>Consultar CPF</Button>
-        </HeaderRoot.Navigation>
-      </Header>
+          <Header.Actions>
+            <Button>Consultar CPF</Button>
+          </Header.Actions>
+        </Header.Navigation>
+      </Header.Root>
     )
   },
 }

@@ -32,7 +32,8 @@ export const HeaderNavbarLink = ({
                     as="a"
                     variant="body-medium"
                     weight="light"
-                    className="au-header__dropdown-link">
+                    className="au-header__dropdown-link"
+                    title={item.name}>
                     {item.name}
                   </Text>
                 )

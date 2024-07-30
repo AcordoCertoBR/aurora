@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-type HeaderWrapProps = {
+export type HeaderWrapProps = {
   children: ReactNode
 }
 

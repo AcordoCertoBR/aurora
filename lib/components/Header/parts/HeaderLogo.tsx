@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-type HeaderLogoProps = {
+export type HeaderLogoProps = {
   children: ReactNode
 }
 
