@@ -10,9 +10,9 @@ export const Text: React.FC<TextProps> = ({
   children,
   className = '',
   color = 'common',
-  variant = 'body-large',
+  variant = 'body-medium',
   variantDesk,
-  weight = 'bold',
+  weight = 'regular',
   dangerouslySetInnerHTML,
   ...props
 }: TextProps) => {

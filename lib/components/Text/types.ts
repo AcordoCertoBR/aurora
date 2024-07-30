@@ -6,6 +6,7 @@ type TextVariant =
   | 'heading-large'
   | 'heading-medium'
   | 'heading-small'
+  | 'heading-micro'
   | 'body-big'
   | 'body-large'
   | 'body-medium'

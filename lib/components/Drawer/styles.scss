@@ -1,0 +1,42 @@
+.au-drawer {
+  background-color: $color-neutral-00;
+  width: 100%;
+  max-width: 320px;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(320px);
+  transition: transform 0.1s ease-out 0.1s;
+
+  &.is-open {
+    transform: translateX(0);
+  }
+
+  &__header {
+    position: relative;
+    border-bottom: 1px solid $color-neutral-20;
+    padding: 16px 24px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+
+    &-close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      transform: translateX(-28px) translateY(24px);
+      cursor: pointer;
+    }
+
+    .au-logo {
+      margin: 8px 0;
+      display: block;
+      height: 100%;
+
+      svg {
+        height: 100%;
+      }
+    }
+  }
+}

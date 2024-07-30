@@ -83,7 +83,9 @@ export const Blog: Story = {
       <Header.Root {...args}>
         <Header.Logo>
           <LogoPrimaryCP />
-          <Text variant="body-medium">Blog</Text>
+          <Text variant="heading-micro" weight="bold">
+            Blog
+          </Text>
         </Header.Logo>
         <Header.Navigation>
           <Header.Navbar

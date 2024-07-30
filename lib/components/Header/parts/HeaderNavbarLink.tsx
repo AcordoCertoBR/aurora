@@ -13,7 +13,7 @@ export const HeaderNavbarLink = ({
   return (
     <Text
       as="a"
-      variant="body-medium"
+      variant="heading-micro"
       weight="light"
       onClick={onClick}
       title={name}
@@ -33,7 +33,7 @@ export const HeaderNavbarLink = ({
                 return (
                   <Text
                     as="a"
-                    variant="body-medium"
+                    variant="heading-micro"
                     weight="light"
                     className={classNames('au-header__dropdown-link', {
                       'is-active': item.active,
