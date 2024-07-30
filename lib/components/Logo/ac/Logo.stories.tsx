@@ -6,6 +6,7 @@ import {
   LogoPrimaryNegativeAC,
   LogoPrimaryWhiteAC,
   LogoPrimaryFullWhiteAC,
+  LogoBadgetAC,
 } from '../index'
 
 const meta: Meta = {
@@ -49,5 +50,11 @@ export const PrimaryFullWhite: StoryObj = {
 export const Tertiary: StoryObj = {
   render: (args) => {
     return <LogoTertiaryAC {...args} />
+  },
+}
+
+export const BadgetAC: StoryObj = {
+  render: (args) => {
+    return <LogoBadgetAC {...args} />
   },
 }

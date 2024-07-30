@@ -25,6 +25,22 @@
       margin-left: 16px;
       border-left: 1px solid $color-neutral-20;
     }
+
+    > * + * {
+      padding-left: 16px;
+      margin-left: 16px;
+      position: relative;
+
+      &::before {
+        content: '';
+        height: 24px;
+        width: 1px;
+        background-color: $color-neutral-20;
+        position: absolute;
+        left: 0;
+        top: calc(50% - 12px);
+      }
+    }
   }
 
   &__link {

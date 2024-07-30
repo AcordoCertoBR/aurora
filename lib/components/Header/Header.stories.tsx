@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Button } from '../Button'
-import { LogoPrimaryCP } from '../Logo'
+import { LogoBadgetAC, LogoBadgetCP, LogoPrimaryCP } from '../Logo'
 import { Text } from '../Text'
 import { IconChevronLeft, IconX } from '../icons/default'
 import Header from './index'
@@ -131,7 +131,7 @@ export const FunilBack: Story = {
         <Header.Link onClick={() => ''}>
           <IconChevronLeft />
         </Header.Link>
-        <LogoPrimaryCP />
+        <LogoBadgetCP />
       </Header.Root>
     )
   },
@@ -144,7 +144,7 @@ export const FunilClose: Story = {
         <Header.Link onClick={() => ''}>
           <IconChevronLeft />
         </Header.Link>
-        <LogoPrimaryCP />
+        <LogoBadgetAC />
         <Header.Link onClick={() => ''}>
           <IconX />
         </Header.Link>
@@ -161,8 +161,8 @@ export const FunilPartnerBack: Story = {
           <IconChevronLeft />
         </Header.Link>
         <Header.Logo>
-          <LogoPrimaryCP />
-          <LogoPrimaryCP />
+          <LogoBadgetCP />
+          <LogoBadgetAC />
         </Header.Logo>
       </Header.Root>
     )
@@ -177,10 +177,12 @@ export const FunilPartnerClose: Story = {
           <IconChevronLeft />
         </Header.Link>
         <Header.Logo>
-          <LogoPrimaryCP />
-          <LogoPrimaryCP />
+          <LogoBadgetCP />
+          <LogoBadgetAC />
         </Header.Logo>
-        <IconX />
+        <Header.Link onClick={() => ''}>
+          <IconX />
+        </Header.Link>
       </Header.Root>
     )
   },
