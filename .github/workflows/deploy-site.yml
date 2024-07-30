@@ -68,13 +68,13 @@ jobs:
           aws s3 sync storybook-static/ s3://cp-aurora-ui-production-sa-east-1 \
           --exclude '*.gitkeep' \
           --exclude '*.html' \
-          --cache-control 'max-age=3888000' \ 
+          --cache-control 'max-age=3888000' \
           --delete
 
           aws s3 sync storybook-static/ s3://cp-aurora-ui-production-sa-east-1 \
           --exclude '*' \
           --include '*.html' \
-          --cache-control 'no-cache, no-store' \ 
+          --cache-control 'no-cache, no-store' \
           --delete
 
       - name: Invalidate CloudFront cache
