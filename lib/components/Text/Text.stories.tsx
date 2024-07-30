@@ -76,6 +76,15 @@ export const HeadingSmall: Story = {
   render: (args) => <Text {...args} />,
 }
 
+export const HeadingMicro: Story = {
+  args: {
+    as: 'h3',
+    children: 'Heading Micro',
+    variant: 'heading-micro',
+  },
+  render: (args) => <Text {...args} />,
+}
+
 // -- BodyText
 export const ParagraphBig: Story = {
   args: {

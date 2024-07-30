@@ -27,7 +27,8 @@ $desk-variation: 'desk-';
   &--#{$viewport}heading-big,
   &--#{$viewport}heading-large,
   &--#{$viewport}heading-medium,
-  &--#{$viewport}heading-small {
+  &--#{$viewport}heading-small,
+  &--#{$viewport}heading-micro {
     font-family: $font-lexend-deca;
   }
 
@@ -49,6 +50,11 @@ $desk-variation: 'desk-';
   &--#{$viewport}heading-small {
     font-size: 20px;
     line-height: 40px;
+  }
+
+  &--#{$viewport}heading-micro {
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 

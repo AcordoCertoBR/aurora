@@ -1,0 +1,14 @@
+.au-profile-nav {
+  display: flex;
+  gap: 16px;
+
+  &__badget {
+    width: 48px;
+    height: 48px;
+    background-color: $color-brand-blue-20;
+    border-radius: $border-radius-pill;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
