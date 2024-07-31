@@ -10,7 +10,7 @@ import {
   IconSpark,
   IconUser,
 } from '../icons/default'
-import { NavbarVertical, NavbarVerticalLink } from './index'
+import { NavbarVertical } from './index'
 import { Button } from '../Button'
 
 const meta: Meta<typeof NavbarVertical> = {
@@ -71,7 +71,7 @@ export const Organic: Story = {
     ],
     renderItem: (link) => {
       return (
-        <NavbarVerticalLink
+        <NavbarVertical.Link
           active={link.active}
           dropdown={link.dropdown}
           Icon={link.Icon}
@@ -143,7 +143,7 @@ export const Logged: Story = {
     ],
     renderItem: (link) => {
       return (
-        <NavbarVerticalLink
+        <NavbarVertical.Link
           active={link.active}
           dropdown={link.dropdown}
           Icon={link.Icon}

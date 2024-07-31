@@ -34,7 +34,7 @@ export const NavbarVertical = ({
   )
 }
 
-export const NavbarVerticalLink = ({
+const NavbarVerticalLink = ({
   name,
   onClick,
   Icon,
@@ -81,3 +81,5 @@ export const NavbarVerticalLink = ({
     </Text>
   )
 }
+
+NavbarVertical.Link = NavbarVerticalLink
