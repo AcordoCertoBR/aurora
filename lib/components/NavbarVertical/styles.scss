@@ -1,0 +1,55 @@
+.au-navbar-vertical {
+  width: 100%;
+  background-color: $color-neutral-00;
+  height: 100%;
+
+  &__link {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    flex-wrap: wrap;
+    border-bottom: 1px solid $color-brand-blue-20;
+
+    &:hover,
+    &:focus {
+      font-weight: 700;
+    }
+
+    &.is-active {
+      background-color: $color-brand-blue-10;
+      color: $color-brand-blue-40;
+      font-weight: 700;
+    }
+  }
+
+  &__dropdown {
+    display: block;
+    width: 100%;
+    border-top: 1px solid $color-brand-blue-20;
+    padding-top: 12px;
+
+    &-link {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+
+      &:hover,
+      &:focus {
+        font-weight: 700;
+      }
+
+      &.is-active {
+        color: $color-brand-blue-40;
+        font-weight: 700;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    padding: 24px;
+  }
+}
