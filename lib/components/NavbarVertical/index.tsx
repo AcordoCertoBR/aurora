@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { Text } from '../Text'
 import { IconChevronDown, IconChevronUp } from '../icons/default'
 import { Conditional } from '../misc'
@@ -41,15 +41,27 @@ const NavbarVerticalLink = ({
   dropdown,
   active = false,
 }: NavbarVerticalDataProps) => {
+  const [open, setOpen] = useState<boolean>(active)
+
+  function handleClick() {
+    if (dropdown) {
+      setOpen((prev) => !prev)
+    } else {
+      onClick()
+    }
+  }
+
   return (
     <Text
       as="a"
       variant="heading-micro"
       weight="light"
       className={classNames('au-navbar-vertical__link', {
+        'is-dropdown': dropdown,
         'is-active': active,
+        'is-open': open,
       })}
-      onClick={onClick}>
+      onClick={handleClick}>
       <Conditional condition={!!Icon} renderIf={Icon} />
       {name}
 
@@ -57,8 +69,8 @@ const NavbarVerticalLink = ({
         condition={!!dropdown?.length}
         renderIf={
           <>
-            <Conditional condition={!!active} renderIf={<IconChevronUp />} />
-            <Conditional condition={!active} renderIf={<IconChevronDown />} />
+            <Conditional condition={!!open} renderIf={<IconChevronUp />} />
+            <Conditional condition={!open} renderIf={<IconChevronDown />} />
             <div className="au-navbar-vertical__dropdown">
               {dropdown?.map((item) => {
                 return (

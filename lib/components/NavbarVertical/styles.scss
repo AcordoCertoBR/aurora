@@ -29,6 +29,11 @@
     width: 100%;
     border-top: 1px solid $color-brand-blue-20;
     padding-top: 12px;
+    display: none;
+
+    .is-open & {
+      display: block;
+    }
 
     &-link {
       display: block;
