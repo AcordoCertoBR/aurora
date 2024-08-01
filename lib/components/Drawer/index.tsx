@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import { IconX } from '../icons/default'
 import './styles.scss'
 
