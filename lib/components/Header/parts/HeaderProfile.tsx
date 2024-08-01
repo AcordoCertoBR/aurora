@@ -1,4 +1,4 @@
-import { IconBell, IconChevronDown } from '../../icons/default'
+import { IconBell, IconChevronDown, IconMenu } from '../../icons/default'
 
 export type HeaderProfileProps = {
   onClickNotifications?: () => void
@@ -15,6 +15,10 @@ export const HeaderProfile = ({
         className="au-header__profile-notifications"
         onClick={onClickNotifications}>
         <IconBell />
+      </div>
+
+      <div className="au-header__profile-menu-mobile" onClick={onClickMenu}>
+        <IconMenu />
       </div>
 
       <div className="au-header__profile-menu" onClick={onClickMenu}>

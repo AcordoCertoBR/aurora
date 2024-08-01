@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { IconX } from '../icons/default'
 import './styles.scss'
 
@@ -7,26 +7,22 @@ type DrawerProps = {
   renderHeader: () => ReactNode
   renderContent: () => ReactNode
   isOpen: boolean
+  handleOpen: () => void
 }
 
 export const Drawer = ({
   renderHeader,
   renderContent,
   isOpen = false,
+  handleOpen,
 }: DrawerProps) => {
-  const [open, toggleOpen] = useState<Boolean>(isOpen)
-
-  function onClickClose() {
-    toggleOpen((prev) => !prev)
-  }
-
   return (
     <div
       className={classNames('au-drawer', {
-        'is-open': open,
+        'is-open': isOpen,
       })}>
       <div className="au-drawer__header">
-        <div className="au-drawer__header-close" onClick={onClickClose}>
+        <div className="au-drawer__header-close" onClick={handleOpen}>
           <IconX />
         </div>
         {renderHeader()}
