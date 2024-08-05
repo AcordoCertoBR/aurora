@@ -4,7 +4,7 @@ import { Header } from '../index'
 import { Button } from '../../Button'
 
 const meta: Meta<typeof Header.Actions> = {
-  title: 'Components/Header/Actions',
+  title: 'Components/Header/WithActions',
   component: Header.Actions,
   tags: ['autodocs'],
   decorators: [

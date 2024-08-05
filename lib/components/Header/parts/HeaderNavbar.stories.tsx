@@ -3,7 +3,7 @@ import { LogoPrimaryCP } from '../../Logo'
 import { Header } from '../index'
 
 const meta: Meta<typeof Header.Navbar> = {
-  title: 'Components/Header/Navbar',
+  title: 'Components/Header/WithNavbar',
   component: Header.Navbar,
   tags: ['autodocs'],
   decorators: [
