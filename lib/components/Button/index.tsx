@@ -15,7 +15,7 @@ type ButtonProps = (
     }
 ) & {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
-  children?: ReactNode
+  children?: ReactNode | string | JSX.Element | JSX.Element[]
   color?: 'default'
   disabled?: boolean
   expand?: 'x'

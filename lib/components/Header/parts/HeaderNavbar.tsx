@@ -3,13 +3,15 @@ import { NavbarDataProps } from '../types'
 
 export type HeaderNavbarProps = {
   data: NavbarDataProps[]
-  renderItem: (item: NavbarDataProps) => ReactNode
+  renderItem: (
+    item: NavbarDataProps,
+  ) => ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const HeaderNavbar = ({ data, renderItem }: HeaderNavbarProps) => {
   return (
     <nav className="au-header__navbar">
-      {data.map((item) => {
+      {data?.map((item) => {
         return renderItem(item)
       })}
     </nav>

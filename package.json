@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.12",
   "type": "module",
-  "main": "./dist/main.cjs.js",
+  "main": "./dist/main.es.js",
   "modules": "./dist/main.es.js",
   "types": "./dist/main.d.ts",
   "files": [
@@ -11,8 +11,7 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/main.es.js",
-      "require": "./dist/main.cjs.js"
+      "import": "./dist/main.es.js"
     },
     "./package.json": "./package.json"
   },
@@ -41,17 +40,17 @@
   "devDependencies": {
     "@chromatic-com/storybook": "1.6.1",
     "@rollup/plugin-terser": "0.4.4",
-    "@storybook/addon-docs": "8.2.6",
-    "@storybook/addon-essentials": "^8.2.6",
-    "@storybook/addon-interactions": "^8.2.6",
-    "@storybook/addon-links": "^8.2.6",
-    "@storybook/addon-onboarding": "^8.2.6",
-    "@storybook/blocks": "^8.2.6",
-    "@storybook/manager-api": "8.2.6",
-    "@storybook/react": "^8.2.6",
-    "@storybook/react-vite": "^8.2.6",
-    "@storybook/test": "^8.2.6",
-    "@storybook/theming": "8.2.6",
+    "@storybook/addon-docs": "^8.2.7",
+    "@storybook/addon-essentials": "^8.2.7",
+    "@storybook/addon-interactions": "^8.2.7",
+    "@storybook/addon-links": "^8.2.7",
+    "@storybook/addon-onboarding": "^8.2.7",
+    "@storybook/blocks": "^8.2.7",
+    "@storybook/manager-api": "^8.2.7",
+    "@storybook/react": "^8.2.7",
+    "@storybook/react-vite": "^8.2.7",
+    "@storybook/test": "^8.2.7",
+    "@storybook/theming": "^8.2.7",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@typescript-eslint/eslint-plugin": "7.15.0",
@@ -69,7 +68,7 @@
     "prettier": "3.3.3",
     "rollup-plugin-css-only": "4.5.2",
     "sass": "1.77.8",
-    "storybook": "^8.2.6",
+    "storybook": "^8.2.7",
     "storybook-addon-pseudo-states": "3.1.1",
     "typescript": "5.2.2",
     "vite": "5.3.4",

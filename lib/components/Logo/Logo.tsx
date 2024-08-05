@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
+import './styles.scss'
 
 type LogoProps = {
-  children?: ReactNode
+  children?: ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const Logo = ({ children }: LogoProps) => {

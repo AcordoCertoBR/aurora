@@ -1,0 +1,244 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Padrões de Código" />
+
+# Padrões de Código
+
+Esse projeto possui alguns padrões e boas práticas de desenvolvimento.
+
+## CSS
+
+### Prefixo Classes
+
+Para manter consistência, é recomendado que os nomes das classes dos componentes comecem sempre com `.au-`.
+
+```css
+// styles.scss
+.au-btn {
+}
+```
+
+```jsx
+// Button.tsx
+
+import './styles.scss'
+
+export const Button = () => {
+  return <button className="au-btn" />
+}
+```
+
+### BEM CSS
+
+Optamos por utilizar o `SASS` como compilador de CSS e seguimos a metodologia [BEM CSS](https://getbem.com/introduction/) para a escrita das classes.
+
+❌ Fora do padrão
+
+```jsx
+export const Nav = () => {
+  return (
+    <div className="au-nav">
+      <div className="au-nav-container">
+        <div className="au-nav-link" />
+        <div className="au-nav-link--active" />
+      </div>
+    </div>
+  )
+}
+```
+
+✅ Padronizado
+
+Para modificadores podemos utlizar o sufixo `--active` ou versão curta com prefixo`is-`
+
+```jsx
+export const Nav = () => {
+  return (
+    <div className="au-nav">
+      <div className="au-nav__container">
+        <div className="au-nav__link" />
+        <div className="au-nav__link au-nav__link--active" />
+        <div className="au-nav__link is-active" /> // short alternative too
+        `au-nav__link--active`
+      </div>
+    </div>
+  )
+}
+```
+
+## React
+
+### Export/Import
+
+Por padrão os components são criados mantendo a exportação nomeada e não exportação default.
+
+❌ Fora do padrão
+
+```jsx
+// Component1.tsx
+export default function Component({ children }) {
+  return <div className="au-component">{children}</div>
+}
+
+// Component2.tsx
+import Component from './Component1'
+```
+
+✅ Padronizado
+
+```jsx
+// Component1.tsx
+export const Component = ({ children }) => {
+  return <div className="au-component">{children}</div>
+}
+
+// Component2.tsx
+import { Component } from './Component1'
+```
+
+### Composição de Componentes
+
+Para components grandes sempre que possível utlizar Composição.
+
+❌ Fora do padrão
+
+```jsx
+// Nav.tsx
+export const Nav = ({ dataSource, renderLink }: NavProps) => {
+  return (
+    <nav className="au-nav">
+      {dataSource.map(item => {
+        return <a className="au-nav__link" href={item.href}>{item.name}</a>
+      })}
+    </nav>
+  )
+}
+```
+
+```jsx
+// Page.tsx
+import { Nav } from './Nav'
+
+export const Page = () => {
+  return (
+    <Nav
+      dataSource={[
+        { name: 'Contato', href: '/contato' },
+        { name: 'Minha Conta', href: '/conta' },
+      ]}
+    />
+  )
+}
+```
+
+✅ Padronizado
+
+```jsx
+// Nav.tsx
+const Nav = ({ dataSource, renderLink }: NavProps) => {
+  return (
+    <nav className="au-nav">
+      {dataSource.map(item => {
+        return renderLink(item)
+      })}
+    </nav>
+  )
+}
+
+const NavLink = ({ name, href }: NavLinkProps) => {
+  return (
+    <a className="au-nav__link" href={href}>{name}</a>
+  )
+}
+
+const components = {
+  Root: Nav,
+  Link: NavLink
+}
+
+export { components as Nav }
+
+```
+
+```jsx
+// Page.tsx
+import { Nav } from './Nav'
+
+export const Page = () => {
+  return (
+    <Nav.Root
+      dataSource={[
+        { name: 'Contato', href: '/contato' },
+        { name: 'Minha Conta', href: '/conta' },
+      ]}
+      renderLink={(item) => <Nav.Link name={link.name} href={link.href} />}
+    />
+  )
+}
+```
+
+## Typescript
+
+### Type
+
+Por padrão a tipagem dos components e hooks sempre vamos utilizar `type`.
+
+❌ Fora do padrão
+
+```jsx
+interface ComponentProps {
+  children: ReactNode
+}
+
+export default function Component({ children }: ComponentProps) {
+  return (
+    <div className="au-component">{children}</div>
+  )
+}
+```
+
+✅ Padronizado
+
+```jsx
+type ComponentProps = {
+  children: ReactNode
+}
+
+export const Component = ({ children }: ComponentProps) => {
+  return (
+    <div className="au-component">{children}</div>
+  )
+}
+```
+
+### Nomenclatura
+
+Utilizando sempre o sufixo no nome como Component`Props`
+
+❌ Fora do padrão
+
+```jsx
+type PropsComponent = {
+  children: ReactNode
+}
+
+type TComponent = {
+  children: ReactNode
+}
+
+type PropsUseHook = {
+  prop: string
+}
+```
+
+✅ Padronizado
+
+```jsx
+type ComponentProps = {
+  children: ReactNode
+}
+
+type UseHookProps = {
+  prop: string
+}
+```

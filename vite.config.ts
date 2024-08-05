@@ -33,7 +33,7 @@ export default defineConfig({
   plugins: [react(), dts({ include: ['lib'] }), libInjectCss()],
   build: {
     copyPublicDir: false,
-    target: 'es2015',
+    // target: 'es2015',
     lib: {
       entry: {
         main: resolve(__dirname, 'lib/main.ts'),
@@ -44,7 +44,7 @@ export default defineConfig({
           ? `main.${format}.js`
           : `components/${entryName}/index.${format}.js`,
       name: 'aurora',
-      formats: ['es', 'cjs'],
+      formats: ['es'],
     },
     cssCodeSplit: true,
     rollupOptions: {

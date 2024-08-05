@@ -4,10 +4,15 @@
   max-width: 320px;
   height: 100vh;
   position: absolute;
+  z-index: 6;
   top: 0;
   right: 0;
   transform: translateX(320px);
   transition: transform 0.1s ease-out 0.1s;
+
+  @include aboveMedium() {
+    box-shadow: $shadow-04;
+  }
 
   &.is-open {
     transform: translateX(0);
@@ -38,5 +43,9 @@
         height: 100%;
       }
     }
+  }
+
+  &__content {
+    height: calc(100% - 80px);
   }
 }

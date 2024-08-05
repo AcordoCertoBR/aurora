@@ -1,12 +1,21 @@
+import classNames from 'classnames'
 import { ReactNode } from 'react'
 
 export type HeaderWrapProps = {
-  children: ReactNode
+  position?: string
+  children: ReactNode | string | JSX.Element | JSX.Element[]
 }
 
-export const HeaderWrap = ({ children }: HeaderWrapProps) => {
+export const HeaderWrap = ({
+  children,
+  position = 'static',
+}: HeaderWrapProps) => {
   return (
-    <header className="au-header">
+    <header
+      className={classNames('au-header', {
+        'au-header--fixed': position === 'fixed',
+        'au-header--static': position === 'static',
+      })}>
       <div className="au-header__container">{children}</div>
     </header>
   )

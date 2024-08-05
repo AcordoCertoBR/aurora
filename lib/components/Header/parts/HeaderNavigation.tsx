@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 export type HeaderNavigationProps = {
-  children: ReactNode
+  children: ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const HeaderNavigation = ({ children }: HeaderNavigationProps) => {

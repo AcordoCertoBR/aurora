@@ -32,6 +32,7 @@ export const HeaderNavbarLink = ({
               {dropdown?.map((item) => {
                 return (
                   <Text
+                    key={item.name}
                     as="a"
                     variant="heading-micro"
                     weight="light"

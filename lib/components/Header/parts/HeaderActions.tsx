@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { ReactNode } from 'react'
 
 export type HeaderActionsProps = {
-  children: ReactNode
+  children: ReactNode | string | JSX.Element | JSX.Element[]
   divider?: boolean
 }
 

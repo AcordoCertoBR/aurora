@@ -2,308 +2,314 @@
 // To edit see the file lib/tasks/generateIcons.js
 import { Meta, StoryObj } from '@storybook/react'
 import Icon from '../Icon'
-import IconActivity from './IconActivity'
-import IconAlignJustify from './IconAlignJustify'
 import IconAlertOctagon from './IconAlertOctagon'
-import IconAirplay from './IconAirplay'
-import IconAlertCircle from './IconAlertCircle'
-import IconAlertTriangle from './IconAlertTriangle'
-import IconAlignRight from './IconAlignRight'
 import IconAlignCenter from './IconAlignCenter'
-import IconAperture from './IconAperture'
-import IconArrowDown from './IconArrowDown'
+import IconAlignRight from './IconAlignRight'
+import IconAlignJustify from './IconAlignJustify'
+import IconAnchor from './IconAnchor'
+import IconAlignLeft from './IconAlignLeft'
+import IconArchive from './IconArchive'
+import IconArrowDownRight from './IconArrowDownRight'
 import IconArrowDownLeft from './IconArrowDownLeft'
 import IconArrowDownCircle from './IconArrowDownCircle'
-import IconAlignLeft from './IconAlignLeft'
-import IconArrowLeft from './IconArrowLeft'
-import IconArrowDownRight from './IconArrowDownRight'
+import IconArrowLeftCircle from './IconArrowLeftCircle'
+import IconAperture from './IconAperture'
+import IconArrowDown from './IconArrowDown'
 import IconArrowRightCircle from './IconArrowRightCircle'
 import IconArrowRight from './IconArrowRight'
 import IconArrowUpCircle from './IconArrowUpCircle'
-import IconArrowUpRight from './IconArrowUpRight'
-import IconArrowUpLeft from './IconArrowUpLeft'
-import IconAward from './IconAward'
-import IconAtSign from './IconAtSign'
-import IconArrowUp from './IconArrowUp'
-import IconBarCode from './IconBarCode'
-import IconBatteryCharging from './IconBatteryCharging'
-import IconBellOff from './IconBellOff'
-import IconBattery from './IconBattery'
+import IconArrowLeft from './IconArrowLeft'
 import IconBarChart2 from './IconBarChart2'
 import IconBarChart from './IconBarChart'
-import IconBook from './IconBook'
+import IconArrowUpLeft from './IconArrowUpLeft'
+import IconArrowUpRight from './IconArrowUpRight'
+import IconBatteryCharging from './IconBatteryCharging'
+import IconArrowUp from './IconArrowUp'
+import IconAtSign from './IconAtSign'
+import IconAward from './IconAward'
+import IconBellOff from './IconBellOff'
 import IconBluetooth from './IconBluetooth'
 import IconBell from './IconBell'
-import IconBookOpen from './IconBookOpen'
 import IconBold from './IconBold'
+import IconBookOpen from './IconBookOpen'
+import IconBook from './IconBook'
 import IconBox from './IconBox'
-import IconCalendar from './IconCalendar'
 import IconBookmark from './IconBookmark'
-import IconCast from './IconCast'
 import IconBriefcase from './IconBriefcase'
 import IconCameraOff from './IconCameraOff'
 import IconCamera from './IconCamera'
+import IconCar from './IconCar'
+import IconCast from './IconCast'
+import IconBarCode from './IconBarCode'
 import IconCheckCircle from './IconCheckCircle'
 import IconCheckSquare from './IconCheckSquare'
-import IconCar from './IconCar'
-import IconAnchor from './IconAnchor'
 import IconCake from './IconCake'
-import IconChevronLeft from './IconChevronLeft'
 import IconChevronDown from './IconChevronDown'
+import IconChevronLeft from './IconChevronLeft'
+import IconChevronRight from './IconChevronRight'
 import IconCheck from './IconCheck'
 import IconChevronsDown from './IconChevronsDown'
+import IconBattery from './IconBattery'
 import IconChevronsLeft from './IconChevronsLeft'
-import IconChevronsRight from './IconChevronsRight'
-import IconChevronRight from './IconChevronRight'
+import IconCalendar from './IconCalendar'
+import IconChevronUp from './IconChevronUp'
 import IconChevronsUp from './IconChevronsUp'
-import IconCloudDrizzle from './IconCloudDrizzle'
-import IconChrome from './IconChrome'
+import IconChevronsRight from './IconChevronsRight'
 import IconCircle from './IconCircle'
-import IconClock from './IconClock'
+import IconChrome from './IconChrome'
 import IconClipboard from './IconClipboard'
-import IconCloudLightning from './IconCloudLightning'
-import IconCloudOff from './IconCloudOff'
+import IconCloudDrizzle from './IconCloudDrizzle'
+import IconClock from './IconClock'
 import IconCloudRain from './IconCloudRain'
 import IconCloudSnow from './IconCloudSnow'
 import IconCloud from './IconCloud'
-import IconCodepen from './IconCodepen'
+import IconCloudLightning from './IconCloudLightning'
 import IconCode from './IconCode'
-import IconColumns from './IconColumns'
-import IconCommand from './IconCommand'
-import IconCodesandbox from './IconCodesandbox'
-import IconArchive from './IconArchive'
-import IconCornerDownLeft from './IconCornerDownLeft'
 import IconCoffee from './IconCoffee'
-import IconCornerDownRight from './IconCornerDownRight'
-import IconCopy from './IconCopy'
-import IconCornerLeftUp from './IconCornerLeftUp'
+import IconCodesandbox from './IconCodesandbox'
+import IconCloudOff from './IconCloudOff'
+import IconCommand from './IconCommand'
+import IconCompass from './IconCompass'
 import IconCookie from './IconCookie'
-import IconCornerRightUp from './IconCornerRightUp'
 import IconCoin from './IconCoin'
-import IconCornerUpRight from './IconCornerUpRight'
-import IconCornerUpLeft from './IconCornerUpLeft'
-import IconCrop from './IconCrop'
+import IconCornerDownLeft from './IconCornerDownLeft'
+import IconColumns from './IconColumns'
 import IconCornerLeftDown from './IconCornerLeftDown'
-import IconCornerRightDown from './IconCornerRightDown'
-import IconCpu from './IconCpu'
-import IconCrosshair from './IconCrosshair'
-import IconDatabase from './IconDatabase'
+import IconCornerLeftUp from './IconCornerLeftUp'
+import IconCornerUpRight from './IconCornerUpRight'
+import IconCornerRightUp from './IconCornerRightUp'
+import IconCornerDownRight from './IconCornerDownRight'
 import IconCreditCard from './IconCreditCard'
+import IconCodepen from './IconCodepen'
+import IconCornerRightDown from './IconCornerRightDown'
+import IconCopy from './IconCopy'
+import IconCrop from './IconCrop'
+import IconCrosshair from './IconCrosshair'
 import IconDelete from './IconDelete'
-import IconDivideCircle from './IconDivideCircle'
 import IconDisc from './IconDisc'
-import IconDribbble from './IconDribbble'
+import IconAlertTriangle from './IconAlertTriangle'
+import IconCpu from './IconCpu'
+import IconDivideSquare from './IconDivideSquare'
 import IconDollarSign from './IconDollarSign'
+import IconActivity from './IconActivity'
+import IconDivide from './IconDivide'
 import IconDownload from './IconDownload'
 import IconDroplet from './IconDroplet'
-import IconDivide from './IconDivide'
-import IconDivideSquare from './IconDivideSquare'
+import IconDribbble from './IconDribbble'
 import IconEdit2 from './IconEdit2'
-import IconEdit3 from './IconEdit3'
+import IconCornerUpLeft from './IconCornerUpLeft'
 import IconDownloadCloud from './IconDownloadCloud'
+import IconEdit3 from './IconEdit3'
 import IconEyeOff from './IconEyeOff'
-import IconEye from './IconEye'
 import IconEdit from './IconEdit'
+import IconDatabase from './IconDatabase'
 import IconFastForward from './IconFastForward'
-import IconExternalLink from './IconExternalLink'
-import IconFeather from './IconFeather'
 import IconFileMinus from './IconFileMinus'
-import IconFilePdf from './IconFilePdf'
 import IconFacebook from './IconFacebook'
+import IconDivideCircle from './IconDivideCircle'
+import IconFilePdf from './IconFilePdf'
 import IconFilePlus from './IconFilePlus'
 import IconFilm from './IconFilm'
-import IconFile from './IconFile'
-import IconFilter from './IconFilter'
-import IconFlag from './IconFlag'
-import IconFileText from './IconFileText'
-import IconFigma from './IconFigma'
-import IconFolder from './IconFolder'
 import IconFolderPlus from './IconFolderPlus'
-import IconFramer from './IconFramer'
+import IconFeather from './IconFeather'
+import IconFilter from './IconFilter'
+import IconFigma from './IconFigma'
 import IconFolderMinus from './IconFolderMinus'
-import IconFrown from './IconFrown'
 import IconGift from './IconGift'
+import IconFrown from './IconFrown'
+import IconFileText from './IconFileText'
 import IconGitBranch from './IconGitBranch'
-import IconGitMerge from './IconGitMerge'
+import IconFile from './IconFile'
+import IconAirplay from './IconAirplay'
+import IconFlag from './IconFlag'
 import IconGitCommit from './IconGitCommit'
-import IconGitPullRequest from './IconGitPullRequest'
-import IconGithub from './IconGithub'
-import IconGlobe from './IconGlobe'
-import IconGitlab from './IconGitlab'
-import IconHardDrive from './IconHardDrive'
-import IconGraduationHat from './IconGraduationHat'
-import IconGrid from './IconGrid'
-import IconHash from './IconHash'
-import IconHelpCircle from './IconHelpCircle'
-import IconHexagon from './IconHexagon'
-import IconHeadphones from './IconHeadphones'
-import IconHomeChimney from './IconHomeChimney'
-import IconHeart from './IconHeart'
 import IconGiveMoney from './IconGiveMoney'
-import IconHome from './IconHome'
-import IconInfo from './IconInfo'
-import IconInbox from './IconInbox'
-import IconImage from './IconImage'
-import IconKey from './IconKey'
+import IconGitMerge from './IconGitMerge'
+import IconFolder from './IconFolder'
+import IconEye from './IconEye'
+import IconGitlab from './IconGitlab'
+import IconGitPullRequest from './IconGitPullRequest'
+import IconHeart from './IconHeart'
+import IconGraduationHat from './IconGraduationHat'
+import IconHelpCircle from './IconHelpCircle'
+import IconGithub from './IconGithub'
+import IconHexagon from './IconHexagon'
+import IconGlobe from './IconGlobe'
+import IconHardDrive from './IconHardDrive'
+import IconHash from './IconHash'
+import IconHeadphones from './IconHeadphones'
 import IconInstagram from './IconInstagram'
-import IconChevronUp from './IconChevronUp'
-import IconCompass from './IconCompass'
-import IconLink2 from './IconLink2'
-import IconLayout from './IconLayout'
-import IconLaptop from './IconLaptop'
-import IconLink from './IconLink'
-import IconArrowLeftCircle from './IconArrowLeftCircle'
+import IconInbox from './IconInbox'
+import IconInfo from './IconInfo'
 import IconItalic from './IconItalic'
-import IconLogIn from './IconLogIn'
-import IconLoader from './IconLoader'
+import IconKey from './IconKey'
+import IconHome from './IconHome'
+import IconExternalLink from './IconExternalLink'
+import IconLaptop from './IconLaptop'
+import IconHomeChimney from './IconHomeChimney'
+import IconLifeBuoy from './IconLifeBuoy'
+import IconLink from './IconLink'
+import IconLinkedin from './IconLinkedin'
+import IconList from './IconList'
+import IconFramer from './IconFramer'
+import IconLips from './IconLips'
 import IconLock from './IconLock'
-import IconLogOut from './IconLogOut'
-import IconMap from './IconMap'
+import IconLoader from './IconLoader'
+import IconGrid from './IconGrid'
+import IconImage from './IconImage'
+import IconLink2 from './IconLink2'
 import IconMail from './IconMail'
 import IconMapPin from './IconMapPin'
-import IconLifeBuoy from './IconLifeBuoy'
-import IconLinkedin from './IconLinkedin'
-import IconMaximize2 from './IconMaximize2'
-import IconLips from './IconLips'
-import IconMaximize from './IconMaximize'
 import IconLayers from './IconLayers'
-import IconMeh from './IconMeh'
+import IconMaximize from './IconMaximize'
 import IconMessageSquare from './IconMessageSquare'
+import IconMap from './IconMap'
+import IconLogOut from './IconLogOut'
+import IconMessageCircle from './IconMessageCircle'
+import IconMic from './IconMic'
+import IconMicOff from './IconMicOff'
+import IconMinimize2 from './IconMinimize2'
 import IconMenu from './IconMenu'
+import IconLogIn from './IconLogIn'
+import IconMinusSquare from './IconMinusSquare'
 import IconMonitor from './IconMonitor'
 import IconMinimize from './IconMinimize'
-import IconMic from './IconMic'
-import IconMessageCircle from './IconMessageCircle'
-import IconMinusCircle from './IconMinusCircle'
-import IconMinusSquare from './IconMinusSquare'
-import IconMoreHorizontal from './IconMoreHorizontal'
-import IconMoney from './IconMoney'
-import IconMoreVertical from './IconMoreVertical'
-import IconMousePointer from './IconMousePointer'
-import IconNavigation2 from './IconNavigation2'
-import IconMove from './IconMove'
-import IconMusic from './IconMusic'
 import IconMinus from './IconMinus'
-import IconMoon from './IconMoon'
+import IconMoreHorizontal from './IconMoreHorizontal'
+import IconMousePointer from './IconMousePointer'
+import IconMusic from './IconMusic'
+import IconMoreVertical from './IconMoreVertical'
 import IconObjective from './IconObjective'
+import IconMove from './IconMove'
+import IconNavigation2 from './IconNavigation2'
+import IconMeh from './IconMeh'
+import IconMinusCircle from './IconMinusCircle'
+import IconMoney from './IconMoney'
+import IconMoon from './IconMoon'
+import IconPause from './IconPause'
+import IconPaperclip from './IconPaperclip'
 import IconPackage from './IconPackage'
 import IconNavigation from './IconNavigation'
-import IconPaperclip from './IconPaperclip'
-import IconPause from './IconPause'
-import IconPercent from './IconPercent'
-import IconPhoneCall from './IconPhoneCall'
-import IconPhoneForwarded from './IconPhoneForwarded'
+import IconPenTool from './IconPenTool'
+import IconOctagon from './IconOctagon'
 import IconPhoneIncoming from './IconPhoneIncoming'
-import IconPhoneOff from './IconPhoneOff'
-import IconPhoneOutgoing from './IconPhoneOutgoing'
+import IconPercent from './IconPercent'
+import IconPhoneForwarded from './IconPhoneForwarded'
+import IconPhoneCall from './IconPhoneCall'
 import IconNegotiation from './IconNegotiation'
-import IconPieChart from './IconPieChart'
+import IconPhoneOutgoing from './IconPhoneOutgoing'
+import IconPhoneOff from './IconPhoneOff'
 import IconPix from './IconPix'
-import IconPlane from './IconPlane'
-import IconPlayCircle from './IconPlayCircle'
+import IconMaximize2 from './IconMaximize2'
+import IconPhone from './IconPhone'
 import IconPlay from './IconPlay'
-import IconPlusCircle from './IconPlusCircle'
 import IconPlusSquare from './IconPlusSquare'
 import IconPlus from './IconPlus'
-import IconPhone from './IconPhone'
 import IconPocket from './IconPocket'
-import IconPower from './IconPower'
-import IconPrinter from './IconPrinter'
-import IconRadio from './IconRadio'
+import IconPlusCircle from './IconPlusCircle'
+import IconAlertCircle from './IconAlertCircle'
 import IconRefreshCw from './IconRefreshCw'
-import IconPauseCircle from './IconPauseCircle'
-import IconQrCode from './IconQrCode'
-import IconRewind from './IconRewind'
-import IconRotateCw from './IconRotateCw'
-import IconRepeat from './IconRepeat'
-import IconRss from './IconRss'
-import IconRotateCcw from './IconRotateCcw'
-import IconSave from './IconSave'
-import IconSearch from './IconSearch'
-import IconScissors from './IconScissors'
-import IconSend from './IconSend'
-import IconServer from './IconServer'
-import IconShare2 from './IconShare2'
-import IconShare from './IconShare'
-import IconShieldOff from './IconShieldOff'
-import IconShield from './IconShield'
-import IconOctagon from './IconOctagon'
-import IconPenTool from './IconPenTool'
-import IconMinimize2 from './IconMinimize2'
-import IconSettings from './IconSettings'
-import IconShuffle from './IconShuffle'
-import IconSaveMoney from './IconSaveMoney'
-import IconMicOff from './IconMicOff'
-import IconSkipForward from './IconSkipForward'
+import IconRadio from './IconRadio'
+import IconPieChart from './IconPieChart'
 import IconRefreshCcw from './IconRefreshCcw'
-import IconSlash from './IconSlash'
-import IconSliders from './IconSliders'
 import IconPhoneMissed from './IconPhoneMissed'
-import IconShoppingCart from './IconShoppingCart'
-import IconSmartphone from './IconSmartphone'
-import IconSkipBack from './IconSkipBack'
-import IconSpark from './IconSpark'
-import IconSmile from './IconSmile'
-import IconSlack from './IconSlack'
-import IconStopCircle from './IconStopCircle'
-import IconSquare from './IconSquare'
+import IconPlane from './IconPlane'
+import IconRotateCcw from './IconRotateCcw'
+import IconQrCode from './IconQrCode'
+import IconRss from './IconRss'
+import IconSave from './IconSave'
+import IconScissors from './IconScissors'
+import IconSearch from './IconSearch'
+import IconServer from './IconServer'
+import IconSend from './IconSend'
+import IconPrinter from './IconPrinter'
+import IconRewind from './IconRewind'
+import IconSaveMoney from './IconSaveMoney'
 import IconShoppingBag from './IconShoppingBag'
-import IconSunrise from './IconSunrise'
-import IconTable from './IconTable'
-import IconStar from './IconStar'
-import IconSunset from './IconSunset'
-import IconSmartphoneSms from './IconSmartphoneSms'
-import IconTag from './IconTag'
-import IconTerminal from './IconTerminal'
-import IconTablet from './IconTablet'
+import IconSettings from './IconSettings'
+import IconPlayCircle from './IconPlayCircle'
+import IconShield from './IconShield'
+import IconShuffle from './IconShuffle'
+import IconSidebar from './IconSidebar'
+import IconShoppingCart from './IconShoppingCart'
+import IconShare from './IconShare'
+import IconSkipBack from './IconSkipBack'
+import IconShare2 from './IconShare2'
+import IconSlack from './IconSlack'
+import IconRepeat from './IconRepeat'
+import IconSmartphone from './IconSmartphone'
+import IconSmile from './IconSmile'
+import IconSquare from './IconSquare'
+import IconLayout from './IconLayout'
+import IconSlash from './IconSlash'
+import IconStopCircle from './IconStopCircle'
+import IconShieldOff from './IconShieldOff'
 import IconSun from './IconSun'
-import IconThumbsUp from './IconThumbsUp'
+import IconSunrise from './IconSunrise'
+import IconSunset from './IconSunset'
+import IconTable from './IconTable'
+import IconTarget from './IconTarget'
+import IconTablet from './IconTablet'
+import IconTag from './IconTag'
 import IconThumbsDown from './IconThumbsDown'
-import IconTool from './IconTool'
+import IconSkipForward from './IconSkipForward'
+import IconStar from './IconStar'
+import IconThumbsUp from './IconThumbsUp'
+import IconTerminal from './IconTerminal'
+import IconSliders from './IconSliders'
 import IconToggleLeft from './IconToggleLeft'
+import IconToggleRight from './IconToggleRight'
+import IconTrash2 from './IconTrash2'
+import IconSmartphoneSms from './IconSmartphoneSms'
 import IconTrello from './IconTrello'
 import IconTrendingUp from './IconTrendingUp'
+import IconRotateCw from './IconRotateCw'
 import IconTrendingDown from './IconTrendingDown'
-import IconTarget from './IconTarget'
-import IconTrash2 from './IconTrash2'
-import IconTriangle from './IconTriangle'
-import IconTruck from './IconTruck'
-import IconTwitch from './IconTwitch'
+import IconTv from './IconTv'
 import IconSpeaker from './IconSpeaker'
-import IconList from './IconList'
-import IconToggleRight from './IconToggleRight'
-import IconTwitter from './IconTwitter'
-import IconUmbrella from './IconUmbrella'
-import IconType from './IconType'
-import IconUnlock from './IconUnlock'
-import IconUnderline from './IconUnderline'
-import IconUploadCloud from './IconUploadCloud'
-import IconUpload from './IconUpload'
-import IconUserCheck from './IconUserCheck'
-import IconUserMinus from './IconUserMinus'
 import IconTrophy from './IconTrophy'
-import IconTrash from './IconTrash'
+import IconTool from './IconTool'
+import IconTwitter from './IconTwitter'
+import IconType from './IconType'
+import IconUmbrella from './IconUmbrella'
+import IconUnlock from './IconUnlock'
+import IconThermometer from './IconThermometer'
+import IconUserCheck from './IconUserCheck'
+import IconSpark from './IconSpark'
+import IconUnderline from './IconUnderline'
+import IconUpload from './IconUpload'
 import IconUserPlus from './IconUserPlus'
 import IconUser from './IconUser'
-import IconVideoOff from './IconVideoOff'
-import IconUserX from './IconUserX'
-import IconVoicemail from './IconVoicemail'
-import IconVideo from './IconVideo'
-import IconWatch from './IconWatch'
-import IconVolume1 from './IconVolume1'
-import IconVolumeX from './IconVolumeX'
 import IconUsers from './IconUsers'
-import IconWebsite from './IconWebsite'
-import IconSidebar from './IconSidebar'
-import IconThermometer from './IconThermometer'
-import IconWifi from './IconWifi'
+import IconPauseCircle from './IconPauseCircle'
+import IconUploadCloud from './IconUploadCloud'
+import IconVideo from './IconVideo'
 import IconVolume2 from './IconVolume2'
-import IconXSquare from './IconXSquare'
-import IconWifiOff from './IconWifiOff'
-import IconX from './IconX'
-import IconXCircle from './IconXCircle'
+import IconWatch from './IconWatch'
+import IconPower from './IconPower'
+import IconVolumeX from './IconVolumeX'
 import IconVelocimeter from './IconVelocimeter'
-import IconTv from './IconTv'
+import IconWifiOff from './IconWifiOff'
+import IconWind from './IconWind'
+import IconWifi from './IconWifi'
+import IconUserMinus from './IconUserMinus'
+import IconTrash from './IconTrash'
+import IconVoicemail from './IconVoicemail'
+import IconZapOff from './IconZapOff'
+import IconXOctagon from './IconXOctagon'
+import IconX from './IconX'
+import IconZoomIn from './IconZoomIn'
+import IconTruck from './IconTruck'
+import IconTriangle from './IconTriangle'
+import IconTwitch from './IconTwitch'
+import IconVolume1 from './IconVolume1'
+import IconXSquare from './IconXSquare'
+import IconUserX from './IconUserX'
+import IconYoutube from './IconYoutube'
+import IconXCircle from './IconXCircle'
+import IconVideoOff from './IconVideoOff'
+import IconWebsite from './IconWebsite'
+import IconZap from './IconZap'
 import IconZoomOut from './IconZoomOut'
 
 const meta: Meta<typeof Icon> = {
@@ -316,53 +322,11 @@ export default meta
 
 type Story = StoryObj<typeof Icon>
 
-export const Activity: Story = {
-  render: (args) => {
-    return <IconActivity {...args} />
-  },
-  name: 'Activity',
-}
-
-export const AlignJustify: Story = {
-  render: (args) => {
-    return <IconAlignJustify {...args} />
-  },
-  name: 'AlignJustify',
-}
-
 export const AlertOctagon: Story = {
   render: (args) => {
     return <IconAlertOctagon {...args} />
   },
   name: 'AlertOctagon',
-}
-
-export const Airplay: Story = {
-  render: (args) => {
-    return <IconAirplay {...args} />
-  },
-  name: 'Airplay',
-}
-
-export const AlertCircle: Story = {
-  render: (args) => {
-    return <IconAlertCircle {...args} />
-  },
-  name: 'AlertCircle',
-}
-
-export const AlertTriangle: Story = {
-  render: (args) => {
-    return <IconAlertTriangle {...args} />
-  },
-  name: 'AlertTriangle',
-}
-
-export const AlignRight: Story = {
-  render: (args) => {
-    return <IconAlignRight {...args} />
-  },
-  name: 'AlignRight',
 }
 
 export const AlignCenter: Story = {
@@ -372,18 +336,46 @@ export const AlignCenter: Story = {
   name: 'AlignCenter',
 }
 
-export const Aperture: Story = {
+export const AlignRight: Story = {
   render: (args) => {
-    return <IconAperture {...args} />
+    return <IconAlignRight {...args} />
   },
-  name: 'Aperture',
+  name: 'AlignRight',
 }
 
-export const ArrowDown: Story = {
+export const AlignJustify: Story = {
   render: (args) => {
-    return <IconArrowDown {...args} />
+    return <IconAlignJustify {...args} />
   },
-  name: 'ArrowDown',
+  name: 'AlignJustify',
+}
+
+export const Anchor: Story = {
+  render: (args) => {
+    return <IconAnchor {...args} />
+  },
+  name: 'Anchor',
+}
+
+export const AlignLeft: Story = {
+  render: (args) => {
+    return <IconAlignLeft {...args} />
+  },
+  name: 'AlignLeft',
+}
+
+export const Archive: Story = {
+  render: (args) => {
+    return <IconArchive {...args} />
+  },
+  name: 'Archive',
+}
+
+export const ArrowDownRight: Story = {
+  render: (args) => {
+    return <IconArrowDownRight {...args} />
+  },
+  name: 'ArrowDownRight',
 }
 
 export const ArrowDownLeft: Story = {
@@ -400,25 +392,25 @@ export const ArrowDownCircle: Story = {
   name: 'ArrowDownCircle',
 }
 
-export const AlignLeft: Story = {
+export const ArrowLeftCircle: Story = {
   render: (args) => {
-    return <IconAlignLeft {...args} />
+    return <IconArrowLeftCircle {...args} />
   },
-  name: 'AlignLeft',
+  name: 'ArrowLeftCircle',
 }
 
-export const ArrowLeft: Story = {
+export const Aperture: Story = {
   render: (args) => {
-    return <IconArrowLeft {...args} />
+    return <IconAperture {...args} />
   },
-  name: 'ArrowLeft',
+  name: 'Aperture',
 }
 
-export const ArrowDownRight: Story = {
+export const ArrowDown: Story = {
   render: (args) => {
-    return <IconArrowDownRight {...args} />
+    return <IconArrowDown {...args} />
   },
-  name: 'ArrowDownRight',
+  name: 'ArrowDown',
 }
 
 export const ArrowRightCircle: Story = {
@@ -442,67 +434,11 @@ export const ArrowUpCircle: Story = {
   name: 'ArrowUpCircle',
 }
 
-export const ArrowUpRight: Story = {
+export const ArrowLeft: Story = {
   render: (args) => {
-    return <IconArrowUpRight {...args} />
+    return <IconArrowLeft {...args} />
   },
-  name: 'ArrowUpRight',
-}
-
-export const ArrowUpLeft: Story = {
-  render: (args) => {
-    return <IconArrowUpLeft {...args} />
-  },
-  name: 'ArrowUpLeft',
-}
-
-export const Award: Story = {
-  render: (args) => {
-    return <IconAward {...args} />
-  },
-  name: 'Award',
-}
-
-export const AtSign: Story = {
-  render: (args) => {
-    return <IconAtSign {...args} />
-  },
-  name: 'AtSign',
-}
-
-export const ArrowUp: Story = {
-  render: (args) => {
-    return <IconArrowUp {...args} />
-  },
-  name: 'ArrowUp',
-}
-
-export const BarCode: Story = {
-  render: (args) => {
-    return <IconBarCode {...args} />
-  },
-  name: 'BarCode',
-}
-
-export const BatteryCharging: Story = {
-  render: (args) => {
-    return <IconBatteryCharging {...args} />
-  },
-  name: 'BatteryCharging',
-}
-
-export const BellOff: Story = {
-  render: (args) => {
-    return <IconBellOff {...args} />
-  },
-  name: 'BellOff',
-}
-
-export const Battery: Story = {
-  render: (args) => {
-    return <IconBattery {...args} />
-  },
-  name: 'Battery',
+  name: 'ArrowLeft',
 }
 
 export const BarChart2: Story = {
@@ -519,11 +455,53 @@ export const BarChart: Story = {
   name: 'BarChart',
 }
 
-export const Book: Story = {
+export const ArrowUpLeft: Story = {
   render: (args) => {
-    return <IconBook {...args} />
+    return <IconArrowUpLeft {...args} />
   },
-  name: 'Book',
+  name: 'ArrowUpLeft',
+}
+
+export const ArrowUpRight: Story = {
+  render: (args) => {
+    return <IconArrowUpRight {...args} />
+  },
+  name: 'ArrowUpRight',
+}
+
+export const BatteryCharging: Story = {
+  render: (args) => {
+    return <IconBatteryCharging {...args} />
+  },
+  name: 'BatteryCharging',
+}
+
+export const ArrowUp: Story = {
+  render: (args) => {
+    return <IconArrowUp {...args} />
+  },
+  name: 'ArrowUp',
+}
+
+export const AtSign: Story = {
+  render: (args) => {
+    return <IconAtSign {...args} />
+  },
+  name: 'AtSign',
+}
+
+export const Award: Story = {
+  render: (args) => {
+    return <IconAward {...args} />
+  },
+  name: 'Award',
+}
+
+export const BellOff: Story = {
+  render: (args) => {
+    return <IconBellOff {...args} />
+  },
+  name: 'BellOff',
 }
 
 export const Bluetooth: Story = {
@@ -540,6 +518,13 @@ export const Bell: Story = {
   name: 'Bell',
 }
 
+export const Bold: Story = {
+  render: (args) => {
+    return <IconBold {...args} />
+  },
+  name: 'Bold',
+}
+
 export const BookOpen: Story = {
   render: (args) => {
     return <IconBookOpen {...args} />
@@ -547,11 +532,11 @@ export const BookOpen: Story = {
   name: 'BookOpen',
 }
 
-export const Bold: Story = {
+export const Book: Story = {
   render: (args) => {
-    return <IconBold {...args} />
+    return <IconBook {...args} />
   },
-  name: 'Bold',
+  name: 'Book',
 }
 
 export const Box: Story = {
@@ -561,25 +546,11 @@ export const Box: Story = {
   name: 'Box',
 }
 
-export const Calendar: Story = {
-  render: (args) => {
-    return <IconCalendar {...args} />
-  },
-  name: 'Calendar',
-}
-
 export const Bookmark: Story = {
   render: (args) => {
     return <IconBookmark {...args} />
   },
   name: 'Bookmark',
-}
-
-export const Cast: Story = {
-  render: (args) => {
-    return <IconCast {...args} />
-  },
-  name: 'Cast',
 }
 
 export const Briefcase: Story = {
@@ -603,6 +574,27 @@ export const Camera: Story = {
   name: 'Camera',
 }
 
+export const Car: Story = {
+  render: (args) => {
+    return <IconCar {...args} />
+  },
+  name: 'Car',
+}
+
+export const Cast: Story = {
+  render: (args) => {
+    return <IconCast {...args} />
+  },
+  name: 'Cast',
+}
+
+export const BarCode: Story = {
+  render: (args) => {
+    return <IconBarCode {...args} />
+  },
+  name: 'BarCode',
+}
+
 export const CheckCircle: Story = {
   render: (args) => {
     return <IconCheckCircle {...args} />
@@ -617,25 +609,18 @@ export const CheckSquare: Story = {
   name: 'CheckSquare',
 }
 
-export const Car: Story = {
-  render: (args) => {
-    return <IconCar {...args} />
-  },
-  name: 'Car',
-}
-
-export const Anchor: Story = {
-  render: (args) => {
-    return <IconAnchor {...args} />
-  },
-  name: 'Anchor',
-}
-
 export const Cake: Story = {
   render: (args) => {
     return <IconCake {...args} />
   },
   name: 'Cake',
+}
+
+export const ChevronDown: Story = {
+  render: (args) => {
+    return <IconChevronDown {...args} />
+  },
+  name: 'ChevronDown',
 }
 
 export const ChevronLeft: Story = {
@@ -645,11 +630,11 @@ export const ChevronLeft: Story = {
   name: 'ChevronLeft',
 }
 
-export const ChevronDown: Story = {
+export const ChevronRight: Story = {
   render: (args) => {
-    return <IconChevronDown {...args} />
+    return <IconChevronRight {...args} />
   },
-  name: 'ChevronDown',
+  name: 'ChevronRight',
 }
 
 export const Check: Story = {
@@ -666,6 +651,13 @@ export const ChevronsDown: Story = {
   name: 'ChevronsDown',
 }
 
+export const Battery: Story = {
+  render: (args) => {
+    return <IconBattery {...args} />
+  },
+  name: 'Battery',
+}
+
 export const ChevronsLeft: Story = {
   render: (args) => {
     return <IconChevronsLeft {...args} />
@@ -673,18 +665,18 @@ export const ChevronsLeft: Story = {
   name: 'ChevronsLeft',
 }
 
-export const ChevronsRight: Story = {
+export const Calendar: Story = {
   render: (args) => {
-    return <IconChevronsRight {...args} />
+    return <IconCalendar {...args} />
   },
-  name: 'ChevronsRight',
+  name: 'Calendar',
 }
 
-export const ChevronRight: Story = {
+export const ChevronUp: Story = {
   render: (args) => {
-    return <IconChevronRight {...args} />
+    return <IconChevronUp {...args} />
   },
-  name: 'ChevronRight',
+  name: 'ChevronUp',
 }
 
 export const ChevronsUp: Story = {
@@ -694,18 +686,11 @@ export const ChevronsUp: Story = {
   name: 'ChevronsUp',
 }
 
-export const CloudDrizzle: Story = {
+export const ChevronsRight: Story = {
   render: (args) => {
-    return <IconCloudDrizzle {...args} />
+    return <IconChevronsRight {...args} />
   },
-  name: 'CloudDrizzle',
-}
-
-export const Chrome: Story = {
-  render: (args) => {
-    return <IconChrome {...args} />
-  },
-  name: 'Chrome',
+  name: 'ChevronsRight',
 }
 
 export const Circle: Story = {
@@ -715,11 +700,11 @@ export const Circle: Story = {
   name: 'Circle',
 }
 
-export const Clock: Story = {
+export const Chrome: Story = {
   render: (args) => {
-    return <IconClock {...args} />
+    return <IconChrome {...args} />
   },
-  name: 'Clock',
+  name: 'Chrome',
 }
 
 export const Clipboard: Story = {
@@ -729,18 +714,18 @@ export const Clipboard: Story = {
   name: 'Clipboard',
 }
 
-export const CloudLightning: Story = {
+export const CloudDrizzle: Story = {
   render: (args) => {
-    return <IconCloudLightning {...args} />
+    return <IconCloudDrizzle {...args} />
   },
-  name: 'CloudLightning',
+  name: 'CloudDrizzle',
 }
 
-export const CloudOff: Story = {
+export const Clock: Story = {
   render: (args) => {
-    return <IconCloudOff {...args} />
+    return <IconClock {...args} />
   },
-  name: 'CloudOff',
+  name: 'Clock',
 }
 
 export const CloudRain: Story = {
@@ -764,11 +749,11 @@ export const Cloud: Story = {
   name: 'Cloud',
 }
 
-export const Codepen: Story = {
+export const CloudLightning: Story = {
   render: (args) => {
-    return <IconCodepen {...args} />
+    return <IconCloudLightning {...args} />
   },
-  name: 'Codepen',
+  name: 'CloudLightning',
 }
 
 export const Code: Story = {
@@ -778,18 +763,11 @@ export const Code: Story = {
   name: 'Code',
 }
 
-export const Columns: Story = {
+export const Coffee: Story = {
   render: (args) => {
-    return <IconColumns {...args} />
+    return <IconCoffee {...args} />
   },
-  name: 'Columns',
-}
-
-export const Command: Story = {
-  render: (args) => {
-    return <IconCommand {...args} />
-  },
-  name: 'Command',
+  name: 'Coffee',
 }
 
 export const Codesandbox: Story = {
@@ -799,46 +777,25 @@ export const Codesandbox: Story = {
   name: 'Codesandbox',
 }
 
-export const Archive: Story = {
+export const CloudOff: Story = {
   render: (args) => {
-    return <IconArchive {...args} />
+    return <IconCloudOff {...args} />
   },
-  name: 'Archive',
+  name: 'CloudOff',
 }
 
-export const CornerDownLeft: Story = {
+export const Command: Story = {
   render: (args) => {
-    return <IconCornerDownLeft {...args} />
+    return <IconCommand {...args} />
   },
-  name: 'CornerDownLeft',
+  name: 'Command',
 }
 
-export const Coffee: Story = {
+export const Compass: Story = {
   render: (args) => {
-    return <IconCoffee {...args} />
+    return <IconCompass {...args} />
   },
-  name: 'Coffee',
-}
-
-export const CornerDownRight: Story = {
-  render: (args) => {
-    return <IconCornerDownRight {...args} />
-  },
-  name: 'CornerDownRight',
-}
-
-export const Copy: Story = {
-  render: (args) => {
-    return <IconCopy {...args} />
-  },
-  name: 'Copy',
-}
-
-export const CornerLeftUp: Story = {
-  render: (args) => {
-    return <IconCornerLeftUp {...args} />
-  },
-  name: 'CornerLeftUp',
+  name: 'Compass',
 }
 
 export const Cookie: Story = {
@@ -848,13 +805,6 @@ export const Cookie: Story = {
   name: 'Cookie',
 }
 
-export const CornerRightUp: Story = {
-  render: (args) => {
-    return <IconCornerRightUp {...args} />
-  },
-  name: 'CornerRightUp',
-}
-
 export const Coin: Story = {
   render: (args) => {
     return <IconCoin {...args} />
@@ -862,25 +812,18 @@ export const Coin: Story = {
   name: 'Coin',
 }
 
-export const CornerUpRight: Story = {
+export const CornerDownLeft: Story = {
   render: (args) => {
-    return <IconCornerUpRight {...args} />
+    return <IconCornerDownLeft {...args} />
   },
-  name: 'CornerUpRight',
+  name: 'CornerDownLeft',
 }
 
-export const CornerUpLeft: Story = {
+export const Columns: Story = {
   render: (args) => {
-    return <IconCornerUpLeft {...args} />
+    return <IconColumns {...args} />
   },
-  name: 'CornerUpLeft',
-}
-
-export const Crop: Story = {
-  render: (args) => {
-    return <IconCrop {...args} />
-  },
-  name: 'Crop',
+  name: 'Columns',
 }
 
 export const CornerLeftDown: Story = {
@@ -890,32 +833,32 @@ export const CornerLeftDown: Story = {
   name: 'CornerLeftDown',
 }
 
-export const CornerRightDown: Story = {
+export const CornerLeftUp: Story = {
   render: (args) => {
-    return <IconCornerRightDown {...args} />
+    return <IconCornerLeftUp {...args} />
   },
-  name: 'CornerRightDown',
+  name: 'CornerLeftUp',
 }
 
-export const Cpu: Story = {
+export const CornerUpRight: Story = {
   render: (args) => {
-    return <IconCpu {...args} />
+    return <IconCornerUpRight {...args} />
   },
-  name: 'Cpu',
+  name: 'CornerUpRight',
 }
 
-export const Crosshair: Story = {
+export const CornerRightUp: Story = {
   render: (args) => {
-    return <IconCrosshair {...args} />
+    return <IconCornerRightUp {...args} />
   },
-  name: 'Crosshair',
+  name: 'CornerRightUp',
 }
 
-export const Database: Story = {
+export const CornerDownRight: Story = {
   render: (args) => {
-    return <IconDatabase {...args} />
+    return <IconCornerDownRight {...args} />
   },
-  name: 'Database',
+  name: 'CornerDownRight',
 }
 
 export const CreditCard: Story = {
@@ -925,18 +868,46 @@ export const CreditCard: Story = {
   name: 'CreditCard',
 }
 
+export const Codepen: Story = {
+  render: (args) => {
+    return <IconCodepen {...args} />
+  },
+  name: 'Codepen',
+}
+
+export const CornerRightDown: Story = {
+  render: (args) => {
+    return <IconCornerRightDown {...args} />
+  },
+  name: 'CornerRightDown',
+}
+
+export const Copy: Story = {
+  render: (args) => {
+    return <IconCopy {...args} />
+  },
+  name: 'Copy',
+}
+
+export const Crop: Story = {
+  render: (args) => {
+    return <IconCrop {...args} />
+  },
+  name: 'Crop',
+}
+
+export const Crosshair: Story = {
+  render: (args) => {
+    return <IconCrosshair {...args} />
+  },
+  name: 'Crosshair',
+}
+
 export const Delete: Story = {
   render: (args) => {
     return <IconDelete {...args} />
   },
   name: 'Delete',
-}
-
-export const DivideCircle: Story = {
-  render: (args) => {
-    return <IconDivideCircle {...args} />
-  },
-  name: 'DivideCircle',
 }
 
 export const Disc: Story = {
@@ -946,11 +917,25 @@ export const Disc: Story = {
   name: 'Disc',
 }
 
-export const Dribbble: Story = {
+export const AlertTriangle: Story = {
   render: (args) => {
-    return <IconDribbble {...args} />
+    return <IconAlertTriangle {...args} />
   },
-  name: 'Dribbble',
+  name: 'AlertTriangle',
+}
+
+export const Cpu: Story = {
+  render: (args) => {
+    return <IconCpu {...args} />
+  },
+  name: 'Cpu',
+}
+
+export const DivideSquare: Story = {
+  render: (args) => {
+    return <IconDivideSquare {...args} />
+  },
+  name: 'DivideSquare',
 }
 
 export const DollarSign: Story = {
@@ -958,6 +943,20 @@ export const DollarSign: Story = {
     return <IconDollarSign {...args} />
   },
   name: 'DollarSign',
+}
+
+export const Activity: Story = {
+  render: (args) => {
+    return <IconActivity {...args} />
+  },
+  name: 'Activity',
+}
+
+export const Divide: Story = {
+  render: (args) => {
+    return <IconDivide {...args} />
+  },
+  name: 'Divide',
 }
 
 export const Download: Story = {
@@ -974,18 +973,11 @@ export const Droplet: Story = {
   name: 'Droplet',
 }
 
-export const Divide: Story = {
+export const Dribbble: Story = {
   render: (args) => {
-    return <IconDivide {...args} />
+    return <IconDribbble {...args} />
   },
-  name: 'Divide',
-}
-
-export const DivideSquare: Story = {
-  render: (args) => {
-    return <IconDivideSquare {...args} />
-  },
-  name: 'DivideSquare',
+  name: 'Dribbble',
 }
 
 export const Edit2: Story = {
@@ -995,11 +987,11 @@ export const Edit2: Story = {
   name: 'Edit2',
 }
 
-export const Edit3: Story = {
+export const CornerUpLeft: Story = {
   render: (args) => {
-    return <IconEdit3 {...args} />
+    return <IconCornerUpLeft {...args} />
   },
-  name: 'Edit3',
+  name: 'CornerUpLeft',
 }
 
 export const DownloadCloud: Story = {
@@ -1009,18 +1001,18 @@ export const DownloadCloud: Story = {
   name: 'DownloadCloud',
 }
 
+export const Edit3: Story = {
+  render: (args) => {
+    return <IconEdit3 {...args} />
+  },
+  name: 'Edit3',
+}
+
 export const EyeOff: Story = {
   render: (args) => {
     return <IconEyeOff {...args} />
   },
   name: 'EyeOff',
-}
-
-export const Eye: Story = {
-  render: (args) => {
-    return <IconEye {...args} />
-  },
-  name: 'Eye',
 }
 
 export const Edit: Story = {
@@ -1030,25 +1022,18 @@ export const Edit: Story = {
   name: 'Edit',
 }
 
+export const Database: Story = {
+  render: (args) => {
+    return <IconDatabase {...args} />
+  },
+  name: 'Database',
+}
+
 export const FastForward: Story = {
   render: (args) => {
     return <IconFastForward {...args} />
   },
   name: 'FastForward',
-}
-
-export const ExternalLink: Story = {
-  render: (args) => {
-    return <IconExternalLink {...args} />
-  },
-  name: 'ExternalLink',
-}
-
-export const Feather: Story = {
-  render: (args) => {
-    return <IconFeather {...args} />
-  },
-  name: 'Feather',
 }
 
 export const FileMinus: Story = {
@@ -1058,18 +1043,25 @@ export const FileMinus: Story = {
   name: 'FileMinus',
 }
 
-export const FilePdf: Story = {
-  render: (args) => {
-    return <IconFilePdf {...args} />
-  },
-  name: 'FilePdf',
-}
-
 export const Facebook: Story = {
   render: (args) => {
     return <IconFacebook {...args} />
   },
   name: 'Facebook',
+}
+
+export const DivideCircle: Story = {
+  render: (args) => {
+    return <IconDivideCircle {...args} />
+  },
+  name: 'DivideCircle',
+}
+
+export const FilePdf: Story = {
+  render: (args) => {
+    return <IconFilePdf {...args} />
+  },
+  name: 'FilePdf',
 }
 
 export const FilePlus: Story = {
@@ -1086,11 +1078,18 @@ export const Film: Story = {
   name: 'Film',
 }
 
-export const File: Story = {
+export const FolderPlus: Story = {
   render: (args) => {
-    return <IconFile {...args} />
+    return <IconFolderPlus {...args} />
   },
-  name: 'File',
+  name: 'FolderPlus',
+}
+
+export const Feather: Story = {
+  render: (args) => {
+    return <IconFeather {...args} />
+  },
+  name: 'Feather',
 }
 
 export const Filter: Story = {
@@ -1100,46 +1099,11 @@ export const Filter: Story = {
   name: 'Filter',
 }
 
-export const Flag: Story = {
-  render: (args) => {
-    return <IconFlag {...args} />
-  },
-  name: 'Flag',
-}
-
-export const FileText: Story = {
-  render: (args) => {
-    return <IconFileText {...args} />
-  },
-  name: 'FileText',
-}
-
 export const Figma: Story = {
   render: (args) => {
     return <IconFigma {...args} />
   },
   name: 'Figma',
-}
-
-export const Folder: Story = {
-  render: (args) => {
-    return <IconFolder {...args} />
-  },
-  name: 'Folder',
-}
-
-export const FolderPlus: Story = {
-  render: (args) => {
-    return <IconFolderPlus {...args} />
-  },
-  name: 'FolderPlus',
-}
-
-export const Framer: Story = {
-  render: (args) => {
-    return <IconFramer {...args} />
-  },
-  name: 'Framer',
 }
 
 export const FolderMinus: Story = {
@@ -1149,6 +1113,13 @@ export const FolderMinus: Story = {
   name: 'FolderMinus',
 }
 
+export const Gift: Story = {
+  render: (args) => {
+    return <IconGift {...args} />
+  },
+  name: 'Gift',
+}
+
 export const Frown: Story = {
   render: (args) => {
     return <IconFrown {...args} />
@@ -1156,11 +1127,11 @@ export const Frown: Story = {
   name: 'Frown',
 }
 
-export const Gift: Story = {
+export const FileText: Story = {
   render: (args) => {
-    return <IconGift {...args} />
+    return <IconFileText {...args} />
   },
-  name: 'Gift',
+  name: 'FileText',
 }
 
 export const GitBranch: Story = {
@@ -1170,11 +1141,25 @@ export const GitBranch: Story = {
   name: 'GitBranch',
 }
 
-export const GitMerge: Story = {
+export const File: Story = {
   render: (args) => {
-    return <IconGitMerge {...args} />
+    return <IconFile {...args} />
   },
-  name: 'GitMerge',
+  name: 'File',
+}
+
+export const Airplay: Story = {
+  render: (args) => {
+    return <IconAirplay {...args} />
+  },
+  name: 'Airplay',
+}
+
+export const Flag: Story = {
+  render: (args) => {
+    return <IconFlag {...args} />
+  },
+  name: 'Flag',
 }
 
 export const GitCommit: Story = {
@@ -1184,25 +1169,32 @@ export const GitCommit: Story = {
   name: 'GitCommit',
 }
 
-export const GitPullRequest: Story = {
+export const GiveMoney: Story = {
   render: (args) => {
-    return <IconGitPullRequest {...args} />
+    return <IconGiveMoney {...args} />
   },
-  name: 'GitPullRequest',
+  name: 'GiveMoney',
 }
 
-export const Github: Story = {
+export const GitMerge: Story = {
   render: (args) => {
-    return <IconGithub {...args} />
+    return <IconGitMerge {...args} />
   },
-  name: 'Github',
+  name: 'GitMerge',
 }
 
-export const Globe: Story = {
+export const Folder: Story = {
   render: (args) => {
-    return <IconGlobe {...args} />
+    return <IconFolder {...args} />
   },
-  name: 'Globe',
+  name: 'Folder',
+}
+
+export const Eye: Story = {
+  render: (args) => {
+    return <IconEye {...args} />
+  },
+  name: 'Eye',
 }
 
 export const Gitlab: Story = {
@@ -1212,60 +1204,11 @@ export const Gitlab: Story = {
   name: 'Gitlab',
 }
 
-export const HardDrive: Story = {
+export const GitPullRequest: Story = {
   render: (args) => {
-    return <IconHardDrive {...args} />
+    return <IconGitPullRequest {...args} />
   },
-  name: 'HardDrive',
-}
-
-export const GraduationHat: Story = {
-  render: (args) => {
-    return <IconGraduationHat {...args} />
-  },
-  name: 'GraduationHat',
-}
-
-export const Grid: Story = {
-  render: (args) => {
-    return <IconGrid {...args} />
-  },
-  name: 'Grid',
-}
-
-export const Hash: Story = {
-  render: (args) => {
-    return <IconHash {...args} />
-  },
-  name: 'Hash',
-}
-
-export const HelpCircle: Story = {
-  render: (args) => {
-    return <IconHelpCircle {...args} />
-  },
-  name: 'HelpCircle',
-}
-
-export const Hexagon: Story = {
-  render: (args) => {
-    return <IconHexagon {...args} />
-  },
-  name: 'Hexagon',
-}
-
-export const Headphones: Story = {
-  render: (args) => {
-    return <IconHeadphones {...args} />
-  },
-  name: 'Headphones',
-}
-
-export const HomeChimney: Story = {
-  render: (args) => {
-    return <IconHomeChimney {...args} />
-  },
-  name: 'HomeChimney',
+  name: 'GitPullRequest',
 }
 
 export const Heart: Story = {
@@ -1275,46 +1218,60 @@ export const Heart: Story = {
   name: 'Heart',
 }
 
-export const GiveMoney: Story = {
+export const GraduationHat: Story = {
   render: (args) => {
-    return <IconGiveMoney {...args} />
+    return <IconGraduationHat {...args} />
   },
-  name: 'GiveMoney',
+  name: 'GraduationHat',
 }
 
-export const Home: Story = {
+export const HelpCircle: Story = {
   render: (args) => {
-    return <IconHome {...args} />
+    return <IconHelpCircle {...args} />
   },
-  name: 'Home',
+  name: 'HelpCircle',
 }
 
-export const Info: Story = {
+export const Github: Story = {
   render: (args) => {
-    return <IconInfo {...args} />
+    return <IconGithub {...args} />
   },
-  name: 'Info',
+  name: 'Github',
 }
 
-export const Inbox: Story = {
+export const Hexagon: Story = {
   render: (args) => {
-    return <IconInbox {...args} />
+    return <IconHexagon {...args} />
   },
-  name: 'Inbox',
+  name: 'Hexagon',
 }
 
-export const Image: Story = {
+export const Globe: Story = {
   render: (args) => {
-    return <IconImage {...args} />
+    return <IconGlobe {...args} />
   },
-  name: 'Image',
+  name: 'Globe',
 }
 
-export const Key: Story = {
+export const HardDrive: Story = {
   render: (args) => {
-    return <IconKey {...args} />
+    return <IconHardDrive {...args} />
   },
-  name: 'Key',
+  name: 'HardDrive',
+}
+
+export const Hash: Story = {
+  render: (args) => {
+    return <IconHash {...args} />
+  },
+  name: 'Hash',
+}
+
+export const Headphones: Story = {
+  render: (args) => {
+    return <IconHeadphones {...args} />
+  },
+  name: 'Headphones',
 }
 
 export const Instagram: Story = {
@@ -1324,53 +1281,18 @@ export const Instagram: Story = {
   name: 'Instagram',
 }
 
-export const ChevronUp: Story = {
+export const Inbox: Story = {
   render: (args) => {
-    return <IconChevronUp {...args} />
+    return <IconInbox {...args} />
   },
-  name: 'ChevronUp',
+  name: 'Inbox',
 }
 
-export const Compass: Story = {
+export const Info: Story = {
   render: (args) => {
-    return <IconCompass {...args} />
+    return <IconInfo {...args} />
   },
-  name: 'Compass',
-}
-
-export const Link2: Story = {
-  render: (args) => {
-    return <IconLink2 {...args} />
-  },
-  name: 'Link2',
-}
-
-export const Layout: Story = {
-  render: (args) => {
-    return <IconLayout {...args} />
-  },
-  name: 'Layout',
-}
-
-export const Laptop: Story = {
-  render: (args) => {
-    return <IconLaptop {...args} />
-  },
-  name: 'Laptop',
-}
-
-export const Link: Story = {
-  render: (args) => {
-    return <IconLink {...args} />
-  },
-  name: 'Link',
-}
-
-export const ArrowLeftCircle: Story = {
-  render: (args) => {
-    return <IconArrowLeftCircle {...args} />
-  },
-  name: 'ArrowLeftCircle',
+  name: 'Info',
 }
 
 export const Italic: Story = {
@@ -1380,18 +1302,81 @@ export const Italic: Story = {
   name: 'Italic',
 }
 
-export const LogIn: Story = {
+export const Key: Story = {
   render: (args) => {
-    return <IconLogIn {...args} />
+    return <IconKey {...args} />
   },
-  name: 'LogIn',
+  name: 'Key',
 }
 
-export const Loader: Story = {
+export const Home: Story = {
   render: (args) => {
-    return <IconLoader {...args} />
+    return <IconHome {...args} />
   },
-  name: 'Loader',
+  name: 'Home',
+}
+
+export const ExternalLink: Story = {
+  render: (args) => {
+    return <IconExternalLink {...args} />
+  },
+  name: 'ExternalLink',
+}
+
+export const Laptop: Story = {
+  render: (args) => {
+    return <IconLaptop {...args} />
+  },
+  name: 'Laptop',
+}
+
+export const HomeChimney: Story = {
+  render: (args) => {
+    return <IconHomeChimney {...args} />
+  },
+  name: 'HomeChimney',
+}
+
+export const LifeBuoy: Story = {
+  render: (args) => {
+    return <IconLifeBuoy {...args} />
+  },
+  name: 'LifeBuoy',
+}
+
+export const Link: Story = {
+  render: (args) => {
+    return <IconLink {...args} />
+  },
+  name: 'Link',
+}
+
+export const Linkedin: Story = {
+  render: (args) => {
+    return <IconLinkedin {...args} />
+  },
+  name: 'Linkedin',
+}
+
+export const List: Story = {
+  render: (args) => {
+    return <IconList {...args} />
+  },
+  name: 'List',
+}
+
+export const Framer: Story = {
+  render: (args) => {
+    return <IconFramer {...args} />
+  },
+  name: 'Framer',
+}
+
+export const Lips: Story = {
+  render: (args) => {
+    return <IconLips {...args} />
+  },
+  name: 'Lips',
 }
 
 export const Lock: Story = {
@@ -1401,18 +1386,32 @@ export const Lock: Story = {
   name: 'Lock',
 }
 
-export const LogOut: Story = {
+export const Loader: Story = {
   render: (args) => {
-    return <IconLogOut {...args} />
+    return <IconLoader {...args} />
   },
-  name: 'LogOut',
+  name: 'Loader',
 }
 
-export const Map: Story = {
+export const Grid: Story = {
   render: (args) => {
-    return <IconMap {...args} />
+    return <IconGrid {...args} />
   },
-  name: 'Map',
+  name: 'Grid',
+}
+
+export const Image: Story = {
+  render: (args) => {
+    return <IconImage {...args} />
+  },
+  name: 'Image',
+}
+
+export const Link2: Story = {
+  render: (args) => {
+    return <IconLink2 {...args} />
+  },
+  name: 'Link2',
 }
 
 export const Mail: Story = {
@@ -1429,32 +1428,11 @@ export const MapPin: Story = {
   name: 'MapPin',
 }
 
-export const LifeBuoy: Story = {
+export const Layers: Story = {
   render: (args) => {
-    return <IconLifeBuoy {...args} />
+    return <IconLayers {...args} />
   },
-  name: 'LifeBuoy',
-}
-
-export const Linkedin: Story = {
-  render: (args) => {
-    return <IconLinkedin {...args} />
-  },
-  name: 'Linkedin',
-}
-
-export const Maximize2: Story = {
-  render: (args) => {
-    return <IconMaximize2 {...args} />
-  },
-  name: 'Maximize2',
-}
-
-export const Lips: Story = {
-  render: (args) => {
-    return <IconLips {...args} />
-  },
-  name: 'Lips',
+  name: 'Layers',
 }
 
 export const Maximize: Story = {
@@ -1464,20 +1442,6 @@ export const Maximize: Story = {
   name: 'Maximize',
 }
 
-export const Layers: Story = {
-  render: (args) => {
-    return <IconLayers {...args} />
-  },
-  name: 'Layers',
-}
-
-export const Meh: Story = {
-  render: (args) => {
-    return <IconMeh {...args} />
-  },
-  name: 'Meh',
-}
-
 export const MessageSquare: Story = {
   render: (args) => {
     return <IconMessageSquare {...args} />
@@ -1485,11 +1449,67 @@ export const MessageSquare: Story = {
   name: 'MessageSquare',
 }
 
+export const Map: Story = {
+  render: (args) => {
+    return <IconMap {...args} />
+  },
+  name: 'Map',
+}
+
+export const LogOut: Story = {
+  render: (args) => {
+    return <IconLogOut {...args} />
+  },
+  name: 'LogOut',
+}
+
+export const MessageCircle: Story = {
+  render: (args) => {
+    return <IconMessageCircle {...args} />
+  },
+  name: 'MessageCircle',
+}
+
+export const Mic: Story = {
+  render: (args) => {
+    return <IconMic {...args} />
+  },
+  name: 'Mic',
+}
+
+export const MicOff: Story = {
+  render: (args) => {
+    return <IconMicOff {...args} />
+  },
+  name: 'MicOff',
+}
+
+export const Minimize2: Story = {
+  render: (args) => {
+    return <IconMinimize2 {...args} />
+  },
+  name: 'Minimize2',
+}
+
 export const Menu: Story = {
   render: (args) => {
     return <IconMenu {...args} />
   },
   name: 'Menu',
+}
+
+export const LogIn: Story = {
+  render: (args) => {
+    return <IconLogIn {...args} />
+  },
+  name: 'LogIn',
+}
+
+export const MinusSquare: Story = {
+  render: (args) => {
+    return <IconMinusSquare {...args} />
+  },
+  name: 'MinusSquare',
 }
 
 export const Monitor: Story = {
@@ -1506,32 +1526,11 @@ export const Minimize: Story = {
   name: 'Minimize',
 }
 
-export const Mic: Story = {
+export const Minus: Story = {
   render: (args) => {
-    return <IconMic {...args} />
+    return <IconMinus {...args} />
   },
-  name: 'Mic',
-}
-
-export const MessageCircle: Story = {
-  render: (args) => {
-    return <IconMessageCircle {...args} />
-  },
-  name: 'MessageCircle',
-}
-
-export const MinusCircle: Story = {
-  render: (args) => {
-    return <IconMinusCircle {...args} />
-  },
-  name: 'MinusCircle',
-}
-
-export const MinusSquare: Story = {
-  render: (args) => {
-    return <IconMinusSquare {...args} />
-  },
-  name: 'MinusSquare',
+  name: 'Minus',
 }
 
 export const MoreHorizontal: Story = {
@@ -1541,39 +1540,11 @@ export const MoreHorizontal: Story = {
   name: 'MoreHorizontal',
 }
 
-export const Money: Story = {
-  render: (args) => {
-    return <IconMoney {...args} />
-  },
-  name: 'Money',
-}
-
-export const MoreVertical: Story = {
-  render: (args) => {
-    return <IconMoreVertical {...args} />
-  },
-  name: 'MoreVertical',
-}
-
 export const MousePointer: Story = {
   render: (args) => {
     return <IconMousePointer {...args} />
   },
   name: 'MousePointer',
-}
-
-export const Navigation2: Story = {
-  render: (args) => {
-    return <IconNavigation2 {...args} />
-  },
-  name: 'Navigation2',
-}
-
-export const Move: Story = {
-  render: (args) => {
-    return <IconMove {...args} />
-  },
-  name: 'Move',
 }
 
 export const Music: Story = {
@@ -1583,11 +1554,53 @@ export const Music: Story = {
   name: 'Music',
 }
 
-export const Minus: Story = {
+export const MoreVertical: Story = {
   render: (args) => {
-    return <IconMinus {...args} />
+    return <IconMoreVertical {...args} />
   },
-  name: 'Minus',
+  name: 'MoreVertical',
+}
+
+export const Objective: Story = {
+  render: (args) => {
+    return <IconObjective {...args} />
+  },
+  name: 'Objective',
+}
+
+export const Move: Story = {
+  render: (args) => {
+    return <IconMove {...args} />
+  },
+  name: 'Move',
+}
+
+export const Navigation2: Story = {
+  render: (args) => {
+    return <IconNavigation2 {...args} />
+  },
+  name: 'Navigation2',
+}
+
+export const Meh: Story = {
+  render: (args) => {
+    return <IconMeh {...args} />
+  },
+  name: 'Meh',
+}
+
+export const MinusCircle: Story = {
+  render: (args) => {
+    return <IconMinusCircle {...args} />
+  },
+  name: 'MinusCircle',
+}
+
+export const Money: Story = {
+  render: (args) => {
+    return <IconMoney {...args} />
+  },
+  name: 'Money',
 }
 
 export const Moon: Story = {
@@ -1597,11 +1610,18 @@ export const Moon: Story = {
   name: 'Moon',
 }
 
-export const Objective: Story = {
+export const Pause: Story = {
   render: (args) => {
-    return <IconObjective {...args} />
+    return <IconPause {...args} />
   },
-  name: 'Objective',
+  name: 'Pause',
+}
+
+export const Paperclip: Story = {
+  render: (args) => {
+    return <IconPaperclip {...args} />
+  },
+  name: 'Paperclip',
 }
 
 export const Package: Story = {
@@ -1618,39 +1638,18 @@ export const Navigation: Story = {
   name: 'Navigation',
 }
 
-export const Paperclip: Story = {
+export const PenTool: Story = {
   render: (args) => {
-    return <IconPaperclip {...args} />
+    return <IconPenTool {...args} />
   },
-  name: 'Paperclip',
+  name: 'PenTool',
 }
 
-export const Pause: Story = {
+export const Octagon: Story = {
   render: (args) => {
-    return <IconPause {...args} />
+    return <IconOctagon {...args} />
   },
-  name: 'Pause',
-}
-
-export const Percent: Story = {
-  render: (args) => {
-    return <IconPercent {...args} />
-  },
-  name: 'Percent',
-}
-
-export const PhoneCall: Story = {
-  render: (args) => {
-    return <IconPhoneCall {...args} />
-  },
-  name: 'PhoneCall',
-}
-
-export const PhoneForwarded: Story = {
-  render: (args) => {
-    return <IconPhoneForwarded {...args} />
-  },
-  name: 'PhoneForwarded',
+  name: 'Octagon',
 }
 
 export const PhoneIncoming: Story = {
@@ -1660,18 +1659,25 @@ export const PhoneIncoming: Story = {
   name: 'PhoneIncoming',
 }
 
-export const PhoneOff: Story = {
+export const Percent: Story = {
   render: (args) => {
-    return <IconPhoneOff {...args} />
+    return <IconPercent {...args} />
   },
-  name: 'PhoneOff',
+  name: 'Percent',
 }
 
-export const PhoneOutgoing: Story = {
+export const PhoneForwarded: Story = {
   render: (args) => {
-    return <IconPhoneOutgoing {...args} />
+    return <IconPhoneForwarded {...args} />
   },
-  name: 'PhoneOutgoing',
+  name: 'PhoneForwarded',
+}
+
+export const PhoneCall: Story = {
+  render: (args) => {
+    return <IconPhoneCall {...args} />
+  },
+  name: 'PhoneCall',
 }
 
 export const Negotiation: Story = {
@@ -1681,11 +1687,18 @@ export const Negotiation: Story = {
   name: 'Negotiation',
 }
 
-export const PieChart: Story = {
+export const PhoneOutgoing: Story = {
   render: (args) => {
-    return <IconPieChart {...args} />
+    return <IconPhoneOutgoing {...args} />
   },
-  name: 'PieChart',
+  name: 'PhoneOutgoing',
+}
+
+export const PhoneOff: Story = {
+  render: (args) => {
+    return <IconPhoneOff {...args} />
+  },
+  name: 'PhoneOff',
 }
 
 export const Pix: Story = {
@@ -1695,18 +1708,18 @@ export const Pix: Story = {
   name: 'Pix',
 }
 
-export const Plane: Story = {
+export const Maximize2: Story = {
   render: (args) => {
-    return <IconPlane {...args} />
+    return <IconMaximize2 {...args} />
   },
-  name: 'Plane',
+  name: 'Maximize2',
 }
 
-export const PlayCircle: Story = {
+export const Phone: Story = {
   render: (args) => {
-    return <IconPlayCircle {...args} />
+    return <IconPhone {...args} />
   },
-  name: 'PlayCircle',
+  name: 'Phone',
 }
 
 export const Play: Story = {
@@ -1714,13 +1727,6 @@ export const Play: Story = {
     return <IconPlay {...args} />
   },
   name: 'Play',
-}
-
-export const PlusCircle: Story = {
-  render: (args) => {
-    return <IconPlusCircle {...args} />
-  },
-  name: 'PlusCircle',
 }
 
 export const PlusSquare: Story = {
@@ -1737,13 +1743,6 @@ export const Plus: Story = {
   name: 'Plus',
 }
 
-export const Phone: Story = {
-  render: (args) => {
-    return <IconPhone {...args} />
-  },
-  name: 'Phone',
-}
-
 export const Pocket: Story = {
   render: (args) => {
     return <IconPocket {...args} />
@@ -1751,25 +1750,18 @@ export const Pocket: Story = {
   name: 'Pocket',
 }
 
-export const Power: Story = {
+export const PlusCircle: Story = {
   render: (args) => {
-    return <IconPower {...args} />
+    return <IconPlusCircle {...args} />
   },
-  name: 'Power',
+  name: 'PlusCircle',
 }
 
-export const Printer: Story = {
+export const AlertCircle: Story = {
   render: (args) => {
-    return <IconPrinter {...args} />
+    return <IconAlertCircle {...args} />
   },
-  name: 'Printer',
-}
-
-export const Radio: Story = {
-  render: (args) => {
-    return <IconRadio {...args} />
-  },
-  name: 'Radio',
+  name: 'AlertCircle',
 }
 
 export const RefreshCw: Story = {
@@ -1779,172 +1771,18 @@ export const RefreshCw: Story = {
   name: 'RefreshCw',
 }
 
-export const PauseCircle: Story = {
+export const Radio: Story = {
   render: (args) => {
-    return <IconPauseCircle {...args} />
+    return <IconRadio {...args} />
   },
-  name: 'PauseCircle',
+  name: 'Radio',
 }
 
-export const QrCode: Story = {
+export const PieChart: Story = {
   render: (args) => {
-    return <IconQrCode {...args} />
+    return <IconPieChart {...args} />
   },
-  name: 'QrCode',
-}
-
-export const Rewind: Story = {
-  render: (args) => {
-    return <IconRewind {...args} />
-  },
-  name: 'Rewind',
-}
-
-export const RotateCw: Story = {
-  render: (args) => {
-    return <IconRotateCw {...args} />
-  },
-  name: 'RotateCw',
-}
-
-export const Repeat: Story = {
-  render: (args) => {
-    return <IconRepeat {...args} />
-  },
-  name: 'Repeat',
-}
-
-export const Rss: Story = {
-  render: (args) => {
-    return <IconRss {...args} />
-  },
-  name: 'Rss',
-}
-
-export const RotateCcw: Story = {
-  render: (args) => {
-    return <IconRotateCcw {...args} />
-  },
-  name: 'RotateCcw',
-}
-
-export const Save: Story = {
-  render: (args) => {
-    return <IconSave {...args} />
-  },
-  name: 'Save',
-}
-
-export const Search: Story = {
-  render: (args) => {
-    return <IconSearch {...args} />
-  },
-  name: 'Search',
-}
-
-export const Scissors: Story = {
-  render: (args) => {
-    return <IconScissors {...args} />
-  },
-  name: 'Scissors',
-}
-
-export const Send: Story = {
-  render: (args) => {
-    return <IconSend {...args} />
-  },
-  name: 'Send',
-}
-
-export const Server: Story = {
-  render: (args) => {
-    return <IconServer {...args} />
-  },
-  name: 'Server',
-}
-
-export const Share2: Story = {
-  render: (args) => {
-    return <IconShare2 {...args} />
-  },
-  name: 'Share2',
-}
-
-export const Share: Story = {
-  render: (args) => {
-    return <IconShare {...args} />
-  },
-  name: 'Share',
-}
-
-export const ShieldOff: Story = {
-  render: (args) => {
-    return <IconShieldOff {...args} />
-  },
-  name: 'ShieldOff',
-}
-
-export const Shield: Story = {
-  render: (args) => {
-    return <IconShield {...args} />
-  },
-  name: 'Shield',
-}
-
-export const Octagon: Story = {
-  render: (args) => {
-    return <IconOctagon {...args} />
-  },
-  name: 'Octagon',
-}
-
-export const PenTool: Story = {
-  render: (args) => {
-    return <IconPenTool {...args} />
-  },
-  name: 'PenTool',
-}
-
-export const Minimize2: Story = {
-  render: (args) => {
-    return <IconMinimize2 {...args} />
-  },
-  name: 'Minimize2',
-}
-
-export const Settings: Story = {
-  render: (args) => {
-    return <IconSettings {...args} />
-  },
-  name: 'Settings',
-}
-
-export const Shuffle: Story = {
-  render: (args) => {
-    return <IconShuffle {...args} />
-  },
-  name: 'Shuffle',
-}
-
-export const SaveMoney: Story = {
-  render: (args) => {
-    return <IconSaveMoney {...args} />
-  },
-  name: 'SaveMoney',
-}
-
-export const MicOff: Story = {
-  render: (args) => {
-    return <IconMicOff {...args} />
-  },
-  name: 'MicOff',
-}
-
-export const SkipForward: Story = {
-  render: (args) => {
-    return <IconSkipForward {...args} />
-  },
-  name: 'SkipForward',
+  name: 'PieChart',
 }
 
 export const RefreshCcw: Story = {
@@ -1954,20 +1792,6 @@ export const RefreshCcw: Story = {
   name: 'RefreshCcw',
 }
 
-export const Slash: Story = {
-  render: (args) => {
-    return <IconSlash {...args} />
-  },
-  name: 'Slash',
-}
-
-export const Sliders: Story = {
-  render: (args) => {
-    return <IconSliders {...args} />
-  },
-  name: 'Sliders',
-}
-
 export const PhoneMissed: Story = {
   render: (args) => {
     return <IconPhoneMissed {...args} />
@@ -1975,60 +1799,88 @@ export const PhoneMissed: Story = {
   name: 'PhoneMissed',
 }
 
-export const ShoppingCart: Story = {
+export const Plane: Story = {
   render: (args) => {
-    return <IconShoppingCart {...args} />
+    return <IconPlane {...args} />
   },
-  name: 'ShoppingCart',
+  name: 'Plane',
 }
 
-export const Smartphone: Story = {
+export const RotateCcw: Story = {
   render: (args) => {
-    return <IconSmartphone {...args} />
+    return <IconRotateCcw {...args} />
   },
-  name: 'Smartphone',
+  name: 'RotateCcw',
 }
 
-export const SkipBack: Story = {
+export const QrCode: Story = {
   render: (args) => {
-    return <IconSkipBack {...args} />
+    return <IconQrCode {...args} />
   },
-  name: 'SkipBack',
+  name: 'QrCode',
 }
 
-export const Spark: Story = {
+export const Rss: Story = {
   render: (args) => {
-    return <IconSpark {...args} />
+    return <IconRss {...args} />
   },
-  name: 'Spark',
+  name: 'Rss',
 }
 
-export const Smile: Story = {
+export const Save: Story = {
   render: (args) => {
-    return <IconSmile {...args} />
+    return <IconSave {...args} />
   },
-  name: 'Smile',
+  name: 'Save',
 }
 
-export const Slack: Story = {
+export const Scissors: Story = {
   render: (args) => {
-    return <IconSlack {...args} />
+    return <IconScissors {...args} />
   },
-  name: 'Slack',
+  name: 'Scissors',
 }
 
-export const StopCircle: Story = {
+export const Search: Story = {
   render: (args) => {
-    return <IconStopCircle {...args} />
+    return <IconSearch {...args} />
   },
-  name: 'StopCircle',
+  name: 'Search',
 }
 
-export const Square: Story = {
+export const Server: Story = {
   render: (args) => {
-    return <IconSquare {...args} />
+    return <IconServer {...args} />
   },
-  name: 'Square',
+  name: 'Server',
+}
+
+export const Send: Story = {
+  render: (args) => {
+    return <IconSend {...args} />
+  },
+  name: 'Send',
+}
+
+export const Printer: Story = {
+  render: (args) => {
+    return <IconPrinter {...args} />
+  },
+  name: 'Printer',
+}
+
+export const Rewind: Story = {
+  render: (args) => {
+    return <IconRewind {...args} />
+  },
+  name: 'Rewind',
+}
+
+export const SaveMoney: Story = {
+  render: (args) => {
+    return <IconSaveMoney {...args} />
+  },
+  name: 'SaveMoney',
 }
 
 export const ShoppingBag: Story = {
@@ -2038,60 +1890,130 @@ export const ShoppingBag: Story = {
   name: 'ShoppingBag',
 }
 
-export const Sunrise: Story = {
+export const Settings: Story = {
   render: (args) => {
-    return <IconSunrise {...args} />
+    return <IconSettings {...args} />
   },
-  name: 'Sunrise',
+  name: 'Settings',
 }
 
-export const Table: Story = {
+export const PlayCircle: Story = {
   render: (args) => {
-    return <IconTable {...args} />
+    return <IconPlayCircle {...args} />
   },
-  name: 'Table',
+  name: 'PlayCircle',
 }
 
-export const Star: Story = {
+export const Shield: Story = {
   render: (args) => {
-    return <IconStar {...args} />
+    return <IconShield {...args} />
   },
-  name: 'Star',
+  name: 'Shield',
 }
 
-export const Sunset: Story = {
+export const Shuffle: Story = {
   render: (args) => {
-    return <IconSunset {...args} />
+    return <IconShuffle {...args} />
   },
-  name: 'Sunset',
+  name: 'Shuffle',
 }
 
-export const SmartphoneSms: Story = {
+export const Sidebar: Story = {
   render: (args) => {
-    return <IconSmartphoneSms {...args} />
+    return <IconSidebar {...args} />
   },
-  name: 'SmartphoneSms',
+  name: 'Sidebar',
 }
 
-export const Tag: Story = {
+export const ShoppingCart: Story = {
   render: (args) => {
-    return <IconTag {...args} />
+    return <IconShoppingCart {...args} />
   },
-  name: 'Tag',
+  name: 'ShoppingCart',
 }
 
-export const Terminal: Story = {
+export const Share: Story = {
   render: (args) => {
-    return <IconTerminal {...args} />
+    return <IconShare {...args} />
   },
-  name: 'Terminal',
+  name: 'Share',
 }
 
-export const Tablet: Story = {
+export const SkipBack: Story = {
   render: (args) => {
-    return <IconTablet {...args} />
+    return <IconSkipBack {...args} />
   },
-  name: 'Tablet',
+  name: 'SkipBack',
+}
+
+export const Share2: Story = {
+  render: (args) => {
+    return <IconShare2 {...args} />
+  },
+  name: 'Share2',
+}
+
+export const Slack: Story = {
+  render: (args) => {
+    return <IconSlack {...args} />
+  },
+  name: 'Slack',
+}
+
+export const Repeat: Story = {
+  render: (args) => {
+    return <IconRepeat {...args} />
+  },
+  name: 'Repeat',
+}
+
+export const Smartphone: Story = {
+  render: (args) => {
+    return <IconSmartphone {...args} />
+  },
+  name: 'Smartphone',
+}
+
+export const Smile: Story = {
+  render: (args) => {
+    return <IconSmile {...args} />
+  },
+  name: 'Smile',
+}
+
+export const Square: Story = {
+  render: (args) => {
+    return <IconSquare {...args} />
+  },
+  name: 'Square',
+}
+
+export const Layout: Story = {
+  render: (args) => {
+    return <IconLayout {...args} />
+  },
+  name: 'Layout',
+}
+
+export const Slash: Story = {
+  render: (args) => {
+    return <IconSlash {...args} />
+  },
+  name: 'Slash',
+}
+
+export const StopCircle: Story = {
+  render: (args) => {
+    return <IconStopCircle {...args} />
+  },
+  name: 'StopCircle',
+}
+
+export const ShieldOff: Story = {
+  render: (args) => {
+    return <IconShieldOff {...args} />
+  },
+  name: 'ShieldOff',
 }
 
 export const Sun: Story = {
@@ -2101,11 +2023,46 @@ export const Sun: Story = {
   name: 'Sun',
 }
 
-export const ThumbsUp: Story = {
+export const Sunrise: Story = {
   render: (args) => {
-    return <IconThumbsUp {...args} />
+    return <IconSunrise {...args} />
   },
-  name: 'ThumbsUp',
+  name: 'Sunrise',
+}
+
+export const Sunset: Story = {
+  render: (args) => {
+    return <IconSunset {...args} />
+  },
+  name: 'Sunset',
+}
+
+export const Table: Story = {
+  render: (args) => {
+    return <IconTable {...args} />
+  },
+  name: 'Table',
+}
+
+export const Target: Story = {
+  render: (args) => {
+    return <IconTarget {...args} />
+  },
+  name: 'Target',
+}
+
+export const Tablet: Story = {
+  render: (args) => {
+    return <IconTablet {...args} />
+  },
+  name: 'Tablet',
+}
+
+export const Tag: Story = {
+  render: (args) => {
+    return <IconTag {...args} />
+  },
+  name: 'Tag',
 }
 
 export const ThumbsDown: Story = {
@@ -2115,11 +2072,39 @@ export const ThumbsDown: Story = {
   name: 'ThumbsDown',
 }
 
-export const Tool: Story = {
+export const SkipForward: Story = {
   render: (args) => {
-    return <IconTool {...args} />
+    return <IconSkipForward {...args} />
   },
-  name: 'Tool',
+  name: 'SkipForward',
+}
+
+export const Star: Story = {
+  render: (args) => {
+    return <IconStar {...args} />
+  },
+  name: 'Star',
+}
+
+export const ThumbsUp: Story = {
+  render: (args) => {
+    return <IconThumbsUp {...args} />
+  },
+  name: 'ThumbsUp',
+}
+
+export const Terminal: Story = {
+  render: (args) => {
+    return <IconTerminal {...args} />
+  },
+  name: 'Terminal',
+}
+
+export const Sliders: Story = {
+  render: (args) => {
+    return <IconSliders {...args} />
+  },
+  name: 'Sliders',
 }
 
 export const ToggleLeft: Story = {
@@ -2127,6 +2112,27 @@ export const ToggleLeft: Story = {
     return <IconToggleLeft {...args} />
   },
   name: 'ToggleLeft',
+}
+
+export const ToggleRight: Story = {
+  render: (args) => {
+    return <IconToggleRight {...args} />
+  },
+  name: 'ToggleRight',
+}
+
+export const Trash2: Story = {
+  render: (args) => {
+    return <IconTrash2 {...args} />
+  },
+  name: 'Trash2',
+}
+
+export const SmartphoneSms: Story = {
+  render: (args) => {
+    return <IconSmartphoneSms {...args} />
+  },
+  name: 'SmartphoneSms',
 }
 
 export const Trello: Story = {
@@ -2143,6 +2149,13 @@ export const TrendingUp: Story = {
   name: 'TrendingUp',
 }
 
+export const RotateCw: Story = {
+  render: (args) => {
+    return <IconRotateCw {...args} />
+  },
+  name: 'RotateCw',
+}
+
 export const TrendingDown: Story = {
   render: (args) => {
     return <IconTrendingDown {...args} />
@@ -2150,39 +2163,11 @@ export const TrendingDown: Story = {
   name: 'TrendingDown',
 }
 
-export const Target: Story = {
+export const Tv: Story = {
   render: (args) => {
-    return <IconTarget {...args} />
+    return <IconTv {...args} />
   },
-  name: 'Target',
-}
-
-export const Trash2: Story = {
-  render: (args) => {
-    return <IconTrash2 {...args} />
-  },
-  name: 'Trash2',
-}
-
-export const Triangle: Story = {
-  render: (args) => {
-    return <IconTriangle {...args} />
-  },
-  name: 'Triangle',
-}
-
-export const Truck: Story = {
-  render: (args) => {
-    return <IconTruck {...args} />
-  },
-  name: 'Truck',
-}
-
-export const Twitch: Story = {
-  render: (args) => {
-    return <IconTwitch {...args} />
-  },
-  name: 'Twitch',
+  name: 'Tv',
 }
 
 export const Speaker: Story = {
@@ -2192,18 +2177,18 @@ export const Speaker: Story = {
   name: 'Speaker',
 }
 
-export const List: Story = {
+export const Trophy: Story = {
   render: (args) => {
-    return <IconList {...args} />
+    return <IconTrophy {...args} />
   },
-  name: 'List',
+  name: 'Trophy',
 }
 
-export const ToggleRight: Story = {
+export const Tool: Story = {
   render: (args) => {
-    return <IconToggleRight {...args} />
+    return <IconTool {...args} />
   },
-  name: 'ToggleRight',
+  name: 'Tool',
 }
 
 export const Twitter: Story = {
@@ -2213,18 +2198,18 @@ export const Twitter: Story = {
   name: 'Twitter',
 }
 
-export const Umbrella: Story = {
-  render: (args) => {
-    return <IconUmbrella {...args} />
-  },
-  name: 'Umbrella',
-}
-
 export const Type: Story = {
   render: (args) => {
     return <IconType {...args} />
   },
   name: 'Type',
+}
+
+export const Umbrella: Story = {
+  render: (args) => {
+    return <IconUmbrella {...args} />
+  },
+  name: 'Umbrella',
 }
 
 export const Unlock: Story = {
@@ -2234,25 +2219,11 @@ export const Unlock: Story = {
   name: 'Unlock',
 }
 
-export const Underline: Story = {
+export const Thermometer: Story = {
   render: (args) => {
-    return <IconUnderline {...args} />
+    return <IconThermometer {...args} />
   },
-  name: 'Underline',
-}
-
-export const UploadCloud: Story = {
-  render: (args) => {
-    return <IconUploadCloud {...args} />
-  },
-  name: 'UploadCloud',
-}
-
-export const Upload: Story = {
-  render: (args) => {
-    return <IconUpload {...args} />
-  },
-  name: 'Upload',
+  name: 'Thermometer',
 }
 
 export const UserCheck: Story = {
@@ -2262,25 +2233,25 @@ export const UserCheck: Story = {
   name: 'UserCheck',
 }
 
-export const UserMinus: Story = {
+export const Spark: Story = {
   render: (args) => {
-    return <IconUserMinus {...args} />
+    return <IconSpark {...args} />
   },
-  name: 'UserMinus',
+  name: 'Spark',
 }
 
-export const Trophy: Story = {
+export const Underline: Story = {
   render: (args) => {
-    return <IconTrophy {...args} />
+    return <IconUnderline {...args} />
   },
-  name: 'Trophy',
+  name: 'Underline',
 }
 
-export const Trash: Story = {
+export const Upload: Story = {
   render: (args) => {
-    return <IconTrash {...args} />
+    return <IconUpload {...args} />
   },
-  name: 'Trash',
+  name: 'Upload',
 }
 
 export const UserPlus: Story = {
@@ -2297,25 +2268,25 @@ export const User: Story = {
   name: 'User',
 }
 
-export const VideoOff: Story = {
+export const Users: Story = {
   render: (args) => {
-    return <IconVideoOff {...args} />
+    return <IconUsers {...args} />
   },
-  name: 'VideoOff',
+  name: 'Users',
 }
 
-export const UserX: Story = {
+export const PauseCircle: Story = {
   render: (args) => {
-    return <IconUserX {...args} />
+    return <IconPauseCircle {...args} />
   },
-  name: 'UserX',
+  name: 'PauseCircle',
 }
 
-export const Voicemail: Story = {
+export const UploadCloud: Story = {
   render: (args) => {
-    return <IconVoicemail {...args} />
+    return <IconUploadCloud {...args} />
   },
-  name: 'Voicemail',
+  name: 'UploadCloud',
 }
 
 export const Video: Story = {
@@ -2325,6 +2296,13 @@ export const Video: Story = {
   name: 'Video',
 }
 
+export const Volume2: Story = {
+  render: (args) => {
+    return <IconVolume2 {...args} />
+  },
+  name: 'Volume2',
+}
+
 export const Watch: Story = {
   render: (args) => {
     return <IconWatch {...args} />
@@ -2332,11 +2310,11 @@ export const Watch: Story = {
   name: 'Watch',
 }
 
-export const Volume1: Story = {
+export const Power: Story = {
   render: (args) => {
-    return <IconVolume1 {...args} />
+    return <IconPower {...args} />
   },
-  name: 'Volume1',
+  name: 'Power',
 }
 
 export const VolumeX: Story = {
@@ -2346,53 +2324,11 @@ export const VolumeX: Story = {
   name: 'VolumeX',
 }
 
-export const Users: Story = {
+export const Velocimeter: Story = {
   render: (args) => {
-    return <IconUsers {...args} />
+    return <IconVelocimeter {...args} />
   },
-  name: 'Users',
-}
-
-export const Website: Story = {
-  render: (args) => {
-    return <IconWebsite {...args} />
-  },
-  name: 'Website',
-}
-
-export const Sidebar: Story = {
-  render: (args) => {
-    return <IconSidebar {...args} />
-  },
-  name: 'Sidebar',
-}
-
-export const Thermometer: Story = {
-  render: (args) => {
-    return <IconThermometer {...args} />
-  },
-  name: 'Thermometer',
-}
-
-export const Wifi: Story = {
-  render: (args) => {
-    return <IconWifi {...args} />
-  },
-  name: 'Wifi',
-}
-
-export const Volume2: Story = {
-  render: (args) => {
-    return <IconVolume2 {...args} />
-  },
-  name: 'Volume2',
-}
-
-export const XSquare: Story = {
-  render: (args) => {
-    return <IconXSquare {...args} />
-  },
-  name: 'XSquare',
+  name: 'Velocimeter',
 }
 
 export const WifiOff: Story = {
@@ -2402,11 +2338,116 @@ export const WifiOff: Story = {
   name: 'WifiOff',
 }
 
+export const Wind: Story = {
+  render: (args) => {
+    return <IconWind {...args} />
+  },
+  name: 'Wind',
+}
+
+export const Wifi: Story = {
+  render: (args) => {
+    return <IconWifi {...args} />
+  },
+  name: 'Wifi',
+}
+
+export const UserMinus: Story = {
+  render: (args) => {
+    return <IconUserMinus {...args} />
+  },
+  name: 'UserMinus',
+}
+
+export const Trash: Story = {
+  render: (args) => {
+    return <IconTrash {...args} />
+  },
+  name: 'Trash',
+}
+
+export const Voicemail: Story = {
+  render: (args) => {
+    return <IconVoicemail {...args} />
+  },
+  name: 'Voicemail',
+}
+
+export const ZapOff: Story = {
+  render: (args) => {
+    return <IconZapOff {...args} />
+  },
+  name: 'ZapOff',
+}
+
+export const XOctagon: Story = {
+  render: (args) => {
+    return <IconXOctagon {...args} />
+  },
+  name: 'XOctagon',
+}
+
 export const X: Story = {
   render: (args) => {
     return <IconX {...args} />
   },
   name: 'X',
+}
+
+export const ZoomIn: Story = {
+  render: (args) => {
+    return <IconZoomIn {...args} />
+  },
+  name: 'ZoomIn',
+}
+
+export const Truck: Story = {
+  render: (args) => {
+    return <IconTruck {...args} />
+  },
+  name: 'Truck',
+}
+
+export const Triangle: Story = {
+  render: (args) => {
+    return <IconTriangle {...args} />
+  },
+  name: 'Triangle',
+}
+
+export const Twitch: Story = {
+  render: (args) => {
+    return <IconTwitch {...args} />
+  },
+  name: 'Twitch',
+}
+
+export const Volume1: Story = {
+  render: (args) => {
+    return <IconVolume1 {...args} />
+  },
+  name: 'Volume1',
+}
+
+export const XSquare: Story = {
+  render: (args) => {
+    return <IconXSquare {...args} />
+  },
+  name: 'XSquare',
+}
+
+export const UserX: Story = {
+  render: (args) => {
+    return <IconUserX {...args} />
+  },
+  name: 'UserX',
+}
+
+export const Youtube: Story = {
+  render: (args) => {
+    return <IconYoutube {...args} />
+  },
+  name: 'Youtube',
 }
 
 export const XCircle: Story = {
@@ -2416,18 +2457,25 @@ export const XCircle: Story = {
   name: 'XCircle',
 }
 
-export const Velocimeter: Story = {
+export const VideoOff: Story = {
   render: (args) => {
-    return <IconVelocimeter {...args} />
+    return <IconVideoOff {...args} />
   },
-  name: 'Velocimeter',
+  name: 'VideoOff',
 }
 
-export const Tv: Story = {
+export const Website: Story = {
   render: (args) => {
-    return <IconTv {...args} />
+    return <IconWebsite {...args} />
   },
-  name: 'Tv',
+  name: 'Website',
+}
+
+export const Zap: Story = {
+  render: (args) => {
+    return <IconZap {...args} />
+  },
+  name: 'Zap',
 }
 
 export const ZoomOut: Story = {
