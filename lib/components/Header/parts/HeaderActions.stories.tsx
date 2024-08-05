@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { LogoPrimaryCP } from '../../Logo'
-import Header from '../index'
+import { Header } from '../index'
 import { Button } from '../../Button'
 
 const meta: Meta<typeof Header.Actions> = {

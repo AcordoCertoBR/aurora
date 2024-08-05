@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 export type HeaderButtonProps = {
-  children: ReactNode
+  children: ReactNode | string | JSX.Element | JSX.Element[]
   onClick: () => void
 }
 

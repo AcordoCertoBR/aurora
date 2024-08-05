@@ -6,6 +6,18 @@
     background-color: $color-neutral-00;
   }
 
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+  }
+
+  &--static {
+    position: relative;
+  }
+
   &__container {
     @include container();
 
@@ -142,6 +154,7 @@
       max-width: 230px;
       min-width: 230px;
       position: absolute;
+      z-index: 2;
       top: 100%;
       width: 100%;
       left: 0;

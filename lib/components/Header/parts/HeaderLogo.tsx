@@ -2,9 +2,9 @@ import { ReactNode } from 'react'
 import { Conditional } from '../../misc'
 
 export type HeaderLogoProps = {
-  children?: ReactNode
-  renderMobile?: () => ReactNode
-  renderDesktop?: () => ReactNode
+  children?: ReactNode | string | JSX.Element | JSX.Element[]
+  renderMobile?: () => ReactNode | string | JSX.Element | JSX.Element[]
+  renderDesktop?: () => ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const HeaderLogo = ({

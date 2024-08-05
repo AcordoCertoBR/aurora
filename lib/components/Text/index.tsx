@@ -2,10 +2,9 @@ import DynamicTagComponentStories from '../misc/DynamicTagComponent'
 import classNames from 'classnames'
 import { TextProps } from './types'
 import { Conditional } from '../misc/Conditional'
-import React from 'react'
 import './styles.scss'
 
-export const Text: React.FC<TextProps> = ({
+export const Text = ({
   as = 'p',
   children,
   className = '',

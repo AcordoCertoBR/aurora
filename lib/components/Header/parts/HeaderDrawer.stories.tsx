@@ -4,7 +4,7 @@ import { Drawer } from '../../Drawer'
 import { useDrawer } from '../../Drawer/hooks'
 import { LogoBadgetCP, LogoPrimaryCP } from '../../Logo'
 import { NavbarVertical } from '../../NavbarVertical'
-import Header from '../index'
+import { Header } from '../index'
 
 const meta: Meta<typeof Drawer> = {
   title: 'Components/Header/WithDrawer',

@@ -1,4 +1,5 @@
 import { HeaderActions, HeaderActionsProps } from './parts/HeaderActions'
+import { HeaderBadges, HeaderBadgesProps } from './parts/HeaderBadges'
 import { HeaderButton, HeaderButtonProps } from './parts/HeaderButton'
 import { HeaderLink, HeaderLinkProps } from './parts/HeaderLink'
 import { HeaderLogo, HeaderLogoProps } from './parts/HeaderLogo'
@@ -13,7 +14,6 @@ import { HeaderWrap as Header, HeaderWrapProps } from './parts/HeaderWrap'
 import { NavbarDataProps } from './types'
 
 import './styles.scss'
-import { HeaderBadges, HeaderBadgesProps } from './parts/HeaderBadges'
 
 type Components = {
   Root: React.FC<HeaderWrapProps>
@@ -46,5 +46,4 @@ Object.keys(components).forEach((key) => {
   component.displayName = `Header.${key}`
 })
 
-export default components
-export { Header }
+export { components as Header }

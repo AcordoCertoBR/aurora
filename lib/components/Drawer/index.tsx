@@ -4,8 +4,8 @@ import { IconX } from '../icons/default'
 import './styles.scss'
 
 type DrawerProps = {
-  renderHeader: () => ReactNode
-  renderContent: () => ReactNode
+  renderHeader: () => ReactNode | string | JSX.Element | JSX.Element[]
+  renderContent: () => ReactNode | string | JSX.Element | JSX.Element[]
   isOpen: boolean
   handleOpen: () => void
 }

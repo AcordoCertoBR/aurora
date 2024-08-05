@@ -7,7 +7,7 @@ import './styles.scss'
 
 type NavbarVerticalDataProps = {
   name: string
-  Icon?: ReactNode
+  Icon?: ReactNode | string | JSX.Element | JSX.Element[]
   onClick: () => void
   dropdown?: NavbarVerticalDataProps[]
   active?: boolean
@@ -15,8 +15,10 @@ type NavbarVerticalDataProps = {
 
 type NavbarVerticalProps = {
   data: NavbarVerticalDataProps[]
-  renderItem: (link: NavbarVerticalDataProps) => ReactNode
-  renderActions: () => ReactNode
+  renderItem: (
+    link: NavbarVerticalDataProps,
+  ) => ReactNode | string | JSX.Element | JSX.Element[]
+  renderActions: () => ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const NavbarVertical = ({

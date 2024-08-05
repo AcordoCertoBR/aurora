@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { LogoPrimaryCP } from '../../Logo'
-import Header from '../index'
+import { Header } from '../index'
 
 const meta: Meta<typeof Header.Navbar> = {
   title: 'Components/Header/Navbar',

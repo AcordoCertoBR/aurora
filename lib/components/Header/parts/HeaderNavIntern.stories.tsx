@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { LogoBadgetAC, LogoBadgetCP } from '../../Logo'
 import { IconChevronLeft, IconX } from '../../icons/default'
-import Header from '../index'
+import { Header } from '../index'
 
 const meta: Meta<typeof Header.Root> = {
   title: 'Components/Header/NavIntern',
