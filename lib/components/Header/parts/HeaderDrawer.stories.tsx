@@ -19,7 +19,10 @@ const meta: Meta<typeof Drawer> = {
             <LogoPrimaryCP />
           </Header.Logo>
           <Header.Actions>
-            <Header.Profile onClickMenu={handleOpenDrawer} />
+            <Header.Profile
+              onClickMenu={handleOpenDrawer}
+              fullName="Fulano Silva"
+            />
           </Header.Actions>
 
           <Drawer

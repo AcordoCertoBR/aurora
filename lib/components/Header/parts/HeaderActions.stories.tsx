@@ -4,7 +4,7 @@ import { Header } from '../index'
 import { Button } from '../../Button'
 
 const meta: Meta<typeof Header.Actions> = {
-  title: 'Components/Header/Actions',
+  title: 'Components/Header/WithActions',
   component: Header.Actions,
   tags: ['autodocs'],
   decorators: [
@@ -40,7 +40,7 @@ export const ActionDeskDivider: Story = {
 
 export const ActionProfiler: Story = {
   args: {
-    children: <Header.Profile />,
+    children: <Header.Profile fullName="Fulano Silva" />,
     divider: true,
   },
 }

@@ -20,7 +20,7 @@ export default meta
 
 type Story = StoryObj<typeof Drawer>
 
-export const DrawerWithText: Story = {
+export const WithText: Story = {
   args: {
     isOpen: true,
     renderHeader: () => (
@@ -32,7 +32,7 @@ export const DrawerWithText: Story = {
   },
 }
 
-export const DrawerWithLogo: Story = {
+export const WithLogo: Story = {
   args: {
     isOpen: true,
     renderHeader: () => <LogoPrimaryCP />,
@@ -40,10 +40,10 @@ export const DrawerWithLogo: Story = {
   },
 }
 
-export const DrawerWithProfile: Story = {
+export const WithProfile: Story = {
   args: {
     isOpen: true,
-    renderHeader: () => <ProfileNav name="Fulano" />,
+    renderHeader: () => <ProfileNav name="Fulano" fullName="Fulano Silva" />,
     renderContent: () => <div></div>,
   },
 }

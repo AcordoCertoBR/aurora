@@ -1,16 +1,20 @@
+import { getInitialLetters } from '../../core/utils/getInitialLetters'
 import { Text } from '../Text'
 import './styles.scss'
 
 type ProfileNavProps = {
   name: string
+  fullName: string
 }
 
-export const ProfileNav = ({ name }: ProfileNavProps) => {
+export const ProfileNav = ({ name, fullName }: ProfileNavProps) => {
+  const initialLetters = getInitialLetters(fullName)
+
   return (
     <div className="au-profile-nav">
       <div className="au-profile-nav__badget">
         <Text variant="heading-small" weight="medium">
-          FS
+          {initialLetters}
         </Text>
       </div>
       <div className="div">

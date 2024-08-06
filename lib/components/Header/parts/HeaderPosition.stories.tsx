@@ -4,7 +4,7 @@ import { IconChevronLeft } from '../../icons/default'
 import { Header } from '../index'
 
 const meta: Meta<typeof Header.Root> = {
-  title: 'Components/Header/Position',
+  title: 'Components/Header/WithPosition',
   component: Header.Root,
   tags: ['autodocs'],
   parameters: {

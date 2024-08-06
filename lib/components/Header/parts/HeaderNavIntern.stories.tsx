@@ -4,7 +4,7 @@ import { IconChevronLeft, IconX } from '../../icons/default'
 import { Header } from '../index'
 
 const meta: Meta<typeof Header.Root> = {
-  title: 'Components/Header/NavIntern',
+  title: 'Components/Header/WithNavIntern',
   component: Header.Root,
   tags: ['autodocs'],
   parameters: {
