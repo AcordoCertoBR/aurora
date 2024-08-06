@@ -18,4 +18,8 @@
   &--color-dark > svg {
     color: $color-neutral-50;
   }
+
+  &--color-info > svg {
+    color: $color-info-40;
+  }
 }

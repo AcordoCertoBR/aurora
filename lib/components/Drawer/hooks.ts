@@ -1,12 +1,20 @@
 import { useState } from 'react'
 
-export function useDrawer() {
-  const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
+type UseDrawerProps = Record<string, boolean>
 
-  function handleOpenDrawer() {
-    setDrawerOpen((prev) => !prev)
+export function useDrawer(props: UseDrawerProps) {
+  const [drawerOpen, setDrawerOpen] = useState<UseDrawerProps>(props)
+
+  function handleOpenDrawer(name: string) {
+    setDrawerOpen((prev) => {
+      return {
+        ...prev,
+        [name]: !prev[name],
+      }
+    })
   }
 
+  console.log('drawerOpen', drawerOpen)
   return {
     handleOpenDrawer,
     drawerOpen,
