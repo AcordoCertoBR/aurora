@@ -1,0 +1,50 @@
+.au-footer {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding-block: 48px;
+  gap: 48px;
+  @include container();
+  @include aboveLarge() {
+    padding-block: 64px;
+    gap: 40px;
+  }
+
+  &__logo {
+  }
+
+  &__certifications {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-block: 1px solid #c4c9d4;
+    padding-block: 40px;
+    gap: 32px;
+    @include aboveLarge() {
+      padding-block: 48px;
+      flex-direction: row;
+      gap: 100px;
+    }
+    &__certificates {
+      display: flex;
+      flex-direction: row;
+      gap: 33px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    &__info {
+      flex: 1;
+      @include aboveLarge() {
+        text-align: end;
+      }
+    }
+  }
+
+  &__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
