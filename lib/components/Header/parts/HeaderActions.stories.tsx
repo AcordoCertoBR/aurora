@@ -40,7 +40,7 @@ export const ActionDeskDivider: Story = {
 
 export const ActionProfiler: Story = {
   args: {
-    children: <Header.Profile />,
+    children: <Header.Profile fullName="Fulano Silva" />,
     divider: true,
   },
 }

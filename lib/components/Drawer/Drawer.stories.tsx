@@ -43,7 +43,7 @@ export const WithLogo: Story = {
 export const WithProfile: Story = {
   args: {
     isOpen: true,
-    renderHeader: () => <ProfileNav name="Fulano" />,
+    renderHeader: () => <ProfileNav name="Fulano" fullName="Fulano Silva" />,
     renderContent: () => <div></div>,
   },
 }
