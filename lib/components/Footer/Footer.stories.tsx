@@ -18,7 +18,8 @@ export const Default: Story = {
     children: (
       <>
         <Footer.Logo children={<LogoPrimaryCP />} />
-        <Footer.Certifications sslblindado reclameaqui pcidss>
+        <Footer.Certifications
+          certificates={['sslblindado', 'reclameaqui', 'pcidss']}>
           <Text as="h2" variant="body-medium" weight="regular">
             Consumidor Positivo Ltda.
             <br />
