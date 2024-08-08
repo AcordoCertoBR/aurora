@@ -4,8 +4,8 @@ import { IconX } from '../icons/default'
 import './styles.scss'
 
 type DrawerProps = {
-  renderHeader: () => ReactNode | string | JSX.Element | JSX.Element[]
-  renderContent: () => ReactNode | string | JSX.Element | JSX.Element[]
+  renderHeader: ReactNode | string | JSX.Element | JSX.Element[]
+  renderContent: ReactNode | string | JSX.Element | JSX.Element[]
   isOpen: boolean
   handleOpen: () => void
 }
@@ -25,9 +25,9 @@ export const Drawer = ({
         <div className="au-drawer__header-close" onClick={handleOpen}>
           <IconX />
         </div>
-        {renderHeader()}
+        {renderHeader}
       </div>
-      <div className="au-drawer__content">{renderContent()}</div>
+      <div className="au-drawer__content">{renderContent}</div>
     </div>
   )
 }

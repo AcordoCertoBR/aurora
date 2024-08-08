@@ -1,4 +1,4 @@
-name: Publish package
+name: Publish Lib (npm)
 on:
   # When Release Pull Request is merged
   workflow_dispatch:

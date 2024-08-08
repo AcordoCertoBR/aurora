@@ -1,4 +1,4 @@
-name: Deploy Site
+name: Deploy Site (Storybook)
 
 on:
   workflow_dispatch:
