@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-lib/core/tokensn/.cache
+lib/core/tokens/.cache
 
 node_modules
 dist

@@ -6,6 +6,7 @@ import pkg from './package.json'
 import { resolve, dirname, basename, parse } from 'path'
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
 import glob from 'glob'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 dotenv.config()
 
@@ -43,6 +44,17 @@ export default defineConfig({
     react(),
     dts({ include: ['lib'], exclude: ['**/*.stories.tsx'] }),
     libInjectCss(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: [
+            'lib/core/styles/mixins.scss',
+            'lib/core/tokens/.cache/variables.scss',
+          ],
+          dest: '.',
+        },
+      ],
+    }),
   ],
   build: {
     copyPublicDir: false,
@@ -86,7 +98,12 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: [`@import "lib/core/tokens/index.scss";`],
+        additionalData: [
+          `
+          @import "lib/core/tokens/.cache/variables.scss";
+          @import "lib/core/styles/mixins.scss";
+          `,
+        ],
       },
     },
   },

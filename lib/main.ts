@@ -21,3 +21,6 @@ export * from './components/icons'
 
 // Utils
 export * from './components/misc'
+
+// Tokens
+export * from './core/tokens/.cache/tokens'
