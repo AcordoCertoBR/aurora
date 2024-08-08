@@ -1,0 +1,10 @@
+{
+  "name": "Border radius",
+  "desc": "",
+  "items": {
+    "border-radius-small": "4px",
+    "border-radius-medium": "8px",
+    "border-radius-big": "16px",
+    "border-radius-pill": "999px"
+  }
+}
