@@ -41,7 +41,7 @@ export const Default: Story = {
 
 export const Responsive: Story = {
   args: {
-    renderDesktop: () => <LogoPrimaryCP />,
-    renderMobile: () => <LogoBadgetCP />,
+    renderDesktop: <LogoPrimaryCP />,
+    renderMobile: <LogoBadgetCP />,
   },
 }

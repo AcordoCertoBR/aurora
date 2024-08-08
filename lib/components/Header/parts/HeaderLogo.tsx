@@ -3,8 +3,8 @@ import { Conditional } from '../../misc'
 
 export type HeaderLogoProps = {
   children?: ReactNode | string | JSX.Element | JSX.Element[]
-  renderMobile?: () => ReactNode | string | JSX.Element | JSX.Element[]
-  renderDesktop?: () => ReactNode | string | JSX.Element | JSX.Element[]
+  renderMobile?: ReactNode | string | JSX.Element | JSX.Element[]
+  renderDesktop?: ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const HeaderLogo = ({
@@ -16,18 +16,12 @@ export const HeaderLogo = ({
     <div className="au-header__logo">
       <Conditional
         condition={!!renderMobile}
-        renderIf={
-          <div className="au-header__logo--mobile">
-            {renderMobile && renderMobile()}
-          </div>
-        }
+        renderIf={<div className="au-header__logo--mobile">{renderMobile}</div>}
       />
       <Conditional
         condition={!!renderDesktop}
         renderIf={
-          <div className="au-header__logo--desktop">
-            {renderDesktop && renderDesktop()}
-          </div>
+          <div className="au-header__logo--desktop">{renderDesktop}</div>
         }
       />
       {children}
