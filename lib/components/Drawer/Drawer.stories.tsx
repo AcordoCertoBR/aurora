@@ -23,27 +23,27 @@ type Story = StoryObj<typeof Drawer>
 export const WithText: Story = {
   args: {
     isOpen: true,
-    renderHeader: () => (
+    renderHeader: (
       <Text as="h3" variant="heading-small" weight="bold">
         Notificações
       </Text>
     ),
-    renderContent: () => <div></div>,
+    renderContent: <div></div>,
   },
 }
 
 export const WithLogo: Story = {
   args: {
     isOpen: true,
-    renderHeader: () => <LogoPrimaryCP />,
-    renderContent: () => <div></div>,
+    renderHeader: <LogoPrimaryCP />,
+    renderContent: <div></div>,
   },
 }
 
 export const WithProfile: Story = {
   args: {
     isOpen: true,
-    renderHeader: () => <ProfileNav name="Fulano" fullName="Fulano Silva" />,
-    renderContent: () => <div></div>,
+    renderHeader: <ProfileNav name="Fulano" fullName="Fulano Silva" />,
+    renderContent: <div></div>,
   },
 }

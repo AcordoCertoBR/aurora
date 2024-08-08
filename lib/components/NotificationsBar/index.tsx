@@ -5,8 +5,8 @@ import { Conditional } from '../misc'
 import './styles.scss'
 
 type NotificationsBarWrapProps = {
-  renderRecents: () => ReactNode | string | JSX.Element | JSX.Element[]
-  renderOlds: () => ReactNode | string | JSX.Element | JSX.Element[]
+  renderRecents?: () => ReactNode | string | JSX.Element | JSX.Element[]
+  renderOlds?: () => ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 type NotificationsBarListProps = {
@@ -39,8 +39,8 @@ export const NotificationsBarWrap = ({
 }: NotificationsBarWrapProps) => {
   return (
     <div className="au-notifications-bar">
-      {renderRecents()}
-      {renderOlds()}
+      {renderRecents && renderRecents()}
+      {renderOlds && renderOlds()}
     </div>
   )
 }

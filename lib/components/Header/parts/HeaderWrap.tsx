@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { ReactNode } from 'react'
 
 export type HeaderWrapProps = {
-  position?: string
+  position?: 'static' | 'fixed'
   children: ReactNode | string | JSX.Element | JSX.Element[]
 }
 
