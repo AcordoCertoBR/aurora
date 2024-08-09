@@ -1,8 +1,8 @@
 // This file is generated automatically
 // To edit see the file lib/tasks/generateIcons.js
-import Icon from '../Icon'
+import Icon, { IconSize, IconColor } from '../Icon'
 
-export default function IconVolume2(props: any) {
+export function IconVolume2(props: { size: IconSize; color: IconColor }) {
   return (
     <Icon
       iconMarkup={
@@ -11,7 +11,6 @@ export default function IconVolume2(props: any) {
       iconName="IconVolume2"
       iconSize={props.size}
       iconColor={props.color}
-      {...props}
     />
   )
 }

@@ -1,0 +1,1 @@
+export { IconSocialGoogle } from './IconSocialGoogle'

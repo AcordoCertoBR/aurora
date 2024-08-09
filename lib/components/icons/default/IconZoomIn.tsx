@@ -1,8 +1,8 @@
 // This file is generated automatically
 // To edit see the file lib/tasks/generateIcons.js
-import Icon from '../Icon'
+import Icon, { IconSize, IconColor } from '../Icon'
 
-export default function IconZoomIn(props: any) {
+export function IconZoomIn(props: { size: IconSize; color: IconColor }) {
   return (
     <Icon
       iconMarkup={
@@ -11,7 +11,6 @@ export default function IconZoomIn(props: any) {
       iconName="IconZoomIn"
       iconSize={props.size}
       iconColor={props.color}
-      {...props}
     />
   )
 }

@@ -1,8 +1,11 @@
 // This file is generated automatically
 // To edit see the file lib/tasks/generateIcons.js
-import Icon from '../Icon'
+import Icon, { IconSize, IconColor } from '../Icon'
 
-export default function IconBatteryCharging(props: any) {
+export function IconBatteryCharging(props: {
+  size: IconSize
+  color: IconColor
+}) {
   return (
     <Icon
       iconMarkup={
@@ -11,7 +14,6 @@ export default function IconBatteryCharging(props: any) {
       iconName="IconBatteryCharging"
       iconSize={props.size}
       iconColor={props.color}
-      {...props}
     />
   )
 }

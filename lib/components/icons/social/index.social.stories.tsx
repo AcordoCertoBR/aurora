@@ -1,8 +1,8 @@
 // This file is generated automatically
 // To edit see the file lib/tasks/generateIcons.js
 import { Meta, StoryObj } from '@storybook/react'
-import Icon from '../Icon'
-import IconSocialGoogle from './IconSocialGoogle'
+import Icon, { IconSize, IconColor } from '../Icon'
+import { IconSocialGoogle } from './IconSocialGoogle'
 
 const meta: Meta<typeof Icon> = {
   title: 'icons/social',
@@ -13,10 +13,11 @@ const meta: Meta<typeof Icon> = {
 export default meta
 
 type Story = StoryObj<typeof Icon>
+type IconProps = { size: IconSize; color: IconColor }
 
-export const SocialGoogle: Story = {
+export const Google: Story = {
   render: (args) => {
-    return <IconSocialGoogle {...args} />
+    return <IconSocialGoogle {...(args as IconProps)} />
   },
-  name: 'SocialGoogle',
+  name: 'google',
 }

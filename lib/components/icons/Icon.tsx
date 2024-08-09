@@ -1,9 +1,12 @@
 import classNames from 'classnames'
 import './styles.scss'
 
-interface IconProps {
-  iconSize?: 'large' | 'default'
-  iconColor?: 'dark' | 'info' | 'default'
+export type IconSize = 'large' | 'default'
+export type IconColor = 'dark' | 'info' | 'default'
+
+type IconProps = {
+  iconSize?: IconSize
+  iconColor?: IconColor
   iconMarkup?: string
   iconName?: string
 }

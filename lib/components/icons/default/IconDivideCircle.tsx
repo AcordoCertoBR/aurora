@@ -1,8 +1,8 @@
 // This file is generated automatically
 // To edit see the file lib/tasks/generateIcons.js
-import Icon from '../Icon'
+import Icon, { IconSize, IconColor } from '../Icon'
 
-export default function IconDivideCircle(props: any) {
+export function IconDivideCircle(props: { size: IconSize; color: IconColor }) {
   return (
     <Icon
       iconMarkup={
@@ -11,7 +11,6 @@ export default function IconDivideCircle(props: any) {
       iconName="IconDivideCircle"
       iconSize={props.size}
       iconColor={props.color}
-      {...props}
     />
   )
 }

@@ -1,8 +1,8 @@
 // This file is generated automatically
 // To edit see the file lib/tasks/generateIcons.js
-import Icon from '../Icon'
+import Icon, { IconSize, IconColor } from '../Icon'
 
-export default function IconTwitter(props: any) {
+export function IconTwitter(props: { size: IconSize; color: IconColor }) {
   return (
     <Icon
       iconMarkup={
@@ -11,7 +11,6 @@ export default function IconTwitter(props: any) {
       iconName="IconTwitter"
       iconSize={props.size}
       iconColor={props.color}
-      {...props}
     />
   )
 }
