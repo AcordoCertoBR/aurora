@@ -1,7 +1,6 @@
 import fs from 'node:fs'
 import { rimrafSync } from 'rimraf'
 import { pascalCase } from 'change-case'
-import { collectionStoriesTemplate } from './templates/storiesContent'
 import iconContentTemplate from './templates/iconContent'
 import { iconsFolder, outputFolder } from './constants'
 import {
@@ -19,7 +18,6 @@ function generateIconComponents() {
   collections.forEach((collection) => {
     createCollectionComponents(collection)
     createCollectionRoot(collection)
-    createCollectionStories(collection)
   })
 
   createIconsRoot()
@@ -69,17 +67,6 @@ function createCollectionRoot(collection: string) {
   }, '')
 
   fs.writeFileSync(`${collectionPath}/index.tsx`, rootTemplate, 'utf8')
-}
-
-function createCollectionStories(collection: string) {
-  const collectionPath = `${outputFolder}/${collection}`
-  const components = getComponentsOfCollection(collection)
-  const collectionStories = collectionStoriesTemplate(components, collection)
-  fs.writeFileSync(
-    `${collectionPath}/index.${collection}.stories.tsx`,
-    collectionStories,
-    'utf8',
-  )
 }
 
 function createIconsRoot() {
