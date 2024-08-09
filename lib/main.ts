@@ -7,6 +7,7 @@ export { Conditional } from './components/misc/Conditional'
 export { Drawer } from './components/Drawer'
 export { Header } from './components/Header'
 export { NavbarVertical } from './components/NavbarVertical'
+export { NotificationsBar } from './components/NotificationsBar'
 export { ProfileNav } from './components/ProfileNav'
 export { Text } from './components/Text'
 
