@@ -17,7 +17,11 @@
     ".": {
       "import": "./dist/main.es.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./dist/*.scss": {
+      "import": "./dist/*.scss",
+      "require": "./dist/*.scss"
+    }
   },
   "scripts": {
     "tokens": "tsx scripts/update-tokens/index.ts",
