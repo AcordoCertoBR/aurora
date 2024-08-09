@@ -1,1 +1,0 @@
-export { IconSocialGoogle } from './IconSocialGoogle'

@@ -8,6 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 lib/core/tokens/.cache
+lib/components/icons/default
+lib/components/icons/social
+
 
 node_modules
 dist
