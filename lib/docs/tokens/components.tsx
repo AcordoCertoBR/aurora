@@ -7,8 +7,8 @@ import {
   COLOR_INFO_10,
   COLOR_INFO_50,
   BORDER_RADIUS_SMALL,
-  COLOR_SUCESS_50,
-  COLOR_SUCESS_00,
+  COLOR_SUCCESS_50,
+  COLOR_SUCCESS_00,
   BORDER_RADIUS_MEDIUM,
 } from '../../main'
 
@@ -111,12 +111,12 @@ function Clipboard({ title, value, style }: ClipboardProps) {
         onClick={copyTextValue}
         style={{
           transition: 'all .2s ease',
-          color: copied ? COLOR_SUCESS_50 : COLOR_INFO_50,
+          color: copied ? COLOR_SUCCESS_50 : COLOR_INFO_50,
           borderWidth: '1px',
           borderStyle: 'solid',
           cursor: 'pointer',
-          borderColor: copied ? COLOR_SUCESS_50 : COLOR_INFO_10,
-          backgroundColor: copied ? COLOR_SUCESS_00 : COLOR_INFO_00,
+          borderColor: copied ? COLOR_SUCCESS_50 : COLOR_INFO_10,
+          backgroundColor: copied ? COLOR_SUCCESS_00 : COLOR_INFO_00,
           fontSize: '12px',
           borderRadius: BORDER_RADIUS_SMALL,
           padding: '5px',
@@ -134,7 +134,7 @@ function Clipboard({ title, value, style }: ClipboardProps) {
             transform: 'translateY(-50%)',
             color: 'red',
           }}>
-          {copied ? <IconCheck rawColor={COLOR_SUCESS_50} /> : <IconCopy />}
+          {copied ? <IconCheck rawColor={COLOR_SUCCESS_50} /> : <IconCopy />}
         </div>
         {value}
       </div>
