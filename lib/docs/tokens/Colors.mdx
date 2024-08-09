@@ -1,0 +1,8 @@
+import { Meta } from '@storybook/blocks'
+import { getColorsGroups, ColorGrid } from './helpers'
+import { capitalCase } from 'change-case'
+import colors from '../../core/tokens/colors.json'
+
+<Meta title="Tokens/Cores" />
+
+{getColorsGroups(colors.items).map(([collection, colors]) => <ColorGrid collection={collection} colors={colors} />)}
