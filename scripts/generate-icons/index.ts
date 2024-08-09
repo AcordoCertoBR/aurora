@@ -62,7 +62,7 @@ function createCollectionRoot(collection: string) {
   const collectionPath = `${outputFolder}/${collection}`
   const components = getComponentsOfCollection(collection)
   const rootTemplate = components.reduce((acc, component) => {
-    const reExport = `export { ${component} } from "./${component}";`
+    const reExport = `export { ${component} } from './${component}';`
     return `${acc}\n${reExport}`
   }, '')
 
@@ -75,7 +75,7 @@ function createIconsRoot() {
     .filter((item) => !item.includes('.'))
 
   const template = collections
-    .map((collection) => `export * from "./${collection}"`)
+    .map((collection) => `export * from './${collection}'`)
     .join('\n')
 
   fs.writeFileSync(`${outputFolder}/index.tsx`, template, 'utf8')
