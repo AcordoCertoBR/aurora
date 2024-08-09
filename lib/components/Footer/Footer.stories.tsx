@@ -15,99 +15,99 @@ type Story = StoryObj<typeof Footer>
 export const Default: Story = {
   args: {
     logo: <LogoPrimaryCP />,
-    links: [
+    categoryLinks: [
       {
-        category: 'Quem Somos',
-        items: [
+        categoryTitle: 'Quem Somos',
+        links: [
           {
-            name: 'Sobre o Consumidor Positivo',
+            title: 'Sobre o Consumidor Positivo',
             url: 'https://google.com',
           },
           {
-            name: 'Termos e Políticas',
+            title: 'Termos e Políticas',
             url: 'https://google.com',
           },
           {
-            name: 'Blog',
+            title: 'Blog',
             url: 'https://google.com',
           },
           {
-            name: 'Evite fraudes',
+            title: 'Evite fraudes',
             url: 'https://google.com',
           },
         ],
       },
       {
-        category: 'Nossas soluções',
-        items: [
+        categoryTitle: 'Nossas soluções',
+        links: [
           {
-            name: 'Cartões de Crédito',
+            title: 'Cartões de Crédito',
             url: 'https://google.com',
           },
           {
-            name: 'Score',
+            title: 'Score',
             url: 'https://google.com',
           },
           {
-            name: 'Acordo Certo',
+            title: 'Acordo Certo',
             url: 'https://google.com',
           },
           {
-            name: 'Cadastro Positivo',
+            title: 'Cadastro Positivo',
             url: 'https://google.com',
           },
           {
-            name: 'Consultar CPF Grátis',
-            url: 'https://google.com',
-          },
-        ],
-      },
-      {
-        category: 'Blog',
-        items: [
-          {
-            name: 'Página Inicial',
-            url: 'https://google.com',
-          },
-          {
-            name: 'Educação Financeira',
-            url: 'https://google.com',
-          },
-          {
-            name: 'Score',
-            url: 'https://google.com',
-          },
-          {
-            name: 'Cartão de Crédito',
-            url: 'https://google.com',
-          },
-          {
-            name: 'Empréstimos',
+            title: 'Consultar CPF Grátis',
             url: 'https://google.com',
           },
         ],
       },
       {
-        category: 'Contato',
-        items: [
+        categoryTitle: 'Blog',
+        links: [
           {
-            name: 'Fale Conosco',
+            title: 'Página Inicial',
             url: 'https://google.com',
           },
           {
-            name: 'Central de Ajuda',
+            title: 'Educação Financeira',
             url: 'https://google.com',
           },
           {
-            name: '3003 - 0201 ( Das 8h às 20h )',
+            title: 'Score',
+            url: 'https://google.com',
           },
           {
-            name: '0800 727 0201 ( Cadastro Positivo )',
+            title: 'Cartão de Crédito',
+            url: 'https://google.com',
+          },
+          {
+            title: 'Empréstimos',
+            url: 'https://google.com',
+          },
+        ],
+      },
+      {
+        categoryTitle: 'Contato',
+        links: [
+          {
+            title: 'Fale Conosco',
+            url: 'https://google.com',
+          },
+          {
+            title: 'Central de Ajuda',
+            url: 'https://google.com',
+          },
+          {
+            title: '3003 - 0201 ( Das 8h às 20h )',
+          },
+          {
+            title: '0800 727 0201 ( Cadastro Positivo )',
           },
         ],
       },
     ],
-    socials: {
+    socialLinks: {
       instagram: 'https://instagram.com',
       facebook: 'https://facebook.com',
       youtube: 'https://youtube.com',

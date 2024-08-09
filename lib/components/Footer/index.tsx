@@ -1,99 +1,13 @@
-import { ReactNode } from 'react'
-import './styles.scss'
 import { Text } from '../Text'
-import fintech2022Logo from '../../assets/certifications/fintech-2022.svg'
-import fintech2023Logo from '../../assets/certifications/fintech-2023.svg'
-import pcidssLogo from '../../assets/certifications/pci-dss.svg'
-import quintessaLogo from '../../assets/certifications/quintessa.svg'
-import ra1000Logo from '../../assets/certifications/ra1000.svg'
-import reclameaquiLogo from '../../assets/certifications/reclame-aqui.svg'
-import scaleupLogo from '../../assets/certifications/scale-up.svg'
-import sslblindadoLogo from '../../assets/certifications/ssl-blindado.svg'
-
-import {
-  IconInstagram,
-  IconFacebook,
-  IconYoutube,
-  IconLinkedin,
-} from '../icons'
 import classNames from 'classnames'
-
-const socialsMap = {
-  instagram: {
-    name: 'Instagram',
-    icon: <IconInstagram />,
-  },
-  facebook: {
-    name: 'Facebook',
-    icon: <IconFacebook />,
-  },
-  youtube: {
-    name: 'Youtube',
-    icon: <IconYoutube />,
-  },
-  linkedin: {
-    name: 'Linkedin',
-    icon: <IconLinkedin />,
-  },
-}
-
-const certificatesMap = {
-  fintech2022: {
-    logo: fintech2022Logo,
-    name: 'Melhores Fintechs 2022',
-  },
-  fintech2023: {
-    logo: fintech2023Logo,
-    name: 'Melhores Fintechs 2023',
-  },
-  pcidss: {
-    logo: pcidssLogo,
-    name: 'PCI DSS Compliant',
-  },
-  quintessa: {
-    logo: quintessaLogo,
-    name: 'Quintessa',
-  },
-  ra1000: {
-    logo: ra1000Logo,
-    name: 'RA 1000',
-  },
-  reclameaqui: {
-    logo: reclameaquiLogo,
-    name: 'Ótimo Reclame Aqui',
-  },
-  scaleup: {
-    logo: scaleupLogo,
-    name: 'Scale Up',
-  },
-  sslblindado: {
-    logo: sslblindadoLogo,
-    name: 'SSL Blindado',
-  },
-}
-
-type FooterProps = {
-  logo: ReactNode | string | JSX.Element | JSX.Element[]
-  links: Array<{
-    category: string
-    items: Array<{ name: string; url?: string }>
-  }>
-  socials: {
-    instagram?: string
-    facebook?: string
-    youtube?: string
-    linkedin?: string
-  }
-  address: string
-  certificates: Array<keyof typeof certificatesMap>
-  notes: ReactNode | string | JSX.Element | JSX.Element[]
-  copyrights: ReactNode | string | JSX.Element | JSX.Element[]
-}
+import { FooterProps } from './types'
+import { certificatesMap, socialsMap } from './data'
+import './styles.scss'
 
 export const Footer = ({
   logo,
-  links,
-  socials,
+  categoryLinks,
+  socialLinks,
   address,
   certificates,
   notes,
@@ -103,10 +17,10 @@ export const Footer = ({
     (certificate) => certificatesMap[certificate],
   )
 
-  const usedSocials = Object.keys(socials).map((social) => {
+  const usedSocials = Object.keys(socialLinks).map((social) => {
     return {
       ...socialsMap[social as keyof typeof socialsMap],
-      url: socials[social as keyof typeof socials],
+      url: socialLinks[social as keyof typeof socialLinks],
     }
   })
 
@@ -114,19 +28,17 @@ export const Footer = ({
     window.open(url, '_blank')
   }
 
-  console.log(usedSocials)
-
   return (
     <footer className="au-footer">
       <section className="au-footer__logo">{logo}</section>
       <section className="au-footer__links">
-        {links.map(({ category, items }, index) => {
+        {categoryLinks.map(({ categoryTitle, links }, index) => {
           return (
             <div key={index} className="au-footer__links__category">
               <Text as="h2" variant="heading-micro" weight="bold">
-                {category}
+                {categoryTitle}
               </Text>
-              {items.map(({ name, url }, index) => {
+              {links.map(({ title, url }, index) => {
                 return (
                   <div
                     className={classNames('au-footer__links', {
@@ -139,7 +51,7 @@ export const Footer = ({
                       variant="body-medium"
                       weight="regular"
                       color="secondary">
-                      {name}
+                      {title}
                     </Text>
                   </div>
                 )
