@@ -1,7 +1,7 @@
 import { Text } from '../Text'
-import classNames from 'classnames'
 import { FooterProps } from './types'
 import { certificatesMap, socialsMap } from './data'
+import classNames from 'classnames'
 import './styles.scss'
 
 export const Footer = ({
@@ -27,72 +27,128 @@ export const Footer = ({
   const handleClick = (url: string) => {
     window.open(url, '_blank')
   }
-
-  return (
-    <footer className="au-footer">
-      <section className="au-footer__logo">{logo}</section>
-      <section className="au-footer__links">
-        {categoryLinks.map(({ categoryTitle, links }, index) => {
-          return (
-            <div key={index} className="au-footer__links__category">
-              <Text as="h2" variant="heading-micro" weight="bold">
-                {categoryTitle}
-              </Text>
-              {links.map(({ title, url }, index) => {
+  if (categoryLinks) {
+    return (
+      <footer className="au-footer-full">
+        <section className="au-footer-full__logo">{logo}</section>
+        <section className="au-footer-full__links">
+          {categoryLinks.map(({ categoryTitle, links }, index) => {
+            return (
+              <div key={index} className="au-footer-full__links-category">
+                <Text as="h2" variant="heading-micro" weight="bold">
+                  {categoryTitle}
+                </Text>
+                {links.map(({ title, url }, index) => {
+                  return (
+                    <div
+                      className={classNames('au-footer-full__links', {
+                        'is-clickable': !!url,
+                      })}
+                      key={index}
+                      onClick={() => url && handleClick(url)}>
+                      <Text
+                        as="a"
+                        variant="body-medium"
+                        weight="regular"
+                        color="secondary">
+                        {title}
+                      </Text>
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })}
+          <div className="au-footer-full__links-category">
+            <Text as="h2" variant="heading-micro" weight="bold">
+              Siga a gente
+            </Text>
+            <div className="au-footer-full__links-socials">
+              {usedSocials.map(({ icon, url }, index) => {
                 return (
                   <div
-                    className={classNames('au-footer__links', {
-                      clickable: !!url,
+                    className={classNames('au-footer-full__links', {
+                      'is-clickable': !!url,
                     })}
                     key={index}
                     onClick={() => url && handleClick(url)}>
-                    <Text
-                      as="a"
-                      variant="body-medium"
-                      weight="regular"
-                      color="secondary">
-                      {title}
-                    </Text>
+                    {icon}
                   </div>
                 )
               })}
             </div>
-          )
-        })}
-        <div className="au-footer__links__category">
-          <Text as="h2" variant="heading-micro" weight="bold">
-            Siga a gente
-          </Text>
-          <div className="au-footer__links__socials">
-            {usedSocials.map(({ icon, url }, index) => {
-              return (
-                <div
-                  className={classNames('au-footer__links', {
-                    clickable: !!url,
-                  })}
-                  key={index}
-                  onClick={() => url && handleClick(url)}>
-                  {icon}
-                </div>
-              )
+            <Text
+              as="h2"
+              variant="body-medium"
+              weight="regular"
+              color="secondary">
+              {address}
+            </Text>
+          </div>
+        </section>
+        <section className="au-footer-full__certificates">
+          <div className="au-footer-full__certificates-logos">
+            {usedCertificates.map(({ logo, name }, index) => {
+              return <img key={index} src={logo} alt={name} />
             })}
           </div>
+          <div className="au-footer-full__certificates__notes">
+            <Text
+              as="h2"
+              variant="body-medium"
+              weight="regular"
+              color="secondary">
+              {notes}
+            </Text>
+          </div>
+        </section>
+        <section className="au-footer-full__copyrights">
           <Text
             as="h2"
             variant="body-medium"
             weight="regular"
             color="secondary">
-            {address}
+            {copyrights}
           </Text>
+        </section>
+      </footer>
+    )
+  }
+
+  return (
+    <footer className="au-footer">
+      <section className="au-footer__top">
+        <div className="au-footer__top-logos">
+          {logo}
+          <div className="au-footer__top-divider" />
+          <div className="au-footer__top-certificates">
+            {usedCertificates.map(({ logo, name }, index) => {
+              return <img key={index} src={logo} alt={name} />
+            })}
+          </div>
+        </div>
+        <div className="au-footer__top-social">
+          <Text as="h2" variant="heading-micro" weight="bold">
+            Siga a gente
+          </Text>
+          <div className="au-footer__top-social-links">
+            {usedSocials.map(({ icon, url }, index) => {
+              return (
+                <div key={index} onClick={() => url && handleClick(url)}>
+                  {icon}
+                </div>
+              )
+            })}
+          </div>
         </div>
       </section>
-      <section className="au-footer__certifications">
-        <div className="au-footer__certifications__certificates">
+      <section className="au-footer__content">
+        <div className="au-footer__content-certificates">
           {usedCertificates.map(({ logo, name }, index) => {
             return <img key={index} src={logo} alt={name} />
           })}
         </div>
-        <div className="au-footer__certifications__notes">
+        <div className="au-footer__content-notes">
           <Text
             as="h2"
             variant="body-medium"
@@ -101,11 +157,40 @@ export const Footer = ({
             {notes}
           </Text>
         </div>
+        <div className="au-footer__content-social">
+          <Text as="h2" variant="heading-micro" weight="bold">
+            Siga a gente
+          </Text>
+          <div className="au-footer__content-social-links">
+            {usedSocials.map(({ icon, url }, index) => {
+              return (
+                <div key={index} onClick={() => url && handleClick(url)}>
+                  {icon}
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </section>
-      <section className="au-footer__copyrights">
-        <Text as="h2" variant="body-medium" weight="regular" color="secondary">
-          {copyrights}
-        </Text>
+      <section className="au-footer__bottom">
+        <div className="au-footer__bottom-notes">
+          <Text
+            as="h2"
+            variant="body-medium"
+            weight="regular"
+            color="secondary">
+            {notes}
+          </Text>
+        </div>
+        <div className="au-footer__bottom-copyrights">
+          <Text
+            as="h2"
+            variant="body-medium"
+            weight="regular"
+            color="secondary">
+            {copyrights}
+          </Text>
+        </div>
       </section>
     </footer>
   )

@@ -26,9 +26,9 @@ export type Certificate =
 
 export type FooterProps = {
   logo: ReactNode | JSX.Element | JSX.Element[]
-  categoryLinks: Array<CategoryLink>
+  categoryLinks?: Array<CategoryLink>
   socialLinks: SocialLink
-  address: string | ReactNode | JSX.Element | JSX.Element[]
+  address?: string | ReactNode | JSX.Element | JSX.Element[]
   certificates: Array<Certificate>
   notes: string | ReactNode | JSX.Element | JSX.Element[]
   copyrights: string | ReactNode | JSX.Element | JSX.Element[]

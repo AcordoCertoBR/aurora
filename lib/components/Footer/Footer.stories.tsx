@@ -122,3 +122,19 @@ export const Default: Story = {
       '© 2024 Consumidor Positivo Ltda.- Todos os direitos reservados',
   },
 }
+
+export const Logged: Story = {
+  args: {
+    logo: <LogoPrimaryCP />,
+    socialLinks: {
+      instagram: 'https://instagram.com',
+      facebook: 'https://facebook.com',
+      youtube: 'https://youtube.com',
+      linkedin: 'https://linkedin.com',
+    },
+    notes:
+      'As informações apresentadas nos relatórios de auto consulta, tais como: score, negativação e verificação de consultas realizadas no CPF são originárias do SCPC - banco de dados de proteção ao crédito administrado pela BOA VISTA SERVIÇOS S.A. inscrita no CNPJ nº 11.725.176/0001-27 -, empresa do Grupo Equifax.',
+    certificates: ['sslblindado', 'reclameaqui', 'pcidss'],
+    copyrights: `© Copyright 2024 Consumidor Positivo Ltda. Todos os direitos reservados / CNPJ: 30.247.128/0001-15`,
+  },
+}
