@@ -12,7 +12,7 @@ export default meta
 
 type Story = StoryObj<typeof Footer>
 
-export const Default: Story = {
+export const LoggedOut: Story = {
   args: {
     logo: <LogoPrimaryCP />,
     categoryLinks: [
@@ -123,7 +123,7 @@ export const Default: Story = {
   },
 }
 
-export const Logged: Story = {
+export const LoggedIn: Story = {
   args: {
     logo: <LogoPrimaryCP />,
     socialLinks: {

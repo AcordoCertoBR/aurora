@@ -30,8 +30,8 @@ export const Footer = ({
   if (categoryLinks) {
     return (
       <footer className="au-footer-full">
-        <section className="au-footer-full__logo">{logo}</section>
-        <section className="au-footer-full__links">
+        <div className="au-footer-full__logo">{logo}</div>
+        <div className="au-footer-full__links">
           {categoryLinks.map(({ categoryTitle, links }, index) => {
             return (
               <div key={index} className="au-footer-full__links-category">
@@ -85,8 +85,8 @@ export const Footer = ({
               {address}
             </Text>
           </div>
-        </section>
-        <section className="au-footer-full__certificates">
+        </div>
+        <div className="au-footer-full__certificates">
           <div className="au-footer-full__certificates-logos">
             {usedCertificates.map(({ logo, name }, index) => {
               return <img key={index} src={logo} alt={name} />
@@ -101,8 +101,8 @@ export const Footer = ({
               {notes}
             </Text>
           </div>
-        </section>
-        <section className="au-footer-full__copyrights">
+        </div>
+        <div className="au-footer-full__copyrights">
           <Text
             as="h2"
             variant="body-medium"
@@ -110,14 +110,14 @@ export const Footer = ({
             color="secondary">
             {copyrights}
           </Text>
-        </section>
+        </div>
       </footer>
     )
   }
 
   return (
     <footer className="au-footer">
-      <section className="au-footer__top">
+      <div className="au-footer__top">
         <div className="au-footer__top-logos">
           {logo}
           <div className="au-footer__top-divider" />
@@ -141,8 +141,8 @@ export const Footer = ({
             })}
           </div>
         </div>
-      </section>
-      <section className="au-footer__content">
+      </div>
+      <div className="au-footer__content">
         <div className="au-footer__content-certificates">
           {usedCertificates.map(({ logo, name }, index) => {
             return <img key={index} src={logo} alt={name} />
@@ -171,8 +171,8 @@ export const Footer = ({
             })}
           </div>
         </div>
-      </section>
-      <section className="au-footer__bottom">
+      </div>
+      <div className="au-footer__bottom">
         <div className="au-footer__bottom-notes">
           <Text
             as="h2"
@@ -191,7 +191,7 @@ export const Footer = ({
             {copyrights}
           </Text>
         </div>
-      </section>
+      </div>
     </footer>
   )
 }
