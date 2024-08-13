@@ -1,6 +1,7 @@
 import { Meta, Title, IconGallery, IconItem } from '@storybook/blocks'
 import * as iconsDefault from '../components/icons/default'
 import * as iconsSocial from '../components/icons/social'
+import { IconsPresentation } from './components'
 
 <Meta title="Icones/Biblioteca" />
 
@@ -23,20 +24,8 @@ type IconProps = {
 
 ## Coleção padrão
 
-<IconGallery>
-  {Object.entries(iconsDefault).map(([key, Comp]) => (
-    <IconItem name={key}>
-      <Comp />
-    </IconItem>
-  ))}
-</IconGallery>
+<IconsPresentation iconsMap={iconsDefault} />
 
 ## Coleção social
 
-<IconGallery>
-  {Object.entries(iconsSocial).map(([key, Comp]) => (
-    <IconItem name={key}>
-      <Comp />
-    </IconItem>
-  ))}
-</IconGallery>
+<IconsPresentation iconsMap={iconsSocial} />
