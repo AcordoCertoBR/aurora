@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { certificatesMap } from './data'
 
 export type Link = { title: string; url?: string }
 
@@ -14,15 +15,7 @@ export type SocialLink = {
   linkedin?: string
 }
 
-export type Certificate =
-  | 'fintech2022'
-  | 'fintech2023'
-  | 'pcidss'
-  | 'quintessa'
-  | 'ra1000'
-  | 'reclameaqui'
-  | 'scaleup'
-  | 'sslblindado'
+export type Certificate = keyof typeof certificatesMap
 
 export type FooterProps = {
   logo: ReactNode | JSX.Element | JSX.Element[]

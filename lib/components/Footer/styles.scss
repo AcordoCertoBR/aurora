@@ -142,7 +142,7 @@
 .au-footer-full {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: $color-neutral-00;
   padding-block: 48px;
   gap: 40px;
   @include container();
