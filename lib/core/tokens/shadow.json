@@ -1,0 +1,10 @@
+{
+  "name": "Sombras",
+  "desc": "",
+  "items": {
+    "shadow-01": "0px 2px 8px 0px rgba(169, 177, 197, 0.08), 0px 4px 4px 0px rgba(0, 72, 219, 0.04)",
+    "shadow-02": "0px 8px 24px 0px rgba(118, 134, 173, 0.08), 0px 4px 4px 0px rgba(0, 72, 219, 0.04)",
+    "shadow-03": "0px 16px 40px 0px rgba(118, 134, 173, 0.08), 0px 8px 8px 0px rgba(0, 72, 219, 0.04)",
+    "shadow-04": "0px 24px 56px 0px rgba(118, 134, 173, 0.08), 0px 12px 12px 0px rgba(0, 72, 219, 0.04)"
+  }
+}

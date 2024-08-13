@@ -5,6 +5,10 @@
   "type": "module",
   "main": "./dist/main.es.js",
   "modules": "./dist/main.es.js",
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "types": "./dist/main.d.ts",
   "files": [
     "dist"
@@ -13,17 +17,23 @@
     ".": {
       "import": "./dist/main.es.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./dist/*.scss": {
+      "import": "./dist/*.scss",
+      "require": "./dist/*.scss"
+    }
   },
   "scripts": {
-    "dev": "vite",
+    "tokens": "tsx scripts/update-tokens/index.ts",
+    "icons": "tsx scripts/generate-icons/index.ts",
+    "prebuild": "npm run tokens && npm run icons",
+    "dev": "npm run prebuild && vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "prepare": "husky",
-    "generate:icons": "cd lib/tasks && node ./generateIcons.js"
+    "storybook": "npm run prebuild && storybook dev -p 6006",
+    "build-storybook": "npm run prebuild && storybook build",
+    "prepare": "husky"
   },
   "peerDependencies": {
     "react": ">=18.3.1",
@@ -33,8 +43,6 @@
     "@fontsource-variable/lexend-deca": "5.0.13",
     "@fontsource-variable/source-sans-3": "5.0.21",
     "dotenv": "16.4.5",
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1",
     "vite-plugin-dts": "4.0.0-beta.1"
   },
   "devDependencies": {
@@ -56,6 +64,7 @@
     "@typescript-eslint/eslint-plugin": "7.15.0",
     "@typescript-eslint/parser": "7.15.0",
     "@vitejs/plugin-react": "4.3.1",
+    "change-case": "5.4.4",
     "classnames": "2.5.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
@@ -66,12 +75,17 @@
     "glob": "7.2.3",
     "husky": "9.1.1",
     "prettier": "3.3.3",
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1",
+    "rimraf": "6.0.1",
     "rollup-plugin-css-only": "4.5.2",
     "sass": "1.77.8",
     "storybook": "^8.2.7",
     "storybook-addon-pseudo-states": "3.1.1",
+    "tsx": "4.17.0",
     "typescript": "5.2.2",
     "vite": "5.3.4",
-    "vite-plugin-lib-inject-css": "2.1.1"
+    "vite-plugin-lib-inject-css": "2.1.1",
+    "vite-plugin-static-copy": "1.0.6"
   }
 }

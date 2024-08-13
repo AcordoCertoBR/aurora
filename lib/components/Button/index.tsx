@@ -62,7 +62,7 @@ export const Button: React.FC<ButtonProps> = ({
     [className ?? '']: typeof className === 'string',
   })
 
-  function handleClick(e: any) {
+  function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (!disabled && !!onClick) onClick(e)
   }
 

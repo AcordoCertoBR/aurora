@@ -1,0 +1,42 @@
+// MIXIN BREAKPOINTS
+@mixin aboveXSmall {
+  @media (min-width: $breakpoint-xsm) {
+    @content;
+  }
+}
+@mixin aboveSmall {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin aboveMedium {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin aboveLarge {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin aboveXLarge {
+  @media (min-width: $breakpoint-xlg) {
+    @content;
+  }
+}
+
+@mixin container {
+  & {
+    width: 100%;
+    max-width: $container-size;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  @include aboveLarge() {
+    padding: 0 16px;
+  }
+}
