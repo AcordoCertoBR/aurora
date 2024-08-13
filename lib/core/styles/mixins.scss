@@ -23,7 +23,7 @@
 }
 
 @mixin aboveXLarge {
-  @media (min-width: $breakpoint-xlarge) {
+  @media (min-width: $breakpoint-xlg) {
     @content;
   }
 }
