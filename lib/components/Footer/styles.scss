@@ -41,6 +41,7 @@
     @include aboveLarge() {
       display: flex;
       gap: 33px;
+      align-items: center;
     }
   }
 
@@ -81,6 +82,7 @@
   &__content-certificates {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 30px;
     flex-wrap: wrap;
     @include aboveLarge() {
@@ -202,6 +204,7 @@
 
   &__certificates-logos {
     display: flex;
+    align-items: center;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
