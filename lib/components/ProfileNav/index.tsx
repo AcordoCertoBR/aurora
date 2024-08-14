@@ -21,7 +21,7 @@ export const ProfileNav = ({ name, fullName }: ProfileNavProps) => {
         <Text as="h3" variant="heading-micro" weight="bold">
           Olá, {name}
         </Text>
-        <Text>Tudo bem?</Text>
+        <Text color="secondary">Tudo bem?</Text>
       </div>
     </div>
   )
