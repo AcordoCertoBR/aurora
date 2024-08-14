@@ -1,0 +1,10 @@
+{
+  "name": "Border radius",
+  "desc": "O tamanho do componente vai ditar qual border radius deve ser usado, mas como regra geral, todos elementos devem ser arredondados",
+  "items": {
+    "border-radius-small": "4px",
+    "border-radius-medium": "8px",
+    "border-radius-big": "16px",
+    "border-radius-pill": "999px"
+  }
+}

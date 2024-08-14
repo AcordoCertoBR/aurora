@@ -1,0 +1,31 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Tokens/Intro" />
+
+# Design tokens
+
+Os tokens representam as menores decisiões de design do Aurora, são
+a base para todos os componentes da biblioteca.
+Os tokens do Aurora contemplam cores, espaçamentos, tipografia e etc.
+
+Eles podem ser importados via scss ou TS/JS dessa forma:
+
+### SCSS
+
+```css
+@import '@consumidor-positivo/aurora/dist/variables.scss';
+
+.my-component {
+  background-color: $color-neutral-10;
+}
+```
+
+### JS/TS
+
+```tsx
+import { COLOR_BRAND_BLUE_40 } from '@consumidor-positivo/aurora'
+
+function MyComponent() {
+  return <p style={{ color: COLOR_BRAND_BLUE_40 }}>my text</p>
+}
+```

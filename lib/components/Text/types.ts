@@ -18,7 +18,7 @@ type TextWeight = 'bold' | 'semibold' | 'medium' | 'regular' | 'light'
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   as?: keyof React.ReactHTML
   className?: string
-  color?: 'common'
+  color?: 'common' | 'secondary'
   variant?: TextVariant
   variantDesk?: TextVariant
   weight?: TextWeight

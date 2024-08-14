@@ -1,0 +1,229 @@
+.au-footer {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding-block: 48px;
+  gap: 40px;
+  @include container();
+  @include aboveLarge() {
+    padding-block: 64px;
+    gap: 48px;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $color-neutral-20;
+    padding-bottom: 40px;
+    @include aboveLarge() {
+      padding-bottom: 48px;
+    }
+  }
+  &__top-logos {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  &__top-divider {
+    display: none;
+    @include aboveLarge() {
+      display: block;
+      width: 1px;
+      height: 60px;
+      background-color: $color-neutral-20;
+    }
+  }
+
+  &__top-certificates {
+    display: none;
+    @include aboveLarge() {
+      display: flex;
+      gap: 33px;
+    }
+  }
+
+  &__top-social {
+    display: none;
+    @include aboveLarge() {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
+  &__top-social-links {
+    display: none;
+    @include aboveLarge() {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      & svg {
+        cursor: pointer;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    border-bottom: 1px solid $color-neutral-30;
+    padding-bottom: 40px;
+    @include aboveLarge() {
+      display: none;
+    }
+  }
+
+  &__content-certificates {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    @include aboveLarge() {
+      display: none;
+    }
+  }
+
+  &__content-notes {
+    display: flex;
+    @include aboveLarge() {
+      display: none;
+    }
+  }
+
+  &__content-social {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    @include aboveLarge() {
+      display: none;
+    }
+  }
+  &__content-social-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    & svg {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include aboveLarge() {
+      justify-content: space-between;
+    }
+  }
+
+  &__bottom-notes {
+    display: none;
+    @include aboveLarge() {
+      display: block;
+      max-width: 540px;
+    }
+  }
+  &__bottom-copyrights {
+    text-align: center;
+    @include aboveLarge() {
+      max-width: 400px;
+      text-align: end;
+    }
+  }
+}
+
+.au-footer-full {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-neutral-00;
+  padding-block: 48px;
+  gap: 40px;
+  @include container();
+  @include aboveLarge() {
+    padding-block: 64px;
+    gap: 48px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    @include aboveLarge() {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &.is-clickable {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &__links-category {
+    max-width: 272px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__links-socials {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__certificates {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-block: 1px solid $color-neutral-30;
+    padding-block: 40px;
+    gap: 32px;
+    @include aboveLarge() {
+      flex-direction: row;
+      padding-block: 48px;
+    }
+  }
+
+  &__certificates-logos {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    @include aboveLarge() {
+      justify-content: start;
+      gap: 32px;
+      width: 100%;
+    }
+  }
+  &__certificates-notes {
+    width: 100%;
+    @include aboveLarge() {
+      max-width: 554px;
+      text-align: end;
+    }
+  }
+
+  &__copyrights {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}

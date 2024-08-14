@@ -1,0 +1,31 @@
+import { Meta, Title, IconGallery, IconItem } from '@storybook/blocks'
+import * as iconsDefault from '../components/icons/default'
+import * as iconsSocial from '../components/icons/social'
+import { IconsPresentation } from './components'
+
+<Meta title="Icones/Biblioteca" />
+
+# Icones
+
+para utilizar os icones basta importa-los:
+
+```jsx
+import { IconTruck } from '@consumidor-positivo/aurora'
+```
+
+Cada icone aceita as seguintes props:
+
+```jsx
+type IconProps = {
+    size: 'large' | 'default';
+    color: 'dark' | 'info' | 'default';
+};
+```
+
+## Coleção padrão
+
+<IconsPresentation iconsMap={iconsDefault} />
+
+## Coleção social
+
+<IconsPresentation iconsMap={iconsSocial} />

@@ -22,4 +22,8 @@
   &--color-info > svg {
     color: $color-info-40;
   }
+
+  &--color-raw > svg {
+    color: inherit;
+  }
 }

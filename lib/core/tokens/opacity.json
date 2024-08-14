@@ -1,0 +1,11 @@
+{
+  "name": "Opacidade",
+  "desc": "",
+  "items": {
+    "opacity-00": "0.05",
+    "opacity-10": "0.2",
+    "opacity-20": "0.4",
+    "opacity-30": "0.6",
+    "opacity-40": "0.8"
+  }
+}
