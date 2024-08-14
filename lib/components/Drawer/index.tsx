@@ -19,7 +19,7 @@ export const Drawer = ({
   return (
     <div
       className={classNames('au-drawer', {
-        'is-open': isOpen,
+        'au-drawer--is-open': isOpen,
       })}>
       <div className="au-drawer__header">
         <div className="au-drawer__header-close" onClick={handleOpen}>
