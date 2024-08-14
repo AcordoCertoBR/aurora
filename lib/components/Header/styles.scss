@@ -69,10 +69,6 @@
     display: flex;
     align-items: center;
 
-    @include aboveLarge {
-      border: 1px solid red;
-    }
-
     > * + * {
       padding-left: 16px;
       margin-left: 16px;
@@ -105,7 +101,7 @@
     @include aboveLarge() {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 40px;
     }
 
     .au-text {
@@ -129,6 +125,15 @@
         font-weight: 700;
         color: $color-brand-blue-40;
         letter-spacing: -0.6px;
+      }
+
+      &.is-active {
+        color: $color-brand-blue-40;
+      }
+
+      &:hover,
+      &:focus {
+        color: $color-neutral-70;
       }
     }
 
