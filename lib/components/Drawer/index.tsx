@@ -23,10 +23,10 @@ export const Drawer = ({
       })}>
       <div className="au-drawer__container">
         <div className="au-drawer__header">
+          {renderHeader}
           <div className="au-drawer__header-close" onClick={handleOpen}>
             <IconX />
           </div>
-          {renderHeader}
         </div>
         <div className="au-drawer__content">{renderContent}</div>
       </div>
