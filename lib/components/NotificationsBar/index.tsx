@@ -1,5 +1,4 @@
 import { ReactNode } from 'react'
-import { Button } from '../Button'
 import { Text } from '../Text'
 import { Conditional } from '../misc'
 import './styles.scss'
@@ -87,9 +86,13 @@ export const NotificationsBarLink = ({
         <Conditional
           condition={!!onDelete}
           renderIf={
-            <Button type="ghost" onClick={onDelete}>
+            <Text
+              as="a"
+              variant="body-small"
+              weight="semibold"
+              onClick={onDelete}>
               Excluir
-            </Button>
+            </Text>
           }
         />
       </div>

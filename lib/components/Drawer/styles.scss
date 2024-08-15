@@ -1,21 +1,56 @@
 .au-drawer {
-  background-color: $color-neutral-00;
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  z-index: 6;
-  top: 0;
-  right: 0;
-  transform: translateX(100%);
-  transition: transform 0.1s ease-out 0.1s;
+  & {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+    height: 100vh;
+  }
 
-  @include aboveMedium() {
-    box-shadow: $shadow-04;
-    max-width: 320px;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    background-color: rgba(22, 24, 29, 0.8);
+    opacity: 0;
+    transform: translateX(100%);
+    transition:
+      transform 0.1s ease 0.1s,
+      opacity 0.3s ease 0.1s;
   }
 
   &.is-open {
-    transform: translateX(0);
+    width: 100vw;
+
+    &::before {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  &__container {
+    background-color: $color-neutral-00;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: 6;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+    transition: transform 0.1s ease-out 0.1s;
+
+    @include aboveMedium() {
+      box-shadow: $shadow-04;
+      max-width: 414px;
+    }
+
+    .is-open & {
+      transform: translateX(0);
+    }
   }
 
   &__header {
