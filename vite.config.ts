@@ -68,7 +68,7 @@ export default defineConfig({
         const isIconFile = entryName.startsWith('Icon') && entryName !== 'Icon'
         if (isMainFile) return `main.${format}.js`
         if (isIconFile) {
-          return `components/Icons/${entryName}/index.${format}.js`
+          return `components/icons/${entryName}/index.${format}.js`
         }
         return `components/${entryName}/index.${format}.js`
       },
