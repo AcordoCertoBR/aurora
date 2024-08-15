@@ -34,6 +34,7 @@
     right: 0;
     transform: translateX(100%);
     transition: transform 0.3s ease;
+    overflow: hidden;
 
     @include aboveMedium() {
       border-radius: $border-radius-big 0 0 $border-radius-big;
