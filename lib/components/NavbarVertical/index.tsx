@@ -11,6 +11,7 @@ type NavbarVerticalDataProps = {
   onClick: () => void
   dropdown?: NavbarVerticalDataProps[]
   active?: boolean
+  href?: string
 }
 
 type NavbarVerticalProps = {
@@ -43,13 +44,11 @@ const NavbarVerticalLink = ({
   Icon,
   dropdown,
   active = false,
+  href,
 }: NavbarVerticalDataProps) => {
   const [open, setOpen] = useState<boolean>(active)
 
   function handleClick() {
-    const hasHref = false // TODO
-    if (hasHref) return
-
     if (dropdown) {
       setOpen((prev) => !prev)
     } else if (onClick) {
@@ -62,6 +61,7 @@ const NavbarVerticalLink = ({
       as="a"
       variant="heading-micro"
       weight="light"
+      href={href}
       className={classNames('au-navbar-vertical__link', {
         'au-navbar-vertical__link--is-dropdown': dropdown,
         'au-navbar-vertical__link--is-active': active,
