@@ -1,7 +1,6 @@
 import { HeaderActions, HeaderActionsProps } from './parts/HeaderActions'
 import { HeaderBadges, HeaderBadgesProps } from './parts/HeaderBadges'
 import { HeaderButton, HeaderButtonProps } from './parts/HeaderButton'
-import { HeaderLink, HeaderLinkProps } from './parts/HeaderLink'
 import { HeaderLogo, HeaderLogoProps } from './parts/HeaderLogo'
 import { HeaderNavbar, HeaderNavbarProps } from './parts/HeaderNavbar'
 import { HeaderNavbarLink } from './parts/HeaderNavbarLink'
@@ -20,7 +19,6 @@ type Components = {
   Actions: React.FC<HeaderActionsProps>
   Badges: React.FC<HeaderBadgesProps>
   Button: React.FC<HeaderButtonProps>
-  Link: React.FC<HeaderLinkProps>
   Logo: React.FC<HeaderLogoProps>
   Navbar: React.FC<HeaderNavbarProps>
   NavbarLink: React.FC<NavbarDataProps>
@@ -33,7 +31,6 @@ const components: Components = {
   Actions: HeaderActions,
   Badges: HeaderBadges,
   Button: HeaderButton,
-  Link: HeaderLink,
   Logo: HeaderLogo,
   Navbar: HeaderNavbar,
   NavbarLink: HeaderNavbarLink,

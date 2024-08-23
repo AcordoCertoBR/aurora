@@ -21,13 +21,15 @@ export const Drawer = ({
       className={classNames('au-drawer', {
         'au-drawer--is-open': isOpen,
       })}>
-      <div className="au-drawer__header">
-        <div className="au-drawer__header-close" onClick={handleOpen}>
-          <IconX />
+      <div className="au-drawer__container">
+        <div className="au-drawer__header">
+          {renderHeader}
+          <div className="au-drawer__header-close" onClick={handleOpen}>
+            <IconX />
+          </div>
         </div>
-        {renderHeader}
+        <div className="au-drawer__content">{renderContent}</div>
       </div>
-      <div className="au-drawer__content">{renderContent}</div>
     </div>
   )
 }
