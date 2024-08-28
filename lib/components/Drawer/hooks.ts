@@ -14,7 +14,6 @@ export function useDrawer(props: UseDrawerProps) {
     })
   }
 
-  console.log('drawerOpen', drawerOpen)
   return {
     handleOpenDrawer,
     drawerOpen,

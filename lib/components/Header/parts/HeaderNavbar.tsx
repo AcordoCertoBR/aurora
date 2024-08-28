@@ -10,7 +10,7 @@ export type HeaderNavbarProps = {
 
 export const HeaderNavbar = ({ data, renderItem }: HeaderNavbarProps) => {
   return (
-    <nav className="au-header__navbar">
+    <nav role="navigation" className="au-header__navbar">
       {data?.map((item) => {
         return renderItem(item)
       })}

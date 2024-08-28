@@ -29,7 +29,7 @@ export const Footer = ({
   }
   if (categoryLinks) {
     return (
-      <footer className="au-footer-full">
+      <footer role="contentinfo" className="au-footer-full">
         <div className="au-footer-full__logo">{logo}</div>
         <div className="au-footer-full__links">
           {categoryLinks.map(({ categoryTitle, links }, index) => {
@@ -116,7 +116,7 @@ export const Footer = ({
   }
 
   return (
-    <footer className="au-footer">
+    <footer role="contentinfo" className="au-footer">
       <div className="au-footer__top">
         <div className="au-footer__top-logos">
           {logo}

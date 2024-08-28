@@ -12,6 +12,7 @@ export const HeaderWrap = ({
 }: HeaderWrapProps) => {
   return (
     <header
+      role="banner"
       className={classNames('au-header', {
         'au-header--fixed': position === 'fixed',
         'au-header--static': position === 'static',
