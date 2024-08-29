@@ -272,4 +272,12 @@
       text-transform: uppercase;
     }
   }
+
+  &__hamburger {
+    cursor: pointer;
+
+    @include aboveLarge() {
+      display: none;
+    }
+  }
 }
