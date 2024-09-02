@@ -10,6 +10,7 @@ export { NavbarVertical } from './components/NavbarVertical'
 export { NotificationsBar } from './components/NotificationsBar'
 export { ProfileNav } from './components/ProfileNav'
 export { Text } from './components/Text'
+export { Footer } from './components/Footer'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
