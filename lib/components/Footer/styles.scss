@@ -1,13 +1,14 @@
 .au-footer {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
-  padding-block: 48px;
-  gap: 40px;
+  background-color: $color-neutral-00;
+  border-top: 1px solid $color-neutral-20;
+  padding-block: $spacing-600;
+  gap: $spacing-500;
   @include container();
   @include aboveLarge() {
-    padding-block: 64px;
-    gap: 48px;
+    padding-block: $spacing-800;
+    gap: $spacing-600;
   }
 
   &__top {
@@ -15,14 +16,14 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid $color-neutral-20;
-    padding-bottom: 40px;
+    padding-bottom: $spacing-500;
     @include aboveLarge() {
-      padding-bottom: 48px;
+      padding-bottom: $spacing-600;
     }
   }
   &__top-logos {
     display: flex;
-    gap: 24px;
+    gap: $spacing-300;
     align-items: center;
   }
 
@@ -50,7 +51,7 @@
     @include aboveLarge() {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: $spacing-200;
     }
   }
 
@@ -59,7 +60,7 @@
     @include aboveLarge() {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: $spacing-200;
       & svg {
         cursor: pointer;
         &:hover {
@@ -71,9 +72,9 @@
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: $spacing-400;
     border-bottom: 1px solid $color-neutral-30;
-    padding-bottom: 40px;
+    padding-bottom: $spacing-500;
     @include aboveLarge() {
       display: none;
     }
@@ -100,7 +101,7 @@
   &__content-social {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: $spacing-200;
     @include aboveLarge() {
       display: none;
     }
@@ -108,7 +109,7 @@
   &__content-social-links {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: $spacing-200;
     & svg {
       cursor: pointer;
       &:hover {
@@ -129,7 +130,7 @@
     display: none;
     @include aboveLarge() {
       display: block;
-      max-width: 540px;
+      max-width: 5$spacing-500;
     }
   }
   &__bottom-copyrights {
@@ -145,12 +146,13 @@
   display: flex;
   flex-direction: column;
   background-color: $color-neutral-00;
-  padding-block: 48px;
-  gap: 40px;
+  border-top: 1px solid $color-neutral-20;
+  padding-block: $spacing-600;
+  gap: $spacing-500;
   @include container();
   @include aboveLarge() {
-    padding-block: 64px;
-    gap: 48px;
+    padding-block: $spacing-800;
+    gap: $spacing-600;
   }
 
   &__logo {
@@ -161,7 +163,7 @@
   &__links {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: $spacing-400;
     @include aboveLarge() {
       flex-direction: row;
       justify-content: space-between;
@@ -170,7 +172,7 @@
     &.is-clickable {
       cursor: pointer;
       &:hover {
-        opacity: 0.7;
+        opacity: $opacity-30;
       }
     }
   }
@@ -179,13 +181,13 @@
     max-width: 272px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: $spacing-200;
   }
 
   &__links-socials {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: $spacing-200;
   }
 
   &__certificates {
@@ -194,11 +196,11 @@
     justify-content: space-between;
     align-items: center;
     border-block: 1px solid $color-neutral-30;
-    padding-block: 40px;
-    gap: 32px;
+    padding-block: $spacing-500;
+    gap: $spacing-400;
     @include aboveLarge() {
       flex-direction: row;
-      padding-block: 48px;
+      padding-block: $spacing-600;
     }
   }
 
@@ -211,7 +213,7 @@
     flex-wrap: wrap;
     @include aboveLarge() {
       justify-content: start;
-      gap: 32px;
+      gap: $spacing-400;
       width: 100%;
     }
   }
