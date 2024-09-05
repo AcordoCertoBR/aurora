@@ -3,11 +3,11 @@
   flex-direction: column;
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  padding-block: $spacing-600;
   gap: $spacing-500;
-  @include container();
+  padding: $spacing-600 $spacing-300;
+
   @include aboveLarge() {
-    padding-block: $spacing-800;
+    padding: $spacing-800;
     gap: $spacing-600;
   }
 
@@ -147,11 +147,10 @@
   flex-direction: column;
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  padding-block: $spacing-600;
+  padding: $spacing-600 $spacing-300;
   gap: $spacing-500;
-  @include container();
   @include aboveLarge() {
-    padding-block: $spacing-800;
+    padding: $spacing-800;
     gap: $spacing-600;
   }
 
@@ -190,21 +189,21 @@
     gap: $spacing-200;
   }
 
-  &__certificates {
+  &__bottom {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-block: 1px solid $color-neutral-30;
-    padding-block: $spacing-500;
-    gap: $spacing-400;
+    border-top: 1px solid $color-neutral-30;
+    padding-top: $spacing-500;
+    gap: $spacing-600;
     @include aboveLarge() {
       flex-direction: row;
-      padding-block: $spacing-600;
+      padding-top: $spacing-600;
     }
   }
 
-  &__certificates-logos {
+  &__bottom-certificates {
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -217,18 +216,52 @@
       width: 100%;
     }
   }
-  &__certificates-notes {
+
+  &__bottom-side {
+    display: flex;
     width: 100%;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid $color-neutral-30;
+    padding-top: $spacing-600;
+    text-align: center;
+
     @include aboveLarge() {
-      max-width: 554px;
-      text-align: end;
+      border-top: 0;
+      padding-top: 0;
+      text-align: right;
+      align-items: flex-end;
+    }
+  }
+
+  &__stores {
+    display: flex;
+    gap: 13px;
+    margin-bottom: $spacing-600;
+
+    @include aboveLarge {
+      gap: $spacing-200;
+      margin-bottom: $spacing-200;
+    }
+  }
+
+  &__stores-logo {
+    cursor: pointer;
+    width: 129px;
+    @include aboveLarge {
+      width: 117px;
+    }
+
+    &.is-clickable {
+      cursor: pointer;
+      &:hover {
+        opacity: $opacity-30;
+      }
     }
   }
 
   &__copyrights {
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
   }
 }
