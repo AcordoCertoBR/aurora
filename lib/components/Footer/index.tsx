@@ -1,6 +1,7 @@
 import { Text } from '../Text'
 import { FooterProps } from './types'
 import { certificatesMap, socialsMap, storesMap } from './data'
+import { Conditional } from '../misc'
 import classNames from 'classnames'
 import './styles.scss'
 
@@ -100,28 +101,34 @@ export const Footer = ({
             })}
           </div>
           <div className="au-footer-full__bottom-side">
-            <div className="au-footer-full__stores">
-              {usedStores.map(({ icon, url, name }, index) => {
-                return (
-                  <img
-                    className={classNames('au-footer-full__stores-logo', {
-                      'is-clickable': !!url,
-                    })}
-                    key={index}
-                    src={icon}
-                    alt={name}
-                    onClick={() => url && handleClick(url)}
-                  />
-                )
-              })}
-            </div>
+            <Conditional
+              condition={!!usedStores.length}
+              renderIf={
+                <div className="au-footer-full__stores">
+                  {usedStores.map(({ icon, url, name }, index) => {
+                    return (
+                      <img
+                        className={classNames('au-footer-full__stores-logo', {
+                          'is-clickable': !!url,
+                        })}
+                        key={index}
+                        src={icon}
+                        alt={name}
+                        onClick={() => url && handleClick(url)}
+                      />
+                    )
+                  })}
+                </div>
+              }
+            />
             <Text
               as="h2"
               variant="body-medium"
               weight="regular"
-              color="secondary">
-              {copyrights}
-            </Text>
+              color="secondary"
+              className="au-footer-full__copyrights"
+              dangerouslySetInnerHTML={copyrights}
+            />
           </div>
         </div>
       </footer>
@@ -177,15 +184,9 @@ export const Footer = ({
         </div>
       </div>
       <div className="au-footer__bottom">
-        <div className="au-footer__bottom-copyrights">
-          <Text
-            as="h2"
-            variant="body-medium"
-            weight="regular"
-            color="secondary">
-            {copyrights}
-          </Text>
-        </div>
+        <Text as="h2" variant="body-medium" weight="regular" color="secondary">
+          {copyrights}
+        </Text>
       </div>
     </footer>
   )

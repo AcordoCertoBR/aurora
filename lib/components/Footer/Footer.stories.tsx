@@ -108,10 +108,9 @@ export const LoggedOut: Story = {
       },
     ],
     socialLinks: {
-      instagram: 'https://instagram.com',
       facebook: 'https://facebook.com',
+      instagram: 'https://instagram.com',
       youtube: 'https://youtube.com',
-      linkedin: 'https://linkedin.com',
     },
     stores: {
       googleplay: 'https://play.google.com',

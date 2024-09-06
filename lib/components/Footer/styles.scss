@@ -41,8 +41,10 @@
     display: none;
     @include aboveLarge() {
       display: flex;
-      gap: 33px;
+      flex-wrap: wrap;
       align-items: center;
+      gap: 33px;
+      margin-right: $spacing-100;
     }
   }
 
@@ -84,8 +86,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 30px;
     flex-wrap: wrap;
+    gap: $spacing-400 0px;
+
     @include aboveLarge() {
       display: none;
     }
@@ -121,24 +124,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    @include aboveLarge() {
-      justify-content: space-between;
-    }
-  }
-
-  &__bottom-notes {
-    display: none;
-    @include aboveLarge() {
-      display: block;
-      max-width: 5$spacing-500;
-    }
-  }
-  &__bottom-copyrights {
     text-align: center;
-    @include aboveLarge() {
-      max-width: 400px;
-      text-align: end;
-    }
   }
 }
 
@@ -210,6 +196,8 @@
     width: 100%;
     justify-content: space-between;
     flex-wrap: wrap;
+    gap: $spacing-400 0px;
+
     @include aboveLarge() {
       justify-content: start;
       gap: $spacing-400;
@@ -223,12 +211,9 @@
     flex-direction: column;
     align-items: center;
     border-top: 1px solid $color-neutral-30;
-    padding-top: $spacing-600;
     text-align: center;
-
     @include aboveLarge() {
       border-top: 0;
-      padding-top: 0;
       text-align: right;
       align-items: flex-end;
     }
@@ -237,11 +222,11 @@
   &__stores {
     display: flex;
     gap: 13px;
-    margin-bottom: $spacing-600;
+    padding-top: $spacing-600;
 
     @include aboveLarge {
       gap: $spacing-200;
-      margin-bottom: $spacing-200;
+      padding-top: 0;
     }
   }
 
@@ -261,7 +246,10 @@
   }
 
   &__copyrights {
-    display: flex;
-    align-items: center;
+    padding-top: $spacing-600;
+
+    @include aboveLarge() {
+      padding-top: $spacing-200;
+    }
   }
 }
