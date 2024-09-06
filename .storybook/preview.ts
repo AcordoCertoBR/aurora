@@ -11,7 +11,7 @@ const preview: Preview = {
       },
     },
     docs: {
-      theme: themes.light,
+      theme: themes.dark,
     },
   },
 }
