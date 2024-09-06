@@ -3,12 +3,11 @@
   flex-direction: column;
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  gap: $spacing-500;
+  gap: $spacing-600;
   padding: $spacing-600 $spacing-300;
 
   @include aboveLarge() {
     padding: $spacing-800;
-    gap: $spacing-600;
   }
 
   &__top {
@@ -76,7 +75,7 @@
     flex-direction: column;
     gap: $spacing-400;
     border-bottom: 1px solid $color-neutral-30;
-    padding-bottom: $spacing-500;
+    padding-bottom: $spacing-600;
     @include aboveLarge() {
       display: none;
     }
@@ -134,10 +133,9 @@
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
   padding: $spacing-600 $spacing-300;
-  gap: $spacing-500;
+  gap: $spacing-600;
   @include aboveLarge() {
     padding: $spacing-800;
-    gap: $spacing-600;
   }
 
   &__logo {

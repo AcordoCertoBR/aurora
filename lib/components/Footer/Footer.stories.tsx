@@ -133,10 +133,6 @@ export const LoggedIn: Story = {
       youtube: 'https://youtube.com',
       linkedin: 'https://linkedin.com',
     },
-    stores: {
-      googleplay: 'https://play.google.com',
-      appstore: 'https://appstore.com',
-    },
     certificates: ['sslblindado', 'reclameaqui', 'pcidss'],
     copyrights: `© Copyright 2024 Consumidor Positivo Ltda. Todos os direitos reservados / CNPJ: 30.247.128/0001-15`,
   },
