@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useLazyImageTypes } from './types'
+import { UseLazyImageProps } from './types'
 
-export function useLazyImage({ lazy = true, src }: useLazyImageTypes) {
+export function useLazyImage({ lazy = true, src }: UseLazyImageProps) {
   const [imageSrc, setImageSrc] = useState<string | undefined>(
     lazy ? undefined : src,
   )

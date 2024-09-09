@@ -1,4 +1,4 @@
-export interface LazyImageTypes {
+export type LazyImageProps = {
   className?: string
   lazy?: boolean
   src: string
@@ -9,7 +9,7 @@ export interface LazyImageTypes {
   style?: { [key: string]: string | number }
 }
 
-export interface useLazyImageTypes {
+export type UseLazyImageProps = {
   lazy: boolean
   src: string
 }

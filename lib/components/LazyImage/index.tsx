@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useLazyImage } from './hooks'
 
-import { LazyImageTypes } from './types'
+import { LazyImageProps } from './types'
 
 export const LazyImage = ({
   className,
@@ -13,7 +13,7 @@ export const LazyImage = ({
   width,
   draggable = false,
   style,
-}: LazyImageTypes) => {
+}: LazyImageProps) => {
   const { imgRef, imageSrc } = useLazyImage({ lazy, src })
 
   return React.createElement('img', {
