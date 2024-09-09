@@ -4,7 +4,7 @@ import { useLazyImage } from './hooks'
 
 import { LazyImageTypes } from './types'
 
-const LazyImage = ({
+export const LazyImage = ({
   className,
   lazy = true,
   src,
@@ -29,5 +29,3 @@ const LazyImage = ({
     style,
   })
 }
-
-export default LazyImage
