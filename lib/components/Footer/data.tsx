@@ -1,11 +1,14 @@
-import fintech2022Logo from '../../assets/certifications/fintech-2022.svg'
-import fintech2023Logo from '../../assets/certifications/fintech-2023.svg'
-import pcidssLogo from '../../assets/certifications/pci-dss.svg'
-import quintessaLogo from '../../assets/certifications/quintessa.svg'
-import ra1000Logo from '../../assets/certifications/ra1000.svg'
-import reclameaquiLogo from '../../assets/certifications/reclame-aqui.svg'
-import scaleupLogo from '../../assets/certifications/scale-up.svg'
-import sslblindadoLogo from '../../assets/certifications/ssl-blindado.svg'
+import fintech2022Logo from '../../assets/certifications/fintech-2022.png'
+import fintech2023Logo from '../../assets/certifications/fintech-2023.png'
+import pcidssLogo from '../../assets/certifications/pci-dss.png'
+import quintessaLogo from '../../assets/certifications/quintessa.png'
+import ra1000Logo from '../../assets/certifications/ra1000.png'
+import reclameaquiLogo from '../../assets/certifications/reclame-aqui.png'
+import scaleupLogo from '../../assets/certifications/scale-up.png'
+import sslblindadoLogo from '../../assets/certifications/ssl-blindado.png'
+import appStoreLogo from '../../assets/stores/app-store.png'
+import googlePlayLogo from '../../assets/stores/google-play.png'
+
 import {
   IconInstagram,
   IconFacebook,
@@ -63,5 +66,16 @@ export const socialsMap = {
   linkedin: {
     name: 'Linkedin',
     icon: <IconLinkedin />,
+  },
+}
+
+export const storesMap = {
+  googleplay: {
+    name: 'Google Play',
+    icon: googlePlayLogo,
+  },
+  appstore: {
+    name: 'App Store',
+    icon: appStoreLogo,
   },
 }

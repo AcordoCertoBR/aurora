@@ -20,7 +20,7 @@ export const LoggedOut: Story = {
         categoryTitle: 'Quem Somos',
         links: [
           {
-            title: 'Sobre o Consumidor Positivo',
+            title: 'Sobre a Consumidor Positivo',
             url: 'https://google.com',
           },
           {
@@ -99,27 +99,28 @@ export const LoggedOut: Story = {
             url: 'https://google.com',
           },
           {
-            title: '3003 - 0201 ( Das 8h às 20h )',
+            title: '3003 - 0201 (Das 8h às 20h)',
           },
           {
-            title: '0800 727 0201 ( Cadastro Positivo )',
+            title: '0800 727 0201 (Cadastro Positivo)',
           },
         ],
       },
     ],
     socialLinks: {
-      instagram: 'https://instagram.com',
       facebook: 'https://facebook.com',
+      instagram: 'https://instagram.com',
       youtube: 'https://youtube.com',
-      linkedin: 'https://linkedin.com',
+    },
+    stores: {
+      googleplay: 'https://play.google.com',
+      appstore: 'https://appstore.com',
     },
     address:
       'Rua Cardeal Arcoverde nº 2365, Conjuntos. 81 a 84, Sala 03, Bairro: Pinheiros, na cidade de São Paulo, Estado de São Paulo, CEP 05407-003',
-    notes:
-      'As informações apresentadas nos relatórios de auto consulta, tais como: score, negativação e verificação de consultas realizadas no CPF são originárias do SCPC - banco de dados de proteção ao crédito administrado pela BOA VISTA SERVIÇOS S.A. inscrita no CNPJ nº 11.725.176/0001-27 -, empresa do Grupo Equifax.',
     certificates: ['sslblindado', 'reclameaqui', 'pcidss'],
     copyrights:
-      '© 2024 Consumidor Positivo Ltda.- Todos os direitos reservados',
+      '© 2024 Consumidor Positivo Ltda. - Todos os direitos reservados',
   },
 }
 
@@ -132,8 +133,6 @@ export const LoggedIn: Story = {
       youtube: 'https://youtube.com',
       linkedin: 'https://linkedin.com',
     },
-    notes:
-      'As informações apresentadas nos relatórios de auto consulta, tais como: score, negativação e verificação de consultas realizadas no CPF são originárias do SCPC - banco de dados de proteção ao crédito administrado pela BOA VISTA SERVIÇOS S.A. inscrita no CNPJ nº 11.725.176/0001-27 -, empresa do Grupo Equifax.',
     certificates: ['sslblindado', 'reclameaqui', 'pcidss'],
     copyrights: `© Copyright 2024 Consumidor Positivo Ltda. Todos os direitos reservados / CNPJ: 30.247.128/0001-15`,
   },

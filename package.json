@@ -1,7 +1,7 @@
 {
   "name": "@consumidor-positivo/aurora",
   "private": false,
-  "version": "0.0.19",
+  "version": "0.0.33",
   "type": "module",
   "main": "./dist/main.es.js",
   "modules": "./dist/main.es.js",
@@ -36,8 +36,8 @@
     "prepare": "husky"
   },
   "peerDependencies": {
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "dependencies": {
     "@fontsource-variable/lexend-deca": "5.0.13",

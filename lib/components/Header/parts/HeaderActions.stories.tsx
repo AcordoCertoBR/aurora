@@ -56,3 +56,10 @@ export const ActionProfile: Story = {
   },
   name: 'Profile',
 }
+
+export const ActionHamburger: Story = {
+  args: {
+    children: <Header.Hamburger onClick={() => ''} />,
+  },
+  name: 'Hamburger',
+}

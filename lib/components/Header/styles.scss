@@ -62,15 +62,12 @@
   }
 
   &__button {
-    padding: 4px;
     cursor: pointer;
   }
 
   &__badges {
-    padding: 4px;
     display: flex;
     align-items: center;
-    padding: 0 16px;
 
     > * + * {
       padding-left: 16px;
@@ -85,6 +82,14 @@
         position: absolute;
         left: 0;
         top: calc(50% - 12px);
+      }
+    }
+
+    .au-logo {
+      max-width: 56px;
+
+      img {
+        width: 100%;
       }
     }
   }
@@ -104,7 +109,7 @@
     @include aboveLarge() {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 40px;
     }
 
     .au-text {
@@ -126,8 +131,21 @@
       &:hover,
       &:focus {
         font-weight: 700;
-        color: $color-brand-blue-40;
         letter-spacing: -0.6px;
+      }
+
+      &.is-active {
+        color: $color-brand-blue-40;
+
+        &:hover,
+        &:focus {
+          color: $color-brand-blue-40;
+        }
+      }
+
+      &:hover,
+      &:focus {
+        color: $color-neutral-70;
       }
     }
 
@@ -185,6 +203,7 @@
       &:hover,
       &:focus {
         font-weight: 700;
+        letter-spacing: -0.6px;
       }
 
       &.is-active {
@@ -251,6 +270,14 @@
       color: $color-neutral-70;
       font-size: 16px;
       text-transform: uppercase;
+    }
+  }
+
+  &__hamburger {
+    cursor: pointer;
+
+    @include aboveLarge() {
+      display: none;
     }
   }
 }
