@@ -135,7 +135,7 @@ $desk-variation: 'desk-';
   @include bodyText();
   @include caption();
 
-  @include aboveSmall {
+  @include aboveLarge {
     @include displays(#{$desk-variation});
     @include headings(#{$desk-variation});
     @include bodyText(#{$desk-variation});
