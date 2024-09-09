@@ -1,6 +1,7 @@
 import { Text } from '../Text'
 import { FooterProps } from './types'
-import { certificatesMap, socialsMap } from './data'
+import { certificatesMap, socialsMap, storesMap } from './data'
+import { Conditional } from '../misc'
 import classNames from 'classnames'
 import './styles.scss'
 
@@ -10,8 +11,8 @@ export const Footer = ({
   socialLinks,
   address,
   certificates,
-  notes,
   copyrights,
+  stores = {},
 }: FooterProps) => {
   const usedCertificates = certificates.map(
     (certificate) => certificatesMap[certificate],
@@ -21,6 +22,13 @@ export const Footer = ({
     return {
       ...socialsMap[social as keyof typeof socialsMap],
       url: socialLinks[social as keyof typeof socialLinks],
+    }
+  })
+
+  const usedStores = Object.keys(stores).map((store) => {
+    return {
+      ...storesMap[store as keyof typeof storesMap],
+      url: stores[store as keyof typeof stores],
     }
   })
 
@@ -86,30 +94,42 @@ export const Footer = ({
             </Text>
           </div>
         </div>
-        <div className="au-footer-full__certificates">
-          <div className="au-footer-full__certificates-logos">
+        <div className="au-footer-full__bottom">
+          <div className="au-footer-full__bottom-certificates">
             {usedCertificates.map(({ logo, name }, index) => {
               return <img key={index} src={logo} alt={name} />
             })}
           </div>
-          <div className="au-footer-full__certificates__notes">
+          <div className="au-footer-full__bottom-side">
+            <Conditional
+              condition={!!usedStores.length}
+              renderIf={
+                <div className="au-footer-full__stores">
+                  {usedStores.map(({ icon, url, name }, index) => {
+                    return (
+                      <img
+                        className={classNames('au-footer-full__stores-logo', {
+                          'is-clickable': !!url,
+                        })}
+                        key={index}
+                        src={icon}
+                        alt={name}
+                        onClick={() => url && handleClick(url)}
+                      />
+                    )
+                  })}
+                </div>
+              }
+            />
             <Text
               as="h2"
               variant="body-medium"
               weight="regular"
-              color="secondary">
-              {notes}
-            </Text>
+              color="secondary"
+              className="au-footer-full__copyrights"
+              dangerouslySetInnerHTML={copyrights}
+            />
           </div>
-        </div>
-        <div className="au-footer-full__copyrights">
-          <Text
-            as="h2"
-            variant="body-medium"
-            weight="regular"
-            color="secondary">
-            {copyrights}
-          </Text>
         </div>
       </footer>
     )
@@ -148,15 +168,6 @@ export const Footer = ({
             return <img key={index} src={logo} alt={name} />
           })}
         </div>
-        <div className="au-footer__content-notes">
-          <Text
-            as="h2"
-            variant="body-medium"
-            weight="regular"
-            color="secondary">
-            {notes}
-          </Text>
-        </div>
         <div className="au-footer__content-social">
           <Text as="h2" variant="heading-micro" weight="bold">
             Siga a gente
@@ -173,24 +184,9 @@ export const Footer = ({
         </div>
       </div>
       <div className="au-footer__bottom">
-        <div className="au-footer__bottom-notes">
-          <Text
-            as="h2"
-            variant="body-medium"
-            weight="regular"
-            color="secondary">
-            {notes}
-          </Text>
-        </div>
-        <div className="au-footer__bottom-copyrights">
-          <Text
-            as="h2"
-            variant="body-medium"
-            weight="regular"
-            color="secondary">
-            {copyrights}
-          </Text>
-        </div>
+        <Text as="h2" variant="body-medium" weight="regular" color="secondary">
+          {copyrights}
+        </Text>
       </div>
     </footer>
   )

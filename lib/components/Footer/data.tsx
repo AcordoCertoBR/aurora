@@ -6,6 +6,9 @@ import ra1000Logo from '../../assets/certifications/ra1000.png'
 import reclameaquiLogo from '../../assets/certifications/reclame-aqui.png'
 import scaleupLogo from '../../assets/certifications/scale-up.png'
 import sslblindadoLogo from '../../assets/certifications/ssl-blindado.png'
+import appStoreLogo from '../../assets/stores/app-store.png'
+import googlePlayLogo from '../../assets/stores/google-play.png'
+
 import {
   IconInstagram,
   IconFacebook,
@@ -63,5 +66,16 @@ export const socialsMap = {
   linkedin: {
     name: 'Linkedin',
     icon: <IconLinkedin />,
+  },
+}
+
+export const storesMap = {
+  googleplay: {
+    name: 'Google Play',
+    icon: googlePlayLogo,
+  },
+  appstore: {
+    name: 'App Store',
+    icon: appStoreLogo,
   },
 }
