@@ -13,6 +13,7 @@ export const LazyImage = ({
   width,
   draggable = false,
   style,
+  onClick,
 }: LazyImageProps) => {
   const { imgRef, imageSrc } = useLazyImage({ lazy, src })
 
@@ -27,5 +28,6 @@ export const LazyImage = ({
     width,
     draggable,
     style,
+    onClick,
   })
 }

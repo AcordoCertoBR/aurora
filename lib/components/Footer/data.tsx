@@ -14,6 +14,7 @@ import {
   IconFacebook,
   IconYoutube,
   IconLinkedin,
+  IconTiktok,
 } from '../icons'
 
 export const certificatesMap = {
@@ -66,6 +67,10 @@ export const socialsMap = {
   linkedin: {
     name: 'Linkedin',
     icon: <IconLinkedin />,
+  },
+  tiktok: {
+    name: 'TikTok',
+    icon: <IconTiktok />,
   },
 }
 

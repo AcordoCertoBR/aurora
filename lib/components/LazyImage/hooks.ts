@@ -5,7 +5,7 @@ export function useLazyImage({ lazy = true, src }: UseLazyImageProps) {
   const [imageSrc, setImageSrc] = useState<string | undefined>(
     lazy ? undefined : src,
   )
-  const imgRef = useRef<any>(null)
+  const imgRef = useRef<HTMLImageElement>(null)
 
   const observeIntersection = useCallback(() => {
     const observer = new IntersectionObserver((entries) => {
