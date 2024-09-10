@@ -1,0 +1,76 @@
+.au-input {
+  cursor: pointer;
+  max-width: 272px;
+
+  &__field {
+    border: 1px solid $color-neutral-50;
+    background-color: $color-neutral-00;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 16px;
+    width: 100%;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 8px;
+
+    &-label {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 22px;
+    }
+
+    &-icon {
+    }
+  }
+
+  &__error-message {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  &--disabled {
+    .au-input {
+      cursor: not-allowed;
+
+      &__field {
+        background-color: $color-neutral-20;
+        border-color: $color-neutral-40;
+      }
+
+      &__header-label {
+        color: $color-neutral-40;
+      }
+    }
+  }
+
+  &--error {
+    .au-input {
+      &__field {
+        background-color: $color-error-00;
+        border-color: $color-error-50;
+      }
+
+      &__header-label {
+        color: $color-error-50;
+      }
+    }
+  }
+
+  &--success {
+    .au-input {
+      &__field {
+        background-color: $color-success-00;
+        border-color: $color-success-50;
+      }
+
+      &__header-label {
+        color: $color-success-50;
+      }
+    }
+  }
+}
