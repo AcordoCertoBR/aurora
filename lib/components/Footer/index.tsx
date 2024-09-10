@@ -3,6 +3,7 @@ import { FooterProps } from './types'
 import { certificatesMap, socialsMap, storesMap } from './data'
 import { Conditional } from '../misc'
 import classNames from 'classnames'
+import { LazyImage } from '../LazyImage'
 import './styles.scss'
 
 export const Footer = ({
@@ -97,7 +98,7 @@ export const Footer = ({
         <div className="au-footer-full__bottom">
           <div className="au-footer-full__bottom-certificates">
             {usedCertificates.map(({ logo, name }, index) => {
-              return <img key={index} src={logo} alt={name} />
+              return <LazyImage key={index} src={logo} alt={name} />
             })}
           </div>
           <div className="au-footer-full__bottom-side">
@@ -107,7 +108,7 @@ export const Footer = ({
                 <div className="au-footer-full__stores">
                   {usedStores.map(({ icon, url, name }, index) => {
                     return (
-                      <img
+                      <LazyImage
                         className={classNames('au-footer-full__stores-logo', {
                           'is-clickable': !!url,
                         })}
@@ -143,7 +144,7 @@ export const Footer = ({
           <div className="au-footer__top-divider" />
           <div className="au-footer__top-certificates">
             {usedCertificates.map(({ logo, name }, index) => {
-              return <img key={index} src={logo} alt={name} />
+              return <LazyImage key={index} src={logo} alt={name} />
             })}
           </div>
         </div>
@@ -165,7 +166,7 @@ export const Footer = ({
       <div className="au-footer__content">
         <div className="au-footer__content-certificates">
           {usedCertificates.map(({ logo, name }, index) => {
-            return <img key={index} src={logo} alt={name} />
+            return <LazyImage key={index} src={logo} alt={name} />
           })}
         </div>
         <div className="au-footer__content-social">

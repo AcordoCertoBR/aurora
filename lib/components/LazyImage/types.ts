@@ -7,6 +7,7 @@ export type LazyImageProps = {
   width?: number
   draggable?: boolean
   style?: { [key: string]: string | number }
+  onClick?: () => void
 }
 
 export type UseLazyImageProps = {
