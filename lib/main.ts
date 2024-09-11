@@ -12,6 +12,7 @@ export { NotificationsBar } from './components/NotificationsBar'
 export { ProfileNav } from './components/ProfileNav'
 export { Text } from './components/Text'
 export { Footer } from './components/Footer'
+export { InputField } from './components/InputField'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
