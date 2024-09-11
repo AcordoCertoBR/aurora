@@ -4,7 +4,7 @@ import { InputField } from './index'
 const meta: Meta<typeof InputField> = {
   title: 'Components/InputField',
   component: InputField,
-  tags: [],
+  tags: ['autodocs'],
 }
 
 export default meta
