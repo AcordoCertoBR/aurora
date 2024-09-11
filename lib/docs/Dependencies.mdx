@@ -8,9 +8,23 @@ Esse projeto existe algumas dependencias que usamos como base para construção 
 
 ## Fonts
 
-No projeto, são utilizadas as fontes [Lexend Deca](https://fontsource.org/fonts/lexend-deca) para títulos e [Source Sans 3](https://fontsource.org/fonts/source-sans-3) para os parágrafos. Para incorporar essas fontes, estamos utilizando a biblioteca Fontsource.
+No projeto, as fontes Google [Lexend Deca](https://fonts.google.com/specimen/Lexend+Deca?query=lexend+deca) são empregadas para títulos, enquanto a fonte [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3?query=source+sans+3) é utilizada para os parágrafos. Para incorporar essas fontes ao projeto, siga as etapas abaixo:
 
-Então é necessário instalar essas fonts no projeto
+### import
 
-<p>`npm install @fontsource-variable/lexend-deca`</p>
-<p>`npm install @fontsource-variable/source-sans-3`</p>
+<p>
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Source+Sans+3:wght@200..900&display=swap" rel="stylesheet" />
+```
+</p>
+
+### @import
+
+<p>
+```css 
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Source+Sans+3:wght@200..900&display=swap');
+```
+</p>
