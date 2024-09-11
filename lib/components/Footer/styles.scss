@@ -1,13 +1,19 @@
 .au-footer {
-  display: flex;
-  flex-direction: column;
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  gap: $spacing-600;
-  padding: $spacing-600 $spacing-300;
+  padding: $spacing-600 0;
 
   @include aboveLarge() {
     padding: $spacing-800;
+  }
+
+  &__container {
+    @include container;
+    & {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-600;
+    }
   }
 
   &__top {
@@ -128,14 +134,21 @@
 }
 
 .au-footer-full {
-  display: flex;
-  flex-direction: column;
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  padding: $spacing-600 $spacing-300;
+  padding: $spacing-600 0;
   gap: $spacing-600;
   @include aboveLarge() {
     padding: $spacing-800;
+  }
+
+  &__container {
+    @include container;
+    & {
+      gap: $spacing-600;
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__logo {
@@ -198,8 +211,8 @@
 
     @include aboveLarge() {
       justify-content: start;
+      flex-wrap: nowrap;
       gap: $spacing-400;
-      width: 100%;
     }
   }
 
