@@ -6,20 +6,22 @@ import { Conditional } from '../misc'
 import './styles.scss'
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  status?: 'default' | 'success' | 'error'
   optional?: boolean
+  requiredInput?: boolean
+  success?: boolean
+  error?: boolean
   errorMessage?: string
   label?: string
-  requiredInput?: boolean
   ref?: React.MutableRefObject<HTMLInputElement>
 }
 
 export const InputField = ({
-  status = 'default',
   optional,
+  requiredInput,
+  success,
+  error,
   errorMessage,
   label,
-  requiredInput,
   ref,
   id,
   disabled,
@@ -28,19 +30,30 @@ export const InputField = ({
 }: InputProps) => {
   const inputClasses = classNames('au-input', {
     'au-input--disabled': disabled,
-    'au-input--error': status === 'error',
-    'au-input--success': status === 'success',
+    'au-input--error': error,
+    'au-input--success': success,
   })
 
-  const statesFlag = {
-    default: null,
-    optional: <span>(Opcional)</span>,
-    success: <IconCheck rawColor={COLOR_SUCCESS_50} />,
-    error: <IconAlertCircle rawColor={COLOR_ERROR_50} />,
-    disabled: <IconSlash rawColor={COLOR_NEUTRAL_40} />,
-  }
+  const statesFlag = [
+    { state: 'optional', value: !!optional, icon: <span>(Opcional)</span> },
+    {
+      state: 'success',
+      value: !!success,
+      icon: <IconCheck rawColor={COLOR_SUCCESS_50} />,
+    },
+    {
+      state: 'error',
+      value: !!error,
+      icon: <IconAlertCircle rawColor={COLOR_ERROR_50} />,
+    },
+    {
+      state: 'disabled',
+      value: !!disabled,
+      icon: <IconSlash rawColor={COLOR_NEUTRAL_40} />,
+    },
+  ]
 
-  const currentState = disabled ? 'disabled' : optional ? 'optional' : status
+  const currentState = statesFlag.find(({ value }) => !!value)
 
   return (
     <div className={inputClasses} style={style}>
@@ -56,7 +69,7 @@ export const InputField = ({
             </label>
           }
         />
-        <div className="au-input__header-icon">{statesFlag[currentState]}</div>
+        <div className="au-input__header-icon">{currentState?.icon}</div>
       </div>
       <input
         id={id}
@@ -66,7 +79,7 @@ export const InputField = ({
         {...props}
       />
       <Conditional
-        condition={!!errorMessage && status === 'error'}
+        condition={!!errorMessage && !!error}
         renderIf={<p className="au-input__error-message">{errorMessage}</p>}
       />
     </div>

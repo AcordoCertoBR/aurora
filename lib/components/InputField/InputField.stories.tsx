@@ -44,7 +44,7 @@ export const Optional: Story = {
 export const Success: Story = {
   args: {
     id: 'success-input',
-    status: 'success',
+    success: true,
     ...commonArgs,
   },
 }
@@ -52,7 +52,7 @@ export const Success: Story = {
 export const Error: Story = {
   args: {
     id: 'error-input',
-    status: 'error',
+    error: true,
     errorMessage: 'Mensagem de erro',
     ...commonArgs,
   },
