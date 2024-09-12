@@ -19,20 +19,23 @@ const commonArgs = {
 
 export const Default: Story = {
   args: {
+    id: 'default-input',
     ...commonArgs,
   },
 }
 
 export const Required: Story = {
   args: {
+    id: 'required-input',
     requiredInput: true,
     required: true,
     ...commonArgs,
   },
 }
 
-export const Opcional: Story = {
+export const Optional: Story = {
   args: {
+    id: 'optional-input',
     optional: true,
     ...commonArgs,
   },
@@ -40,6 +43,7 @@ export const Opcional: Story = {
 
 export const Success: Story = {
   args: {
+    id: 'success-input',
     status: 'success',
     ...commonArgs,
   },
@@ -47,6 +51,7 @@ export const Success: Story = {
 
 export const Error: Story = {
   args: {
+    id: 'error-input',
     status: 'error',
     errorMessage: 'Mensagem de erro',
     ...commonArgs,
@@ -55,6 +60,7 @@ export const Error: Story = {
 
 export const Disabled: Story = {
   args: {
+    id: 'disabled-input',
     disabled: true,
     ...commonArgs,
   },

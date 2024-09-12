@@ -21,6 +21,7 @@ export const InputField = ({
   label,
   requiredInput,
   ref,
+  id,
   disabled,
   style,
   ...props
@@ -47,7 +48,7 @@ export const InputField = ({
         <Conditional
           condition={!!label}
           renderIf={
-            <label htmlFor="input-text" className="au-input__header-label">
+            <label htmlFor={id} className="au-input__header-label">
               {label}{' '}
               {requiredInput && (
                 <strong className="au-input__header-label--required">*</strong>
@@ -58,7 +59,7 @@ export const InputField = ({
         <div className="au-input__header-icon">{statesFlag[currentState]}</div>
       </div>
       <input
-        id="input-text"
+        id={id}
         className="au-input__field"
         ref={ref}
         disabled={disabled}
