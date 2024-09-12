@@ -1,10 +1,10 @@
 .au-footer {
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  padding: $spacing-600 0;
+  padding-block: $spacing-600;
 
   @include aboveLarge() {
-    padding: $spacing-800;
+    padding-block: $spacing-800;
   }
 
   &__container {
@@ -136,10 +136,10 @@
 .au-footer-full {
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  padding: $spacing-600 0;
-  gap: $spacing-600;
+  padding-block: $spacing-600;
+
   @include aboveLarge() {
-    padding: $spacing-800;
+    padding-block: $spacing-800;
   }
 
   &__container {
