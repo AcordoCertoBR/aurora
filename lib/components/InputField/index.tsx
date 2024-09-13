@@ -12,7 +12,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   error?: boolean
   errorMessage?: string
   label?: string
-  ref?: React.MutableRefObject<HTMLInputElement>
+  ref?: React.RefObject<HTMLInputElement>
 }
 
 export const InputField = ({
