@@ -2,7 +2,7 @@
   cursor: pointer;
 
   &__field {
-    border: 1px solid $color-neutral-70;
+    border: 1px solid $color-neutral-50;
     background-color: $color-neutral-00;
     border-radius: 8px;
     font-size: 16px;
@@ -11,7 +11,7 @@
     width: 100%;
 
     &:hover {
-      border: 1px solid $color-brand-blue-40;
+      border: 1px solid $color-neutral-70;
     }
 
     &:focus {
@@ -19,7 +19,7 @@
     }
   }
 
-  &:focus-within:not(.au-input--error), &:hover:not(.au-input--error, .au-input--disabled) {
+  &:focus-within:not(.au-input--error) {
     [class*='__header-label'] {
       color: $color-brand-blue-40;
     }
