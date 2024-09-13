@@ -2,20 +2,24 @@
   cursor: pointer;
 
   &__field {
-    border: 1px solid $color-neutral-50;
+    border: 1px solid $color-neutral-70;
     background-color: $color-neutral-00;
     border-radius: 8px;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 22px;
     padding: 16px;
     width: 100%;
 
-    &:focus {
+    &:hover {
       border: 1px solid $color-brand-blue-40;
+    }
+
+    &:focus {
+      border: 2px solid $color-brand-blue-40;
     }
   }
 
-  &:focus-within:not(.au-input--error) {
+  &:focus-within:not(.au-input--error), &:hover:not(.au-input--error, .au-input--disabled) {
     [class*='__header-label'] {
       color: $color-brand-blue-40;
     }
@@ -40,6 +44,7 @@
 
     &-icon {
       span {
+        font-size: 14px;
         color: $color-neutral-50;
       }
     }
