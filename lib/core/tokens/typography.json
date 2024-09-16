@@ -2,8 +2,8 @@
   "name": "Tipografia",
   "desc": "",
   "items": {
-    "font-lexend-deca": "'Lexend Deca', sans-serif",
-    "font-source-sans-3": "'Source Sans 3', sans-serif",
+    "font-title": "'Lexend Deca', sans-serif",
+    "font-body": "'Source Sans 3', sans-serif",
     "font-weight-bold": 700,
     "font-weight-semibold": 600,
     "font-weight-medium": 500,

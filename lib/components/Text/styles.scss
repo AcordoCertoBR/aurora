@@ -4,7 +4,7 @@ $desk-variation: 'desk-';
   &--#{$viewport}display-large,
   &--#{$viewport}display-medium,
   &--#{$viewport}display-small {
-    font-family: $font-lexend-deca;
+    font-family: $font-title;
   }
 
   &--#{$viewport}display-large {
@@ -29,7 +29,7 @@ $desk-variation: 'desk-';
   &--#{$viewport}heading-medium,
   &--#{$viewport}heading-small,
   &--#{$viewport}heading-micro {
-    font-family: $font-lexend-deca;
+    font-family: $font-title;
   }
 
   &--#{$viewport}heading-big {
@@ -63,7 +63,7 @@ $desk-variation: 'desk-';
   &--#{$viewport}body-large,
   &--#{$viewport}body-medium,
   &--#{$viewport}body-small {
-    font-family: $font-source-sans-3;
+    font-family: $font-body;
   }
 
   &--#{$viewport}body-big {
@@ -89,14 +89,14 @@ $desk-variation: 'desk-';
 
 @mixin caption($viewport: '') {
   &--#{$viewport}caption {
-    font-family: $font-source-sans-3;
+    font-family: $font-body;
     font-size: 12px;
     line-height: 18px;
   }
 }
 
 .au-text {
-  font-family: $font-source-sans-3;
+  font-family: $font-body;
   font-weight: 400;
   &--color {
     &-common {
