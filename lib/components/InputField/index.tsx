@@ -12,7 +12,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   error?: boolean
   errorMessage?: string
   label?: string
-  ref?: React.MutableRefObject<HTMLInputElement>
+  ref?: React.RefObject<HTMLInputElement>
 }
 
 export const InputField = ({
@@ -30,8 +30,8 @@ export const InputField = ({
 }: InputProps) => {
   const inputClasses = classNames('au-input', {
     'au-input--disabled': disabled,
-    'au-input--error': error,
     'au-input--success': success,
+    'au-input--error': error,
   })
 
   const statesFlag = [

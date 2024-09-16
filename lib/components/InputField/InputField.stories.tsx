@@ -24,6 +24,14 @@ export const Default: Story = {
   },
 }
 
+export const Focus: Story = {
+  args: {
+    id: 'focus-input',
+    autoFocus: true,
+    ...commonArgs
+  }
+}
+
 export const Required: Story = {
   args: {
     id: 'required-input',
