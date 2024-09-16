@@ -80,7 +80,7 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-400;
-    border-bottom: 1px solid $color-neutral-30;
+    border-bottom: 1px solid $color-neutral-20;
     padding-bottom: $spacing-600;
     @include aboveLarge() {
       display: none;
@@ -191,7 +191,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid $color-neutral-30;
+    border-top: 1px solid $color-neutral-20;
     padding-top: $spacing-500;
     gap: $spacing-600;
     @include aboveLarge() {
@@ -221,7 +221,7 @@
     width: 100%;
     flex-direction: column;
     align-items: center;
-    border-top: 1px solid $color-neutral-30;
+    border-top: 1px solid $color-neutral-20;
     text-align: center;
     @include aboveLarge() {
       border-top: 0;
