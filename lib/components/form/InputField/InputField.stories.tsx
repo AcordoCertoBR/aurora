@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { InputField } from './index'
 
 const meta: Meta<typeof InputField> = {
-  title: 'Components/InputField',
+  title: 'Components/form/InputField',
   component: InputField,
   tags: ['autodocs'],
 }
@@ -71,5 +71,12 @@ export const Disabled: Story = {
     id: 'disabled-input',
     disabled: true,
     ...commonArgs,
+  },
+}
+
+export const WithoutLabel: Story = {
+  args: {
+    style: commonArgs.style,
+    placeholder: commonArgs.placeholder
   },
 }
