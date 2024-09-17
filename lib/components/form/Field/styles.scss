@@ -1,13 +1,15 @@
-.au-input {
+.au-field {
   cursor: pointer;
 
-  &__field {
-    border: 1px solid $color-neutral-50;
+  &__input {
     background-color: $color-neutral-00;
+    border: 1px solid $color-neutral-50;
     border-radius: 8px;
+    box-sizing: border-box;
     font-size: 16px;
     line-height: 22px;
     padding: 16px;
+    height: 56px;
     width: 100%;
 
     &:hover {
@@ -19,7 +21,7 @@
     }
   }
 
-  &:focus-within:not(.au-input--error) {
+  &:focus-within:not(.au-field--error) {
     [class*='__header-label'] {
       color: $color-brand-blue-40;
     }
@@ -28,6 +30,7 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding-bottom: 8px;
 
     &-label {
@@ -35,7 +38,6 @@
       cursor: pointer;
       font-size: 14px;
       font-weight: 600;
-      line-height: 22px;
 
       &--required {
         color: $color-error-50;
@@ -61,7 +63,7 @@
   &--disabled {
     cursor: not-allowed;
 
-    [class*='__field'] {
+    [class*='__input'] {
       background-color: $color-neutral-20;
       border-color: $color-neutral-40;
       color: $color-neutral-40;
@@ -75,7 +77,7 @@
   }
 
   &--error {
-    [class*='__field'] {
+    [class*='__input'] {
       background-color: $color-error-00;
       border-color: $color-error-50;
     }
@@ -86,7 +88,7 @@
   }
 
   &--success {
-    [class*='__field'] {
+    [class*='__input'] {
       animation: inputSuccess 2s forwards;
     }
 
@@ -108,7 +110,7 @@
       border-color: $color-success-50;
     }
     100% {
-      @extend [class*='__field'];
+      @extend [class*='__input'];
     }
   }
 

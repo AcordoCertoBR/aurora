@@ -1,0 +1,19 @@
+.au-token-field {
+  max-width: max-content;
+
+  &__container {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__input {
+    font-size: 20px;
+    text-align: center;
+    padding: 8px;
+
+    &[type='number']::-webkit-inner-spin-button,
+    &[type='number']::-webkit-outer-spin-button {
+      display: none;
+    }
+  }
+}
