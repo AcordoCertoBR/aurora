@@ -1,10 +1,15 @@
 import { DatePicker } from 'react-aria-components'
 import './styles.scss'
 
+type DatepickerMode = 'simple' | 'calendar'
+
 type DatepickerProps = {
-  teste: string
+  mode?: DatepickerMode
+  defaultDate?: Date
 }
 
-export const Datepicker = ({ teste = 'lala' }: DatepickerProps) => {
-  return <DatePicker>{teste}</DatePicker>
+export const Datepicker = ({ mode = 'calendar' }: DatepickerProps) => {
+  return <DatePicker>
+    <input type='date' />
+  </DatePicker>
 }
