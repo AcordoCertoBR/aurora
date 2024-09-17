@@ -73,3 +73,10 @@ export const Disabled: Story = {
     ...commonArgs,
   },
 }
+
+export const WithoutLabel: Story = {
+  args: {
+    style: commonArgs.style,
+    placeholder: commonArgs.placeholder
+  },
+}
