@@ -13,6 +13,7 @@ export { ProfileNav } from './components/ProfileNav'
 export { Text } from './components/Text'
 export { Footer } from './components/Footer'
 export { InputField } from './components/form/InputField'
+export { TokenField } from './components/form/TokenField'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'

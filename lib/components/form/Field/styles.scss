@@ -2,9 +2,10 @@
   cursor: pointer;
 
   &__input {
-    border: 1px solid $color-neutral-50;
     background-color: $color-neutral-00;
+    border: 1px solid $color-neutral-50;
     border-radius: 8px;
+    box-sizing: border-box;
     font-size: 16px;
     line-height: 22px;
     padding: 16px;
@@ -16,8 +17,7 @@
     }
 
     &:focus {
-      border-color: $color-brand-blue-40;
-      outline: 2px solid $color-brand-blue-40;
+      border: 2px solid $color-brand-blue-40;
     }
   }
 
