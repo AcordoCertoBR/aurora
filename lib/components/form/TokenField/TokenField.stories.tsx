@@ -18,21 +18,28 @@ const commonArgs = {
 
 export const Default: Story = {
   args: {
-    ...commonArgs
+    ...commonArgs,
   },
 }
 
 export const CustomSize: Story = {
   args: {
     size: 4,
-    ...commonArgs
-  }
+    ...commonArgs,
+  },
 }
 
 export const Success: Story = {
   args: {
     success: true,
     ...commonArgs,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Estilo temporário com duração de 2 segundos',
+      },
+    },
   },
 }
 

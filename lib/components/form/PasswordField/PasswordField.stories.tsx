@@ -28,8 +28,8 @@ export const Focus: Story = {
   args: {
     id: 'focus-input',
     autoFocus: true,
-    ...commonArgs
-  }
+    ...commonArgs,
+  },
 }
 
 export const Required: Story = {
@@ -55,6 +55,13 @@ export const Success: Story = {
     success: true,
     ...commonArgs,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Estilo temporário com duração de 2 segundos',
+      },
+    },
+  },
 }
 
 export const Error: Story = {
@@ -77,6 +84,6 @@ export const Disabled: Story = {
 export const WithoutLabel: Story = {
   args: {
     style: commonArgs.style,
-    placeholder: commonArgs.placeholder
+    placeholder: commonArgs.placeholder,
   },
 }
