@@ -42,7 +42,7 @@ export default function useTokenField({
   }
 
   function _handleStartTimer() {
-    let interval = null
+    let interval: NodeJS.Timeout
 
     if (timer) {
       interval = setInterval(() => {
@@ -56,9 +56,10 @@ export default function useTokenField({
           }
         })
       }, 1000)
-    }
-    if (interval) {
-      return () => clearInterval(interval)
+      
+      if (interval) {
+        return () => clearInterval(interval)
+      }
     }
   }
 
