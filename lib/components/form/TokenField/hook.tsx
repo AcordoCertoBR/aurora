@@ -14,13 +14,13 @@ function inputtedValueIsValid(value: unknown) {
   return !isNaN
 }
 
-export default function useTokenField({
+export const useTokenField = ({
   size,
   onComplete,
   onChange,
   onChangeTimer,
   timer = null,
-}: UseTokenInputProps) {
+}: UseTokenInputProps) => {
   const rootElementRef = useRef<HTMLDivElement | null>(null)
   const [tokenMap, setTokenMap] = useState(_getDefaultTokens())
   const [timerTime, setTimerTime] = useState<number | null>(timer)
@@ -56,7 +56,7 @@ export default function useTokenField({
           }
         })
       }, 1000)
-      
+
       if (interval) {
         return () => clearInterval(interval)
       }
