@@ -8,6 +8,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   errorMessage?: string
   label?: string
   ref?: React.RefObject<HTMLInputElement>
+  inputStyle?: React.CSSProperties
 }
 
 export const InputField = ({
@@ -22,6 +23,7 @@ export const InputField = ({
   disabled,
   style,
   className,
+  inputStyle,
   ...props
 }: InputProps) => {
   return (
@@ -40,7 +42,13 @@ export const InputField = ({
         error={error}
         disabled={disabled}
       />
-      <Field.Input id={id} ref={ref} disabled={disabled} {...props} />
+      <Field.Input
+        id={id}
+        ref={ref}
+        disabled={disabled}
+        style={inputStyle}
+        {...props}
+      />
       <Field.ErrorMessage hasError={!!error} message={errorMessage} />
     </Field.Root>
   )

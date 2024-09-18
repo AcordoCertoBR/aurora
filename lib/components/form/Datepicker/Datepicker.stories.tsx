@@ -18,5 +18,7 @@ export default meta
 type Story = StoryObj<typeof Datepicker>
 
 export const WithText: Story = {
-  args: {},
+  args: {
+    style: { maxWidth: '272px' },
+  },
 }
