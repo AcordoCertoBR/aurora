@@ -54,7 +54,10 @@ export const PasswordField = ({
           disabled={disabled}
           {...props}
         />
-        <button className="au-password-field__btn" onClick={changeVisibility}>
+        <button
+          className="au-password-field__btn"
+          onClick={changeVisibility}
+          disabled={disabled}>
           {textButton}
         </button>
       </div>
