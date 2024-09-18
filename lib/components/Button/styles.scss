@@ -199,9 +199,17 @@
   }
 
   &--round {
-    padding: 12px;
-    height: 48px;
-    width: 48px;
+    &-large {
+      padding: 12px;
+      height: 48px;
+      width: 48px;
+    }
+
+    &-medium {
+      padding: 10px;
+      height: 40px;
+      width: 40px;
+    }
   }
 }
 

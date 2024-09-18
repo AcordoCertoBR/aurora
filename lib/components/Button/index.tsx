@@ -59,7 +59,7 @@ export const Button: React.FC<ButtonProps> = ({
     'au-btn--negative': !!negative,
     'au-btn--disabled': !!disabled,
     'au-btn--loading': !!loading,
-    'au-btn--round': !!round,
+    [`au-btn--round-${size}`]: !!round,
     'btn-text': !!btnText,
     [`au-btn--border-${borderWidth}`]: !!borderWidth,
     [className ?? '']: typeof className === 'string',

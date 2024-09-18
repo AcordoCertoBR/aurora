@@ -213,6 +213,14 @@ export const RoundGhost: Story = {
   },
 }
 
+export const RoundLargeSize: Story = {
+  args: {
+    children: <IconDownload />,
+    round: true,
+    size: 'large'
+  },
+}
+
 // export const Negative: Story = {
 //   args: {
 //     children: 'Negative',
