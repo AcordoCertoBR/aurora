@@ -22,5 +22,9 @@
         background-position-y: center;
         right: 16px;
         height: 56px;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
     }
 }
