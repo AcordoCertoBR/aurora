@@ -21,6 +21,6 @@ export const WithText: Story = {
   args: {
     style: { maxWidth: '272px' },
     label: 'lulu',
-    onChange: (date) => alert(date?.toString())
+    onChange: (date) => alert(date?.toString()),
   },
 }

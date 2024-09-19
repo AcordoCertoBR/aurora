@@ -1,8 +1,7 @@
 .au-datepicker {
   position: relative;
 
-  &__calendar-holder {
-    position: absolute;
-    right: 0;
+  &__field-container {
+    position: relative;
   }
 }

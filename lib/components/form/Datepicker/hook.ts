@@ -11,7 +11,7 @@ function strToDate(stringDate: string) {
   return new Date(year, month - 1, day)
 }
 
-export function useDatepicker({ onChange }: UseDatePickerProps) {
+export function useDatepicker({ onChange, disabled }: UseDatePickerProps) {
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [date, setDate] = useState('')
 
@@ -23,7 +23,7 @@ export function useDatepicker({ onChange }: UseDatePickerProps) {
     }
   }, [date])
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     let inputDate = e.target.value
     inputDate = inputDate.replace(/\D/g, '') // Remove non-numeric characters
 
@@ -37,8 +37,15 @@ export function useDatepicker({ onChange }: UseDatePickerProps) {
     setDate(inputDate)
   }
 
+  function showCalendar() {
+    if (!disabled) {
+      alert('calendar')
+    }
+  }
+
   return {
     date,
     handleDateChange,
+    showCalendar,
   }
 }

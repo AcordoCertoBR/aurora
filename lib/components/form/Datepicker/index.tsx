@@ -4,18 +4,16 @@ import { DatepickerProps } from './types'
 import { useDatepicker } from './hook'
 import './styles.scss'
 import { IconCalendar } from '../../icons'
+import { COLOR_NEUTRAL_40 } from '../../../main'
 
 export const Datepicker = ({
-  mode = 'calendar',
+  calendar = true,
   placeholder = 'DD/MM/YYYY',
   disabled,
   onChange,
   ...props
 }: DatepickerProps) => {
-  const { date, handleDateChange } = useDatepicker({ onChange })
-  const isCalendar = mode === 'calendar'
-
-  console.log(mode)
+  const { date, handleDateChange, showCalendar } = useDatepicker({ onChange })
 
   return (
     <div className="au-datepicker">
@@ -28,13 +26,20 @@ export const Datepicker = ({
           disabled={disabled}
           onChange={handleDateChange}
           placeholder={placeholder}
+          rightSlot={
+            calendar && (
+              <div
+                className="au-datepicker__calendar-holder"
+                style={{ color: 'red' }}
+                onClick={showCalendar}>
+                <IconCalendar
+                  rawColor={disabled ? COLOR_NEUTRAL_40 : undefined}
+                />
+              </div>
+            )
+          }
         />
       </DatePicker>
-      {isCalendar && (
-        <div className="au-datepicker__calendar-holder">
-          <IconCalendar />
-        </div>
-      )}
     </div>
   )
 }

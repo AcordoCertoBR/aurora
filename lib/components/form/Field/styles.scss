@@ -1,5 +1,11 @@
 .au-field {
   cursor: pointer;
+  border-radius: 8px;
+
+  &__input-holder {
+    position: relative;
+    height: 56px;
+  }
 
   &__input {
     background-color: $color-neutral-00;
@@ -52,6 +58,13 @@
         color: $color-neutral-50;
       }
     }
+  }
+
+  &__right-slot {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   &__error-message {
