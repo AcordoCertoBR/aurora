@@ -6,7 +6,7 @@
 
     &__input {
         position: absolute;
-        padding: 16px 94px 16px 16px;
+        padding: 16px 92px 16px 16px;
     }
 
     &__btn {
@@ -14,6 +14,7 @@
         border: none;
         color: $color-brand-blue-40;
         cursor: pointer;
+        font-family: $font-body;
         font-size: 14px;
         font-weight: 600;
         text-transform: uppercase;

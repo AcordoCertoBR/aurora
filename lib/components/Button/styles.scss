@@ -72,14 +72,11 @@
 
     &:hover,
     &:focus {
-      background-color: $color-brand-blue-10;
-      border-color: $color-brand-blue-40;
+      background-color: $color-brand-blue-00;
     }
 
     &:active {
       background-color: $color-brand-blue-20;
-      border-color: $color-brand-blue-50;
-      color: $color-brand-blue-50;
     }
   }
 
@@ -95,13 +92,14 @@
 
     &:hover,
     &:focus {
-      background-color: $color-neutral-10;
+      background-color: $color-brand-blue-00;
       border-color: 0;
     }
 
     &:active {
-      background-color: $color-neutral-10;
-      border: 1px solid $color-neutral-40;
+      background-color: $color-brand-blue-20;
+      border: 1px solid $color-brand-blue-50;
+      color: $color-brand-blue-50;
     }
   }
 
@@ -197,6 +195,20 @@
         background-color: transparent;
         color: $color-neutral-40;
       }
+    }
+  }
+
+  &--round {
+    &-large {
+      padding: 12px;
+      height: 48px;
+      width: 48px;
+    }
+
+    &-medium {
+      padding: 10px;
+      height: 40px;
+      width: 40px;
     }
   }
 }
