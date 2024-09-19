@@ -14,6 +14,7 @@ export { Text } from './components/Text'
 export { Footer } from './components/Footer'
 export { InputField } from './components/form/InputField'
 export { TokenField } from './components/form/TokenField'
+export { PasswordField } from './components/form/PasswordField'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'

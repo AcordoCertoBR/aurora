@@ -1,0 +1,31 @@
+.au-password-field {
+    &__container {
+        position: relative;
+        height: 56px;
+    }
+
+    &__input {
+        position: absolute;
+        padding: 16px 92px 16px 16px;
+    }
+
+    &__btn {
+        background-color: transparent;
+        border: none;
+        color: $color-brand-blue-40;
+        cursor: pointer;
+        font-family: $font-body;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        position: absolute;
+        z-index: 1;
+        background-position-y: center;
+        right: 16px;
+        height: 56px;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+}
