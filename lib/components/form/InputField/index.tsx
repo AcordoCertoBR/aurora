@@ -1,6 +1,6 @@
 import Field from '../Field'
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   optional?: boolean
   requiredInput?: boolean
   success?: boolean

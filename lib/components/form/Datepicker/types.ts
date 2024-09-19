@@ -1,11 +1,18 @@
-type DatepickerMode = 'simple' | 'calendar'
+import { InputProps } from '../InputField'
 
-export type DatepickerProps = {
+type DatepickerMode = 'simple' | 'calendar'
+type EventHandler = (value?: Date) => void
+
+export type DatepickerProps = InputProps & {
   mode?: DatepickerMode
   defaultDate?: Date
   style?: React.CSSProperties
   placeholder?: string
   value?: Date
-  onChange?: (value?: Date) => void
-  onBlur?: (value: Date) => void
+  onChange?: EventHandler
+  onBlur?: EventHandler
+}
+
+export type UseDatePickerProps = {
+  onChange?: EventHandler
 }

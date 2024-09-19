@@ -1,9 +1,27 @@
-import { useState } from 'react'
-import { DatepickerProps } from './types'
+import { useEffect, useState } from 'react'
+import { UseDatePickerProps } from './types'
 
-export function useDatepicker({ ...props }: DatepickerProps) {
+function isDateFmtValid(date: string) {
+  const pattern = /^\d{2}\/\d{2}\/\d{4}$/
+  return pattern.test(date)
+}
+
+function strToDate(stringDate: string) {
+  const [day, month, year] = stringDate.split('/').map(Number)
+  return new Date(year, month - 1, day)
+}
+
+export function useDatepicker({ onChange }: UseDatePickerProps) {
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const [date, setDate] = useState('')
-  const [presentationalDate, setPresentationalDate] = useState(() => '')
+
+  useEffect(() => {
+    if (isDateFmtValid(date)) {
+      const dateObj = strToDate(date)
+      setSelectedDate(dateObj)
+      if (onChange) onChange(dateObj)
+    }
+  }, [date])
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputDate = e.target.value
@@ -20,7 +38,6 @@ export function useDatepicker({ ...props }: DatepickerProps) {
   }
 
   return {
-    ...props,
     date,
     handleDateChange,
   }
