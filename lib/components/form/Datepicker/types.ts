@@ -2,7 +2,7 @@ import { InputProps } from '../InputField'
 
 type EventHandler = (value?: Date | null) => void
 
-type DefaultValue = 'empty' | 'now' | Date
+export type DefaultValue = 'empty' | 'now' | Date
 
 export type FormatAdapter = {
   /** mask typed date  */

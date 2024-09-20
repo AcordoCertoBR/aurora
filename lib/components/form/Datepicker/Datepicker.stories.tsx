@@ -21,6 +21,12 @@ export const WithText: Story = {
   args: {
     style: { maxWidth: '272px' },
     label: 'lulu',
-    onChange: (date) => alert(date?.toString()),
+    defaultValue: new Date("02-20-1999"),
+    /* onChange: (date) => alert(date?.toString()), */
   },
 }
+
+// default date
+// controlled
+// uncontrolled
+
