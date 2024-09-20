@@ -9,6 +9,7 @@ export function useDatepicker({
   disabled,
   format = DDMMYYYY,
   placeholder,
+  onBlur,
 }: UseDatePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>()
   const [inputDate, setInputDate] = useState('')
@@ -16,7 +17,7 @@ export function useDatepicker({
   useEffect(() => {
     if (!!value && value instanceof Date) {
       setSelectedDate(value)
-      setInputDate(format.toString(value)) // will trigger the effect above
+      setInputDate(format.toString(value))
     }
   }, [value])
 
@@ -37,6 +38,14 @@ export function useDatepicker({
     }
   }
 
+  function handleInputBlur() {
+    // hide calendar on desk
+
+    if (onBlur) {
+      onBlur(selectedDate)
+    }
+  }
+
   function showCalendar() {
     if (!disabled) {
       alert('calendar')
@@ -46,6 +55,7 @@ export function useDatepicker({
   return {
     inputDate,
     handleInputChange,
+    handleInputBlur,
     showCalendar,
     fmtPlaceholder: placeholder || format.placeholder,
   }

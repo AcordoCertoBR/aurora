@@ -1,6 +1,6 @@
 import { InputProps } from '../InputField'
 
-type EventHandler = (value?: Date) => void
+type EventHandler = (value?: Date | null) => void
 
 type DefaultValue = 'empty' | 'now' | Date
 
@@ -36,4 +36,5 @@ export type UseDatePickerProps = {
   defaultValue?: DefaultValue
   format?: FormatAdapter
   placeholder?: string
+  onBlur?: EventHandler
 }

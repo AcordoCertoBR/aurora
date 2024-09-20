@@ -13,18 +13,25 @@ export const Datepicker = ({
   onChange,
   value,
   defaultValue,
+  onBlur,
   ...props
 }: DatepickerProps) => {
-  const { inputDate, handleInputChange, showCalendar, fmtPlaceholder } =
-    useDatepicker({
-      onChange,
-      value,
-      defaultValue,
-      placeholder,
-    })
+  const {
+    inputDate,
+    handleInputChange,
+    handleInputBlur,
+    showCalendar,
+    fmtPlaceholder,
+  } = useDatepicker({
+    onChange,
+    value,
+    defaultValue,
+    placeholder,
+    onBlur,
+  })
 
   return (
-    <div className="au-datepicker">
+    <div className="au-datepicker" onBlur={handleInputBlur}>
       <DatePicker>
         <InputField
           className="au-datepicker__input"
