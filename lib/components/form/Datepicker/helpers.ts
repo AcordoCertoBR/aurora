@@ -1,6 +1,7 @@
 import { FormatAdapter } from './types'
 
 export const DDMMYYYY: FormatAdapter = {
+  placeholder: 'DD/MM/YYYY',
   maskDate(dateStr) {
     let fmtInputDate = dateStr
     fmtInputDate = fmtInputDate.replace(/\D/g, '') // Remove non-numeric characters
@@ -22,6 +23,14 @@ export const DDMMYYYY: FormatAdapter = {
     return new Date(year, month - 1, day)
   },
 
+  toString(date) {
+    const fmtNumber = (digit: number) =>
+      String(digit).length === 1 ? `0${digit}` : String(digit)
+    const day = date.getDate()
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    return `${fmtNumber(day)}/${fmtNumber(month)}/${year}`
+  },
   validate(dateStr) {
     const [day, month, year] = dateStr.split('/').map(Number)
     const date = new Date(year, month - 1, day)

@@ -8,18 +8,20 @@ import { COLOR_NEUTRAL_40 } from '../../../main'
 
 export const Datepicker = ({
   calendar = true,
-  placeholder = 'DD/MM/YYYY',
+  placeholder,
   disabled,
   onChange,
   value,
   defaultValue,
   ...props
 }: DatepickerProps) => {
-  const { inputDate, handleInputChange, showCalendar } = useDatepicker({
-    onChange,
-    value,
-    defaultValue,
-  })
+  const { inputDate, handleInputChange, showCalendar, fmtPlaceholder } =
+    useDatepicker({
+      onChange,
+      value,
+      defaultValue,
+      placeholder,
+    })
 
   return (
     <div className="au-datepicker">
@@ -31,7 +33,7 @@ export const Datepicker = ({
           value={inputDate}
           disabled={disabled}
           onChange={handleInputChange}
-          placeholder={placeholder}
+          placeholder={fmtPlaceholder}
           rightSlot={
             calendar && (
               <div

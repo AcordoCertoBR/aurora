@@ -12,6 +12,8 @@ export type FormatAdapter = {
   /** Validate if is a valid date */
   validate: (date: string) => boolean
   toDate: (dateStr: string) => Date
+  toString: (date: Date) => string
+  placeholder: string
 }
 
 export type DatepickerProps = InputProps & {
@@ -33,4 +35,5 @@ export type UseDatePickerProps = {
   value?: Date
   defaultValue?: DefaultValue
   format?: FormatAdapter
+  placeholder?: string
 }

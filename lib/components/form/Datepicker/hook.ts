@@ -8,12 +8,23 @@ export function useDatepicker({
   onChange,
   disabled,
   format = DDMMYYYY,
+  placeholder,
 }: UseDatePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>()
   const [inputDate, setInputDate] = useState('')
 
   useEffect(() => {
-    const finishedTypingDate = format.validateFormat(inputDate)
+    if (!!value && value instanceof Date) {
+      setSelectedDate(value)
+      setInputDate(format.toString(value)) // will trigger the effect above
+    }
+  }, [value])
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const maskedValue = format.maskDate(e.target.value)
+    const finishedTypingDate = format.validateFormat(maskedValue)
+    setInputDate(maskedValue)
+
     if (!finishedTypingDate) return
 
     if (format.validate(inputDate)) {
@@ -24,11 +35,6 @@ export function useDatepicker({
       setSelectedDate(null)
       setInputDate('')
     }
-  }, [inputDate])
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const maskedValue = format.maskDate(e.target.value)
-    setInputDate(maskedValue)
   }
 
   function showCalendar() {
@@ -41,5 +47,6 @@ export function useDatepicker({
     inputDate,
     handleInputChange,
     showCalendar,
+    fmtPlaceholder: placeholder || format.placeholder,
   }
 }
