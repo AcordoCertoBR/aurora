@@ -20,6 +20,7 @@ export function useDatepicker({
   const [selectedDate, setSelectedDate] = useState<Date | null>()
   const [inputDate, setInputDate] = useState('')
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false)
 
   useEffect(() => {
     if (!!value && value instanceof Date) {
@@ -61,17 +62,17 @@ export function useDatepicker({
     }
   }
 
-  function showCalendar() {
-    if (!disabled) {
-      alert('calendar')
-    }
+  function toggleCalendar() {
+    if(!isCalendarVisible && disabled) return
+    setIsCalendarVisible(!isCalendarVisible)
   }
 
   return {
     inputDate,
     handleInputChange,
     handleInputBlur,
-    showCalendar,
+    toggleCalendar,
+    isCalendarVisible,
     fmtPlaceholder: placeholder || format.placeholder,
   }
 }

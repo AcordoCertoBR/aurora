@@ -1,10 +1,12 @@
 import { DatePicker } from 'react-aria-components'
 import { InputField } from '../InputField'
 import { DatepickerProps } from './types'
-import { useDatepicker } from './hook'
-import './styles.scss'
 import { IconCalendar } from '../../icons'
 import { COLOR_NEUTRAL_40 } from '../../../main'
+import { DatepickerCalendar } from './Calendar'
+
+import { useDatepicker } from './hook'
+import './styles.scss'
 
 export const Datepicker = ({
   calendar = true,
@@ -20,7 +22,8 @@ export const Datepicker = ({
     inputDate,
     handleInputChange,
     handleInputBlur,
-    showCalendar,
+    toggleCalendar,
+    isCalendarVisible,
     fmtPlaceholder,
   } = useDatepicker({
     onChange,
@@ -46,7 +49,7 @@ export const Datepicker = ({
               <div
                 className="au-datepicker__calendar-holder"
                 style={{ color: 'red' }}
-                onClick={showCalendar}>
+                onClick={toggleCalendar}>
                 <IconCalendar
                   rawColor={disabled ? COLOR_NEUTRAL_40 : undefined}
                 />
@@ -54,6 +57,7 @@ export const Datepicker = ({
             )
           }
         />
+        {calendar && <DatepickerCalendar isVisible={isCalendarVisible} />}
       </DatePicker>
     </div>
   )

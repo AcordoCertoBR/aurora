@@ -4,4 +4,31 @@
   &__field-container {
     position: relative;
   }
+
+  &__calendar {
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid $color-neutral-20;
+    background: $color-neutral-00;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s;
+
+    @include aboveMedium() {
+      width: 414px;
+      height: 464px;
+      position: absolute;
+      top: 150%;
+      left: 0;
+    }
+
+    &--visible {
+      visibility: visible;
+      opacity: 1;
+
+      @include aboveMedium() {
+        top: calc(100% + 16px);
+      }
+    }
+  }
 }
