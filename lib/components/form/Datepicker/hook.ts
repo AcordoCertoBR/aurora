@@ -1,40 +1,34 @@
 import { useEffect, useState } from 'react'
 import { UseDatePickerProps } from './types'
+import { DDMMYYYY } from './helpers'
 
-function isDateFmtValid(date: string) {
-  const pattern = /^\d{2}\/\d{2}\/\d{4}$/
-  return pattern.test(date)
-}
-
-function strToDate(stringDate: string) {
-  const [day, month, year] = stringDate.split('/').map(Number)
-  return new Date(year, month - 1, day)
-}
-
-export function useDatepicker({ onChange, disabled }: UseDatePickerProps) {
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  const [date, setDate] = useState('')
+export function useDatepicker({
+  value,
+  defaultValue,
+  onChange,
+  disabled,
+  format = DDMMYYYY,
+}: UseDatePickerProps) {
+  const [selectedDate, setSelectedDate] = useState<Date | null>()
+  const [inputDate, setInputDate] = useState('')
 
   useEffect(() => {
-    if (isDateFmtValid(date)) {
-      const dateObj = strToDate(date)
+    const finishedTypingDate = format.validateFormat(inputDate)
+    if (!finishedTypingDate) return
+
+    if (format.validate(inputDate)) {
+      const dateObj = format.toDate(inputDate)
       setSelectedDate(dateObj)
       if (onChange) onChange(dateObj)
+    } else {
+      setSelectedDate(null)
+      setInputDate('')
     }
-  }, [date])
+  }, [inputDate])
 
-  function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
-    let inputDate = e.target.value
-    inputDate = inputDate.replace(/\D/g, '') // Remove non-numeric characters
-
-    if (inputDate.length > 2) {
-      inputDate = `${inputDate.slice(0, 2)}/${inputDate.slice(2)}`
-    }
-    if (inputDate.length > 5) {
-      inputDate = `${inputDate.slice(0, 5)}/${inputDate.slice(5)}`
-    }
-
-    setDate(inputDate)
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const maskedValue = format.maskDate(e.target.value)
+    setInputDate(maskedValue)
   }
 
   function showCalendar() {
@@ -44,8 +38,8 @@ export function useDatepicker({ onChange, disabled }: UseDatePickerProps) {
   }
 
   return {
-    date,
-    handleDateChange,
+    inputDate,
+    handleInputChange,
     showCalendar,
   }
 }

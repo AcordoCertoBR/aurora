@@ -11,9 +11,15 @@ export const Datepicker = ({
   placeholder = 'DD/MM/YYYY',
   disabled,
   onChange,
+  value,
+  defaultValue,
   ...props
 }: DatepickerProps) => {
-  const { date, handleDateChange, showCalendar } = useDatepicker({ onChange })
+  const { inputDate, handleInputChange, showCalendar } = useDatepicker({
+    onChange,
+    value,
+    defaultValue,
+  })
 
   return (
     <div className="au-datepicker">
@@ -22,9 +28,9 @@ export const Datepicker = ({
           className="au-datepicker__input"
           {...props}
           maxLength={10}
-          value={date}
+          value={inputDate}
           disabled={disabled}
-          onChange={handleDateChange}
+          onChange={handleInputChange}
           placeholder={placeholder}
           rightSlot={
             calendar && (
