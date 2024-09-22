@@ -1,18 +1,18 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { InputField } from './index'
+import { PasswordField } from './index'
 
-const meta: Meta<typeof InputField> = {
-  title: 'Components/form/InputField',
-  component: InputField,
+const meta: Meta<typeof PasswordField> = {
+  title: 'Components/form/PasswordField',
+  component: PasswordField,
   tags: ['autodocs'],
 }
 
 export default meta
 
-type Story = StoryObj<typeof InputField>
+type Story = StoryObj<typeof PasswordField>
 
 const commonArgs = {
-  label: 'Label',
+  label: 'Digite sua senha',
   placeholder: 'Text',
   style: { maxWidth: '272px' },
 }
@@ -68,7 +68,7 @@ export const Error: Story = {
   args: {
     id: 'error-input',
     error: true,
-    errorMessage: 'Mensagem de erro',
+    errorMessage: 'Senha incorreta',
     ...commonArgs,
   },
 }

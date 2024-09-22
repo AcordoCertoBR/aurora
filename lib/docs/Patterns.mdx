@@ -177,6 +177,46 @@ export const Page = () => {
 }
 ```
 
+### Funções
+
+Para funções privadas (internas) de componentes, utilize o padrão de prefixar o nome da função com um underline (_).
+
+❌ Fora do padrão
+
+```jsx
+// hook.tsx
+function useComponent() {
+
+  function privateFunction() {
+    console.log('private function')
+  }
+
+  function publicFunction() {
+    privateFunction();
+  }
+
+  return { publicFunction };
+}
+```
+
+✅ Padronizado
+
+```jsx
+// hook.tsx
+function useComponent() {
+
+  function _privateFunction() {
+    console.log('private function')
+  }
+
+  function publicFunction() {
+    _privateFunction();
+  }
+
+  return { publicFunction };
+}
+```
+
 ## Typescript
 
 ### Type

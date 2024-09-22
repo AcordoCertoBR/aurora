@@ -189,6 +189,38 @@ export const GhostLoading: Story = {
   },
 }
 
+export const RoundPrimary: Story = {
+  args: {
+    children: <IconDownload />,
+    round: true,
+    type: 'primary'
+  },
+}
+
+export const RoundOutlined: Story = {
+  args: {
+    children: <IconDownload />,
+    round: true,
+    type: 'outlined'
+  },
+}
+
+export const RoundGhost: Story = {
+  args: {
+    children: <IconDownload />,
+    round: true,
+    type: 'ghost'
+  },
+}
+
+export const RoundLargeSize: Story = {
+  args: {
+    children: <IconDownload />,
+    round: true,
+    size: 'large'
+  },
+}
+
 // export const Negative: Story = {
 //   args: {
 //     children: 'Negative',

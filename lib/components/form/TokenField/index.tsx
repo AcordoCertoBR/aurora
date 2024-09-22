@@ -1,5 +1,5 @@
 import Field from '../Field'
-import useTokenField from './hook'
+import { useTokenField } from './hook'
 import './styles.scss'
 
 type TokenFieldProps = {
@@ -31,8 +31,13 @@ export const TokenField = ({
   onComplete,
   onChange,
 }: TokenFieldProps) => {
-  const { tokenMap, rootElementRef, onChangeNumber, onKeyUpHandler, onPasteNumber } =
-    useTokenField({ size, onComplete, onChange, onChangeTimer, timer })
+  const {
+    tokenMap,
+    rootElementRef,
+    onChangeNumber,
+    onKeyUpHandler,
+    onPasteNumber,
+  } = useTokenField({ size, onComplete, onChange, onChangeTimer, timer })
 
   return (
     <Field.Root

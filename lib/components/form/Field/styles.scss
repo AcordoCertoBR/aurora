@@ -17,7 +17,8 @@
     }
 
     &:focus {
-      border: 2px solid $color-brand-blue-40;
+      border-color: $color-brand-blue-40;
+      outline: 1px solid $color-brand-blue-40;
     }
   }
 
@@ -30,6 +31,7 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding-bottom: 8px;
 
     &-label {
@@ -79,6 +81,10 @@
     [class*='__input'] {
       background-color: $color-error-00;
       border-color: $color-error-50;
+
+      &:focus {
+        border-color: $color-brand-blue-40;
+      }
     }
 
     [class*='__header-label'] {

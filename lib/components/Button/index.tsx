@@ -26,6 +26,7 @@ type ButtonProps = (
   target?: string
   negative?: boolean
   btnText?: boolean
+  round?: boolean
   className?: string
   borderWidth?: string
 }
@@ -45,6 +46,7 @@ export const Button: React.FC<ButtonProps> = ({
   target,
   negative = false,
   btnText = false,
+  round = false,
   className,
   borderWidth = 'medium',
   ...props
@@ -57,6 +59,7 @@ export const Button: React.FC<ButtonProps> = ({
     'au-btn--negative': !!negative,
     'au-btn--disabled': !!disabled,
     'au-btn--loading': !!loading,
+    [`au-btn--round-${size}`]: !!round,
     'btn-text': !!btnText,
     [`au-btn--border-${borderWidth}`]: !!borderWidth,
     [className ?? '']: typeof className === 'string',
