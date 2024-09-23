@@ -165,7 +165,7 @@
       justify-content: space-between;
     }
 
-    &.is-clickable {
+    &--is-clickable {
       cursor: pointer;
       &:hover {
         opacity: $opacity-30;

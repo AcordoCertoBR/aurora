@@ -52,7 +52,7 @@ export const Footer = ({
                     return (
                       <div
                         className={classNames('au-footer-full__links', {
-                          'is-clickable': !!url,
+                          'au-footer-full__links--is-clickable': !!url,
                         })}
                         key={index}
                         onClick={() => url && handleClick(url)}>
