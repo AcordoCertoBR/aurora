@@ -23,7 +23,7 @@
   }
 
   &:focus-within:not(.au-field--error) {
-    [class*='__header-label'] {
+    .au-field__header-label {
       color: $color-brand-blue-40;
     }
   }
@@ -64,21 +64,21 @@
   &--disabled {
     cursor: not-allowed;
 
-    [class*='__input'] {
+    .au-field__input {
       background-color: $color-neutral-20;
       border-color: $color-neutral-40;
       color: $color-neutral-40;
       cursor: not-allowed;
     }
 
-    [class*='__header-label'] {
+    .au-field__header-label {
       color: $color-neutral-40;
       cursor: not-allowed;
     }
   }
 
   &--error {
-    [class*='__input'] {
+    .au-field__input {
       background-color: $color-error-00;
       border-color: $color-error-50;
 
@@ -87,21 +87,21 @@
       }
     }
 
-    [class*='__header-label'] {
+    .au-field__header-label {
       color: $color-error-50;
     }
   }
 
   &--success {
-    [class*='__input'] {
+    .au-field__input {
       animation: inputSuccess 2s forwards;
     }
 
-    [class*='__header-label'] {
+    .au-field__header-label {
       animation: labelSuccess 2s forwards;
     }
 
-    [class*='__header-icon'] {
+    .au-field__header-icon {
       .au-icon {
         animation: iconSucess 2s forwards;
       }
@@ -114,18 +114,12 @@
       background-color: $color-success-00;
       border-color: $color-success-50;
     }
-    100% {
-      @extend [class*='__input'];
-    }
   }
 
   @keyframes labelSuccess {
     0%,
     70% {
       color: $color-success-50;
-    }
-    100% {
-      @extend [class*='__header-label'];
     }
   }
 
