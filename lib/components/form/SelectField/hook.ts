@@ -19,6 +19,7 @@ export const useSelectField = (
   const selectRef = useRef<HTMLDivElement>(null)
 
   const toggleDropdown = () => {
+    if (disabled) return
     setIsDropdownOpen((prev) => !prev)
     setActiveOptionIndex(null)
     if (selectRef.current) {
@@ -27,7 +28,7 @@ export const useSelectField = (
   }
 
   const selectOption = (optionValue: string, optionDisabled?: boolean) => {
-    if (optionDisabled) return
+    if (optionDisabled || disabled) return
 
     setCurrentValue(optionValue)
     setIsDropdownOpen(false)
@@ -39,12 +40,13 @@ export const useSelectField = (
   const _findNextAvailableIndex = (
     currentIndex: number,
     direction: 'down' | 'up',
-  ) => {
-    const step = direction === 'down' ? 1 : -1
-    let nextIndex = (currentIndex + step + options.length) % options.length
+  ): number => {
+    const directionStep = direction === 'down' ? 1 : -1
+    let nextIndex =
+      (currentIndex + directionStep + options.length) % options.length
 
     while (options[nextIndex]?.disabled) {
-      nextIndex = (nextIndex + step + options.length) % options.length
+      nextIndex = (nextIndex + directionStep + options.length) % options.length
     }
 
     return nextIndex
@@ -64,10 +66,7 @@ export const useSelectField = (
           !options[activeOptionIndex].disabled
         ) {
           e.preventDefault()
-          selectOption(
-            options[activeOptionIndex].value,
-            options[activeOptionIndex].disabled,
-          )
+          selectOption(options[activeOptionIndex].value)
         }
       },
       ArrowDown: () => {
