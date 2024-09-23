@@ -13,13 +13,13 @@
     visibility 0.4s ease;
   z-index: 5;
 
-  &.is-open {
+  &--is-open {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
     transition: opacity 0.3s ease;
 
-    [class*='__container'] {
+    .au-drawer__container {
       transform: translateY(0);
     }
   }
