@@ -78,7 +78,7 @@ export const Footer = ({
                   return (
                     <div
                       className={classNames('au-footer-full__links', {
-                        'is-clickable': !!url,
+                        'au-footer-full__links--is-clickable': !!url,
                       })}
                       key={index}
                       onClick={() => url && handleClick(url)}>
@@ -111,7 +111,7 @@ export const Footer = ({
                       return (
                         <LazyImage
                           className={classNames('au-footer-full__stores-logo', {
-                            'is-clickable': !!url,
+                            'au-footer-full__stores-logo--is-clickable': !!url,
                           })}
                           key={index}
                           src={icon}
