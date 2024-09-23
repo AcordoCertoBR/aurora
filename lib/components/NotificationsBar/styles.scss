@@ -8,11 +8,11 @@
     }
 
     &:first-child {
-      > [class*='__list'] {
+      > .au-notifications-bar__list {
         background-color: $color-brand-blue-10;
       }
 
-      [class*='__item'] {
+      .au-notifications-bar__item {
         border-bottom: 1px solid $color-neutral-20;
         position: relative;
 
