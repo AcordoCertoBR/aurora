@@ -57,7 +57,12 @@ export const Datepicker = ({
             )
           }
         />
-        {calendar && <DatepickerCalendar isVisible={isCalendarVisible} />}
+        {calendar && (
+          <DatepickerCalendar
+            isVisible={isCalendarVisible}
+            toggleCalendar={toggleCalendar}
+          />
+        )}
       </DatePicker>
     </div>
   )
