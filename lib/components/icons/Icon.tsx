@@ -32,7 +32,7 @@ const Icon: React.FC<IconProps> = ({
   })
 
   return (
-    <div
+    <span
       style={iconStyle}
       className={componentClass}
       dangerouslySetInnerHTML={{

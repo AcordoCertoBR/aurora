@@ -11,12 +11,14 @@ type NavbarVerticalDataProps = {
   onClick: () => void
   dropdown?: NavbarVerticalDataProps[]
   active?: boolean
+  href?: string
 }
 
 type NavbarVerticalProps = {
   data: NavbarVerticalDataProps[]
   renderItem: (
     link: NavbarVerticalDataProps,
+    idx: number,
   ) => ReactNode | string | JSX.Element | JSX.Element[]
   renderActions: () => ReactNode | string | JSX.Element | JSX.Element[]
 }
@@ -28,8 +30,8 @@ export const NavbarVertical = ({
 }: NavbarVerticalProps) => {
   return (
     <div className="au-navbar-vertical">
-      {data?.map((link) => {
-        return renderItem(link)
+      {data?.map((link, idx) => {
+        return renderItem(link, idx)
       })}
       <div className="au-navbar-vertical__actions">{renderActions()}</div>
     </div>
@@ -42,13 +44,14 @@ const NavbarVerticalLink = ({
   Icon,
   dropdown,
   active = false,
+  href,
 }: NavbarVerticalDataProps) => {
   const [open, setOpen] = useState<boolean>(active)
 
   function handleClick() {
     if (dropdown) {
       setOpen((prev) => !prev)
-    } else {
+    } else if (onClick) {
       onClick()
     }
   }
@@ -58,10 +61,11 @@ const NavbarVerticalLink = ({
       as="a"
       variant="heading-micro"
       weight="light"
+      href={href}
       className={classNames('au-navbar-vertical__link', {
-        'is-dropdown': dropdown,
-        'is-active': active,
-        'is-open': open,
+        'au-navbar-vertical__link--is-dropdown': dropdown,
+        'au-navbar-vertical__link--is-active': active,
+        'au-navbar-vertical__link--is-open': open,
       })}
       onClick={handleClick}>
       <Conditional condition={!!Icon} renderIf={Icon} />
@@ -74,15 +78,16 @@ const NavbarVerticalLink = ({
             <Conditional condition={!!open} renderIf={<IconChevronUp />} />
             <Conditional condition={!open} renderIf={<IconChevronDown />} />
             <div className="au-navbar-vertical__dropdown">
-              {dropdown?.map((item) => {
+              {dropdown?.map((item, idx) => {
                 return (
                   <Text
-                    key={item.name}
+                    key={`${item.name}-${idx}`}
                     as="a"
                     variant="heading-micro"
                     weight="light"
                     className={classNames('au-navbar-vertical__dropdown-link', {
-                      'is-active': item.active,
+                      'au-navbar-vertical__dropdown-link--is-active':
+                        item.active,
                     })}
                     title={item.name}>
                     {item.name}

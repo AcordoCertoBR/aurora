@@ -4,25 +4,30 @@ import { IconChevronDown, IconChevronLeft } from '../../icons/default'
 import { Conditional } from '../../misc'
 import { NavbarDataProps } from '../types'
 
-export const HeaderNavbarLink = ({
-  name,
-  onClick,
-  dropdown,
-  active,
-}: NavbarDataProps) => {
+export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
+  const { name, dropdown, active, href } = navItem
+  const isDropdown = !!dropdown && dropdown.length
+
+  function handleItemClick(item: NavbarDataProps, ev: React.MouseEvent) {
+    if (item.onClick) {
+      ev.preventDefault()
+      item.onClick()
+    }
+  }
+
   return (
     <Text
-      as="a"
+      as={isDropdown ? 'p' : 'a'}
       variant="heading-micro"
       weight="light"
-      onClick={onClick}
+      href={href}
+      onClick={(ev) => handleItemClick(navItem, ev)}
       title={name}
       className={classNames('au-header__navbar-link', {
-        'is-dropdown': dropdown,
-        'is-active': active,
+        'au-header__navbar-link--is-dropdown': dropdown,
+        'au-header__navbar-link--is-active': active,
       })}>
       {name}
-
       <Conditional
         condition={!!dropdown?.length}
         renderIf={
@@ -35,9 +40,11 @@ export const HeaderNavbarLink = ({
                     key={item.name}
                     as="a"
                     variant="heading-micro"
+                    href={item.href}
+                    onClick={(ev) => handleItemClick(item, ev)}
                     weight="light"
                     className={classNames('au-header__dropdown-link', {
-                      'is-active': item.active,
+                      'au-header__dropdown-link--is-active': item.active,
                     })}
                     title={item.name}>
                     {item.name}

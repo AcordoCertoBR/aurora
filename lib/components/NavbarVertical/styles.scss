@@ -4,6 +4,7 @@
   height: 100%;
   padding-bottom: 100px;
   position: relative;
+  overflow-y: scroll;
 
   &__link {
     padding: 16px 24px;
@@ -19,7 +20,7 @@
       font-weight: 700;
     }
 
-    &.is-active {
+    &--is-active {
       background-color: $color-brand-blue-10;
       color: $color-brand-blue-40;
       font-weight: 700;
@@ -32,25 +33,25 @@
     border-top: 1px solid $color-brand-blue-20;
     padding-top: 12px;
     display: none;
+  }
 
-    .is-open & {
-      display: block;
+  &__link--is-open &__dropdown {
+    display: block;
+  }
+
+  &__dropdown-link {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+
+    &:hover,
+    &:focus {
+      font-weight: 700;
     }
 
-    &-link {
-      display: block;
-      width: 100%;
-      padding: 12px 0;
-
-      &:hover,
-      &:focus {
-        font-weight: 700;
-      }
-
-      &.is-active {
-        color: $color-brand-blue-40;
-        font-weight: 700;
-      }
+    &--is-active {
+      color: $color-brand-blue-40;
+      font-weight: 700;
     }
   }
 
@@ -58,13 +59,18 @@
     display: flex;
     gap: 8px;
     padding: 24px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    background-color: $color-neutral-00;
 
     > * {
       flex-grow: 1;
+    }
+
+    @include aboveMedium() {
+      position: absolute;
     }
   }
 }
