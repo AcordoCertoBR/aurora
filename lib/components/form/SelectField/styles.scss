@@ -116,7 +116,7 @@
   }
 
   &:not(.au-field-error):has(.au-field__select--open) {
-    [class*='__header-label'] {
+    .au-field__header-label {
       color: $color-brand-blue-40;
     }
     .au-field__select-wrapper {
