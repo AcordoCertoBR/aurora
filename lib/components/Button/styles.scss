@@ -152,11 +152,8 @@
     color: $color-neutral-00;
     cursor: progress;
 
-    .au-icon[class*='loading'],
-    .au-icon[class*='loading'] > svg,
-    .au-icon[class*='loader'],
-    .au-icon[class*='loader'] > svg {
-      animation: spin 2s infinite linear;
+    .au-icon {
+      animation: spin 1s infinite linear;
     }
 
     &:hover,
