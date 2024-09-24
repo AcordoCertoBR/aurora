@@ -26,6 +26,7 @@ export const Datepicker = ({
     toggleCalendar,
     isCalendarVisible,
     fmtPlaceholder,
+    inputRef,
   } = useDatepicker({
     onChange,
     value,
@@ -35,7 +36,7 @@ export const Datepicker = ({
   })
 
   return (
-    <div className="au-datepicker" onBlur={handleInputBlur}>
+    <div className="au-datepicker">
       <DatePicker
         value={new CalendarDate(2000, 1, 29)}
         onChange={(date) => console.log(date)}>
@@ -44,6 +45,8 @@ export const Datepicker = ({
           {...props}
           maxLength={10}
           value={inputDate}
+          inputRef={inputRef}
+          onBlur={handleInputBlur}
           disabled={disabled}
           onChange={handleInputChange}
           placeholder={fmtPlaceholder}
