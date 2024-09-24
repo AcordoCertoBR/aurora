@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { DefaultValue, UseDatePickerProps } from './types'
 import { DDMMYYYY } from './helpers'
 
+
+
 function getDefaultDate(defaultDateProp: DefaultValue) {
   if (defaultDateProp === 'now') return new Date()
   if (defaultDateProp instanceof Date) return defaultDateProp
   return null
 }
+
 
 export function useDatepicker({
   value,
@@ -21,6 +24,9 @@ export function useDatepicker({
   const [inputDate, setInputDate] = useState('')
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
+  
+
+  
 
   useEffect(() => {
     if (!!value && value instanceof Date) {
