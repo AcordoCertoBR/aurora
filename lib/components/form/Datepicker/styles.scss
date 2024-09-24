@@ -61,6 +61,78 @@
     justify-content: space-between;
   }
 
+  &__segment {
+    &--open {
+      .au-datepicker__segment-input .au-icon {
+        transform: rotate(180deg);
+      }
+
+      .au-datepicker__segment-list-holder {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+
+  &__segment-input {
+    padding: 8px;
+    gap: 8px;
+    display: flex;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid $color-neutral-20;
+  }
+
+  &__segment-list-holder {
+    background: $color-neutral-00;
+    border-radius: 16px 16px 0 0;
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__segment-list-header {
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include aboveMedium() {
+      display: none;
+    }
+  }
+
+  &__segment-list {
+    overflow-x: scroll;
+    flex: 1;
+  }
+
+  &__segment-list-item {
+    padding: 16px 24px;
+    font-size: 16px;
+    line-height: 150%;
+
+    &:not(:last-of-type) {
+      border-bottom: 1px solid $color-neutral-20;
+    }
+  }
+
+  &__segment-title {
+    font-family: $font-body;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__navigation-btn {
+    cursor: pointer;
+    outline: none;
+    background-color: transparent;
+    border: none;
+  }
+
   &__calendar-card {
     width: 100%;
     padding: 16px;

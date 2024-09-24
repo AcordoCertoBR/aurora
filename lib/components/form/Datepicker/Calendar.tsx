@@ -7,20 +7,13 @@ import {
   CalendarGridBody,
   CalendarGridHeader,
   CalendarHeaderCell,
-  Heading,
   DatePickerStateContext,
-  CalendarStateContext,
 } from 'react-aria-components'
+import { CalendarHeader } from './CalendarHeader'
 
 type DatepickerCalendarProps = {
   isVisible: boolean
   toggleCalendar: () => void
-}
-
-const Sub = () => {
-  const stateCalendar = useContext(CalendarStateContext)
-  console.log({ stateCalendar })
-  return <button onClick={stateCalendar.focusNextPage}>lala</button>
 }
 
 export const DatepickerCalendar = ({
@@ -47,10 +40,7 @@ export const DatepickerCalendar = ({
       />
       <div className="au-datepicker__calendar-card">
         <Calendar className="au-datepicker__calendar-base">
-          <div className="au-datepicker__header">
-            <Heading />
-            <Sub />
-          </div>
+          <CalendarHeader />
           <CalendarGrid
             className="au-datepicker__calendar-grid"
             weekdayStyle="short">
