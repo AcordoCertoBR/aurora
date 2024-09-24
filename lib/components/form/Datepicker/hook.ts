@@ -59,7 +59,7 @@ export function useDatepicker({
   function handleInputBlur() {
     // hide calendar on desk
     if (!isMobile() && isCalendarVisible) { //TODO adjust scree size
-      toggleCalendar()
+      /* toggleCalendar() */
     }
 
     if (onBlur) {
