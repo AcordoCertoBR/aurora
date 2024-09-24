@@ -1,10 +1,53 @@
 .au-checkbox {
+  position: relative;
 
-    &--error {
+  &__holder {
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
 
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked ~ .au-checkbox__check {
+      background-color: $color-brand-blue-40;
+      border-color: $color-brand-blue-40;
     }
 
-    &--disabled {
-        
+    &:checked ~ .au-checkbox__check .au-icon svg {
+      opacity: 1;
     }
+  }
+
+  &__check {
+    border: 2px solid $color-neutral-50;
+    border-radius: 4px;
+    height: 24px;
+    width: 24px;
+
+    .au-icon svg {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      opacity: 0;
+    }
+  }
+
+  &__label {
+    color: $color-neutral-50;
+    font-family: $font-body;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &--error {
+  }
+
+  &--disabled {
+  }
 }
