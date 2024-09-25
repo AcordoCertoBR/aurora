@@ -1,4 +1,5 @@
-import { DatePicker } from 'react-aria-components'
+import { useState } from 'react'
+import { DatePicker, DateValue } from 'react-aria-components'
 import { CalendarDate } from '@internationalized/date'
 import { InputField } from '../InputField'
 import { DatepickerProps } from './types'
@@ -35,11 +36,13 @@ export const Datepicker = ({
     onBlur,
   })
 
+  const [pickerState, setPickerState] = useState<CalendarDate | DateValue>(
+    new CalendarDate(2000, 1, 29),
+  )
+
   return (
     <div className="au-datepicker">
-      <DatePicker
-        value={new CalendarDate(2000, 1, 29)}
-        onChange={(date) => console.log(date)}>
+      <DatePicker value={pickerState} onChange={(date) => console.log(date)}>
         <InputField
           className="au-datepicker__input"
           {...props}
@@ -67,6 +70,7 @@ export const Datepicker = ({
           <DatepickerCalendar
             isVisible={isCalendarVisible}
             toggleCalendar={toggleCalendar}
+            onChange={(date) => setPickerState(date)}
           />
         )}
       </DatePicker>

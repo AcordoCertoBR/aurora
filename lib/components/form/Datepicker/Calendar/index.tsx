@@ -8,21 +8,25 @@ import {
   CalendarGridHeader,
   CalendarHeaderCell,
   DatePickerStateContext,
+  DateValue,
 } from 'react-aria-components'
 import { CalendarHeader } from '../CalendarHeader'
 
-import './styles.scss'
 import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
 import { BREAKPOINT_MD } from '../../../../main'
+
+import './styles.scss'
 
 type DatepickerCalendarProps = {
   isVisible: boolean
   toggleCalendar: () => void
+  onChange: (date: DateValue) => void
 }
 
 export const DatepickerCalendar = ({
   isVisible,
   toggleCalendar,
+  onChange,
 }: DatepickerCalendarProps) => {
   const rootEl = useRef<HTMLDivElement>(null)
   const { listenOutsideClick } = useOutsideClick({
@@ -56,7 +60,9 @@ export const DatepickerCalendar = ({
         onClick={toggleCalendar}
       />
       <div className="au-datepicker__calendar-card">
-        <Calendar className="au-datepicker__calendar-base">
+        <Calendar
+          className="au-datepicker__calendar-base"
+          onChange={(date) => onChange(date)}>
           <CalendarHeader />
           <CalendarGrid
             className="au-datepicker__calendar-grid"
