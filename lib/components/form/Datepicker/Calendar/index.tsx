@@ -11,14 +11,12 @@ import {
   DateValue,
 } from 'react-aria-components'
 import { CalendarHeader } from '../CalendarHeader'
-
+import { PortalHolder } from '../PortalHolder'
 import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
 import { BREAKPOINT_MD } from '../../../../main'
 import { Button } from '../../../Button'
 
 import './styles.scss'
-import { above } from '../../../../core/utils/screen'
-import { Portal } from '../../../misc/Portal'
 
 type DatepickerCalendarProps = {
   isVisible: boolean
@@ -108,18 +106,4 @@ export const DatepickerCalendar = ({
       </div>
     </PortalHolder>
   )
-}
-
-function PortalHolder({
-  withPortal,
-  children,
-}: {
-  withPortal?: boolean
-  children: React.ReactNode
-}) {
-  const shouldUsePortal = !above(BREAKPOINT_MD) && withPortal
-
-  if (shouldUsePortal) return <Portal>{children}</Portal>
-
-  return <>{children}</>
 }

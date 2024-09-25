@@ -1,3 +1,4 @@
+import { CalendarDate } from '@internationalized/date'
 import { FormatAdapter } from './types'
 
 export const DDMMYYYY: FormatAdapter = {
@@ -41,4 +42,14 @@ export const DDMMYYYY: FormatAdapter = {
       date.getFullYear() === year
     )
   },
+}
+
+export function dateToPickerFormat(date: Date) {
+  const converted = new CalendarDate(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+  )
+
+  return converted
 }

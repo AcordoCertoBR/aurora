@@ -1,7 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { DefaultValue, UseDatePickerProps } from './types'
+import { DefaultValue, EventHandler, FormatAdapter } from './types'
 import { DDMMYYYY } from './helpers'
 import { isMobile } from '../../../core/utils/isMobile'
+
+type UseDatePickerProps = {
+  onChange?: EventHandler
+  disabled?: boolean
+  value?: Date
+  defaultValue?: DefaultValue
+  format?: FormatAdapter
+  placeholder?: string
+  onBlur?: EventHandler
+}
 
 function getDefaultDate(defaultDateProp: DefaultValue) {
   if (defaultDateProp === 'now') return new Date()
@@ -58,7 +68,8 @@ export function useDatepicker({
 
   function handleInputBlur() {
     // hide calendar on desk
-    if (!isMobile() && isCalendarVisible) { //TODO adjust scree size
+    if (!isMobile() && isCalendarVisible) {
+      //TODO adjust scree size
       /* toggleCalendar() */
     }
 

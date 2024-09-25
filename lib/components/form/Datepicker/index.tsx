@@ -2,13 +2,31 @@ import { useState } from 'react'
 import { DatePicker, DateValue } from 'react-aria-components'
 import { CalendarDate } from '@internationalized/date'
 import { InputField } from '../InputField'
-import { DatepickerProps } from './types'
+import { InputProps } from '../InputField'
 import { IconCalendar } from '../../icons'
 import { COLOR_NEUTRAL_40 } from '../../../main'
 import { DatepickerCalendar } from './Calendar'
 
 import { useDatepicker } from './hook'
 import './styles.scss'
+import { DefaultValue, EventHandler, FormatAdapter } from './types'
+import { dateToPickerFormat } from './helpers'
+
+type DatepickerProps = InputProps & {
+  calendar?: boolean
+  defaultDate?: Date
+  style?: React.CSSProperties
+  placeholder?: string
+  value?: Date
+  onChange?: EventHandler
+  onBlur?: EventHandler
+  /** Field default value */
+  defaultValue?: DefaultValue
+  format?: FormatAdapter
+  withPortal?: boolean
+  minValue?: Date
+  maxValue?: Date
+}
 
 export const Datepicker = ({
   calendar = true,
@@ -19,6 +37,8 @@ export const Datepicker = ({
   defaultValue,
   onBlur,
   withPortal = true,
+  minValue = new Date('1900-01-01'),
+  maxValue = new Date('2100-12-31'),
   ...props
 }: DatepickerProps) => {
   const {
@@ -37,12 +57,17 @@ export const Datepicker = ({
     onBlur,
   })
 
+  console.log({ minValue, maxValue })
   const [pickerState, setPickerState] = useState<CalendarDate | DateValue>()
   /* new CalendarDate(2000, 1, 29), */
 
   return (
     <div className="au-datepicker">
-      <DatePicker value={pickerState} onChange={(date) => console.log(date)}>
+      <DatePicker
+        value={pickerState}
+        minValue={minValue && dateToPickerFormat(minValue)}
+        maxValue={maxValue && dateToPickerFormat(maxValue)}
+        onChange={(date) => console.log(date)}>
         <InputField
           className="au-datepicker__input"
           {...props}
