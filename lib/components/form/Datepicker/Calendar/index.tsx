@@ -58,7 +58,7 @@ export const DatepickerCalendar = ({
   }
   const statePicker = useContext(DatePickerStateContext)
 
-  console.log({ statePicker })
+  /* console.log({ statePicker }) */
 
   return (
     <PortalHolder withPortal={withPortal}>

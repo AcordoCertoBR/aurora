@@ -30,6 +30,8 @@ export type DatepickerProps = InputProps & {
   withPortal?: boolean
 }
 
+export type SegmentItem = { label: string; value: string | number }
+
 export type UseDatePickerProps = {
   onChange?: EventHandler
   disabled?: boolean

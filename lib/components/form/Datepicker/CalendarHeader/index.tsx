@@ -1,19 +1,30 @@
 import { useContext } from 'react'
 import { CalendarStateContext } from 'react-aria-components'
+import { CalendarDate } from '@internationalized/date'
 import { IconChevronLeft, IconChevronRight } from '../../../icons'
 import { Segment } from '../Segment'
 
-import "./styles.scss"
+import { months } from './constants'
+import { SegmentItem } from '../types'
+import './styles.scss'
 
-type CalendarHeaderprops = {
-  color?: string
-}
+export const CalendarHeader = () => {
+  const {
+    focusNextPage,
+    focusPreviousPage,
+    setFocusedDate,
+    focusedDate,
+    ...calendar
+  } = useContext(CalendarStateContext)
 
-// TODO portal for mobile version
+  function handleFocusNewMonth(month: SegmentItem) {
+    const monthNumber = month.value as number
+    const focusedDay = focusedDate.day
+    const focusedYear = focusedDate.year
+    setFocusedDate(new CalendarDate(focusedYear, monthNumber, focusedDay))
+  }
 
-export const CalendarHeader = ({ color }: CalendarHeaderprops) => {
-  const { focusNextPage, focusPreviousPage } = useContext(CalendarStateContext)
-  console.log(color)
+  console.log({ calendar })
   return (
     <div className="au-datepicker__header" aria-label="Anterior">
       <button
@@ -23,26 +34,13 @@ export const CalendarHeader = ({ color }: CalendarHeaderprops) => {
       </button>
       <div className="au-datepicker__header-segments">
         <Segment
-          currentItem={{ label: 'Janeiro', value: 1 }}
+          currentValue={focusedDate.month}
           mobileTitle="Escolha o mês"
-          onSelect={() => {}}
-          options={[
-            { label: 'Janeiro', value: 1 },
-            { label: 'Fevereiro', value: 2 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-            { label: 'Março', value: 3 },
-          ]}
+          onSelect={handleFocusNewMonth}
+          options={months}
         />
         <Segment
-          currentItem={{ label: '2020', value: 2020 }}
+          currentValue={2020}
           mobileTitle="Escolha o ano"
           onSelect={() => {}}
           options={[

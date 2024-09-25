@@ -29,7 +29,6 @@ export const InputField = ({
   ...props
 }: InputProps) => {
 
-  console.log(inputRef)
   return (
     <Field.Root
       style={style}

@@ -1,27 +1,35 @@
-// TODO - use select field
-
 import classNames from 'classnames'
 import { IconChevronDown, IconChevronLeft, IconX } from '../../../icons'
 
 import './styles.scss'
 import { useSegment } from './hook'
-
-type SegmentItem = { label: string; value: string | number }
+import { SegmentItem } from '../types'
 
 type SegmentProps = {
   mobileTitle: string
   options: SegmentItem[]
   onSelect: (option: SegmentItem) => void
-  currentItem: SegmentItem
+  currentValue: string | number
 }
 
 export const Segment = ({
-  currentItem,
+  currentValue,
   options,
   mobileTitle,
   onSelect,
 }: SegmentProps) => {
-  const { rootEl, isListOpen, openList, closeList } = useSegment()
+  const {
+    rootEl,
+    isListOpen,
+    openList,
+    closeList,
+    currentItem,
+    handleSelectItem,
+  } = useSegment({
+    options,
+    currentValue,
+    onSelect,
+  })
 
   return (
     <div
@@ -31,7 +39,7 @@ export const Segment = ({
         'au-datepicker__segment--open': isListOpen,
       })}>
       <div className="au-datepicker__segment-input" onClick={openList}>
-        {currentItem.label}
+        {currentItem?.label}
         <IconChevronDown />
       </div>
       <div className="au-datepicker__segment-list-holder">
@@ -48,8 +56,11 @@ export const Segment = ({
           {options.map((option, idx) => (
             <li
               key={`au-datepicker-segment-li-${option.value}-${idx}`}
-              onClick={() => onSelect(option)}
-              className="au-datepicker__segment-list-item">
+              onClick={() => handleSelectItem(option)}
+              className={classNames('au-datepicker__segment-list-item', {
+                'au-datepicker__segment-list-item--active':
+                  option.value === currentValue,
+              })}>
               {option.label}
             </li>
           ))}

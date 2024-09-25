@@ -57,7 +57,6 @@ export const Datepicker = ({
             calendar && (
               <div
                 className="au-datepicker__calendar-holder"
-                style={{ color: 'red' }}
                 onClick={toggleCalendar}>
                 <IconCalendar
                   rawColor={disabled ? COLOR_NEUTRAL_40 : undefined}
