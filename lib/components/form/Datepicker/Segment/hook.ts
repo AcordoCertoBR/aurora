@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { BREAKPOINT_MD } from '../../../../main'
 import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
@@ -17,12 +17,19 @@ export function useSegment({
 }: UseSegmentProps) {
   const [isListOpen, setIsListOpen] = useState(false)
   const rootEl = useRef<HTMLDivElement>(null)
+  const selectedItem = useRef<HTMLLIElement>(null)
   const currentItem = options.find((item) => item.value === currentValue)
   const { listenOutsideClick } = useOutsideClick({
     rootEl,
     breakpoint: BREAKPOINT_MD,
     onLoseFocusCB: closeList,
   })
+
+  useEffect(() => {
+    if (selectedItem.current) {
+      selectedItem.current.scrollIntoView()
+    }
+  }, [isListOpen])
 
   function openList() {
     setIsListOpen(true)
@@ -44,6 +51,7 @@ export function useSegment({
     isListOpen,
     rootEl,
     currentItem,
-    handleSelectItem
+    handleSelectItem,
+    selectedItem,
   }
 }

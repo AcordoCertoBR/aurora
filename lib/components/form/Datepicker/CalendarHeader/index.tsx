@@ -12,7 +12,8 @@ export const CalendarHeader = () => {
     focusPreviousPage,
     focusedDate,
     handleFocusNewMonth,
-    /* handleFocusNewYear, */
+    yearsOptions,
+    handleFocusNewYear,
   } = useCalendarHeader()
 
   return (
@@ -32,13 +33,8 @@ export const CalendarHeader = () => {
         <Segment
           currentValue={focusedDate.year}
           mobileTitle="Escolha o ano"
-          onSelect={handleFocusNewMonth}
-          options={[
-            { label: '2019', value: 2019 },
-            { label: '2020', value: 2020 },
-            { label: '2020', value: 2020 },
-            { label: '2024', value: 2024 },
-          ]}
+          onSelect={handleFocusNewYear}
+          options={yearsOptions}
         />
       </div>
       <button

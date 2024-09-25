@@ -10,7 +10,6 @@ import { DatepickerCalendar } from './Calendar'
 import { useDatepicker } from './hook'
 import './styles.scss'
 import { DefaultValue, EventHandler, FormatAdapter } from './types'
-import { dateToPickerFormat } from './helpers'
 
 type DatepickerProps = InputProps & {
   calendar?: boolean
@@ -49,6 +48,8 @@ export const Datepicker = ({
     isCalendarVisible,
     fmtPlaceholder,
     inputRef,
+    usedMaxValue,
+    usedMinValue,
   } = useDatepicker({
     onChange,
     value,
@@ -57,7 +58,6 @@ export const Datepicker = ({
     onBlur,
   })
 
-  console.log({ minValue, maxValue })
   const [pickerState, setPickerState] = useState<CalendarDate | DateValue>()
   /* new CalendarDate(2000, 1, 29), */
 
@@ -65,8 +65,8 @@ export const Datepicker = ({
     <div className="au-datepicker">
       <DatePicker
         value={pickerState}
-        minValue={minValue && dateToPickerFormat(minValue)}
-        maxValue={maxValue && dateToPickerFormat(maxValue)}
+        minValue={usedMinValue}
+        maxValue={usedMaxValue}
         onChange={(date) => console.log(date)}>
         <InputField
           className="au-datepicker__input"

@@ -10,6 +10,8 @@ type SegmentProps = {
   options: SegmentItem[]
   onSelect: (option: SegmentItem) => void
   currentValue: string | number
+  minValue?: Date
+  maxValue?: Date
 }
 
 export const Segment = ({
@@ -25,6 +27,7 @@ export const Segment = ({
     closeList,
     currentItem,
     handleSelectItem,
+    selectedItem,
   } = useSegment({
     options,
     currentValue,
@@ -53,17 +56,20 @@ export const Segment = ({
           </div>
         </div>
         <ul className="au-datepicker__segment-list">
-          {options.map((option, idx) => (
-            <li
-              key={`au-datepicker-segment-li-${option.value}-${idx}`}
-              onClick={() => handleSelectItem(option)}
-              className={classNames('au-datepicker__segment-list-item', {
-                'au-datepicker__segment-list-item--active':
-                  option.value === currentValue,
-              })}>
-              {option.label}
-            </li>
-          ))}
+          {options.map((option, idx) => {
+            const isSelectedItem = option.value === currentValue
+            return (
+              <li
+                key={`au-datepicker-segment-li-${option.value}-${idx}`}
+                onClick={() => handleSelectItem(option)}
+                ref={isSelectedItem ? selectedItem : null}
+                className={classNames('au-datepicker__segment-list-item', {
+                  'au-datepicker__segment-list-item--active': isSelectedItem,
+                })}>
+                {option.label}
+              </li>
+            )
+          })}
         </ul>
       </div>
     </div>

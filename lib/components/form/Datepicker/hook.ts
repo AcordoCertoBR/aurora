@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { CalendarDate } from '@internationalized/date'
 import { DefaultValue, EventHandler, FormatAdapter } from './types'
-import { DDMMYYYY } from './helpers'
+import { dateToPickerFormat, DDMMYYYY } from './helpers'
 import { isMobile } from '../../../core/utils/isMobile'
 
 type UseDatePickerProps = {
@@ -11,6 +12,8 @@ type UseDatePickerProps = {
   format?: FormatAdapter
   placeholder?: string
   onBlur?: EventHandler
+  minValue?: Date
+  maxValue?: Date
 }
 
 function getDefaultDate(defaultDateProp: DefaultValue) {
@@ -27,12 +30,20 @@ export function useDatepicker({
   format = DDMMYYYY,
   placeholder,
   onBlur,
+  minValue,
+  maxValue,
 }: UseDatePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>()
   const [inputDate, setInputDate] = useState('')
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const usedMinValue = minValue
+    ? dateToPickerFormat(minValue)
+    : new CalendarDate(1900, 1, 1)
+  const usedMaxValue = maxValue
+    ? dateToPickerFormat(maxValue)
+    : new CalendarDate(2100, 12, 31)
 
   useEffect(() => {
     if (!!value && value instanceof Date) {
@@ -93,5 +104,7 @@ export function useDatepicker({
     isCalendarVisible,
     fmtPlaceholder: placeholder || format.placeholder,
     inputRef,
+    usedMaxValue,
+    usedMinValue,
   }
 }
