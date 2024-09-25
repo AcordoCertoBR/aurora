@@ -27,6 +27,7 @@ export type DatepickerProps = InputProps & {
   /** Field default value */
   defaultValue?: DefaultValue
   format?: FormatAdapter
+  withPortal?: boolean
 }
 
 export type UseDatePickerProps = {

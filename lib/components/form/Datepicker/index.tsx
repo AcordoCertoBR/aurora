@@ -18,6 +18,7 @@ export const Datepicker = ({
   value,
   defaultValue,
   onBlur,
+  withPortal = true,
   ...props
 }: DatepickerProps) => {
   const {
@@ -68,6 +69,7 @@ export const Datepicker = ({
         {calendar && (
           <DatepickerCalendar
             isVisible={isCalendarVisible}
+            withPortal={withPortal}
             hasSelectedDate={!!pickerState}
             toggleCalendar={toggleCalendar}
             onChange={(date) => setPickerState(date)}
