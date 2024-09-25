@@ -9,7 +9,9 @@ import {
   CalendarHeaderCell,
   DatePickerStateContext,
 } from 'react-aria-components'
-import { CalendarHeader } from './CalendarHeader'
+import { CalendarHeader } from '../CalendarHeader'
+
+import "./styles.scss"
 
 type DatepickerCalendarProps = {
   isVisible: boolean

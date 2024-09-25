@@ -1,0 +1,99 @@
+.au-datepicker__calendar {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s; // TODO specify
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+
+  @include aboveMedium() {
+    width: 414px;
+    position: absolute;
+    top: 150%;
+    left: 0;
+    right: auto;
+    bottom: auto;
+  }
+
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+
+    .au-datepicker__calendar-backdrop {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .au-datepicker__calendar-card {
+      bottom: 0;
+    }
+
+    @include aboveMedium() {
+      top: calc(100% + 16px); // TODO  transition?
+    }
+  }
+
+  &-backdrop {
+    background-color: rgba($color-neutral-70, 0.8);
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    visibility: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.2s; //TODO specify
+
+    @include aboveMedium() {
+      display: none;
+    }
+  }
+
+  &-card {
+    width: 100%;
+    padding: 16px;
+    position: absolute;
+    bottom: -100%;
+    border-radius: 16px 16px 0 0;
+    border: 1px solid $color-neutral-20;
+    background: $color-neutral-00;
+    bottom: 0;
+    z-index: 2;
+    transition: all 0.2s ease-in; // TODO specify
+
+    @include aboveMedium() {
+      position: relative;
+      height: auto;
+      bottom: auto;
+      transition: none;
+      border-radius: 16px;
+    }
+  }
+
+  &-base {
+    width: 100%;
+  }
+
+  &-grid {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  &-weekday,
+  &-day {
+    padding: 8px;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+    color: $color-neutral-70;
+
+    @media (max-width: 320px) {
+      //TODO create breakpoint
+      padding: 6px;
+    }
+  }
+
+  &-day {
+    cursor: pointer;
+  }
+}
