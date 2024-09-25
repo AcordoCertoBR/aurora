@@ -121,4 +121,17 @@
       color: $color-neutral-00;
     }
   }
+
+  &-actions-dock {
+    display: flex;
+    gap: 8px;
+    padding-top: 16px;
+    @include aboveMedium() {
+      display: none;
+    }
+  }
+
+  &-cancel {
+    max-width: 125px;
+  }
 }

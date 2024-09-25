@@ -14,12 +14,14 @@ import { CalendarHeader } from '../CalendarHeader'
 
 import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
 import { BREAKPOINT_MD } from '../../../../main'
+import { Button } from '../../../Button'
 
 import './styles.scss'
 
 type DatepickerCalendarProps = {
   isVisible: boolean
   toggleCalendar: () => void
+  hasSelectedDate: boolean
   onChange: (date: DateValue) => void
 }
 
@@ -27,6 +29,7 @@ export const DatepickerCalendar = ({
   isVisible,
   toggleCalendar,
   onChange,
+  hasSelectedDate,
 }: DatepickerCalendarProps) => {
   const rootEl = useRef<HTMLDivElement>(null)
   const { listenOutsideClick } = useOutsideClick({
@@ -84,6 +87,18 @@ export const DatepickerCalendar = ({
             </CalendarGridBody>
           </CalendarGrid>
         </Calendar>
+        <div className="au-datepicker__calendar-actions-dock">
+          <Button
+            type="outlined"
+            className="au-datepicker__calendar-cancel"
+            expand="x"
+            onClick={toggleCalendar}>
+            Cancelar
+          </Button>
+          <Button disabled={!hasSelectedDate} expand="x">
+            Confirmar
+          </Button>
+        </div>
       </div>
     </div>
   )

@@ -36,9 +36,8 @@ export const Datepicker = ({
     onBlur,
   })
 
-  const [pickerState, setPickerState] = useState<CalendarDate | DateValue>(
-    new CalendarDate(2000, 1, 29),
-  )
+  const [pickerState, setPickerState] = useState<CalendarDate | DateValue>()
+  /* new CalendarDate(2000, 1, 29), */
 
   return (
     <div className="au-datepicker">
@@ -69,6 +68,7 @@ export const Datepicker = ({
         {calendar && (
           <DatepickerCalendar
             isVisible={isCalendarVisible}
+            hasSelectedDate={!!pickerState}
             toggleCalendar={toggleCalendar}
             onChange={(date) => setPickerState(date)}
           />
