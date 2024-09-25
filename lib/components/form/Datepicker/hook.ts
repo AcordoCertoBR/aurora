@@ -1,26 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
 import { CalendarDate } from '@internationalized/date'
-import { DefaultValue, EventHandler, FormatAdapter } from './types'
-import { dateToPickerFormat, DDMMYYYY } from './helpers'
+import {
+  AUCalendarDateShape,
+  DefaultValue,
+  EventHandler,
+  FormatAdapter,
+} from './types'
+import { DDMMYYYY, getDefaultDate } from './helpers'
 import { isMobile } from '../../../core/utils/isMobile'
 
 type UseDatePickerProps = {
   onChange?: EventHandler
   disabled?: boolean
-  value?: Date
+  value?: AUCalendarDateShape
   defaultValue?: DefaultValue
   format?: FormatAdapter
   placeholder?: string
   onBlur?: EventHandler
-  minValue?: Date
-  maxValue?: Date
+  minValue: AUCalendarDateShape
+  maxValue: AUCalendarDateShape
 }
 
-function getDefaultDate(defaultDateProp: DefaultValue) {
-  if (defaultDateProp === 'now') return new Date()
-  if (defaultDateProp instanceof Date) return defaultDateProp
-  return null
-}
+
 
 export function useDatepicker({
   value,
@@ -33,17 +34,22 @@ export function useDatepicker({
   minValue,
   maxValue,
 }: UseDatePickerProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>()
   const [inputDate, setInputDate] = useState('')
+  const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>()
+
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-  const usedMinValue = minValue
-    ? dateToPickerFormat(minValue)
-    : new CalendarDate(1900, 1, 1)
-  const usedMaxValue = maxValue
-    ? dateToPickerFormat(maxValue)
-    : new CalendarDate(2100, 12, 31)
+  const usedMinValue = new CalendarDate(
+    minValue.year,
+    minValue.month,
+    minValue.date,
+  )
+  const usedMaxValue = new CalendarDate(
+    maxValue.year,
+    maxValue.month,
+    maxValue.date,
+  )
 
   useEffect(() => {
     if (!!value && value instanceof Date) {
@@ -68,7 +74,7 @@ export function useDatepicker({
     if (!finishedTypingDate) return
 
     if (format.validate(inputDate)) {
-      const dateObj = format.toDate(inputDate)
+      const dateObj = format.toCalendarDate(inputDate)
       setSelectedDate(dateObj)
       if (onChange) onChange(dateObj)
     } else {

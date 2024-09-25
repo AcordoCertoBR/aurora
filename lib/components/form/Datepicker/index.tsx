@@ -8,23 +8,30 @@ import { COLOR_NEUTRAL_40 } from '../../../main'
 import { DatepickerCalendar } from './Calendar'
 
 import { useDatepicker } from './hook'
+import {
+  AUCalendarDateShape,
+  DefaultValue,
+  EventHandler,
+  FormatAdapter,
+} from './types'
+
 import './styles.scss'
-import { DefaultValue, EventHandler, FormatAdapter } from './types'
+import { AUCalendarDate } from './helpers'
 
 type DatepickerProps = InputProps & {
   calendar?: boolean
-  defaultDate?: Date
+  defaultDate?: AUCalendarDateShape
   style?: React.CSSProperties
   placeholder?: string
-  value?: Date
+  value?: AUCalendarDateShape
   onChange?: EventHandler
   onBlur?: EventHandler
   /** Field default value */
   defaultValue?: DefaultValue
   format?: FormatAdapter
   withPortal?: boolean
-  minValue?: Date
-  maxValue?: Date
+  minValue?: AUCalendarDateShape
+  maxValue?: AUCalendarDateShape
 }
 
 export const Datepicker = ({
@@ -36,8 +43,8 @@ export const Datepicker = ({
   defaultValue,
   onBlur,
   withPortal = true,
-  minValue = new Date('1900-01-01'),
-  maxValue = new Date('2100-12-31'),
+  minValue = AUCalendarDate(1, 1, 1900),
+  maxValue = AUCalendarDate(31, 12, 2100),
   ...props
 }: DatepickerProps) => {
   const {
@@ -56,6 +63,8 @@ export const Datepicker = ({
     defaultValue,
     placeholder,
     onBlur,
+    minValue,
+    maxValue,
   })
 
   const [pickerState, setPickerState] = useState<CalendarDate | DateValue>()

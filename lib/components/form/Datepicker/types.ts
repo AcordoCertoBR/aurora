@@ -1,6 +1,6 @@
-export type EventHandler = (value?: Date | null) => void
+export type EventHandler = (value?: AUCalendarDateShape | null) => void
 
-export type DefaultValue = 'empty' | 'now' | Date
+export type DefaultValue = 'empty' | 'now' | AUCalendarDateShape
 
 export type FormatAdapter = {
   /** mask typed date  */
@@ -9,11 +9,15 @@ export type FormatAdapter = {
   validateFormat: (date: string) => boolean
   /** Validate if is a valid date */
   validate: (date: string) => boolean
-  toDate: (dateStr: string) => Date
-  toString: (date: Date) => string
+  toCalendarDate: (dateStr: string) => AUCalendarDateShape
+  toString: (date: AUCalendarDateShape) => string
   placeholder: string
-  minValue?: Date
-  maxValue?: Date
 }
 
 export type SegmentItem = { label: string; value: number }
+
+export type AUCalendarDateShape = {
+  date: number
+  month: number
+  year: number
+}

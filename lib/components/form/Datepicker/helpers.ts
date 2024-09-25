@@ -1,5 +1,5 @@
 import { CalendarDate } from '@internationalized/date'
-import { FormatAdapter } from './types'
+import { AUCalendarDateShape, DefaultValue, FormatAdapter } from './types'
 
 export const DDMMYYYY: FormatAdapter = {
   placeholder: 'DD/MM/YYYY',
@@ -19,18 +19,17 @@ export const DDMMYYYY: FormatAdapter = {
     const pattern = /^\d{2}\/\d{2}\/\d{4}$/
     return pattern.test(dateStr)
   },
-  toDate(dateStr) {
-    const [day, month, year] = dateStr.split('/').map(Number)
-    return new Date(year, month - 1, day)
+  toCalendarDate(dateStr) {
+    const [date, month, year] = dateStr.split('/').map(Number)
+    return { date, month, year }
   },
 
-  toString(date) {
+  toString(dateObj) {
     const fmtNumber = (digit: number) =>
       String(digit).length === 1 ? `0${digit}` : String(digit)
-    const day = date.getDate()
-    const month = date.getMonth() + 1
-    const year = date.getFullYear()
-    return `${fmtNumber(day)}/${fmtNumber(month)}/${year}`
+    const { date, month, year } = dateObj
+
+    return `${fmtNumber(date)}/${fmtNumber(month)}/${year}`
   },
   validate(dateStr) {
     const [day, month, year] = dateStr.split('/').map(Number)
@@ -52,4 +51,32 @@ export function dateToPickerFormat(date: Date) {
   )
 
   return converted
+}
+
+export function AUCalendarDate(
+  date: number,
+  month: number,
+  year: number,
+): AUCalendarDateShape {
+  return {
+    date,
+    month,
+    year,
+  }
+}
+
+export function getDefaultDate(
+  defaultDateProp: DefaultValue,
+): AUCalendarDateShape | null {
+  if (defaultDateProp == 'empty') return null
+  if (defaultDateProp === 'now') {
+    const now = new Date()
+    return {
+      date: now.getDate(),
+      month: now.getMonth() + 1,
+      year: now.getFullYear(),
+    }
+  }
+
+  return defaultDateProp
 }
