@@ -1,10 +1,10 @@
 import { DatePicker } from 'react-aria-components'
+import { CalendarDate } from '@internationalized/date'
 import { InputField } from '../InputField'
 import { DatepickerProps } from './types'
 import { IconCalendar } from '../../icons'
 import { COLOR_NEUTRAL_40 } from '../../../main'
 import { DatepickerCalendar } from './Calendar'
-import { CalendarDate } from '@internationalized/date'
 
 import { useDatepicker } from './hook'
 import './styles.scss'

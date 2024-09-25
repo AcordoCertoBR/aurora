@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useContext } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import {
   Calendar,
   CalendarCell,
@@ -11,7 +11,9 @@ import {
 } from 'react-aria-components'
 import { CalendarHeader } from '../CalendarHeader'
 
-import "./styles.scss"
+import './styles.scss'
+import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
+import { BREAKPOINT_MD } from '../../../../main'
 
 type DatepickerCalendarProps = {
   isVisible: boolean
@@ -22,9 +24,22 @@ export const DatepickerCalendar = ({
   isVisible,
   toggleCalendar,
 }: DatepickerCalendarProps) => {
+  const rootEl = useRef<HTMLDivElement>(null)
+  const { listenOutsideClick } = useOutsideClick({
+    rootEl,
+    breakpoint: BREAKPOINT_MD,
+    onLoseFocusCB: toggleCalendar,
+  })
+
   const componentClass = classNames('au-datepicker__calendar', {
     'au-datepicker__calendar--visible': isVisible,
   })
+
+  useEffect(() => {
+    if (isVisible) {
+      listenOutsideClick()
+    }
+  }, [isVisible])
 
   const fmtWeekday = (day: string) => {
     const capitalized = `${day.charAt(0).toUpperCase()}${day.slice(1)}`
@@ -35,7 +50,7 @@ export const DatepickerCalendar = ({
   console.log({ statePicker })
 
   return (
-    <div className={componentClass}>
+    <div className={componentClass} ref={rootEl}>
       <div
         className="au-datepicker__calendar-backdrop"
         onClick={toggleCalendar}
