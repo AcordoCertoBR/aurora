@@ -31,7 +31,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "storybook": "npm run prebuild && storybook dev -p 6006",
+    "storybook": "npm run prebuild && storybook dev -p 6006 --disable-telemetry --no-version-updates",
     "build-storybook": "npm run prebuild && storybook build",
     "prepare": "husky"
   },
