@@ -22,6 +22,14 @@ export const Default: Story = {
   },
 }
 
+export const Checked: Story = {
+    args: {
+      id: 'default-input',
+      defaultChecked: true,
+      ...commonArgs
+    },
+  }
+
 export const Focus: Story = {
   args: {
     id: 'focus-input',
@@ -46,3 +54,12 @@ export const Disabled: Story = {
     ...commonArgs
   },
 }
+
+export const DisabledChecked: Story = {
+    args: {
+      id: 'disabled-input',
+      disabled: true,
+      defaultChecked: true,
+      ...commonArgs
+    },
+  }
