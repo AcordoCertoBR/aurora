@@ -22,6 +22,7 @@ export function useCalendar({
   value,
 }: UseCalendarProps) {
   const rootEl = useRef<HTMLDivElement>(null)
+  const [enteredAnimation, setEnteredAnimation] = useState(false)
   const [calendarInternalState, setCalendarInternalState] =
     useState<CalendarDate>()
 
@@ -42,15 +43,32 @@ export function useCalendar({
     setCalendarInternalState(new CalendarDate(year, month, day))
   }, [value])
 
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setEnteredAnimation(true)
+    }, 100)
+    return () => {
+      clearTimeout(t)
+    }
+  }, [])
+
   function fmtWeekday(day: string) {
     const capitalized = `${day.charAt(0).toUpperCase()}${day.slice(1)}`
     return capitalized.replace('.', '')
   }
 
+  function animatedOnClose() {
+    setEnteredAnimation(false)
+    const t = setTimeout(() => {
+      clearTimeout(t)
+      onClose()
+    }, 200)
+  }
+
   function triggerChange(date: CalendarDate) {
     const { day, month, year } = date
     onChange(AUCalendarDate(day, month, year))
-    onClose()
+    animatedOnClose()
   }
 
   function calendarChange(date: CalendarDate) {
@@ -73,5 +91,7 @@ export function useCalendar({
     usedMinValue,
     rootEl,
     calendarInternalState,
+    animatedOnClose,
+    enteredAnimation,
   }
 }

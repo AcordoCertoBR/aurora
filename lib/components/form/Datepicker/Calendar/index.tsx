@@ -17,7 +17,6 @@ import { useCalendar } from './hook'
 import './styles.scss'
 
 type DatepickerCalendarProps = {
-  isVisible: boolean
   withPortal?: boolean
   minValue: AUCalendarDateShape
   maxValue: AUCalendarDateShape
@@ -27,7 +26,6 @@ type DatepickerCalendarProps = {
 }
 
 export const DatepickerCalendar = ({
-  isVisible,
   onClose,
   withPortal,
   minValue,
@@ -43,6 +41,8 @@ export const DatepickerCalendar = ({
     calendarChange,
     fmtWeekday,
     actionChange,
+    enteredAnimation,
+    animatedOnClose,
   } = useCalendar({
     onChange,
     onClose,
@@ -52,13 +52,16 @@ export const DatepickerCalendar = ({
   })
 
   const componentClass = classNames('au-datepicker__calendar', {
-    'au-datepicker__calendar--visible': isVisible,
+    'au-datepicker__calendar--visible': enteredAnimation,
   })
 
   return (
     <PortalHolder withPortal={withPortal}>
       <div className={componentClass} ref={rootEl}>
-        <div className="au-datepicker__calendar-backdrop" onClick={onClose} />
+        <div
+          className="au-datepicker__calendar-backdrop"
+          onClick={animatedOnClose}
+        />
         <div className="au-datepicker__calendar-card">
           <Calendar
             autoFocus
@@ -93,7 +96,7 @@ export const DatepickerCalendar = ({
               type="outlined"
               className="au-datepicker__calendar-cancel"
               expand="x"
-              onClick={onClose}>
+              onClick={animatedOnClose}>
               Cancelar
             </Button>
             <Button

@@ -17,16 +17,21 @@ export default meta
 
 type Story = StoryObj<typeof DatepickerField>
 
-export const WithText: Story = {
+export const WithoutCalendar: Story = {
   args: {
     style: { maxWidth: '272px' },
-    label: 'lulu',
-    /* defaultValue: new Date("02-20-1999"), */
-    /* onChange: (date) => alert(date?.toString()), */
+    label: 'Digite a data',
+    calendar: false,
+  },
+}
+
+export const WithCalendar: Story = {
+  args: {
+    style: { maxWidth: '272px' },
+    label: 'Escolha a data',
   },
 }
 
 // default date
 // controlled
 // uncontrolled
-

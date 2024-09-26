@@ -93,9 +93,8 @@ export const DatepickerField = ({
           )
         }
       />
-      {calendar && (
+      {calendar && isCalendarVisible && (
         <DatepickerCalendar
-          isVisible={isCalendarVisible}
           withPortal={withPortal}
           onClose={closeCalendar}
           minValue={minValue}
