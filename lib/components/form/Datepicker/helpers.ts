@@ -31,14 +31,23 @@ export const DDMMYYYY: FormatAdapter = {
 
     return `${fmtNumber(date)}/${fmtNumber(month)}/${year}`
   },
-  validate(dateStr) {
+  validate(dateStr, minValue, maxValue) {
     const [day, month, year] = dateStr.split('/').map(Number)
     const date = new Date(year, month - 1, day)
+    const isOlderThanMinDate =
+      !!minValue &&
+      date < new Date(minValue.year, minValue.month - 1, minValue.date)
+
+    const exceedsMaxDate =
+      !!maxValue &&
+      date > new Date(maxValue.year, maxValue.month - 1, maxValue.date)
 
     return (
       date.getDate() === day &&
       date.getMonth() + 1 === month &&
-      date.getFullYear() === year
+      date.getFullYear() === year &&
+      !isOlderThanMinDate &&
+      !exceedsMaxDate
     )
   },
 }

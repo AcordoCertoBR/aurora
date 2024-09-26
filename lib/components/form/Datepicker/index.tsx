@@ -1,4 +1,3 @@
-import { DatePicker } from 'react-aria-components'
 import { InputField } from '../InputField'
 import { InputProps } from '../InputField'
 import { IconCalendar } from '../../icons'
@@ -53,10 +52,7 @@ export const Datepicker = ({
     isCalendarVisible,
     fmtPlaceholder,
     inputRef,
-    usedMaxValue,
-    usedMinValue,
-    pickerFormattedDate,
-    setSelectedDate,
+    selectedDate,
   } = useDatepicker({
     onChange,
     value,
@@ -69,45 +65,39 @@ export const Datepicker = ({
 
   return (
     <div className="au-datepicker">
-      <DatePicker
-        value={pickerFormattedDate}
-        minValue={usedMinValue}
-        maxValue={usedMaxValue}
-        onChange={({ day, month, year }) => {
-          console.log('lulul')
-          setSelectedDate(AUCalendarDate(day, month, year)) //TODO
-        }}>
-        <InputField
-          className="au-datepicker__input"
-          {...props}
-          maxLength={10}
-          value={inputDate}
-          inputRef={inputRef}
-          onBlur={handleInputBlur}
-          disabled={disabled}
-          onChange={handleInputChange}
-          placeholder={fmtPlaceholder}
-          rightSlot={
-            calendar && (
-              <div
-                className="au-datepicker__calendar-holder"
-                onClick={toggleCalendar}>
-                <IconCalendar
-                  rawColor={disabled ? COLOR_NEUTRAL_40 : undefined}
-                />
-              </div>
-            )
-          }
+      <InputField
+        className="au-datepicker__input"
+        {...props}
+        maxLength={10}
+        value={inputDate}
+        inputRef={inputRef}
+        onBlur={handleInputBlur}
+        disabled={disabled}
+        onChange={handleInputChange}
+        placeholder={fmtPlaceholder}
+        rightSlot={
+          calendar && (
+            <div
+              className="au-datepicker__calendar-holder"
+              onClick={toggleCalendar}>
+              <IconCalendar
+                rawColor={disabled ? COLOR_NEUTRAL_40 : undefined}
+              />
+            </div>
+          )
+        }
+      />
+      {calendar && (
+        <DatepickerCalendar
+          isVisible={isCalendarVisible}
+          withPortal={withPortal}
+          toggleCalendar={toggleCalendar}
+          minValue={minValue}
+          maxValue={maxValue}
+          value={selectedDate}
+          onChange={console.log}
         />
-        {calendar && (
-          <DatepickerCalendar
-            isVisible={isCalendarVisible}
-            withPortal={withPortal}
-            hasSelectedDate={!!pickerFormattedDate}
-            toggleCalendar={toggleCalendar}
-          />
-        )}
-      </DatePicker>
+      )}
     </div>
   )
 }

@@ -8,7 +8,11 @@ export type FormatAdapter = {
   /** Validate a string in the format */
   validateFormat: (date: string) => boolean
   /** Validate if is a valid date */
-  validate: (date: string) => boolean
+  validate: (
+    date: string,
+    minValue?: AUCalendarDateShape,
+    maxValue?: AUCalendarDateShape,
+  ) => boolean
   toCalendarDate: (dateStr: string) => AUCalendarDateShape
   toString: (date: AUCalendarDateShape) => string
   placeholder: string

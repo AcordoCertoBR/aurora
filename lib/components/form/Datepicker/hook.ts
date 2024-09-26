@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { CalendarDate } from '@internationalized/date'
+import { useEffect, useRef, useState } from 'react'
+
 import {
   AUCalendarDateShape,
   DefaultValue,
@@ -32,27 +32,11 @@ export function useDatepicker({
   maxValue,
 }: UseDatePickerProps) {
   const [inputDate, setInputDate] = useState('')
-  const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>()
-
-  const pickerFormattedDate = useMemo(() => {
-    if (!selectedDate) return null
-    const { date, month, year } = selectedDate
-    return new CalendarDate(year, month, date)
-  }, [selectedDate])
+  const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>(null)
 
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-  const usedMinValue = new CalendarDate(
-    minValue.year,
-    minValue.month,
-    minValue.date,
-  )
-  const usedMaxValue = new CalendarDate(
-    maxValue.year,
-    maxValue.month,
-    maxValue.date,
-  )
 
   useEffect(() => {
     if (!!value && value.date) {
@@ -76,7 +60,7 @@ export function useDatepicker({
 
     if (!finishedTypingDate) return
 
-    const isDateValid = format.validate(maskedValue)
+    const isDateValid = format.validate(maskedValue, minValue, maxValue)
     const newFieldValue = isDateValid
       ? format.toCalendarDate(maskedValue)
       : null
@@ -107,9 +91,7 @@ export function useDatepicker({
     isCalendarVisible,
     fmtPlaceholder: placeholder || format.placeholder,
     inputRef,
-    usedMaxValue,
-    usedMinValue,
-    pickerFormattedDate,
-    setSelectedDate
+    selectedDate,
+    setSelectedDate,
   }
 }

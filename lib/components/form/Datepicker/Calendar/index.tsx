@@ -1,5 +1,5 @@
+import { useEffect, useMemo, useRef } from 'react'
 import classNames from 'classnames'
-import { useContext, useEffect, useRef } from 'react'
 import {
   Calendar,
   CalendarCell,
@@ -7,8 +7,8 @@ import {
   CalendarGridBody,
   CalendarGridHeader,
   CalendarHeaderCell,
-  DatePickerStateContext,
 } from 'react-aria-components'
+import { CalendarDate } from '@internationalized/date'
 import { CalendarHeader } from '../CalendarHeader'
 import { PortalHolder } from '../PortalHolder'
 import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
@@ -16,20 +16,25 @@ import { BREAKPOINT_MD } from '../../../../main'
 import { Button } from '../../../Button'
 
 import './styles.scss'
+import { AUCalendarDateShape } from '../types'
 
 type DatepickerCalendarProps = {
   isVisible: boolean
   toggleCalendar: () => void
-  hasSelectedDate: boolean
   withPortal?: boolean
+  minValue: AUCalendarDateShape
+  maxValue: AUCalendarDateShape
+  value?: AUCalendarDateShape | null
+  onChange: (date: AUCalendarDateShape) => void
 }
 
 export const DatepickerCalendar = ({
   isVisible,
   toggleCalendar,
-
-  hasSelectedDate,
   withPortal,
+  minValue,
+  maxValue,
+  value,
 }: DatepickerCalendarProps) => {
   const rootEl = useRef<HTMLDivElement>(null)
   const { listenOutsideClick } = useOutsideClick({
@@ -37,6 +42,23 @@ export const DatepickerCalendar = ({
     breakpoint: BREAKPOINT_MD,
     onLoseFocusCB: toggleCalendar,
   })
+
+  const usedMinValue = new CalendarDate(
+    minValue.year,
+    minValue.month,
+    minValue.date,
+  )
+  const usedMaxValue = new CalendarDate(
+    maxValue.year,
+    maxValue.month,
+    maxValue.date,
+  )
+
+  const calendarFormattedDate = useMemo(() => {
+    if (!value) return null
+    const { date, month, year } = value
+    return new CalendarDate(year, month, date)
+  }, [value])
 
   const componentClass = classNames('au-datepicker__calendar', {
     'au-datepicker__calendar--visible': isVisible,
@@ -52,9 +74,6 @@ export const DatepickerCalendar = ({
     const capitalized = `${day.charAt(0).toUpperCase()}${day.slice(1)}`
     return capitalized.replace('.', '')
   }
-  const statePicker = useContext(DatePickerStateContext)
-
-  /* console.log({ statePicker }) */
 
   return (
     <PortalHolder withPortal={withPortal}>
@@ -64,7 +83,11 @@ export const DatepickerCalendar = ({
           onClick={toggleCalendar}
         />
         <div className="au-datepicker__calendar-card">
-          <Calendar className="au-datepicker__calendar-base">
+          <Calendar
+            className="au-datepicker__calendar-base"
+            minValue={usedMinValue}
+            maxValue={usedMaxValue}
+            value={calendarFormattedDate}>
             <CalendarHeader />
             <CalendarGrid
               className="au-datepicker__calendar-grid"
@@ -94,7 +117,7 @@ export const DatepickerCalendar = ({
               onClick={toggleCalendar}>
               Cancelar
             </Button>
-            <Button disabled={!hasSelectedDate} expand="x">
+            <Button disabled={!calendarFormattedDate} expand="x">
               Confirmar
             </Button>
           </div>
