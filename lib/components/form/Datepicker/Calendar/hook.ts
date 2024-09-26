@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { CalendarDate } from '@internationalized/date'
-import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
+
 import { BREAKPOINT_MD } from '../../../../main'
 import { above } from '../../../../core/utils/screen'
 import { AUCalendarDate } from '../helpers'
@@ -8,7 +8,6 @@ import { AUCalendarDateShape } from '../types'
 
 type UseCalendarProps = {
   minValue: AUCalendarDateShape
-  isVisible: boolean
   maxValue: AUCalendarDateShape
   value?: AUCalendarDateShape | null
   onClose: () => void
@@ -21,16 +20,10 @@ export function useCalendar({
   minValue,
   maxValue,
   value,
-  isVisible,
 }: UseCalendarProps) {
   const rootEl = useRef<HTMLDivElement>(null)
   const [calendarInternalState, setCalendarInternalState] =
     useState<CalendarDate>()
-  const { listenOutsideClick } = useOutsideClick({
-    rootEl,
-    breakpoint: BREAKPOINT_MD,
-    onLoseFocusCB: onClose,
-  })
 
   const usedMinValue = new CalendarDate(
     minValue.year,
@@ -48,12 +41,6 @@ export function useCalendar({
     const { day, month, year } = value
     setCalendarInternalState(new CalendarDate(year, month, day))
   }, [value])
-
-  useEffect(() => {
-    if (isVisible) {
-      listenOutsideClick()
-    }
-  }, [isVisible])
 
   function fmtWeekday(day: string) {
     const capitalized = `${day.charAt(0).toUpperCase()}${day.slice(1)}`

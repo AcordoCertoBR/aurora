@@ -49,7 +49,6 @@ export const DatepickerCalendar = ({
     minValue,
     maxValue,
     value,
-    isVisible,
   })
 
   const componentClass = classNames('au-datepicker__calendar', {

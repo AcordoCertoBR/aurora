@@ -7,6 +7,8 @@ import {
   FormatAdapter,
 } from './types'
 import { DDMMYYYY, getDefaultDate } from './helpers'
+import { useOutsideClick } from '../../../core/hooks/useOutsideClick'
+import { BREAKPOINT_MD } from '../../../main'
 
 type UseDatePickerProps = {
   onChange?: EventHandler
@@ -31,6 +33,12 @@ export function useDatepicker({
   minValue,
   maxValue,
 }: UseDatePickerProps) {
+  const rootEl = useRef<HTMLDivElement>(null)
+  const { listenOutsideClick } = useOutsideClick({
+    rootEl,
+    breakpoint: BREAKPOINT_MD,
+    onLoseFocusCB: handleOutsideClick,
+  })
   const [inputDate, setInputDate] = useState('')
   const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>(
     null,
@@ -81,11 +89,18 @@ export function useDatepicker({
   function toggleCalendar() {
     if (!isCalendarVisible && disabled) return
     inputRef.current && inputRef.current.focus()
+    if (!isCalendarVisible) {
+      listenOutsideClick()
+    }
     setIsCalendarVisible(!isCalendarVisible)
   }
 
   function closeCalendar() {
     setIsCalendarVisible(false)
+  }
+
+  function handleOutsideClick() {
+    closeCalendar()
   }
 
   function updateDateFromCalendar(pickerDate: AUCalendarDateShape) {
@@ -104,6 +119,7 @@ export function useDatepicker({
     inputRef,
     selectedDate,
     setSelectedDate,
-    updateDateFromCalendar
+    updateDateFromCalendar,
+    rootEl,
   }
 }

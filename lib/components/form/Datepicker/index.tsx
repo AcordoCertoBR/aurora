@@ -58,6 +58,7 @@ export const DatepickerField = ({
     inputRef,
     selectedDate,
     updateDateFromCalendar,
+    rootEl,
   } = useDatepicker({
     onChange,
     value,
@@ -69,7 +70,8 @@ export const DatepickerField = ({
   })
 
   return (
-    <div className="au-datepicker">
+    <div className="au-datepicker" ref={rootEl}>
+      <button onClick={toggleCalendar}>lala</button>
       <InputField
         className="au-datepicker__input"
         {...props}

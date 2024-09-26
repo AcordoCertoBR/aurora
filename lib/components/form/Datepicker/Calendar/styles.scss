@@ -9,7 +9,7 @@
   @include aboveMedium() {
     width: 414px;
     position: absolute;
-    top: 150%;
+    top: calc(100% + 90px);
     left: 0;
     right: auto;
     bottom: auto;
@@ -29,7 +29,8 @@
     }
 
     @include aboveMedium() {
-      top: calc(100% + 16px); // TODO  transition?
+      /* top: calc(100% + 16px); */ // TODO  transition?
+      transform: translateY(-74px);
     }
   }
 
