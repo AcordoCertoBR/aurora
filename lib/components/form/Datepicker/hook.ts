@@ -13,7 +13,7 @@ import { BREAKPOINT_MD } from '../../../main'
 type UseDatePickerProps = {
   onChange?: EventHandler
   disabled?: boolean
-  value?: AUCalendarDateShape
+  value?: AUCalendarDateShape | null
   defaultValue?: DefaultValue
   format?: FormatAdapter
   placeholder?: string
@@ -106,6 +106,7 @@ export function useDatepicker({
   function updateDateFromCalendar(pickerDate: AUCalendarDateShape) {
     setSelectedDate(pickerDate)
     setInputDate(format.toString(pickerDate))
+    if (onChange) onChange(pickerDate)
   }
 
   return {

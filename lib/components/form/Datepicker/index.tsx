@@ -15,11 +15,11 @@ import { AUCalendarDate } from './helpers'
 import { useDatepicker } from './hook'
 import './styles.scss'
 
-type DatepickerFieldProps = InputProps & {
+type DatepickerFieldProps = Omit<InputProps, 'value' | 'onChange'> & {
   /** Use calendar dialog to pick date */
   calendar?: boolean
   placeholder?: string
-  value?: AUCalendarDateShape
+  value?: AUCalendarDateShape | null
   onChange?: EventHandler
   onBlur?: EventHandler
   /** Default date to use the datepicker as an uncontrolled component */

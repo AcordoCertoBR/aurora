@@ -26,7 +26,7 @@ export function useSegment({
   })
 
   useEffect(() => {
-    if (selectedItem.current) {
+    if (selectedItem.current && isListOpen) {
       selectedItem.current.scrollIntoView()
     }
   }, [isListOpen])
