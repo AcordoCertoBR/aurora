@@ -13,8 +13,8 @@ import { PortalHolder } from '../PortalHolder'
 import { Button } from '../../../Button'
 import { AUCalendarDateShape } from '../types'
 
-import './styles.scss'
 import { useCalendar } from './hook'
+import './styles.scss'
 
 type DatepickerCalendarProps = {
   isVisible: boolean

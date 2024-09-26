@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Datepicker } from './index'
+import { DatepickerField } from './index'
 
-const meta: Meta<typeof Datepicker> = {
+const meta: Meta<typeof DatepickerField> = {
   title: 'Components/form/Datepicker',
-  component: Datepicker,
+  component: DatepickerField,
   tags: ['autodocs'],
   parameters: {
     backgrounds: {
@@ -15,7 +15,7 @@ const meta: Meta<typeof Datepicker> = {
 
 export default meta
 
-type Story = StoryObj<typeof Datepicker>
+type Story = StoryObj<typeof DatepickerField>
 
 export const WithText: Story = {
   args: {

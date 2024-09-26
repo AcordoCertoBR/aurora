@@ -15,6 +15,7 @@ export { Footer } from './components/Footer'
 export { InputField } from './components/form/InputField'
 export { TokenField } from './components/form/TokenField'
 export { PasswordField } from './components/form/PasswordField'
+export { DatepickerField } from './components/form/Datepicker'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'

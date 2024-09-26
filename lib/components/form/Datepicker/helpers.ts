@@ -1,8 +1,8 @@
-import { CalendarDate } from '@internationalized/date'
 import { AUCalendarDateShape, DefaultValue, FormatAdapter } from './types'
 
 export const DDMMYYYY: FormatAdapter = {
   placeholder: 'DD/MM/YYYY',
+  /** Apply DD/MM/YYYY to a field text while typing */
   maskDate(dateStr) {
     let fmtInputDate = dateStr
     fmtInputDate = fmtInputDate.replace(/\D/g, '') // Remove non-numeric characters
@@ -15,23 +15,26 @@ export const DDMMYYYY: FormatAdapter = {
     }
     return fmtInputDate
   },
+  /** Check if a string is on DD/MM/YYYY Format */
   validateFormat(dateStr) {
     const pattern = /^\d{2}\/\d{2}\/\d{4}$/
     return pattern.test(dateStr)
   },
-  toCalendarDate(dateStr) {
+  /** Covert a DD/MM/YYYY to the datepicker date structure */
+  toCalendarDate(dateStr): AUCalendarDateShape {
     const [day, month, year] = dateStr.split('/').map(Number)
     return { day, month, year }
   },
-
-  toString(dateObj) {
+  /** Covert a Date in the datepicker structure into a DD/MM/YYYY string */
+  toString(dateObj: AUCalendarDateShape): string {
     const fmtNumber = (digit: number) =>
       String(digit).length === 1 ? `0${digit}` : String(digit)
     const { day, month, year } = dateObj
 
     return `${fmtNumber(day)}/${fmtNumber(month)}/${year}`
   },
-  validate(dateStr, minValue, maxValue) {
+  /** Check if a DD/MM/YYYY is a valid date */
+  validate(dateStr, minValue, maxValue): boolean {
     const [day, month, year] = dateStr.split('/').map(Number)
     const date = new Date(year, month - 1, day)
     const isOlderThanMinDate =
@@ -50,16 +53,6 @@ export const DDMMYYYY: FormatAdapter = {
       !exceedsMaxDate
     )
   },
-}
-
-export function dateToPickerFormat(date: Date) {
-  const converted = new CalendarDate(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    date.getDate(),
-  )
-
-  return converted
 }
 
 export function AUCalendarDate(

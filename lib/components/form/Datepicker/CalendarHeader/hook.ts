@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { CalendarStateContext } from 'react-aria-components'
 import { CalendarDate } from '@internationalized/date'
 import { SegmentItem } from '../types'
@@ -17,14 +17,38 @@ export function useCalendarHeader({
     focusedDate,
     minValue,
     maxValue,
-    /* ...calendar */
   } = useContext(CalendarStateContext)
 
-  const [yearsOptions, setYearsOptions] = useState<SegmentItem[]>([])
+  const yearsOptions = useMemo(() => {
+    const minYear = minValue?.year || 1900
+    const maxYear = maxValue?.year || 2100
+    const items: SegmentItem[] = []
 
-  useEffect(() => {
-    setYearsOptions(getYearsRange(minValue?.year, maxValue?.year))
+    for (let i = minYear; i <= maxYear; i++) {
+      items.push({ label: String(i), value: i })
+    }
+
+    return items
   }, [minValue, maxValue])
+
+  const monthsOptions = useMemo(
+    () =>
+      [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro',
+      ].map((label, idx) => ({ label, value: idx + 1 })),
+    [],
+  )
 
   useEffect(() => {
     if (defaultFocusDate) {
@@ -53,15 +77,6 @@ export function useCalendarHeader({
     handleFocusNewYear,
     focusedDate,
     yearsOptions,
+    monthsOptions,
   }
-}
-
-function getYearsRange(minYear: number = 1900, maxYear: number = 2100) {
-  const items: SegmentItem[] = []
-
-  for (let i = minYear; i <= maxYear; i++) {
-    items.push({ label: String(i), value: i })
-  }
-
-  return items
 }

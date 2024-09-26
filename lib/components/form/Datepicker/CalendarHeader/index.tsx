@@ -2,7 +2,6 @@ import { IconChevronLeft, IconChevronRight } from '../../../icons'
 import { Segment } from '../Segment'
 import { CalendarDate } from '@internationalized/date'
 
-import { months } from './constants'
 import { useCalendarHeader } from './hook'
 
 import './styles.scss'
@@ -18,6 +17,7 @@ export const CalendarHeader = ({ defaultFocusDate }: CalendarHeaderProps) => {
     focusedDate,
     handleFocusNewMonth,
     yearsOptions,
+    monthsOptions,
     handleFocusNewYear,
   } = useCalendarHeader({ defaultFocusDate })
 
@@ -33,7 +33,7 @@ export const CalendarHeader = ({ defaultFocusDate }: CalendarHeaderProps) => {
           currentValue={focusedDate.month}
           mobileTitle="Escolha o mês"
           onSelect={handleFocusNewMonth}
-          options={months}
+          options={monthsOptions}
         />
         <Segment
           currentValue={focusedDate.year}

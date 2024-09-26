@@ -55,7 +55,7 @@ export function useCalendar({
     }
   }, [isVisible])
 
-  const fmtWeekday = (day: string) => {
+  function fmtWeekday(day: string) {
     const capitalized = `${day.charAt(0).toUpperCase()}${day.slice(1)}`
     return capitalized.replace('.', '')
   }
@@ -85,6 +85,6 @@ export function useCalendar({
     usedMaxValue,
     usedMinValue,
     rootEl,
-    calendarInternalState
+    calendarInternalState,
   }
 }

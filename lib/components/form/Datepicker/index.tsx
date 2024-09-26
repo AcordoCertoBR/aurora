@@ -4,7 +4,6 @@ import { IconCalendar } from '../../icons'
 import { COLOR_NEUTRAL_40 } from '../../../main'
 import { DatepickerCalendar } from './Calendar'
 
-import { useDatepicker } from './hook'
 import {
   AUCalendarDateShape,
   DefaultValue,
@@ -12,10 +11,11 @@ import {
   FormatAdapter,
 } from './types'
 
-import './styles.scss'
 import { AUCalendarDate } from './helpers'
+import { useDatepicker } from './hook'
+import './styles.scss'
 
-type DatepickerProps = InputProps & {
+type DatepickerFieldProps = InputProps & {
   calendar?: boolean
   defaultDate?: AUCalendarDateShape
   style?: React.CSSProperties
@@ -31,7 +31,7 @@ type DatepickerProps = InputProps & {
   maxValue?: AUCalendarDateShape
 }
 
-export const Datepicker = ({
+export const DatepickerField = ({
   calendar = true,
   placeholder,
   disabled,
@@ -43,7 +43,7 @@ export const Datepicker = ({
   minValue = AUCalendarDate(1, 1, 1900),
   maxValue = AUCalendarDate(31, 12, 2100),
   ...props
-}: DatepickerProps) => {
+}: DatepickerFieldProps) => {
   const {
     inputDate,
     handleInputChange,

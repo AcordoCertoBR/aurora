@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 
+/**
+ * A helper component designed to address z-index conflicts within modals and dialogs.
+ * This component ensures that the element remains fixed in its position, unaffected by other elements
+ * possessing higher z-index values further up the DOM tree.
+ */
+
 type PortalProps = {
   /** The children to be rendered into the `Portal`. */
   children: React.ReactNode

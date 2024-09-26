@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { IconChevronDown, IconChevronLeft, IconX } from '../../../icons'
 
-import './styles.scss'
 import { useSegment } from './hook'
 import { SegmentItem } from '../types'
+import './styles.scss'
 
 type SegmentProps = {
   mobileTitle: string
