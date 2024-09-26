@@ -9,11 +9,11 @@
     }
 
     .au-datepicker__segment-list-holder {
-      visibility: visible;
-      opacity: 1;
       transform: translateX(0);
+      visibility: visible;
 
       @include aboveMedium() {
+        opacity: 1;
         transform: none;
       }
     }
@@ -34,20 +34,27 @@
     position: absolute;
     inset: 0;
     visibility: hidden;
-    opacity: 0;
+    opacity: 1;
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
-    transition: all 0.2s; //TODO separate
+    transition:
+      visibility 0.2s,
+      transform 0.2s;
 
     @include aboveMedium() {
       inset: unset;
       left: 0;
+      opacity: 0;
       top: calc(100% + 8px);
       height: 224px;
       border-radius: 16px;
       border: 1px solid $color-neutral-20;
       transform: none;
+      transition:
+        opacity 0.2s,
+        visibility 0.2s,
+        transform 0.2s;
     }
   }
 

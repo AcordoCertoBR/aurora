@@ -112,7 +112,10 @@
     justify-content: center;
     border-radius: 50%;
     border: 1px solid transparent;
-    transition: all 0.2s; //TODO specify
+    transition:
+      border 0.2s ease-in-out,
+      color 0.2s ease-in-out,
+      background-color 0.2s ease-in-out;
 
     &:hover {
       border: 1px solid $color-brand-blue-40;
