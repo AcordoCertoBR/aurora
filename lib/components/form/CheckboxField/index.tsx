@@ -1,8 +1,9 @@
 import classNames from 'classnames'
 import Field from '../Field'
+import { IconCheck } from '../../icons'
+import { COLOR_NEUTRAL_00 } from '../../../main'
 
 import './styles.scss'
-import { IconCheck } from '../../icons'
 
 type CheckboxFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string
@@ -30,10 +31,11 @@ export const CheckboxField = ({
           className="au-checkbox__input"
           type="checkbox"
           id={id}
+          disabled={disabled}
           {...props}
         />
         <span className="au-checkbox__check">
-          <IconCheck rawColor="#fff" />
+          <IconCheck rawColor={COLOR_NEUTRAL_00} />
         </span>
         <span className="au-checkbox__label">
           {label}
