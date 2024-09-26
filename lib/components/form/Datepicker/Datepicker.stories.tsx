@@ -51,7 +51,6 @@ export const ControlledDatepicker: Story = {
     }
 
     function setNewDate(date?: AUCalendarDateShape | null) {
-      console.log({ date })
       setValue(date)
     }
 
@@ -68,7 +67,3 @@ export const ControlledDatepicker: Story = {
     label: 'Escolha a data',
   },
 }
-
-// default date
-// controlled
-// uncontrolled
