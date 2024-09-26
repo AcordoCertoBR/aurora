@@ -32,14 +32,16 @@ export function useDatepicker({
   maxValue,
 }: UseDatePickerProps) {
   const [inputDate, setInputDate] = useState('')
-  const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>(null)
+  const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>(
+    null,
+  )
 
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (!!value && value.date) {
+    if (!!value && value.day) {
       setSelectedDate(value)
       setInputDate(format.toString(value))
     }
@@ -77,10 +79,18 @@ export function useDatepicker({
   }
 
   function toggleCalendar() {
-    // TODO separate as open/close
     if (!isCalendarVisible && disabled) return
     inputRef.current && inputRef.current.focus()
     setIsCalendarVisible(!isCalendarVisible)
+  }
+
+  function closeCalendar() {
+    setIsCalendarVisible(false)
+  }
+
+  function updateDateFromCalendar(pickerDate: AUCalendarDateShape) {
+    setSelectedDate(pickerDate)
+    setInputDate(format.toString(pickerDate))
   }
 
   return {
@@ -88,10 +98,12 @@ export function useDatepicker({
     handleInputChange,
     handleInputBlur,
     toggleCalendar,
+    closeCalendar,
     isCalendarVisible,
     fmtPlaceholder: placeholder || format.placeholder,
     inputRef,
     selectedDate,
     setSelectedDate,
+    updateDateFromCalendar
   }
 }

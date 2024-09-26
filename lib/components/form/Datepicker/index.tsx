@@ -49,10 +49,12 @@ export const Datepicker = ({
     handleInputChange,
     handleInputBlur,
     toggleCalendar,
+    closeCalendar,
     isCalendarVisible,
     fmtPlaceholder,
     inputRef,
     selectedDate,
+    updateDateFromCalendar,
   } = useDatepicker({
     onChange,
     value,
@@ -91,11 +93,11 @@ export const Datepicker = ({
         <DatepickerCalendar
           isVisible={isCalendarVisible}
           withPortal={withPortal}
-          toggleCalendar={toggleCalendar}
+          onClose={closeCalendar}
           minValue={minValue}
           maxValue={maxValue}
           value={selectedDate}
-          onChange={console.log}
+          onChange={updateDateFromCalendar}
         />
       )}
     </div>

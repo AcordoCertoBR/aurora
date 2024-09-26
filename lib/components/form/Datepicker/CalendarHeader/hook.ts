@@ -3,7 +3,13 @@ import { CalendarStateContext } from 'react-aria-components'
 import { CalendarDate } from '@internationalized/date'
 import { SegmentItem } from '../types'
 
-export function useCalendarHeader() {
+type UseCalendarHeaderProps = {
+  defaultFocusDate?: CalendarDate
+}
+
+export function useCalendarHeader({
+  defaultFocusDate,
+}: UseCalendarHeaderProps) {
   const {
     focusNextPage,
     focusPreviousPage,
@@ -19,6 +25,12 @@ export function useCalendarHeader() {
   useEffect(() => {
     setYearsOptions(getYearsRange(minValue?.year, maxValue?.year))
   }, [minValue, maxValue])
+
+  useEffect(() => {
+    if (defaultFocusDate) {
+      setFocusedDate(defaultFocusDate)
+    }
+  }, [defaultFocusDate])
 
   function handleFocusNewMonth(month: SegmentItem) {
     const monthNumber = month.value

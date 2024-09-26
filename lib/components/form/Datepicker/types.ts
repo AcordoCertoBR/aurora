@@ -21,7 +21,7 @@ export type FormatAdapter = {
 export type SegmentItem = { label: string; value: number }
 
 export type AUCalendarDateShape = {
-  date: number
+  day: number
   month: number
   year: number
 }

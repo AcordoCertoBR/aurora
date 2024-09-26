@@ -1,12 +1,17 @@
 import { IconChevronLeft, IconChevronRight } from '../../../icons'
 import { Segment } from '../Segment'
+import { CalendarDate } from '@internationalized/date'
 
 import { months } from './constants'
 import { useCalendarHeader } from './hook'
 
 import './styles.scss'
 
-export const CalendarHeader = () => {
+type CalendarHeaderProps = {
+  defaultFocusDate?: CalendarDate
+}
+
+export const CalendarHeader = ({ defaultFocusDate }: CalendarHeaderProps) => {
   const {
     focusNextPage,
     focusPreviousPage,
@@ -14,7 +19,7 @@ export const CalendarHeader = () => {
     handleFocusNewMonth,
     yearsOptions,
     handleFocusNewYear,
-  } = useCalendarHeader()
+  } = useCalendarHeader({ defaultFocusDate })
 
   return (
     <div className="au-datepicker__header" aria-label="Anterior">

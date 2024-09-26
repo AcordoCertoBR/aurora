@@ -20,27 +20,27 @@ export const DDMMYYYY: FormatAdapter = {
     return pattern.test(dateStr)
   },
   toCalendarDate(dateStr) {
-    const [date, month, year] = dateStr.split('/').map(Number)
-    return { date, month, year }
+    const [day, month, year] = dateStr.split('/').map(Number)
+    return { day, month, year }
   },
 
   toString(dateObj) {
     const fmtNumber = (digit: number) =>
       String(digit).length === 1 ? `0${digit}` : String(digit)
-    const { date, month, year } = dateObj
+    const { day, month, year } = dateObj
 
-    return `${fmtNumber(date)}/${fmtNumber(month)}/${year}`
+    return `${fmtNumber(day)}/${fmtNumber(month)}/${year}`
   },
   validate(dateStr, minValue, maxValue) {
     const [day, month, year] = dateStr.split('/').map(Number)
     const date = new Date(year, month - 1, day)
     const isOlderThanMinDate =
       !!minValue &&
-      date < new Date(minValue.year, minValue.month - 1, minValue.date)
+      date < new Date(minValue.year, minValue.month - 1, minValue.day)
 
     const exceedsMaxDate =
       !!maxValue &&
-      date > new Date(maxValue.year, maxValue.month - 1, maxValue.date)
+      date > new Date(maxValue.year, maxValue.month - 1, maxValue.day)
 
     return (
       date.getDate() === day &&
@@ -63,12 +63,12 @@ export function dateToPickerFormat(date: Date) {
 }
 
 export function AUCalendarDate(
-  date: number,
+  day: number,
   month: number,
   year: number,
 ): AUCalendarDateShape {
   return {
-    date,
+    day,
     month,
     year,
   }
@@ -81,7 +81,7 @@ export function getDefaultDate(
   if (defaultDateProp === 'now') {
     const now = new Date()
     return {
-      date: now.getDate(),
+      day: now.getDate(),
       month: now.getMonth() + 1,
       year: now.getFullYear(),
     }
