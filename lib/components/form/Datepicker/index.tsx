@@ -16,18 +16,21 @@ import { useDatepicker } from './hook'
 import './styles.scss'
 
 type DatepickerFieldProps = InputProps & {
+  /** Use calendar dialog to pick date */
   calendar?: boolean
-  defaultDate?: AUCalendarDateShape
-  style?: React.CSSProperties
   placeholder?: string
   value?: AUCalendarDateShape
   onChange?: EventHandler
   onBlur?: EventHandler
-  /** Field default value */
+  /** Default date to use the datepicker as an uncontrolled component */
   defaultValue?: DefaultValue
+  /** Adapter to modify input behavior - default to DD/MM/YYYY adapter */
   format?: FormatAdapter
+  /** Makes the calendar dialog the top z-indexed item on page */
   withPortal?: boolean
+  /** min allowed date, defaults to 1900-01-01 */
   minValue?: AUCalendarDateShape
+  /** max allowed date, defaults to 2100-12-31 */
   maxValue?: AUCalendarDateShape
 }
 

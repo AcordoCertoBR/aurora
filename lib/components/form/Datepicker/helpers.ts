@@ -1,5 +1,11 @@
 import { AUCalendarDateShape, DefaultValue, FormatAdapter } from './types'
 
+/**
+ * This adapter Handle the input format and convert to a more
+ * universal structure, that can be used accross all subcomponents in the datepicker.
+ * if we need to support another format like dd-mm-yyyy, we only need to create another adapter
+ * following this model
+ */
 export const DDMMYYYY: FormatAdapter = {
   placeholder: 'DD/MM/YYYY',
   /** Apply DD/MM/YYYY to a field text while typing */
