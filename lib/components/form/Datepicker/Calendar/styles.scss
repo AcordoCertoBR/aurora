@@ -1,10 +1,12 @@
 .au-datepicker__calendar {
   visibility: hidden;
   opacity: 0;
-  transition: all 0.2s; // TODO specify
   position: fixed;
   z-index: 1000;
   inset: 0;
+  transition:
+    opacity 0.2s,
+    visibility 0.2s;
 
   @include aboveMedium() {
     width: 414px;
@@ -13,6 +15,10 @@
     left: 0;
     right: auto;
     bottom: auto;
+    transition:
+      opacity 0.2s,
+      visibility 0.2s,
+      transform 0.2s ease-in-out;
   }
 
   &--visible {
@@ -25,11 +31,10 @@
     }
 
     .au-datepicker__calendar-card {
-      bottom: 0;
+      transform: translateY(0);
     }
 
     @include aboveMedium() {
-      /* top: calc(100% + 16px); */ // TODO  transition?
       transform: translateY(-74px);
     }
   }
@@ -42,8 +47,11 @@
     height: 100%;
     visibility: 0;
     z-index: 1;
+    -webkit-tap-highlight-color: transparent;
     opacity: 0;
-    transition: all 0.2s; //TODO specify
+    transition:
+      visibility 0.2s,
+      opacity 0.2s;
 
     @include aboveMedium() {
       display: none;
@@ -54,17 +62,18 @@
     width: 100%;
     padding: 16px;
     position: absolute;
-    bottom: -100%;
     border-radius: 16px 16px 0 0;
     border: 1px solid $color-neutral-20;
     background: $color-neutral-00;
     bottom: 0;
     z-index: 2;
-    transition: all 0.2s ease-in; // TODO specify
+    transform: translateY(500px);
+    transition: transform 0.2s ease-in-out;
 
     @include aboveMedium() {
       position: relative;
       height: auto;
+      transform: none;
       bottom: auto;
       transition: none;
       border-radius: 16px;

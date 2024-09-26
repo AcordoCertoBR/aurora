@@ -71,7 +71,6 @@ export const DatepickerField = ({
 
   return (
     <div className="au-datepicker" ref={rootEl}>
-      <button onClick={toggleCalendar}>lala</button>
       <InputField
         className="au-datepicker__input"
         {...props}
