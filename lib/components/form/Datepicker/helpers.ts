@@ -29,7 +29,7 @@ export const DDMMYYYY: FormatAdapter = {
   /** Covert a DD/MM/YYYY to the datepicker date structure */
   toCalendarDate(dateStr): AUCalendarDateShape {
     const [day, month, year] = dateStr.split('/').map(Number)
-    return { day, month, year }
+    return AUCalendarDate(day, month, year)
   },
   /** Covert a Date in the datepicker structure into a DD/MM/YYYY string */
   toString(dateObj: AUCalendarDateShape): string {
@@ -79,11 +79,7 @@ export function getDefaultDate(
   if (defaultDateProp == 'empty') return null
   if (defaultDateProp === 'now') {
     const now = new Date()
-    return {
-      day: now.getDate(),
-      month: now.getMonth() + 1,
-      year: now.getFullYear(),
-    }
+    return AUCalendarDate(now.getDate(), now.getMonth() + 1, now.getFullYear())
   }
 
   return defaultDateProp

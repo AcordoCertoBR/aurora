@@ -3,11 +3,8 @@ export type EventHandler = (value?: AUCalendarDateShape | null) => void
 export type DefaultValue = 'empty' | 'now' | AUCalendarDateShape
 
 export type FormatAdapter = {
-  /** mask typed date  */
   maskDate: (date: string) => string
-  /** Validate a string in the format */
   validateFormat: (date: string) => boolean
-  /** Validate if is a valid date */
   validate: (
     date: string,
     minValue?: AUCalendarDateShape,
