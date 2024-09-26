@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CalendarDate } from '@internationalized/date'
 import {
   AUCalendarDateShape,
@@ -7,7 +7,6 @@ import {
   FormatAdapter,
 } from './types'
 import { DDMMYYYY, getDefaultDate } from './helpers'
-import { isMobile } from '../../../core/utils/isMobile'
 
 type UseDatePickerProps = {
   onChange?: EventHandler
@@ -20,8 +19,6 @@ type UseDatePickerProps = {
   minValue: AUCalendarDateShape
   maxValue: AUCalendarDateShape
 }
-
-
 
 export function useDatepicker({
   value,
@@ -36,6 +33,12 @@ export function useDatepicker({
 }: UseDatePickerProps) {
   const [inputDate, setInputDate] = useState('')
   const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>()
+
+  const pickerFormattedDate = useMemo(() => {
+    if (!selectedDate) return null
+    const { date, month, year } = selectedDate
+    return new CalendarDate(year, month, date)
+  }, [selectedDate])
 
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
@@ -52,7 +55,7 @@ export function useDatepicker({
   )
 
   useEffect(() => {
-    if (!!value && value instanceof Date) {
+    if (!!value && value.date) {
       setSelectedDate(value)
       setInputDate(format.toString(value))
     }
@@ -73,23 +76,17 @@ export function useDatepicker({
 
     if (!finishedTypingDate) return
 
-    if (format.validate(inputDate)) {
-      const dateObj = format.toCalendarDate(inputDate)
-      setSelectedDate(dateObj)
-      if (onChange) onChange(dateObj)
-    } else {
-      setSelectedDate(null)
-      setInputDate('')
-    }
+    const isDateValid = format.validate(maskedValue)
+    const newFieldValue = isDateValid
+      ? format.toCalendarDate(maskedValue)
+      : null
+    setSelectedDate(newFieldValue)
+    if (onChange) onChange(newFieldValue)
+
+    if (!isDateValid) setInputDate('')
   }
 
   function handleInputBlur() {
-    // hide calendar on desk
-    if (!isMobile() && isCalendarVisible) {
-      //TODO adjust scree size
-      /* toggleCalendar() */
-    }
-
     if (onBlur) {
       onBlur(selectedDate)
     }
@@ -112,5 +109,7 @@ export function useDatepicker({
     inputRef,
     usedMaxValue,
     usedMinValue,
+    pickerFormattedDate,
+    setSelectedDate
   }
 }

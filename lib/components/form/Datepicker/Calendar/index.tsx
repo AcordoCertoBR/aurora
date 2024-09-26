@@ -8,7 +8,6 @@ import {
   CalendarGridHeader,
   CalendarHeaderCell,
   DatePickerStateContext,
-  DateValue,
 } from 'react-aria-components'
 import { CalendarHeader } from '../CalendarHeader'
 import { PortalHolder } from '../PortalHolder'
@@ -22,14 +21,13 @@ type DatepickerCalendarProps = {
   isVisible: boolean
   toggleCalendar: () => void
   hasSelectedDate: boolean
-  onChange: (date: DateValue) => void
   withPortal?: boolean
 }
 
 export const DatepickerCalendar = ({
   isVisible,
   toggleCalendar,
-  onChange,
+
   hasSelectedDate,
   withPortal,
 }: DatepickerCalendarProps) => {
@@ -66,9 +64,7 @@ export const DatepickerCalendar = ({
           onClick={toggleCalendar}
         />
         <div className="au-datepicker__calendar-card">
-          <Calendar
-            className="au-datepicker__calendar-base"
-            onChange={(date) => onChange(date)}>
+          <Calendar className="au-datepicker__calendar-base">
             <CalendarHeader />
             <CalendarGrid
               className="au-datepicker__calendar-grid"
