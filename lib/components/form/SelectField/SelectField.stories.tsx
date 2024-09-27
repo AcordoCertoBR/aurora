@@ -5,6 +5,12 @@ const meta: Meta<typeof SelectField> = {
   title: 'Components/form/SelectField',
   component: SelectField,
   tags: ['autodocs'],
+  parameters: {
+    backgrounds: {
+      default: 'default',
+      values: [{ name: 'default', value: '#f1f1f1' }],
+    },
+  },
 }
 
 export default meta
@@ -25,6 +31,13 @@ const commonArgs = {
 }
 
 export const Default: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
   args: {
     id: 'default-select',
     ...commonArgs,
@@ -32,6 +45,13 @@ export const Default: Story = {
 }
 
 export const Selected: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
   args: {
     id: 'selected-select',
     value: 'option5',
@@ -40,6 +60,13 @@ export const Selected: Story = {
 }
 
 export const Optional: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
   args: {
     id: 'optional-select',
     optional: true,
@@ -57,11 +84,16 @@ export const Disabled: Story = {
 }
 
 export const Placeholder: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
   args: {
     id: 'placeholder-select',
     placeholder: 'Custom placeholder',
     ...commonArgs,
   },
 }
-
-
