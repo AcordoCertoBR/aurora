@@ -27,7 +27,7 @@ export function useSegment({
 
   useEffect(() => {
     if (selectedItem.current && isListOpen) {
-      selectedItem.current.scrollIntoView()
+      selectedItem.current.scrollIntoView({ block: 'center', inline: 'center' })
     }
   }, [isListOpen])
 

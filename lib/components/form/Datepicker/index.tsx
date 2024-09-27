@@ -67,6 +67,7 @@ export const DatepickerField = ({
     minValue,
     maxValue,
     onBlur,
+    disabled
   })
 
   return (

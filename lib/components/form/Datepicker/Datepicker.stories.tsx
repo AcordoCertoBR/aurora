@@ -67,3 +67,18 @@ export const ControlledDatepicker: Story = {
     label: 'Escolha a data',
   },
 }
+
+export const Disabled: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '800px' }}>
+        <DatepickerField {...args} />
+      </div>
+    )
+  },
+  args: {
+    style: { maxWidth: '272px' },
+    label: 'Escolha a data',
+    disabled: true,
+  },
+}
