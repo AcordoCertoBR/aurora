@@ -1,0 +1,129 @@
+.au-field {
+  &__select {
+    position: relative;
+    margin-bottom: 1rem;
+
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 56px;
+      padding: 16px;
+      background-color: $color-neutral-00;
+      border: 1px solid $color-neutral-50;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 16px;
+      line-height: 22px;
+
+      &:focus-within {
+        border: 2px solid $color-brand-blue-40;
+      }
+    }
+
+    &-icon {
+      transition: transform 0.2s ease;
+    }
+
+    &-options {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 16px;
+      border: 1px solid $color-brand-blue-40;
+      background: $color-neutral-00;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: auto;
+      position: absolute;
+      transform-origin: top left;
+      transform: scaleY(0);
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        transform 0.2s,
+        opacity 0.2s,
+        visibility 0s 0.2s;
+      z-index: 1;
+
+      &--open {
+        transform: scaleY(1);
+        opacity: 1;
+        visibility: visible;
+        transition:
+          transform 0.2s,
+          opacity 0.2s;
+      }
+    }
+
+    &-option {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 24px;
+      cursor: pointer;
+
+      &:not(&--selected):hover,
+      &--highlighted:not(&--selected) {
+        background-color: $color-neutral-10;
+        color: $color-neutral-70;
+      }
+
+      &--selected {
+        background-color: $color-brand-blue-40;
+        color: $color-neutral-00;
+        font-weight: 700;
+
+        .au-icon > svg {
+          color: $color-neutral-00;
+        }
+      }
+
+      &--disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+        background-color: $color-neutral-20;
+        color: $color-neutral-40;
+
+        .au-icon > svg {
+          color: $color-neutral-40;
+        }
+      }
+    }
+
+    &--open {
+      .au-field__select-wrapper {
+        border: 2px solid $color-brand-blue-40;
+
+        .au-field__select-icon {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    &--disabled {
+      pointer-events: none;
+      cursor: not-allowed;
+
+      .au-field__select-wrapper {
+        background-color: #e2e4e9;
+
+        .au-icon > svg {
+          color: $color-neutral-40;
+        }
+      }
+    }
+  }
+
+  &:not(.au-field-error):has(.au-field__select--open) {
+    .au-field__header-label {
+      color: $color-brand-blue-40;
+    }
+    .au-field__select-wrapper {
+      &,
+      &:focus-within {
+        border-width: 1px;
+      }
+    }
+  }
+}

@@ -59,9 +59,8 @@ const NavbarVerticalLink = ({
       variant="heading-micro"
       weight="light"
       className={classNames('au-navbar-vertical__link', {
-        'is-dropdown': dropdown,
-        'is-active': active,
-        'is-open': open,
+        [`au-navbar-vertical__link--is-active`]: active,
+        [`au-navbar-vertical__link--is-open`]: open,
       })}
       onClick={handleClick}>
       <Conditional condition={!!Icon} renderIf={Icon} />
@@ -82,7 +81,8 @@ const NavbarVerticalLink = ({
                     variant="heading-micro"
                     weight="light"
                     className={classNames('au-navbar-vertical__dropdown-link', {
-                      'is-active': item.active,
+                      'au-navbar-vertical__dropdown-link--is-active':
+                        item.active,
                     })}
                     title={item.name}>
                     {item.name}

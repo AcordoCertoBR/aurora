@@ -18,8 +18,8 @@ export const HeaderNavbarLink = ({
       onClick={onClick}
       title={name}
       className={classNames('au-header__navbar-link', {
-        'is-dropdown': dropdown,
-        'is-active': active,
+        'au-header__navbar-link--is-dropdown': dropdown,
+        'au-header__navbar-link--is-active': active,
       })}>
       {name}
 
@@ -37,7 +37,7 @@ export const HeaderNavbarLink = ({
                     variant="heading-micro"
                     weight="light"
                     className={classNames('au-header__dropdown-link', {
-                      'is-active': item.active,
+                      'au-header__dropdown-link--is-active': item.active,
                     })}
                     title={item.name}>
                     {item.name}

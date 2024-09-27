@@ -5,6 +5,12 @@ const meta: Meta<typeof TokenField> = {
   title: 'Components/form/TokenField',
   component: TokenField,
   tags: ['autodocs'],
+  parameters: {
+    backgrounds: {
+      default: 'default',
+      values: [{ name: 'default', value: '#f1f1f1' }],
+    },
+  },
 }
 
 export default meta

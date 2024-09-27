@@ -24,7 +24,7 @@ export const FieldLabel = ({
   error,
   disabled,
 }: FieldLabelProps) => {
-  if (!text) return
+  if (!text) return null
 
   const states = [
     { state: 'optional', value: !!optional, icon: <span>(Opcional)</span> },

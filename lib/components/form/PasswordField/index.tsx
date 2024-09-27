@@ -10,7 +10,7 @@ type PasswordFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   error?: boolean
   errorMessage?: string
   label?: string
-  ref?: React.RefObject<HTMLInputElement>
+  inputRef?: React.RefObject<HTMLInputElement>
 }
 
 export const PasswordField = ({
@@ -20,7 +20,7 @@ export const PasswordField = ({
   error,
   errorMessage,
   label,
-  ref,
+  inputRef,
   id,
   disabled,
   style,
@@ -50,7 +50,7 @@ export const PasswordField = ({
           customclass="au-password-field__input"
           type={fieldType}
           id={id}
-          ref={ref}
+          inputRef={inputRef}
           disabled={disabled}
           {...props}
         />
