@@ -67,23 +67,7 @@
 
   &--error {
     .au-checkbox__check {
-      box-shadow:
-        0 0 0 1px $color-neutral-00,
-        0 0 0 3px $color-error-50;
-    }
-
-    .au-checkbox__input {
-      &:hover:not(:focus) ~ .au-checkbox__check {
-        outline: none;
-      }
-
-      &:focus ~ .au-checkbox__check {
-        box-shadow:
-          0 0 0 1px $color-neutral-00,
-          0 0 0 3px $color-error-50,
-          0 0 0 4px $color-neutral-00,
-          0 0 0 6px $color-brand-blue-40;
-      }
+      border: 2px solid $color-error-50;
     }
   }
 
