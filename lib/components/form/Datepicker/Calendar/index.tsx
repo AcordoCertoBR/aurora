@@ -23,6 +23,7 @@ type DatepickerCalendarProps = {
   value?: AUCalendarDateShape | null
   onClose: () => void
   onChange: (date: AUCalendarDateShape) => void
+  isVisible: boolean
 }
 
 export const DatepickerCalendar = ({
@@ -32,6 +33,7 @@ export const DatepickerCalendar = ({
   maxValue,
   value,
   onChange,
+  isVisible,
 }: DatepickerCalendarProps) => {
   const {
     rootEl,
@@ -42,26 +44,26 @@ export const DatepickerCalendar = ({
     fmtWeekday,
     actionChange,
     enteredAnimation,
-    animatedOnClose,
+    delayedIsVisible,
   } = useCalendar({
     onChange,
     onClose,
     minValue,
     maxValue,
     value,
+    isVisible,
   })
 
   const componentClass = classNames('au-datepicker__calendar', {
     'au-datepicker__calendar--visible': enteredAnimation,
   })
 
+  if (!delayedIsVisible) return
+
   return (
     <PortalHolder withPortal={withPortal}>
       <div className={componentClass} ref={rootEl}>
-        <div
-          className="au-datepicker__calendar-backdrop"
-          onClick={animatedOnClose}
-        />
+        <div className="au-datepicker__calendar-backdrop" onClick={onClose} />
         <div className="au-datepicker__calendar-card">
           <Calendar
             autoFocus
@@ -96,7 +98,7 @@ export const DatepickerCalendar = ({
               type="outlined"
               className="au-datepicker__calendar-cancel"
               expand="x"
-              onClick={animatedOnClose}>
+              onClick={onClose}>
               Cancelar
             </Button>
             <Button

@@ -10,6 +10,7 @@ type UseCalendarProps = {
   minValue: AUCalendarDateShape
   maxValue: AUCalendarDateShape
   value?: AUCalendarDateShape | null
+  isVisible: boolean
   onClose: () => void
   onChange: (date: AUCalendarDateShape) => void
 }
@@ -20,11 +21,14 @@ export function useCalendar({
   minValue,
   maxValue,
   value,
+  isVisible,
 }: UseCalendarProps) {
   const rootEl = useRef<HTMLDivElement>(null)
   const [enteredAnimation, setEnteredAnimation] = useState(false)
   const [calendarInternalState, setCalendarInternalState] =
     useState<CalendarDate>()
+
+  const [delayedIsVisible, setDelayedIsVisible] = useState(false)
 
   const usedMinValue = new CalendarDate(
     minValue.year,
@@ -44,31 +48,44 @@ export function useCalendar({
   }, [value])
 
   useEffect(() => {
+    if (isVisible) {
+      setDelayedIsVisible(true)
+      return delayComponentMount()
+    } else {
+      return delayComponentUnmount()
+    }
+  }, [isVisible])
+
+  function delayComponentMount(delayTime = 100) {
     const t = setTimeout(() => {
       setEnteredAnimation(true)
-    }, 100)
+    }, delayTime)
+
     return () => {
       clearTimeout(t)
     }
-  }, [])
+  }
+
+  function delayComponentUnmount(delayTime = 200) {
+    setEnteredAnimation(false)
+    const timoutToUnmount = setTimeout(() => {
+      setDelayedIsVisible(false)
+    }, delayTime)
+
+    return () => {
+      clearTimeout(timoutToUnmount)
+    }
+  }
 
   function fmtWeekday(day: string) {
     const capitalized = `${day.charAt(0).toUpperCase()}${day.slice(1)}`
     return capitalized.replace('.', '')
   }
 
-  function animatedOnClose() {
-    setEnteredAnimation(false)
-    const t = setTimeout(() => {
-      clearTimeout(t)
-      onClose()
-    }, 200)
-  }
-
   function triggerChange(date: CalendarDate) {
     const { day, month, year } = date
     onChange(AUCalendarDate(day, month, year))
-    animatedOnClose()
+    onClose()
   }
 
   function calendarChange(date: CalendarDate) {
@@ -91,7 +108,7 @@ export function useCalendar({
     usedMinValue,
     rootEl,
     calendarInternalState,
-    animatedOnClose,
     enteredAnimation,
+    delayedIsVisible,
   }
 }
