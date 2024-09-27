@@ -46,6 +46,9 @@
         opacity 0.2s,
         visibility 0s 0.2s;
       z-index: 1;
+      // FIXME: temporário
+      max-height: 333px;
+      overflow-y: auto;
 
       &--open {
         transform: scaleY(1);
