@@ -18,7 +18,7 @@ export default meta
 type Story = StoryObj<typeof CheckboxField>
 
 const commonArgs = {
-    label: 'Label'
+    label: 'Label',
 }
 
 export const Default: Story = {
