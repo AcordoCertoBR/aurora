@@ -56,6 +56,25 @@ export const Disabled: Story = {
   },
 }
 
+export const Required: Story = {
+  args: {
+    id: 'required-select',
+    required: true,
+    ...commonArgs,
+    label: 'Required Select',
+  },
+}
+
+export const Error: Story = {
+  args: {
+    id: 'errored-select',
+    error: true,
+    errorMessage: 'Mensagem de erro',
+    ...commonArgs,
+    label: 'Error Select',
+  },
+}
+
 export const Placeholder: Story = {
   args: {
     id: 'placeholder-select',

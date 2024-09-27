@@ -113,16 +113,27 @@
         }
       }
     }
+    
+    &--error {
+      .au-field__select-wrapper {
+        background-color: $color-error-00;
+        border-color: $color-error-50;
+  
+        &:focus {
+          border-color: $color-brand-blue-40;
+        }
+      }
+    }
   }
 
-  &:not(.au-field-error):has(.au-field__select--open) {
+  &:not(.au-field--error):has(.au-field__select--open) {
     .au-field__header-label {
       color: $color-brand-blue-40;
     }
     .au-field__select-wrapper {
       &,
       &:focus-within {
-        border-width: 1px;
+        border-width: 1px;    
       }
     }
   }
