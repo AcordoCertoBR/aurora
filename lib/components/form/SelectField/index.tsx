@@ -14,8 +14,11 @@ type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   label?: string
   options: OptionProps[]
   optional?: boolean
-  placeholder?: string
   disabled?: boolean
+  required?: boolean
+  error?: boolean
+  errorMessage?: string
+  placeholder?: string
   value?: string
   onChange?: (value: string) => void
   onBlur?: () => void
@@ -27,7 +30,10 @@ export const SelectField = ({
   label,
   options,
   optional,
+  error,
+  errorMessage,
   disabled,
+  required,
   value,
   onChange,
   style,
@@ -52,12 +58,24 @@ export const SelectField = ({
   const dropdownClasses = classNames('au-field__select', {
     'au-field__select--disabled': disabled,
     'au-field__select--open': isDropdownOpen,
+    'au-field__select--required': required,
+    'au-field__select--error': error,
     [className!]: className,
   })
 
   return (
-    <Field.Root style={style} customclass={className} disabled={disabled}>
-      <Field.Label text={label} optional={optional} disabled={disabled} />
+    <Field.Root
+      style={style}
+      customclass={className}
+      error={error}
+      disabled={disabled}>
+      <Field.Label
+        text={label}
+        optional={optional}
+        required={required}
+        error={error}
+        disabled={disabled}
+      />
       <div className={dropdownClasses}>
         <div
           className="au-field__select-wrapper"
@@ -130,6 +148,7 @@ export const SelectField = ({
           ))}
         </select>
       </div>
+      <Field.ErrorMessage hasError={!!error} message={errorMessage} />
     </Field.Root>
   )
 }

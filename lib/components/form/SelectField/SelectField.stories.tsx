@@ -75,11 +75,51 @@ export const Optional: Story = {
 }
 
 export const Disabled: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
   args: {
     id: 'disabled-select',
     disabled: true,
     ...commonArgs,
     label: 'Disabled Select',
+  },
+}
+
+export const Required: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
+  args: {
+    id: 'required-select',
+    required: true,
+    ...commonArgs,
+    label: 'Required Select',
+  },
+}
+
+export const Error: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
+  args: {
+    id: 'errored-select',
+    error: true,
+    errorMessage: 'Mensagem de erro',
+    ...commonArgs,
+    label: 'Error Select',
   },
 }
 
