@@ -88,7 +88,6 @@ export function useDatepicker({
 
   function toggleCalendar() {
     if (!isCalendarVisible && disabled) return
-    inputRef.current && inputRef.current.focus()
     if (!isCalendarVisible) {
       listenOutsideClick()
     }

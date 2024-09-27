@@ -77,6 +77,7 @@ export const DatepickerField = ({
         {...props}
         maxLength={10}
         value={inputDate}
+        type='tel'
         inputRef={inputRef}
         onBlur={handleInputBlur}
         disabled={disabled}
