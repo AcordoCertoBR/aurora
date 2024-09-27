@@ -5,6 +5,12 @@ const meta: Meta<typeof CheckboxField> = {
   title: 'Components/form/CheckboxField',
   component: CheckboxField,
   tags: ['autodocs'],
+  parameters: {
+    backgrounds: {
+      default: 'default',
+      values: [{ name: 'default', value: '#f1f1f1' }],
+    },
+  },
 }
 
 export default meta
