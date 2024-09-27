@@ -1,8 +1,8 @@
+import classNames from 'classnames'
 import { Text } from '../Text'
 import { FooterProps } from './types'
 import { certificatesMap, socialsMap, storesMap } from './data'
 import { Conditional } from '../misc'
-import classNames from 'classnames'
 import { LazyImage } from '../LazyImage'
 import './styles.scss'
 

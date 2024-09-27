@@ -1,6 +1,6 @@
-import { above } from '../../../../core/utils/screen'
-import { BREAKPOINT_MD } from '../../../../main'
-import { Portal } from '../../../misc/Portal'
+import { above } from '@core/utils/screen'
+import { BREAKPOINT_MD } from '@core/tokens'
+import { Portal } from '@components/misc/Portal'
 
 type PortalHolderProps = {
   withPortal?: boolean

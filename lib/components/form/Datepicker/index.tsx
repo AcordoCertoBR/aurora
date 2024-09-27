@@ -1,7 +1,7 @@
+import { COLOR_NEUTRAL_40 } from '@core/tokens'
+import { IconCalendar } from '@components/icons'
 import { InputField } from '../InputField'
 import { InputProps } from '../InputField'
-import { IconCalendar } from '../../icons'
-import { COLOR_NEUTRAL_40 } from '../../../main'
 import { DatepickerCalendar } from './Calendar'
 
 import {
@@ -77,6 +77,7 @@ export const DatepickerField = ({
         {...props}
         maxLength={10}
         value={inputDate}
+        type='tel'
         inputRef={inputRef}
         onBlur={handleInputBlur}
         disabled={disabled}

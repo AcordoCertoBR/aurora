@@ -1,5 +1,5 @@
-import DynamicTagComponentStories from '../misc/DynamicTagComponent'
 import classNames from 'classnames'
+import DynamicTagComponentStories from '../misc/DynamicTagComponent'
 import { TextProps } from './types'
 import { Conditional } from '../misc/Conditional'
 import './styles.scss'

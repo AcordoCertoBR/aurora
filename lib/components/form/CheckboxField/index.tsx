@@ -1,7 +1,7 @@
 import classNames from 'classnames'
+import { IconCheck } from '@components/icons'
+import { COLOR_NEUTRAL_00 } from '@core/tokens'
 import Field from '../Field'
-import { IconCheck } from '../../icons'
-import { COLOR_NEUTRAL_00 } from '../../../main'
 
 import './styles.scss'
 
@@ -38,9 +38,7 @@ export const CheckboxField = ({
         <span className="au-checkbox__check">
           <IconCheck rawColor={COLOR_NEUTRAL_00} />
         </span>
-        <span className="au-checkbox__label">
-          {label}
-        </span>
+        <span className="au-checkbox__label">{label}</span>
       </label>
       <Field.ErrorMessage hasError={!!error} message={errorMessage} />
     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { BREAKPOINT_MD } from '@core/tokens'
+import { useOutsideClick } from '@core/hooks/useOutsideClick'
 
-import { BREAKPOINT_MD } from '../../../../main'
-import { useOutsideClick } from '../../../../core/hooks/useOutsideClick'
 import { SegmentItem } from '../types'
 
 type UseSegmentProps = {

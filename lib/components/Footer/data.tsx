@@ -1,13 +1,13 @@
-import fintech2022Logo from '../../assets/certifications/fintech-2022.png'
-import fintech2023Logo from '../../assets/certifications/fintech-2023.png'
-import pcidssLogo from '../../assets/certifications/pci-dss.png'
-import quintessaLogo from '../../assets/certifications/quintessa.png'
-import ra1000Logo from '../../assets/certifications/ra1000.png'
-import reclameaquiLogo from '../../assets/certifications/reclame-aqui.png'
-import scaleupLogo from '../../assets/certifications/scale-up.png'
-import sslblindadoLogo from '../../assets/certifications/ssl-blindado.png'
-import appStoreLogo from '../../assets/stores/app-store.png'
-import googlePlayLogo from '../../assets/stores/google-play.png'
+import fintech2022Logo from '@assets/certifications/fintech-2022.png'
+import fintech2023Logo from '@assets/certifications/fintech-2023.png'
+import pcidssLogo from '@assets/certifications/pci-dss.png'
+import quintessaLogo from '@assets/certifications/quintessa.png'
+import ra1000Logo from '@assets/certifications/ra1000.png'
+import reclameaquiLogo from '@assets/certifications/reclame-aqui.png'
+import scaleupLogo from '@assets/certifications/scale-up.png'
+import sslblindadoLogo from '@assets/certifications/ssl-blindado.png'
+import appStoreLogo from '@assets/stores/app-store.png'
+import googlePlayLogo from '@assets/stores/google-play.png'
 
 import {
   IconInstagram,

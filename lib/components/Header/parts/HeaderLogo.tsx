@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Conditional } from '../../misc'
+import { Conditional } from '@components/misc'
 
 export type HeaderLogoProps = {
   children?: ReactNode | string | JSX.Element | JSX.Element[]

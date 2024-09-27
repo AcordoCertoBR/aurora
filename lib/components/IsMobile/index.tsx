@@ -1,4 +1,4 @@
-import { isMobile } from '../../core/utils/isMobile'
+import { isMobile } from '@core/utils/isMobile'
 import { Conditional } from '../misc'
 import { ReactNode } from 'react'
 

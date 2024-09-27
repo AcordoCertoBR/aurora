@@ -32,4 +32,4 @@ export * from './components/icons'
 export * from './components/misc'
 
 // Tokens
-export * from './core/tokens/.cache/tokens'
+export * from './core/tokens'

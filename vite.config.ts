@@ -12,50 +12,7 @@ dotenv.config()
 
 process.env['VITE_LIB_VERSION'] = pkg.version
 
-function getComponentsEntries() {
-  const dir = 'lib/components'
-
-  const baseComponents = glob
-    .sync(`${dir}/**/*/index.tsx`)
-    .reduce((acc, filePath) => {
-      const folderPath = dirname(filePath)
-      const componentName = basename(folderPath)
-      return { ...acc, [componentName]: filePath }
-    }, {})
-
-  const iconComponents = glob
-    .sync(`${dir}/**/*/Icon*.tsx`)
-    .reduce((acc, filePath) => {
-      const { name: componentName } = parse(basename(filePath))
-      return { ...acc, [componentName]: filePath }
-    }, {})
-
-  const allComponents = {
-    ...baseComponents,
-    ...iconComponents,
-  }
-
-  console.log('components', baseComponents)
-  return allComponents
-}
-
 export default defineConfig({
-  plugins: [
-    react(),
-    dts({ include: ['lib'], exclude: ['**/*.stories.tsx'] }),
-    libInjectCss(),
-    viteStaticCopy({
-      targets: [
-        {
-          src: [
-            'lib/core/styles/mixins.scss',
-            'lib/core/tokens/.cache/variables.scss',
-          ],
-          dest: '.',
-        },
-      ],
-    }),
-  ],
   build: {
     copyPublicDir: false,
     lib: {
@@ -63,6 +20,7 @@ export default defineConfig({
         main: resolve(__dirname, 'lib/main.ts'),
         ...getComponentsEntries(),
       },
+
       fileName: (format, entryName) => {
         const isMainFile = entryName === 'main'
         const isIconFile = entryName.startsWith('Icon') && entryName !== 'Icon'
@@ -95,6 +53,29 @@ export default defineConfig({
     minify: 'terser',
     emptyOutDir: true,
   },
+  resolve: {
+    alias: {
+      '@assets': '/lib/assets',
+      '@components': '/lib/components',
+      '@core': '/lib/core',
+    },
+  },
+  plugins: [
+    react(),
+    dts({ include: ['lib'], exclude: ['**/*.stories.tsx'] }),
+    libInjectCss(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: [
+            'lib/core/styles/mixins.scss',
+            'lib/core/tokens/.cache/variables.scss',
+          ],
+          dest: '.',
+        },
+      ],
+    }),
+  ],
   css: {
     preprocessorOptions: {
       scss: {
@@ -108,3 +89,30 @@ export default defineConfig({
     },
   },
 })
+
+function getComponentsEntries() {
+  const dir = 'lib/components'
+
+  const baseComponents = glob
+    .sync(`${dir}/**/*/index.tsx`)
+    .reduce((acc, filePath) => {
+      const folderPath = dirname(filePath)
+      const componentName = basename(folderPath)
+      return { ...acc, [componentName]: filePath }
+    }, {})
+
+  const iconComponents = glob
+    .sync(`${dir}/**/*/Icon*.tsx`)
+    .reduce((acc, filePath) => {
+      const { name: componentName } = parse(basename(filePath))
+      return { ...acc, [componentName]: filePath }
+    }, {})
+
+  const allComponents = {
+    ...baseComponents,
+    ...iconComponents,
+  }
+
+  console.log('components', baseComponents)
+  return allComponents
+}

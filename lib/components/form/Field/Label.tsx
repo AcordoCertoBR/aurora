@@ -1,9 +1,9 @@
-import { IconAlertCircle, IconCheck, IconSlash } from '../../icons'
+import { IconAlertCircle, IconCheck, IconSlash } from '@components/icons'
 import {
   COLOR_ERROR_50,
   COLOR_NEUTRAL_40,
   COLOR_SUCCESS_50,
-} from '../../../main'
+} from '@core/tokens'
 
 type FieldLabelProps = {
   id?: string
