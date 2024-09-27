@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useOutsideClick } from '@core/hooks/useOutsideClick'
+import { BREAKPOINT_MD } from '@core/tokens'
 
 import {
   AUCalendarDateShape,
@@ -7,8 +9,6 @@ import {
   FormatAdapter,
 } from './types'
 import { DDMMYYYY, getDefaultDate } from './helpers'
-import { useOutsideClick } from '../../../core/hooks/useOutsideClick'
-import { BREAKPOINT_MD } from '../../../main'
 
 type UseDatePickerProps = {
   onChange?: EventHandler

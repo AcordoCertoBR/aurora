@@ -1,4 +1,4 @@
-import { getInitialLetters } from '../../core/utils/getInitialLetters'
+import { getInitialLetters } from '@core/utils/getInitialLetters'
 import { Text } from '../Text'
 import './styles.scss'
 

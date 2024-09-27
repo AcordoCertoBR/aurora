@@ -1,4 +1,4 @@
-import { IconMenu } from '../../icons/default'
+import { IconMenu } from '@components/icons/default'
 
 export type HeaderHamburgerProps = {
   onClick?: () => void

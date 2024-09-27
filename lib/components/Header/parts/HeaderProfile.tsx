@@ -1,5 +1,5 @@
-import { getInitialLetters } from '../../../core/utils/getInitialLetters'
-import { IconBell, IconChevronDown, IconMenu } from '../../icons/default'
+import { getInitialLetters } from '@core/utils/getInitialLetters'
+import { IconBell, IconChevronDown, IconMenu } from '@components/icons/default'
 
 export type HeaderProfileProps = {
   onClickNotifications?: () => void

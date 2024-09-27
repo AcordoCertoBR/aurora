@@ -7,12 +7,12 @@ import {
   CalendarGridHeader,
   CalendarHeaderCell,
 } from 'react-aria-components'
+import { Button } from '@components/Button'
 import { CalendarHeader } from '../CalendarHeader'
 import { PortalHolder } from '../PortalHolder'
 
-import { Button } from '../../../Button'
-import { AUCalendarDateShape } from '../types'
 
+import { AUCalendarDateShape } from '../types'
 import { useCalendar } from './hook'
 import './styles.scss'
 

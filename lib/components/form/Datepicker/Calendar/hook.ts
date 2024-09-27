@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { CalendarDate } from '@internationalized/date'
-
-import { BREAKPOINT_MD } from '../../../../main'
-import { above } from '../../../../core/utils/screen'
+import { BREAKPOINT_MD } from '@core/tokens'
+import { above } from '@core/utils/screen'
 import { AUCalendarDate } from '../helpers'
 import { AUCalendarDateShape } from '../types'
 

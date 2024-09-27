@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { IconChevronDown, IconChevronLeft, IconX } from '../../../icons'
+import { IconChevronDown, IconChevronLeft, IconX } from '@components/icons'
 
 import { useSegment } from './hook'
 import { SegmentItem } from '../types'

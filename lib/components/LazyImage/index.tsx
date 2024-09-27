@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { useLazyImage } from './hooks'
-
 import { LazyImageProps } from './types'
 
 export const LazyImage = ({

@@ -1,7 +1,7 @@
 import classNames from 'classnames'
-import { Text } from '../../Text'
-import { IconChevronDown, IconChevronLeft } from '../../icons/default'
-import { Conditional } from '../../misc'
+import { Text } from '@components/Text'
+import { IconChevronDown, IconChevronLeft } from '@components/icons/default'
+import { Conditional } from '@components/misc'
 import { NavbarDataProps } from '../types'
 
 export const HeaderNavbarLink = ({

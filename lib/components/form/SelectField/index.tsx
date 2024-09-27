@@ -1,7 +1,8 @@
-import { useSelectField } from './hook'
-import Field from '../Field'
 import classNames from 'classnames'
-import { IconChevronDown, IconSlash, IconCheck } from '../../icons'
+import { IconChevronDown, IconSlash, IconCheck } from '@components/icons'
+import Field from '../Field'
+
+import { useSelectField } from './hook'
 import './styles.scss'
 
 type OptionProps = {

@@ -3,6 +3,7 @@ import { ReactNode, useState } from 'react'
 import { Text } from '../Text'
 import { IconChevronDown, IconChevronUp } from '../icons/default'
 import { Conditional } from '../misc'
+
 import './styles.scss'
 
 type NavbarVerticalDataProps = {

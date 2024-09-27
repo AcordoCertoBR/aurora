@@ -1,9 +1,8 @@
-import { IconChevronLeft, IconChevronRight } from '../../../icons'
-import { Segment } from '../Segment'
+import { IconChevronLeft, IconChevronRight } from '@components/icons'
 import { CalendarDate } from '@internationalized/date'
+import { Segment } from '../Segment'
 
 import { useCalendarHeader } from './hook'
-
 import './styles.scss'
 
 type CalendarHeaderProps = {
