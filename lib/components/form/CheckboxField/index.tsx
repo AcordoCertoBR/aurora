@@ -17,6 +17,7 @@ export const CheckboxField = ({
   errorMessage,
   disabled,
   id,
+  style,
   ...props
 }: CheckboxFieldProps) => {
   const checkboxClasses = classNames('au-checkbox', {
@@ -25,7 +26,7 @@ export const CheckboxField = ({
   })
 
   return (
-    <div className={checkboxClasses}>
+    <div className={checkboxClasses} style={style}>
       <label htmlFor={id} className="au-checkbox__holder">
         <input
           className="au-checkbox__input"

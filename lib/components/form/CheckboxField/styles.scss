@@ -28,6 +28,10 @@
       outline: 2px solid $color-brand-blue-00;
     }
 
+    &:hover:not(:checked) ~ .au-checkbox__check {
+      background-color: $color-brand-blue-00;
+    }
+
     &:focus ~ .au-checkbox__check {
       box-shadow:
         0 0 0 1px $color-neutral-00,
@@ -62,10 +66,24 @@
   }
 
   &--error {
-    .au-checkbox__input:focus ~ .au-checkbox__check {
+    .au-checkbox__check {
       box-shadow:
         0 0 0 1px $color-neutral-00,
         0 0 0 3px $color-error-50;
+    }
+
+    .au-checkbox__input {
+      &:hover:not(:focus) ~ .au-checkbox__check {
+        outline: none;
+      }
+
+      &:focus ~ .au-checkbox__check {
+        box-shadow:
+          0 0 0 1px $color-neutral-00,
+          0 0 0 3px $color-error-50,
+          0 0 0 4px $color-neutral-00,
+          0 0 0 6px $color-brand-blue-40;
+      }
     }
   }
 
@@ -83,6 +101,10 @@
       &:hover ~ .au-checkbox__check {
         border-color: $color-neutral-30;
         outline: none;
+      }
+
+      &:hover:not(:checked) ~ .au-checkbox__check {
+        background-color: inherit;
       }
     }
 
