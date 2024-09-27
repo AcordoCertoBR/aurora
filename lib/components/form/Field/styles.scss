@@ -1,11 +1,18 @@
 .au-field {
   cursor: pointer;
+  border-radius: 8px;
+
+  &__input-holder {
+    position: relative;
+    height: 56px;
+  }
 
   &__input {
     background-color: $color-neutral-00;
     border: 1px solid $color-neutral-50;
     border-radius: 8px;
     box-sizing: border-box;
+    font-family: inherit;
     font-size: 16px;
     line-height: 22px;
     padding: 16px;
@@ -23,7 +30,7 @@
   }
 
   &:focus-within:not(.au-field--error) {
-    [class*='__header-label'] {
+    .au-field__header-label {
       color: $color-brand-blue-40;
     }
   }
@@ -53,6 +60,13 @@
     }
   }
 
+  &__right-slot {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   &__error-message {
     color: $color-error-50;
     font-size: 16px;
@@ -64,21 +78,21 @@
   &--disabled {
     cursor: not-allowed;
 
-    [class*='__input'] {
+    .au-field__input {
       background-color: $color-neutral-20;
       border-color: $color-neutral-40;
       color: $color-neutral-40;
       cursor: not-allowed;
     }
 
-    [class*='__header-label'] {
+    .au-field__header-label {
       color: $color-neutral-40;
       cursor: not-allowed;
     }
   }
 
   &--error {
-    [class*='__input'] {
+    .au-field__input {
       background-color: $color-error-00;
       border-color: $color-error-50;
 
@@ -87,21 +101,21 @@
       }
     }
 
-    [class*='__header-label'] {
+    .au-field__header-label {
       color: $color-error-50;
     }
   }
 
   &--success {
-    [class*='__input'] {
+    .au-field__input {
       animation: inputSuccess 2s forwards;
     }
 
-    [class*='__header-label'] {
+    .au-field__header-label {
       animation: labelSuccess 2s forwards;
     }
 
-    [class*='__header-icon'] {
+    .au-field__header-icon {
       .au-icon {
         animation: iconSucess 2s forwards;
       }
@@ -114,18 +128,12 @@
       background-color: $color-success-00;
       border-color: $color-success-50;
     }
-    100% {
-      @extend [class*='__input'];
-    }
   }
 
   @keyframes labelSuccess {
     0%,
     70% {
       color: $color-success-50;
-    }
-    100% {
-      @extend [class*='__header-label'];
     }
   }
 

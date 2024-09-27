@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-interface DynamicTagComponentProps extends React.HTMLAttributes<HTMLElement> {
+type DynamicTagComponentProps = React.HTMLAttributes<HTMLElement> & {
   /** Html tag that this component root should have */
   tag: string
 }

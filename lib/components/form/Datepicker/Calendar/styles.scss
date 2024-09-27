@@ -1,0 +1,150 @@
+.au-datepicker__calendar {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  transition:
+    opacity 0.2s,
+    visibility 0.2s;
+
+  @include aboveMedium() {
+    width: 414px;
+    position: absolute;
+    top: calc(100% + 90px);
+    left: 0;
+    right: auto;
+    bottom: auto;
+    transition:
+      opacity 0.2s,
+      visibility 0.2s,
+      transform 0.2s ease-in-out;
+  }
+
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+
+    .au-datepicker__calendar-backdrop {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .au-datepicker__calendar-card {
+      transform: translateY(0);
+    }
+
+    @include aboveMedium() {
+      transform: translateY(-74px);
+    }
+  }
+
+  &-backdrop {
+    background-color: rgba($color-neutral-70, 0.8);
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    visibility: 0;
+    z-index: 1;
+    -webkit-tap-highlight-color: transparent;
+    opacity: 0;
+    transition:
+      visibility 0.2s,
+      opacity 0.2s;
+
+    @include aboveMedium() {
+      display: none;
+    }
+  }
+
+  &-card {
+    width: 100%;
+    padding: 16px;
+    position: absolute;
+    border-radius: 16px 16px 0 0;
+    border: 1px solid $color-neutral-20;
+    background: $color-neutral-00;
+    bottom: 0;
+    z-index: 2;
+    transform: translateY(500px);
+    transition: transform 0.2s ease-in-out;
+
+    @include aboveMedium() {
+      position: relative;
+      height: auto;
+      transform: none;
+      bottom: auto;
+      transition: none;
+      border-radius: 16px;
+    }
+  }
+
+  &-base {
+    width: 100%;
+  }
+
+  &-grid {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  &-weekday,
+  &-day {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+    color: $color-neutral-70;
+
+    @media (max-width: 320px) {
+      //TODO create breakpoint
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  &-day {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition:
+      border 0.2s ease-in-out,
+      color 0.2s ease-in-out,
+      background-color 0.2s ease-in-out;
+
+    &:hover {
+      border: 1px solid $color-brand-blue-40;
+    }
+
+    &[data-disabled] {
+      cursor: default;
+      color: $color-neutral-40;
+      &:hover {
+        border: 1px solid transparent;
+      }
+    }
+
+    &[data-selected] {
+      background-color: $color-brand-blue-40;
+      color: $color-neutral-00;
+    }
+  }
+
+  &-actions-dock {
+    display: flex;
+    gap: 8px;
+    padding-top: 16px;
+    @include aboveMedium() {
+      display: none;
+    }
+  }
+
+  &-cancel {
+    max-width: 125px;
+  }
+}

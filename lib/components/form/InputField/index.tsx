@@ -1,13 +1,15 @@
 import Field from '../Field'
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   optional?: boolean
   requiredInput?: boolean
   success?: boolean
   error?: boolean
   errorMessage?: string
+  rightSlot?: React.ReactNode
   label?: string
-  ref?: React.RefObject<HTMLInputElement>
+  inputStyle?: React.CSSProperties
+  inputRef?: React.RefObject<HTMLInputElement>
 }
 
 export const InputField = ({
@@ -17,13 +19,16 @@ export const InputField = ({
   error,
   errorMessage,
   label,
-  ref,
   id,
   disabled,
   style,
   className,
+  inputStyle,
+  rightSlot,
+  inputRef,
   ...props
 }: InputProps) => {
+
   return (
     <Field.Root
       style={style}
@@ -40,7 +45,15 @@ export const InputField = ({
         error={error}
         disabled={disabled}
       />
-      <Field.Input id={id} ref={ref} disabled={disabled} {...props} />
+      <Field.InputHolder rightSideSlot={rightSlot}>
+        <Field.Input
+          id={id}
+          inputRef={inputRef}
+          disabled={disabled}
+          style={inputStyle}
+          {...props}
+        />
+      </Field.InputHolder>
       <Field.ErrorMessage hasError={!!error} message={errorMessage} />
     </Field.Root>
   )

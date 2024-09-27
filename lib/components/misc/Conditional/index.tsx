@@ -1,4 +1,4 @@
-export interface ConditionalProps {
+export type ConditionalProps = {
   condition: boolean
   renderIf: any
   renderElse?: any

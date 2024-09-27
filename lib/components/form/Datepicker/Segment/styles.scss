@@ -1,0 +1,101 @@
+.au-datepicker__segment {
+  @include aboveMedium() {
+    position: relative;
+  }
+
+  &--open {
+    .au-datepicker__segment-input .au-icon {
+      transform: rotate(180deg);
+    }
+
+    .au-datepicker__segment-list-holder {
+      transform: translateX(0);
+      visibility: visible;
+
+      @include aboveMedium() {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+
+  &-input {
+    padding: 8px;
+    gap: 8px;
+    display: flex;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid $color-neutral-20;
+  }
+
+  &-list-holder {
+    background: $color-neutral-00;
+    border-radius: 16px 16px 0 0;
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition:
+      visibility 0.2s,
+      transform 0.2s;
+
+    @include aboveMedium() {
+      inset: unset;
+      left: 0;
+      opacity: 0;
+      top: calc(100% + 8px);
+      height: 224px;
+      border-radius: 16px;
+      border: 1px solid $color-neutral-20;
+      transform: none;
+      transition:
+        opacity 0.2s,
+        visibility 0.2s,
+        transform 0.2s;
+    }
+  }
+
+  &-list-header {
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include aboveMedium() {
+      display: none;
+    }
+  }
+
+  &-list {
+    overflow-x: scroll;
+    flex: 1;
+  }
+
+  &-list-item {
+    padding: 16px 24px;
+    font-size: 16px;
+    line-height: 150%;
+    cursor: pointer;
+
+    &:hover,
+    &--active {
+      background-color: $color-neutral-10;
+    }
+
+    &:not(:last-of-type) {
+      border-bottom: 1px solid $color-neutral-20;
+      @include aboveMedium() {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &-title {
+    font-family: $font-body;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}

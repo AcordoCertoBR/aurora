@@ -74,9 +74,10 @@ function createIconsRoot() {
     .readdirSync(outputFolder)
     .filter((item) => !item.includes('.'))
 
-  const template = collections
-    .map((collection) => `export * from './${collection}'`)
-    .join('\n')
+  const template =
+    collections
+      .map((collection) => `export * from './${collection}'`)
+      .join('\n') + '\n'
 
   fs.writeFileSync(`${outputFolder}/index.tsx`, template, 'utf8')
 }

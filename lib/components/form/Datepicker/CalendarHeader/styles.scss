@@ -1,0 +1,16 @@
+.au-datepicker__header {
+  display: flex;
+  justify-content: space-between;
+
+  &-segments {
+    display: flex;
+    gap: 8px;
+  }
+
+  &-navigation-btn {
+    cursor: pointer;
+    outline: none;
+    background-color: transparent;
+    border: none;
+  }
+}

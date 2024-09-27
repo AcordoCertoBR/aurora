@@ -16,6 +16,8 @@ export { InputField } from './components/form/InputField'
 export { TokenField } from './components/form/TokenField'
 export { SelectField } from './components/form/SelectField'
 export { PasswordField } from './components/form/PasswordField'
+export { DatepickerField } from './components/form/Datepicker'
+export { CheckboxField } from './components/form/CheckboxField'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'

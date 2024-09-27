@@ -1,0 +1,97 @@
+.au-checkbox {
+  position: relative;
+
+  &__holder {
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+    align-items: start;
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked ~ .au-checkbox__check {
+      background-color: $color-brand-blue-40;
+      border-color: $color-brand-blue-40;
+    }
+
+    &:checked ~ .au-checkbox__check .au-icon svg {
+      opacity: 1;
+    }
+
+    &:hover:not(:focus) ~ .au-checkbox__check {
+      border-color: $color-brand-blue-40;
+      outline: 2px solid $color-brand-blue-00;
+    }
+
+    &:focus ~ .au-checkbox__check {
+      box-shadow:
+        0 0 0 1px $color-neutral-00,
+        0 0 0 3px $color-brand-blue-40;
+    }
+  }
+
+  &__check {
+    background-color: $color-neutral-00;
+    border: 2px solid $color-neutral-50;
+    border-radius: 4px;
+    height: 24px;
+    width: 24px;
+    transition: background-color 0.2s ease;
+
+    .au-icon svg {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+  }
+
+  &__label {
+    color: $color-neutral-50;
+    font-family: $font-body;
+    font-size: 16px;
+    line-height: 24px;
+    word-wrap: break-word;
+    max-width: calc(100% - 32px);
+  }
+
+  &--error {
+    .au-checkbox__input:focus ~ .au-checkbox__check {
+      box-shadow:
+        0 0 0 1px $color-neutral-00,
+        0 0 0 3px $color-error-50;
+    }
+  }
+
+  &--disabled {
+    .au-checkbox__holder {
+      cursor: not-allowed;
+    }
+
+    .au-checkbox__input {
+      &:checked ~ .au-checkbox__check {
+        background-color: $color-neutral-30;
+        border-color: $color-neutral-30;
+      }
+
+      &:hover ~ .au-checkbox__check {
+        border-color: $color-neutral-30;
+        outline: none;
+      }
+    }
+
+    .au-checkbox__check {
+      border: 2px solid $color-neutral-30;
+    }
+
+    .au-checkbox__label {
+      color: $color-neutral-30;
+    }
+  }
+}
