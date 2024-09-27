@@ -4,7 +4,7 @@ type ErrorMessageProps = {
 }
 
 export const FieldErrorMessage = ({ hasError, message }: ErrorMessageProps) => {
-  if (!hasError || !message) return
+  if (!hasError || !message) return null
 
   return <p className="au-field__error-message">{message}</p>
 }
