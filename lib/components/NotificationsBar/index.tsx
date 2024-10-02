@@ -13,6 +13,7 @@ type NotificationsBarListProps = {
   dataSource: NotificationBarListDataProps[]
   renderItem: (
     item: NotificationBarListDataProps,
+    idx?: number
   ) => ReactNode | string | JSX.Element | JSX.Element[]
 }
 
@@ -55,7 +56,7 @@ export const NotificationsBarList = ({
         {title}
       </Text>
       <div className="au-notifications-bar__list">
-        {dataSource?.map((item) => renderItem(item))}
+        {dataSource?.map((item, idx) => renderItem(item, idx))}
       </div>
     </div>
   )
