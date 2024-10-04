@@ -1,31 +1,9 @@
 import classNames from 'classnames'
 import { IconChevronDown, IconSlash, IconCheck } from '@components/icons'
 import Field from '../Field'
-
+import { SelectFieldProps } from './types'
 import { useSelectField } from './hook'
 import './styles.scss'
-
-type OptionProps = {
-  value: string
-  label: string
-  disabled?: boolean
-}
-
-type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
-  label?: string
-  options: OptionProps[]
-  optional?: boolean
-  disabled?: boolean
-  required?: boolean
-  error?: boolean
-  errorMessage?: string
-  placeholder?: string
-  value?: string
-  onChange?: (value: string) => void
-  onBlur?: () => void
-  name?: string
-  register?: (instance: HTMLSelectElement | null) => void
-}
 
 export const SelectField = ({
   label,
@@ -43,18 +21,25 @@ export const SelectField = ({
   name,
   register,
   onBlur,
+  autocomplete = false,
+  EmptyText = 'Nada encontrado',
 }: SelectFieldProps) => {
   const {
     isDropdownOpen,
-    currentValue,
     selectRef,
     selectElementRef,
+    activeOptionRef,
     toggleDropdown,
     selectOption,
     onKeyDownDropdown,
     setActiveOptionIndex,
     activeOptionIndex,
-  } = useSelectField(options, value, onChange, disabled, register)
+    filteredOptions,
+    searchValue,
+    selectedOption,
+    handleInputChange,
+    dropdownMaxHeight,
+  } = useSelectField(options, value, onChange, disabled, register, autocomplete)
 
   const dropdownClasses = classNames('au-field__select', {
     'au-field__select--disabled': disabled,
@@ -89,16 +74,19 @@ export const SelectField = ({
           aria-expanded={isDropdownOpen}
           aria-labelledby="select-label"
           aria-activedescendant={
-            activeOptionIndex !== null
-              ? options[activeOptionIndex].value
+            activeOptionIndex !== null && filteredOptions[activeOptionIndex]
+              ? filteredOptions[activeOptionIndex].value
               : undefined
           }
           onBlur={onBlur}>
-          <div className="au-field__select-display">
-            {options.find((option) => option.value === currentValue)?.label ||
-              placeholder ||
-              'Selecionar...'}
-          </div>
+          <input
+            className="au-field__select-input"
+            value={searchValue || selectedOption.label}
+            placeholder={placeholder || 'Selecionar...'}
+            onChange={handleInputChange}
+            readOnly={!autocomplete}
+            disabled={disabled}
+          />
           <div className="au-field__select-icon">
             <IconChevronDown />
           </div>
@@ -109,35 +97,44 @@ export const SelectField = ({
           })}
           role="listbox"
           aria-live="polite"
-          tabIndex={-1}>
-          {options.map((option, index) => (
-            <li
-              key={option.value}
-              className={classNames('au-field__select-option', {
-                'au-field__select-option--highlighted':
-                  activeOptionIndex === index,
-                'au-field__select-option--selected':
-                  option.value === currentValue,
-                'au-field__select-option--disabled': option.disabled,
-              })}
-              role="option"
-              aria-selected={option.value === currentValue}
-              aria-disabled={option.disabled}
-              onClick={() => selectOption(option.value, option.disabled)}
-              onMouseEnter={() => setActiveOptionIndex(index)}>
-              {option.label}
-              {option.disabled ? (
-                <IconSlash />
-              ) : option.value === currentValue ? (
-                <IconCheck />
-              ) : null}
+          tabIndex={-1}
+          style={{ maxHeight: `${dropdownMaxHeight}px`, overflowY: 'auto' }}>
+          {filteredOptions.length === 0 ? (
+            <li className="au-field__select-option au-field__select-option--empty">
+              {EmptyText}
             </li>
-          ))}
+          ) : (
+            filteredOptions.map((option, index) => (
+              <li
+                key={option.value}
+                className={classNames('au-field__select-option', {
+                  'au-field__select-option--highlighted':
+                    activeOptionIndex === index,
+                  'au-field__select-option--selected':
+                    option.value === selectedOption.value,
+                  'au-field__select-option--disabled': option.disabled,
+                })}
+                ref={activeOptionIndex === index ? activeOptionRef : null}
+                role="option"
+                aria-selected={option.value === selectedOption.value}
+                aria-disabled={option.disabled}
+                onClick={() => selectOption(option.value, option.disabled)}
+                onMouseEnter={() => setActiveOptionIndex(index)}>
+                {option.label}
+                {option.disabled ? (
+                  <IconSlash />
+                ) : option.value === selectedOption.value ? (
+                  <IconCheck />
+                ) : null}
+              </li>
+            ))
+          )}
         </ul>
+
         <select
           hidden
           disabled={disabled}
-          value={currentValue}
+          value={selectedOption.value}
           onChange={(e) => selectOption(e.target.value)}
           ref={selectElementRef}
           name={name}
