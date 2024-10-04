@@ -8,20 +8,34 @@
       justify-content: space-between;
       width: 100%;
       height: 56px;
-      padding: 16px;
       background-color: $color-neutral-00;
       border: 1px solid $color-neutral-50;
       border-radius: 8px;
       box-sizing: border-box;
       font-size: 16px;
       line-height: 22px;
-
+      overflow: hidden;
       &:focus-within {
         border: 2px solid $color-brand-blue-40;
       }
     }
 
+    &-input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 16px;
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 22px;
+      &:read-only {
+        cursor: pointer;
+      }
+    }
+
     &-icon {
+      position: absolute;
+      right: 16px;
       transition: transform 0.2s ease;
     }
 
@@ -45,9 +59,6 @@
         opacity 0.2s,
         visibility 0s 0.2s;
       z-index: 1;
-      // FIXME: temporário
-      max-height: 333px;
-      overflow-y: auto;
 
       &--open {
         transform: scaleY(1);
@@ -91,6 +102,14 @@
           color: $color-neutral-40;
         }
       }
+      &--empty {
+        cursor: default;
+        background-color: $color-neutral-20;
+        color: $color-neutral-40;
+        &:hover {
+          background-color: $color-neutral-20;
+        }
+      }
     }
 
     &--open {
@@ -115,12 +134,12 @@
         }
       }
     }
-    
+
     &--error {
       .au-field__select-wrapper {
         background-color: $color-error-00;
         border-color: $color-error-50;
-  
+
         &:focus {
           border-color: $color-brand-blue-40;
         }
@@ -135,7 +154,7 @@
     .au-field__select-wrapper {
       &,
       &:focus-within {
-        border-width: 1px;    
+        border-width: 1px;
       }
     }
   }

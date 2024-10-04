@@ -44,6 +44,37 @@ export const Default: Story = {
   },
 }
 
+export const Autocomplete: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} autocomplete />
+      </div>
+    )
+  },
+  args: {
+    ...commonArgs,
+    id: 'autocomplete-select',
+    label: 'Autocomplete Select',
+placeholder: 'Select a country artist', 
+    options: [
+      { value: '1', label: 'Johnny Cash' },
+      { value: '2', label: 'Dolly Parton' },
+      { value: '3', label: 'Willie Nelson', disabled: true },
+      { value: '4', label: 'Cody Johnson' },
+      { value: '5', label: 'Shania Twain' },
+      { value: '6', label: 'Chris Stapleton' },
+      { value: '7', label: 'Brad Paisley' },
+      { value: '8', label: 'Thomas Rhett' },
+      { value: '9', label: 'Tim McGraw' },
+      { value: '10', label: 'Carrie Underwood' },
+    ],
+    onChange: (value) => {
+      console.log('Selected value:', value);
+    },
+  },
+}
+
 export const Selected: Story = {
   render: (args) => {
     return (
