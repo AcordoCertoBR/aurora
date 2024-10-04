@@ -10,10 +10,7 @@ export const useSelectField = (
   autocomplete: boolean = false,
 ) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [selectedOption, setSelectedOption] = useState<{
-    value: string
-    label: string
-  }>({
+  const [selectedOption, setSelectedOption] = useState<OptionProps>({
     value: initialValue || '',
     label: initialValue
       ? options.find((option) => option.value === initialValue)?.label || ''
