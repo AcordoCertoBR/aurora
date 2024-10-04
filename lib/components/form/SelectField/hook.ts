@@ -52,8 +52,8 @@ export const useSelectField = (
   useEffect(() => {
     if (activeOptionRef.current) {
       activeOptionRef.current.scrollIntoView({
-        behavior: 'smooth', // ou 'auto' para uma rolagem instantânea
-        block: 'nearest', // garante que o item fique o mais próximo possível da área visível
+        behavior: 'smooth',
+        block: 'nearest',
       })
     }
   }, [activeOptionIndex])
