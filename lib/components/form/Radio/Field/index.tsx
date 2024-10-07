@@ -1,12 +1,6 @@
 import classNames from 'classnames'
+import { RadioFieldProps } from '../types'
 import './styles.scss'
-
-type RadioFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  direction?: 'left' | 'right'
-  label?: string
-  error?: boolean
-  type?: 'radio'
-}
 
 export const RadioField = ({
   type = 'radio',
@@ -23,9 +17,16 @@ export const RadioField = ({
     'au-radio-field--disabled': !!disabled,
     'au-radio-field--error': !!error,
   })
+  
   return (
     <div className={radioClasses}>
-      <input className="au-radio-field__input" type={type} id={id} disabled={disabled} {...props} />
+      <input
+        className="au-radio-field__input"
+        type={type}
+        id={id}
+        disabled={disabled}
+        {...props}
+      />
       <label className="au-radio-field__label" htmlFor={id}>
         {label}
       </label>
