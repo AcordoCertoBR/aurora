@@ -1,9 +1,20 @@
 import { RadioField } from './Field'
 import { RadioGroup } from './Group'
+import { RadioFieldProps, RadioGroupProps } from './types'
 
-const components = {
-    Field: RadioField,
-    Group: RadioGroup
+type Components = {
+  Field: React.FC<RadioFieldProps>
+  Group: React.FC<RadioGroupProps>
 }
 
-export { components as Radio}
+const components: Components = {
+  Field: RadioField,
+  Group: RadioGroup,
+}
+
+Object.keys(components).forEach((key) => {
+  const component = components[key as keyof Components]
+  component.displayName = `Radio.${key}`
+})
+
+export { components as Radio }
