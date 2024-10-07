@@ -36,7 +36,7 @@ export const RadioGroup = ({
         <RadioField
           name={safeName}
           error={error}
-          defaultChecked={defaultValue === childProps}
+          defaultChecked={defaultValue === childProps.value}
           onChange={onChange}
           onFocus={onFocus}
           {...child.props}
