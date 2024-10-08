@@ -1,0 +1,17 @@
+.au-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &--horizontal {
+    .au-radio-group__fields {
+      flex-direction: row;
+    }
+  }
+}
