@@ -8,6 +8,11 @@
   }
 
   &__input {
+    height: 56px;
+  }
+
+  &__input,
+  &__textarea {
     background-color: $color-neutral-00;
     border: 1px solid $color-neutral-50;
     border-radius: 8px;
@@ -16,7 +21,6 @@
     font-size: 16px;
     line-height: 22px;
     padding: 16px;
-    height: 56px;
     width: 100%;
 
     &:hover {
@@ -27,6 +31,10 @@
       border-color: $color-brand-blue-40;
       outline: 1px solid $color-brand-blue-40;
     }
+  }
+
+  &__char-counter {
+    text-align: right;
   }
 
   &:focus-within:not(.au-field--error) {
@@ -78,7 +86,8 @@
   &--disabled {
     cursor: not-allowed;
 
-    .au-field__input {
+    .au-field__input,
+    .au-field__textarea {
       background-color: $color-neutral-20;
       border-color: $color-neutral-40;
       color: $color-neutral-40;
@@ -92,7 +101,8 @@
   }
 
   &--error {
-    .au-field__input {
+    .au-field__input,
+    .au-field__textarea {
       background-color: $color-error-00;
       border-color: $color-error-50;
 
@@ -107,7 +117,8 @@
   }
 
   &--success {
-    .au-field__input {
+    .au-field__input,
+    .au-field__textarea {
       animation: inputSuccess 2s forwards;
     }
 
