@@ -76,7 +76,7 @@ export const DatepickerField = ({
   })
 
   return (
-    <div className="au-datepicker" onClick={() => console.log("heheheh")} ref={rootEl}>
+    <div className="au-datepicker" ref={rootEl}>
       <InputField
         className="au-datepicker__input"
         {...props}
