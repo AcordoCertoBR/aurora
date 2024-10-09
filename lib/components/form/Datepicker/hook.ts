@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '@core/hooks/useOutsideClick'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { BREAKPOINT_MD } from '@core/tokens'
 
 import {
@@ -9,6 +8,8 @@ import {
   FormatAdapter,
 } from './types'
 import { DDMMYYYY, getDefaultDate } from './helpers'
+import { above } from '@core/utils/screen'
+import { useOutsideClick } from '@core/hooks/useOutsideClick'
 
 type UseDatePickerProps = {
   onChange?: EventHandler
@@ -18,6 +19,7 @@ type UseDatePickerProps = {
   format?: FormatAdapter
   placeholder?: string
   onBlur?: EventHandler
+  onFocus?: React.FocusEventHandler<HTMLInputElement>
   minValue: AUCalendarDateShape
   maxValue: AUCalendarDateShape
 }
@@ -32,12 +34,13 @@ export function useDatepicker({
   onBlur,
   minValue,
   maxValue,
+  onFocus,
 }: UseDatePickerProps) {
   const rootEl = useRef<HTMLDivElement>(null)
   const { listenOutsideClick } = useOutsideClick({
     rootEl,
     breakpoint: BREAKPOINT_MD,
-    onLoseFocusCB: handleOutsideClick,
+    onLoseFocusCB: closeCalendar,
   })
   const [inputDate, setInputDate] = useState('')
   const [selectedDate, setSelectedDate] = useState<AUCalendarDateShape | null>(
@@ -47,6 +50,7 @@ export function useDatepicker({
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const shouldDisableManualInput = useMemo(() => !above(BREAKPOINT_MD), [])
 
   useEffect(() => {
     if (!!value && value.day) {
@@ -80,26 +84,28 @@ export function useDatepicker({
     if (!isDateValid) setInputDate('')
   }
 
+  function handleInputFocus(
+    event: React.FocusEvent<HTMLInputElement, Element>,
+  ) {
+    if (!isCalendarVisible && disabled) return
+
+    listenOutsideClick()
+    setIsCalendarVisible(true)
+    if (onFocus) onFocus(event)
+  }
+
+  function handleCalendarClick() {
+    inputRef.current?.focus()
+  }
+
   function handleInputBlur() {
     if (onBlur) {
       onBlur(selectedDate)
     }
   }
 
-  function toggleCalendar() {
-    if (!isCalendarVisible && disabled) return
-    if (!isCalendarVisible) {
-      listenOutsideClick()
-    }
-    setIsCalendarVisible(!isCalendarVisible)
-  }
-
   function closeCalendar() {
     setIsCalendarVisible(false)
-  }
-
-  function handleOutsideClick() {
-    closeCalendar()
   }
 
   function updateDateFromCalendar(pickerDate: AUCalendarDateShape) {
@@ -112,7 +118,6 @@ export function useDatepicker({
     inputDate,
     handleInputChange,
     handleInputBlur,
-    toggleCalendar,
     closeCalendar,
     isCalendarVisible,
     fmtPlaceholder: placeholder || format.placeholder,
@@ -121,5 +126,8 @@ export function useDatepicker({
     setSelectedDate,
     updateDateFromCalendar,
     rootEl,
+    handleCalendarClick,
+    handleInputFocus,
+    shouldDisableManualInput,
   }
 }
