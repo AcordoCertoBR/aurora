@@ -51,7 +51,7 @@ export const RadioGroup = ({
       <Conditional
         condition={!!label}
         renderIf={
-          <Text variant="body-medium" weight="semibold">
+          <Text variant="body-medium" weight="semibold" color="secondary">
             {label}
           </Text>
         }
