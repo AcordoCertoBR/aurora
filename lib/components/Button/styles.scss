@@ -32,11 +32,6 @@
     width: 16px;
     height: 16px;
     color: $color-neutral-00;
-
-    // @include aboveMedium() {
-    //   width: 24px;
-    //   height: 24px;
-    // }
   }
 
   &--size-large {
@@ -196,6 +191,15 @@
   }
 
   &--round {
+    &-large,
+    &-medium {
+      .au-icon,
+      .au-icon > svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    
     &-large {
       padding: 12px;
       height: 48px;
