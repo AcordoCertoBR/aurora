@@ -1,4 +1,4 @@
-import { IconAlertCircle, IconCheck, IconSlash } from '@components/icons'
+import { IconAlertOctagon, IconCheck, IconSlash } from '@components/icons'
 import {
   COLOR_ERROR_50,
   COLOR_NEUTRAL_40,
@@ -36,7 +36,7 @@ export const FieldLabel = ({
     {
       state: 'error',
       value: !!error,
-      icon: <IconAlertCircle rawColor={COLOR_ERROR_50} />,
+      icon: <IconAlertOctagon rawColor={COLOR_ERROR_50} />,
     },
     {
       state: 'disabled',
