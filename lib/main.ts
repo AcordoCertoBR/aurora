@@ -18,6 +18,7 @@ export { SelectField } from './components/form/SelectField'
 export { PasswordField } from './components/form/PasswordField'
 export { DatepickerField } from './components/form/Datepicker'
 export { CheckboxField } from './components/form/CheckboxField'
+export { TextAreaField } from './components/form/TextareaField'
 export { Radio } from './components/form/Radio'
 
 // Hooks
