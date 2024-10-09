@@ -61,7 +61,7 @@ export const DatepickerField = ({
     rootEl,
     handleCalendarClick,
     handleInputFocus,
-    shouldDisableManualInput,
+    isMobileInputWithCalendar,
   } = useDatepicker({
     onChange,
     value,
@@ -71,6 +71,7 @@ export const DatepickerField = ({
     maxValue,
     onBlur,
     onFocus,
+    calendar,
     disabled,
   })
 
@@ -85,7 +86,7 @@ export const DatepickerField = ({
         inputRef={inputRef}
         onBlur={handleInputBlur}
         disabled={disabled}
-        inputMode={shouldDisableManualInput ? 'none' : undefined}
+        inputMode={isMobileInputWithCalendar ? 'none' : undefined}
         onChange={handleInputChange}
         placeholder={fmtPlaceholder}
         onFocus={handleInputFocus}

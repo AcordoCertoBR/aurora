@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { BREAKPOINT_MD } from '@core/tokens'
+import { above } from '@core/utils/screen'
+import { useOutsideClick } from '@core/hooks/useOutsideClick'
 
 import {
   AUCalendarDateShape,
@@ -8,8 +10,6 @@ import {
   FormatAdapter,
 } from './types'
 import { DDMMYYYY, getDefaultDate } from './helpers'
-import { above } from '@core/utils/screen'
-import { useOutsideClick } from '@core/hooks/useOutsideClick'
 
 type UseDatePickerProps = {
   onChange?: EventHandler
@@ -22,6 +22,7 @@ type UseDatePickerProps = {
   onFocus?: React.FocusEventHandler<HTMLInputElement>
   minValue: AUCalendarDateShape
   maxValue: AUCalendarDateShape
+  calendar?: boolean
 }
 
 export function useDatepicker({
@@ -35,6 +36,7 @@ export function useDatepicker({
   minValue,
   maxValue,
   onFocus,
+  calendar,
 }: UseDatePickerProps) {
   const rootEl = useRef<HTMLDivElement>(null)
   const { listenOutsideClick } = useOutsideClick({
@@ -50,7 +52,10 @@ export function useDatepicker({
   const [alareadySetDefaultValue, setAlreadySetDefaultValue] = useState(false)
   const [isCalendarVisible, setIsCalendarVisible] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-  const shouldDisableManualInput = useMemo(() => !above(BREAKPOINT_MD), [])
+  const isMobileInputWithCalendar = useMemo(
+    () => !above(BREAKPOINT_MD) && !!calendar,
+    [calendar],
+  )
 
   useEffect(() => {
     if (!!value && value.day) {
@@ -128,6 +133,6 @@ export function useDatepicker({
     rootEl,
     handleCalendarClick,
     handleInputFocus,
-    shouldDisableManualInput,
+    isMobileInputWithCalendar,
   }
 }
