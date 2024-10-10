@@ -45,13 +45,13 @@ export const DatepickerField = ({
   withPortal = true,
   minValue = AUCalendarDate(1, 1, 1900),
   maxValue = AUCalendarDate(31, 12, 2100),
+  onFocus,
   ...props
 }: DatepickerFieldProps) => {
   const {
     inputDate,
     handleInputChange,
     handleInputBlur,
-    toggleCalendar,
     closeCalendar,
     isCalendarVisible,
     fmtPlaceholder,
@@ -59,6 +59,9 @@ export const DatepickerField = ({
     selectedDate,
     updateDateFromCalendar,
     rootEl,
+    handleCalendarClick,
+    handleInputFocus,
+    isMobileInputWithCalendar,
   } = useDatepicker({
     onChange,
     value,
@@ -67,6 +70,8 @@ export const DatepickerField = ({
     minValue,
     maxValue,
     onBlur,
+    onFocus,
+    calendar,
     disabled,
   })
 
@@ -77,17 +82,19 @@ export const DatepickerField = ({
         {...props}
         maxLength={10}
         value={inputDate}
-        type='tel'
+        type="tel"
         inputRef={inputRef}
         onBlur={handleInputBlur}
         disabled={disabled}
+        inputMode={isMobileInputWithCalendar ? 'none' : undefined}
         onChange={handleInputChange}
         placeholder={fmtPlaceholder}
+        onFocus={handleInputFocus}
         rightSlot={
           calendar && (
             <div
               className="au-datepicker__calendar-holder"
-              onClick={toggleCalendar}>
+              onClick={handleCalendarClick}>
               <IconCalendar
                 rawColor={disabled ? COLOR_NEUTRAL_40 : undefined}
               />
