@@ -1,0 +1,110 @@
+.au-radio-field {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+
+  &--left-direction {
+    flex-direction: row;
+  }
+
+  &--right-direction {
+    flex-direction: row-reverse;
+  }
+
+  &__input {
+    appearance: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    height: 24px;
+    width: 24px;
+
+    &::after,
+    &::before {
+      content: '';
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    &::after {
+      background-color: $color-neutral-50;
+      content: '';
+      height: 10px;
+      width: 10px;
+      left: 7px;
+      top: 7px;
+      transform: scale(0);
+      transform-origin: center;
+      transition: transform 0.2s;
+    }
+
+    &::before {
+      content: '';
+      border: 2px solid $color-neutral-50;
+      height: 24px;
+      width: 24px;
+    }
+
+    &:checked::before {
+      border-color: $color-brand-blue-40;
+      background-color: $color-brand-blue-40;
+      transition: all 0.2s ease;
+    }
+
+    &:checked::after {
+      background-color: $color-neutral-00;
+      transform: scale(1);
+    }
+
+    &:focus {
+      box-shadow:
+        0 0 0 1px $color-neutral-00,
+        0 0 0 3px $color-brand-blue-40;
+    }
+
+    &:hover:not(:focus) {
+      background-color: $color-brand-blue-00;
+      outline: 2px solid $color-brand-blue-00;
+    }
+  }
+
+  &__label {
+    color: $color-neutral-50;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+
+    .au-radio-field__input {
+      cursor: not-allowed;
+
+      &::before {
+        border-color: $color-neutral-30;
+      }
+
+      &:checked::before {
+        background-color: $color-neutral-30;
+      }
+    }
+
+    .au-radio-field__label {
+      cursor: not-allowed;
+      color: $color-neutral-30;
+    }
+  }
+
+  &--error {
+    .au-radio-field__input {
+      &::before {
+        border: 2px solid $color-error-50;
+      }
+      &:checked::before {
+        border-color: $color-brand-blue-40;
+      }
+    }
+  }
+}

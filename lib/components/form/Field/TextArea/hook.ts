@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
 type UseFieldTextAreaProps = {
-  rows?: number
-  cols?: number
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
 }
 
@@ -11,9 +9,7 @@ export const useFieldTextArea = ({ onChange }: UseFieldTextAreaProps) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCharCount(e.target.value.length)
-    if (onChange) {
-      onChange(e)
-    }
+    if (onChange) onChange(e)
   }
 
   return {
