@@ -10,7 +10,7 @@ type FieldTextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   maxLength?: number
 }
 
-export const FieldTextArea: React.FC<FieldTextAreaProps> = ({
+export const FieldTextArea = ({
   textareaRef,
   customClass,
   rows = 3,
@@ -18,7 +18,7 @@ export const FieldTextArea: React.FC<FieldTextAreaProps> = ({
   horizontalResize = false,
   maxLength,
   ...props
-}) => {
+}: FieldTextAreaProps) => {
   const { dimensions, charCount, handleMouseDown, handleInputChange } =
     useFieldTextArea({ rows, cols, horizontalResize, onChange: props.onChange })
 
