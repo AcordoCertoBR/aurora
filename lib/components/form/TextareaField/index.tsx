@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Text } from '@components/Text'
 import Field from '../Field'
 
 export type TextAreaProps =
@@ -11,6 +9,7 @@ export type TextAreaProps =
     label?: string
     textAreaStyle?: React.CSSProperties
     textareaRef?: React.RefObject<HTMLTextAreaElement>
+    horizontalResize?: boolean
   }
 
 export const TextAreaField = ({
@@ -27,16 +26,9 @@ export const TextAreaField = ({
   textAreaStyle,
   textareaRef,
   maxLength,
-  onChange,
+  horizontalResize,
   ...props
 }: TextAreaProps) => {
-  const [charCount, setCharCount] = useState(0)
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCharCount(e.target.value.length)
-    if (onChange) onChange(e);
-  }
-
   return (
     <Field.Root
       style={style}
@@ -59,14 +51,9 @@ export const TextAreaField = ({
         disabled={disabled}
         style={textAreaStyle}
         maxLength={maxLength}
-        onChange={handleInputChange}
+        horizontalResize={horizontalResize}
         {...props}
       />
-      {maxLength && (
-        <Text className="au-field__char-counter">
-          {charCount}/{maxLength}
-        </Text>
-      )}
       <Field.ErrorMessage hasError={!!error} message={errorMessage} />
     </Field.Root>
   )

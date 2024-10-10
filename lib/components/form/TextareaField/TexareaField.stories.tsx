@@ -39,6 +39,25 @@ export const CharCount: Story = {
   },
 }
 
+export const HorizontalResize: Story = {
+  args: {
+    id: 'horizontalresize-textarea',
+    horizontalResize: true, 
+    maxLength: 100,
+    ...commonArgs,
+  },
+}
+
+export const MoreRows: Story = {
+  args: {
+    ...commonArgs,
+    id: 'horizontalresize-textarea',
+    rows: 12,
+    maxLength: 100,
+    placeholder: 'textarea com 12 rows...',
+  },
+}
+
 export const Required: Story = {
   args: {
     id: 'required-textarea',
