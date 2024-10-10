@@ -14,6 +14,7 @@ export const RadioGroup = ({
   label,
   error,
   errorMessage,
+  required = false,
   children,
   onChange,
   onFocus,
@@ -52,7 +53,10 @@ export const RadioGroup = ({
         condition={!!label}
         renderIf={
           <Text variant="body-medium" weight="semibold" color="secondary">
-            {label}
+            {label}{' '}
+            {!!required && (
+              <span className="au-radio-group__label--required">*</span>
+            )}
           </Text>
         }
       />
