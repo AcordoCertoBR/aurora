@@ -27,12 +27,14 @@ export const TextAreaField = ({
   textAreaStyle,
   textareaRef,
   maxLength,
+  onChange,
   ...props
 }: TextAreaProps) => {
   const [charCount, setCharCount] = useState(0)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCharCount(e.target.value.length)
+    if (onChange) onChange(e);
   }
 
   return (
