@@ -4,39 +4,47 @@ import './styles.scss'
 export type IconSize = 'large' | 'default'
 export type IconColor = 'dark' | 'info' | 'default'
 
-type IconProps = {
-  iconSize?: IconSize
-  iconColor?: IconColor
-  iconMarkup?: string
-  iconName?: string
+export type IconProps = {
+  size?: IconSize
+  color?: IconColor
   rawColor?: string
+  className?: string
+  onClick?: () => void
+}
+type BaseIconProps = IconProps & {
+  markup?: string
+  name?: string
 }
 
-const Icon: React.FC<IconProps> = ({
-  iconMarkup,
-  iconName,
-  iconSize,
-  iconColor,
+const Icon: React.FC<BaseIconProps> = ({
+  markup,
+  name,
+  size,
+  color,
   rawColor,
-}: IconProps) => {
+  className,
+  onClick,
+}: BaseIconProps) => {
   const iconStyle: React.CSSProperties = {
     ...(rawColor && { color: rawColor }),
   }
 
   const componentClass = classNames('au-icon', {
-    [`au-icon--${iconName?.toLocaleLowerCase()}`]: !!iconName,
+    [`au-icon--${name?.toLocaleLowerCase()}`]: !!name,
     'au-icon--color-raw': !!rawColor,
-    'au-icon--color-dark': iconColor === 'dark',
-    'au-icon--color-info': iconColor === 'info',
-    'au-icon--size-large': iconSize === 'large',
+    'au-icon--color-dark': color === 'dark',
+    'au-icon--color-info': color === 'info',
+    'au-icon--size-large': size === 'large',
+    [`${className}`]: !!className,
   })
 
   return (
     <div
       style={iconStyle}
+      onClick={onClick}
       className={componentClass}
       dangerouslySetInnerHTML={{
-        __html: iconMarkup || '',
+        __html: markup || '',
       }}
     />
   )
