@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  
+  &__label--required {
+    color: $color-error-50;
+  }
 
   &__fields {
     display: flex;

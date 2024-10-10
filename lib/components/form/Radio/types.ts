@@ -15,6 +15,7 @@ export type RadioGroupProps = {
   label?: string
   error?: boolean
   errorMessage?: string
+  required?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onFocus?: React.FocusEventHandler<HTMLInputElement>
 }

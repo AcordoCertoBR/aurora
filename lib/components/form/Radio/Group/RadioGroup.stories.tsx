@@ -38,14 +38,24 @@ export const Default: Story = {
 }
 
 export const WithDefaultValue: Story = {
-    render: (args) => {
-      return <Radio.Group {...args}>{options}</Radio.Group>
-    },
-    args: {
-      label: 'Multiple options',
-      defaultValue: 2
-    },
-  }
+  render: (args) => {
+    return <Radio.Group {...args}>{options}</Radio.Group>
+  },
+  args: {
+    label: 'Multiple options',
+    defaultValue: 2,
+  },
+}
+
+export const Required: Story = {
+  render: (args) => {
+    return <Radio.Group {...args}>{options}</Radio.Group>
+  },
+  args: {
+    label: 'Multiple options',
+    required: true,
+  },
+}
 
 export const HorizontalOrientation: Story = {
   render: (args) => {
