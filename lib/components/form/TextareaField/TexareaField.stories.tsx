@@ -48,6 +48,16 @@ export const HorizontalResize: Story = {
   },
 }
 
+export const OneRow: Story = {
+  args: {
+    ...commonArgs,
+    id: 'horizontalresize-textarea',
+    rows: 1,
+    maxLength: 100,
+    placeholder: 'textarea com 1 row...',
+  },
+}
+
 export const MoreRows: Story = {
   args: {
     ...commonArgs,
