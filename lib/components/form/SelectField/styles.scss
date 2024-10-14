@@ -44,6 +44,8 @@
       flex-direction: column;
       width: 100%;
       margin-top: 16px;
+      padding-inline-start: 0;
+      box-sizing: border-box;
       border: 1px solid $color-brand-blue-40;
       background: $color-neutral-00;
       border-radius: 8px;
