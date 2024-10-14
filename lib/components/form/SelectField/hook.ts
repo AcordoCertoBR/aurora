@@ -64,18 +64,18 @@ export const useSelectField = (
         setIsDropdownOpen(false)
       }
     }
-  
+
     if (isDropdownOpen) {
       document.addEventListener('pointerup', handleClickOutside)
     } else {
       document.removeEventListener('pointerup', handleClickOutside)
     }
-  
+
     return () => {
       document.removeEventListener('pointerup', handleClickOutside)
     }
   }, [isDropdownOpen])
-  
+
   const toggleDropdown = () => {
     if (!isDropdownOpen && selectRef.current) {
       const { bottom } = selectRef.current.getBoundingClientRect()
