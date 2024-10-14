@@ -55,6 +55,27 @@ export const useSelectField = (
     }
   }, [activeOptionIndex])
 
+  useEffect(() => {
+    const handleClickOutside = (event: PointerEvent) => {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false)
+      }
+    }
+  
+    if (isDropdownOpen) {
+      document.addEventListener('pointerup', handleClickOutside)
+    } else {
+      document.removeEventListener('pointerup', handleClickOutside)
+    }
+  
+    return () => {
+      document.removeEventListener('pointerup', handleClickOutside)
+    }
+  }, [isDropdownOpen])
+  
   const toggleDropdown = () => {
     if (!isDropdownOpen && selectRef.current) {
       const { bottom } = selectRef.current.getBoundingClientRect()
