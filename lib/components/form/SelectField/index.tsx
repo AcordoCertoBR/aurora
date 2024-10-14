@@ -106,7 +106,7 @@ export const SelectField = ({
           ) : (
             filteredOptions.map((option, index) => (
               <li
-                key={option.value}
+                key={index}
                 className={classNames('au-field__select-option', {
                   'au-field__select-option--highlighted':
                     activeOptionIndex === index,
@@ -139,8 +139,8 @@ export const SelectField = ({
           ref={selectElementRef}
           name={name}
           onBlur={onBlur}>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
+          {options.map((option, index) => (
+            <option key={index} value={option.value}>
               {option.label}
             </option>
           ))}
