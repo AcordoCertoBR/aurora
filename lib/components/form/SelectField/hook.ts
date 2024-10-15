@@ -91,7 +91,7 @@ export const useSelectField = (
       }
 
       const availableSpaceBelow = window.innerHeight - bottom - totalPadding
-      const minDropdownHeight = 150
+      const minDropdownHeight = 212
       const calculatedHeight = Math.max(availableSpaceBelow, minDropdownHeight)
 
       setDropdownMaxHeight(calculatedHeight)
