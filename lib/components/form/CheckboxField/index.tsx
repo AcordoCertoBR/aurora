@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import classNames from 'classnames'
 import { IconCheck } from '@components/icons'
 import { COLOR_NEUTRAL_00 } from '@core/tokens'
@@ -25,13 +26,18 @@ export const CheckboxField = ({
     'au-checkbox--disabled': !!disabled,
   })
 
+  const getSafeId = (id: CheckboxFieldProps['id']) => {
+    return id ? id : `au-checkbox-${Math.random()}`
+  }
+  const [safeId] = useState(getSafeId(id))
+
   return (
     <div className={checkboxClasses} style={style}>
-      <label htmlFor={id} className="au-checkbox__holder">
+      <label htmlFor={safeId} className="au-checkbox__holder">
         <input
           className="au-checkbox__input"
           type="checkbox"
-          id={id}
+          id={safeId}
           disabled={disabled}
           {...props}
         />

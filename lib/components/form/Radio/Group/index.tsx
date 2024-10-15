@@ -26,7 +26,6 @@ export const RadioGroup = ({
   const getSafeName = (name: string): string => {
     return name ? name : `au-radio-group-${Math.random()}`
   }
-
   const [safeName] = useState(getSafeName(name))
 
   const childrenWithProps = React.Children.map(children, (child) => {
@@ -52,7 +51,7 @@ export const RadioGroup = ({
       <Conditional
         condition={!!label}
         renderIf={
-          <Text variant="body-medium" weight="semibold" color="secondary">
+          <Text variant="body-small" weight="semibold" color="secondary">
             {label}{' '}
             {!!required && (
               <span className="au-radio-group__label--required">*</span>
