@@ -12,12 +12,14 @@ type NavbarVerticalDataProps = {
   onClick: () => void
   dropdown?: NavbarVerticalDataProps[]
   active?: boolean
+  href?: string
 }
 
 type NavbarVerticalProps = {
   data: NavbarVerticalDataProps[]
   renderItem: (
     link: NavbarVerticalDataProps,
+    idx?: number
   ) => ReactNode | string | JSX.Element | JSX.Element[]
   renderActions: () => ReactNode | string | JSX.Element | JSX.Element[]
 }
@@ -29,8 +31,8 @@ export const NavbarVertical = ({
 }: NavbarVerticalProps) => {
   return (
     <div className="au-navbar-vertical">
-      {data?.map((link) => {
-        return renderItem(link)
+      {data?.map((link, idx) => {
+        return renderItem(link, idx)
       })}
       <div className="au-navbar-vertical__actions">{renderActions()}</div>
     </div>
@@ -49,7 +51,7 @@ const NavbarVerticalLink = ({
   function handleClick() {
     if (dropdown) {
       setOpen((prev) => !prev)
-    } else {
+    } else if(onClick) {
       onClick()
     }
   }
@@ -74,10 +76,10 @@ const NavbarVerticalLink = ({
             <Conditional condition={!!open} renderIf={<IconChevronUp />} />
             <Conditional condition={!open} renderIf={<IconChevronDown />} />
             <div className="au-navbar-vertical__dropdown">
-              {dropdown?.map((item) => {
+              {dropdown?.map((item, idx) => {
                 return (
                   <Text
-                    key={item.name}
+                    key={`${item.name}-${idx}`}
                     as="a"
                     variant="heading-micro"
                     weight="light"
