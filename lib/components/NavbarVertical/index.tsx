@@ -9,7 +9,7 @@ import './styles.scss'
 type NavbarVerticalDataProps = {
   name: string
   Icon?: ReactNode | string | JSX.Element | JSX.Element[]
-  onClick: () => void
+  onClick?: () => void
   dropdown?: NavbarVerticalDataProps[]
   active?: boolean
   href?: string
@@ -44,21 +44,24 @@ const NavbarVerticalLink = ({
   onClick,
   Icon,
   dropdown,
+  href,
   active = false,
 }: NavbarVerticalDataProps) => {
   const [open, setOpen] = useState<boolean>(active)
 
-  function handleClick() {
+  function handleClick(ev: React.MouseEvent) {
     if (dropdown) {
       setOpen((prev) => !prev)
     } else if(onClick) {
+      ev.preventDefault()
       onClick()
     }
   }
 
   return (
     <Text
-      as="a"
+      as={dropdown ? 'p' : 'a'}
+      href={href}
       variant="heading-micro"
       weight="light"
       className={classNames('au-navbar-vertical__link', {
