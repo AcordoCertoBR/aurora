@@ -8,8 +8,8 @@ import './styles.scss'
 
 type CheckboxFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string
-  error: boolean
-  errorMessage: string
+  error?: boolean
+  errorMessage?: string
 }
 
 export const CheckboxField = ({
