@@ -19,6 +19,7 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   as?: keyof React.ReactHTML
   className?: string
   color?: 'common' | 'secondary'
+  href?: string
   variant?: TextVariant
   variantDesk?: TextVariant
   weight?: TextWeight

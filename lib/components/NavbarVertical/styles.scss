@@ -4,6 +4,7 @@
   height: 100%;
   padding-bottom: 100px;
   position: relative;
+  overflow-y: scroll;
 
   &__link {
     padding: 16px 24px;
@@ -60,13 +61,18 @@
     display: flex;
     gap: 8px;
     padding: 24px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    background-color: $color-neutral-00;
 
     > * {
       flex-grow: 1;
+    }
+
+    @include aboveMedium() {
+      position: absolute;
     }
   }
 }
