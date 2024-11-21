@@ -29,6 +29,7 @@ type ButtonProps = (
   round?: boolean
   className?: string
   borderWidth?: string
+  elementRef?: React.RefObject<HTMLButtonElement | HTMLAnchorElement>
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -49,6 +50,7 @@ export const Button: React.FC<ButtonProps> = ({
   round = false,
   className,
   borderWidth = 'medium',
+  elementRef,
   ...props
 }) => {
   const buttonClasses = classNames('au-btn', {
@@ -71,7 +73,12 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (as === 'a') {
     return (
-      <a className={buttonClasses} href={href} target={target} {...props}>
+      <a
+        className={buttonClasses}
+        href={href}
+        target={target}
+        ref={elementRef as React.RefObject<HTMLAnchorElement>}
+        {...props}>
         {children}
       </a>
     )
@@ -82,6 +89,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={buttonClasses}
       onClick={handleClick}
       type={htmlType}
+      ref={elementRef as React.RefObject<HTMLButtonElement>}
       disabled={disabled || loading}
       {...props}>
       <Conditional
