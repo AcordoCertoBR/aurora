@@ -86,6 +86,7 @@ const NavbarVerticalLink = ({
                     as="a"
                     variant="heading-micro"
                     weight="light"
+                    onClick={onClick}
                     className={classNames('au-navbar-vertical__dropdown-link', {
                       'au-navbar-vertical__dropdown-link--is-active':
                         item.active,
