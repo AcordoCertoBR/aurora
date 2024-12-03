@@ -36,6 +36,7 @@ export const HeaderNavbarLink = ({
                     as="a"
                     variant="heading-micro"
                     weight="light"
+                    onClick={onClick}
                     className={classNames('au-header__dropdown-link', {
                       'au-header__dropdown-link--is-active': item.active,
                     })}
