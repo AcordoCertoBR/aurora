@@ -84,6 +84,7 @@ const NavbarVerticalLink = ({
                   <Text
                     key={`${item.name}-${idx}`}
                     as="a"
+                    href={item.href}
                     variant="heading-micro"
                     weight="light"
                     onClick={onClick}
@@ -91,7 +92,8 @@ const NavbarVerticalLink = ({
                       'au-navbar-vertical__dropdown-link--is-active':
                         item.active,
                     })}
-                    title={item.name}>
+                    title={item.name}
+                    onClick={item.onClick}>
                     {item.name}
                   </Text>
                 )
