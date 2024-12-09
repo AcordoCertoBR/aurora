@@ -21,7 +21,8 @@
       font-weight: 700;
     }
 
-    &--is-active {
+    &--is-active,
+    &--is-open {
       background-color: $color-brand-blue-10;
       color: $color-brand-blue-40;
       font-weight: 700;
@@ -52,7 +53,8 @@
         font-weight: 700;
       }
 
-      &--is-active {
+      &--is-active,
+      &--is-open {
         color: $color-brand-blue-40;
         font-weight: 700;
       }
