@@ -28,7 +28,7 @@
       font-weight: 700;
     }
 
-    &:not(.au-navbar-vertical__link--is-open) {
+    &:not(&--is-open) {
       font-weight: 300;
     }
 
