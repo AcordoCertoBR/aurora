@@ -1,0 +1,93 @@
+.au-alert {
+  border-radius: 16px;
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+
+  &__container {
+    &--horizontal {
+      .au-alert__action-btn {
+        margin-top: 8px;
+      }
+    }
+
+    &--vertical {
+      display: flex;
+      gap: 16px;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &__title {
+    color: $color-neutral-70;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+
+    &--bold {
+      font-weight: 600;
+    }
+  }
+
+  &__support-text {
+    color: $color-neutral-50;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  &__action-btn {
+    background-color: transparent;
+    border: none;
+    color: $color-brand-blue-40;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  &--info {
+    &--type-1 {
+      background-color: $color-info-00;
+      border: 1px solid $color-info-50;
+    }
+    &--type-2 {
+      background-color: $color-info-10;
+      border: none;
+    }
+  }
+
+  &--success {
+    &--type-1 {
+      background-color: $color-success-00;
+      border: 1px solid $color-success-50;
+    }
+    &--type-2 {
+      background-color: $color-success-10;
+      border: none;
+    }
+  }
+
+  &--warning {
+    &--type-1 {
+      background-color: $color-warning-00;
+      border: 1px solid $color-warning-50;
+    }
+    &--type-2 {
+      background-color: $color-warning-10;
+      border: none;
+    }
+  }
+
+  &--error {
+    &--type-1 {
+      background-color: $color-error-00;
+      border: 1px solid $color-error-50;
+    }
+    &--type-2 {
+      background-color: $color-error-10;
+      border: none;
+    }
+  }
+}
