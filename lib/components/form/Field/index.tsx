@@ -1,4 +1,5 @@
 import { FieldErrorMessage } from './ErrorMessage'
+import { FieldMessage } from './Message'
 import { FieldInput } from './Input'
 import { FieldInputHolder } from './InputHolder'
 import { FieldLabel } from './Label'
@@ -12,5 +13,6 @@ export default {
     InputHolder: FieldInputHolder,
     Label: FieldLabel,
     ErrorMessage: FieldErrorMessage,
+    Message: FieldMessage,
     TextArea: FieldTextArea,
 }

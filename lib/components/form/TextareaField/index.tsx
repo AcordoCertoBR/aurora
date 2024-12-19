@@ -2,10 +2,11 @@ import Field from '../Field'
 
 export type TextAreaProps =
   React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-    optional?: boolean
+    showOptionalLabel?: boolean
     success?: boolean
     error?: boolean
     errorMessage?: string
+    helpMessage?: string
     label?: string
     textAreaStyle?: React.CSSProperties
     textareaRef?: React.RefObject<HTMLTextAreaElement>
@@ -13,11 +14,12 @@ export type TextAreaProps =
   }
 
 export const TextAreaField = ({
-  optional,
+  showOptionalLabel,
   required,
   success,
   error,
   errorMessage,
+  helpMessage,
   label,
   id,
   disabled,
@@ -40,7 +42,7 @@ export const TextAreaField = ({
         text={label}
         id={id}
         required={required}
-        optional={optional}
+        showOptionalLabel={showOptionalLabel}
         success={success}
         error={error}
         disabled={disabled}
@@ -54,7 +56,7 @@ export const TextAreaField = ({
         horizontalResize={horizontalResize}
         {...props}
       />
-      <Field.ErrorMessage hasError={!!error} message={errorMessage} />
+      <Field.Message hasError={!!error} errorMessage={errorMessage} helpMessage={helpMessage} />
     </Field.Root>
   )
 }

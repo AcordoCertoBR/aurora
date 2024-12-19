@@ -8,6 +8,8 @@ type TokenFieldProps = {
   success?: boolean
   error?: boolean
   errorMessage?: string
+  helpMessage?: string
+  showOptionalLabel?: boolean
   size?: number
   type?: 'number' | 'password' | 'text'
   style?: React.CSSProperties
@@ -23,6 +25,8 @@ export const TokenField = ({
   success,
   error,
   errorMessage,
+  helpMessage,
+  showOptionalLabel,
   size = 6,
   type,
   style,
@@ -48,6 +52,7 @@ export const TokenField = ({
       disabled={disabled}>
       <Field.Label
         text={label}
+        showOptionalLabel={showOptionalLabel}
         success={success}
         error={error}
         disabled={disabled}
@@ -68,7 +73,7 @@ export const TokenField = ({
           </div>
         ))}
       </div>
-      <Field.ErrorMessage hasError={error} message={errorMessage} />
+      <Field.Message hasError={!!error} errorMessage={errorMessage} helpMessage={helpMessage} />
     </Field.Root>
   )
 }

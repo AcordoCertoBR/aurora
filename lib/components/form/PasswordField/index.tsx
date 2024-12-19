@@ -4,7 +4,7 @@ import './styles.scss'
 
 type PasswordFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   type?: 'password'
-  optional?: boolean
+  showOptionalLabel?: boolean
   requiredInput?: boolean
   success?: boolean
   error?: boolean
@@ -14,7 +14,7 @@ type PasswordFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
 }
 
 export const PasswordField = ({
-  optional,
+  showOptionalLabel,
   requiredInput,
   success,
   error,
@@ -40,7 +40,7 @@ export const PasswordField = ({
         text={label}
         id={id}
         required={requiredInput}
-        optional={optional}
+        showOptionalLabel={showOptionalLabel}
         success={success}
         error={error}
         disabled={disabled}

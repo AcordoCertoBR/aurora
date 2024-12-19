@@ -68,18 +68,11 @@ export const MoreRows: Story = {
   },
 }
 
-export const Required: Story = {
+export const ShowRequired: Story = {
   args: {
-    id: 'required-textarea',
+    id: 'show-required-textarea',
     required: true,
-    ...commonArgs,
-  },
-}
-
-export const Optional: Story = {
-  args: {
-    id: 'optional-textarea',
-    optional: true,
+    showOptionalLabel: false,
     ...commonArgs,
   },
 }

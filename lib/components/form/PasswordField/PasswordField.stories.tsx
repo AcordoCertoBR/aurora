@@ -47,13 +47,6 @@ export const Required: Story = {
   },
 }
 
-export const Optional: Story = {
-  args: {
-    id: 'optional-input',
-    optional: true,
-    ...commonArgs,
-  },
-}
 
 export const Success: Story = {
   args: {

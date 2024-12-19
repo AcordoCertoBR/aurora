@@ -100,7 +100,7 @@ export const Optional: Story = {
   },
   args: {
     id: 'optional-select',
-    optional: true,
+    showOptionalLabel: true,
     ...commonArgs,
   },
 }

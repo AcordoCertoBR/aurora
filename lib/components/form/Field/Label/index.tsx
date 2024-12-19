@@ -9,25 +9,24 @@ type FieldLabelProps = {
   id?: string
   text?: string
   required?: boolean
-  optional?: boolean
   success?: boolean
   error?: boolean
   disabled?: boolean
+  showOptionalLabel?: boolean
 }
 
 export const FieldLabel = ({
   id,
   text,
   required,
-  optional,
   success,
   error,
   disabled,
+  showOptionalLabel = true,
 }: FieldLabelProps) => {
   if (!text) return null
 
   const states = [
-    { state: 'optional', value: !!optional, icon: <span>(Opcional)</span> },
     {
       state: 'success',
       value: !!success,
@@ -51,7 +50,10 @@ export const FieldLabel = ({
     <div className="au-field__header">
       <label htmlFor={id} className="au-field__header-label">
         {text}{' '}
-        {required && (
+        {showOptionalLabel && !required && (
+          <span className="au-field__header-label--optional">(Opcional)</span>
+        )}
+        {!showOptionalLabel && required && (
           <strong className="au-field__header-label--required">*</strong>
         )}
       </label>
