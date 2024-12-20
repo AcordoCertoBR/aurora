@@ -118,7 +118,7 @@ export const SelectField = ({
                 role="option"
                 aria-selected={option.value === selectedOption.value}
                 aria-disabled={option.disabled}
-                onClick={() => selectOption(option.value, option.disabled)}
+                onPointerUp={() => selectOption(option.value, option.disabled)}
                 onMouseEnter={() => setActiveOptionIndex(index)}>
                 {option.label}
                 {option.disabled ? (
