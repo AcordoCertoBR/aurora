@@ -38,19 +38,18 @@ export const Focus: Story = {
   },
 }
 
-export const Required: Story = {
+export const HelpText: Story = {
   args: {
-    id: 'required-input',
-    requiredInput: true,
-    required: true,
+    id: 'help-text-input',
+    helpMessage: 'Help text',
     ...commonArgs,
   },
 }
-
-export const Optional: Story = {
+export const ShowRequired: Story = {
   args: {
-    id: 'optional-input',
-    optional: true,
+    id: 'show-required-input',
+    requiredInput: true,
+    showOptionalLabel: false,
     ...commonArgs,
   },
 }
@@ -91,5 +90,13 @@ export const WithoutLabel: Story = {
   args: {
     style: commonArgs.style,
     placeholder: commonArgs.placeholder,
+  },
+}
+
+export const HelperMessage: Story = {
+  args: {
+    id: 'helper-input',
+    helpMessage: 'Help text',
+    ...commonArgs,
   },
 }

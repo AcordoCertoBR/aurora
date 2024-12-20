@@ -1,11 +1,12 @@
 import Field from '../Field'
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  optional?: boolean
+  showOptionalLabel?: boolean
   requiredInput?: boolean
   success?: boolean
   error?: boolean
   errorMessage?: string
+  helpMessage?: string
   rightSlot?: React.ReactNode
   label?: string
   inputStyle?: React.CSSProperties
@@ -13,11 +14,12 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 }
 
 export const InputField = ({
-  optional,
+  showOptionalLabel,
   requiredInput,
   success,
   error,
   errorMessage,
+  helpMessage,
   label,
   id,
   disabled,
@@ -39,8 +41,8 @@ export const InputField = ({
       <Field.Label
         text={label}
         id={id}
+        showOptionalLabel={showOptionalLabel}
         required={requiredInput}
-        optional={optional}
         success={success}
         error={error}
         disabled={disabled}
@@ -54,7 +56,7 @@ export const InputField = ({
           {...props}
         />
       </Field.InputHolder>
-      <Field.ErrorMessage hasError={!!error} message={errorMessage} />
+      <Field.Message hasError={!!error} errorMessage={errorMessage} helpMessage={helpMessage} />
     </Field.Root>
   )
 }

@@ -7,11 +7,12 @@ export type OptionProps = {
 export type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   label?: string
   options: OptionProps[]
-  optional?: boolean
+  showOptionalLabel?: boolean
   disabled?: boolean
   required?: boolean
   error?: boolean
   errorMessage?: string
+  helpMessage?: string
   placeholder?: string
   value?: string
   onChange?: (value: string) => void

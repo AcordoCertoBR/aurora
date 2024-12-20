@@ -8,9 +8,10 @@ import './styles.scss'
 export const SelectField = ({
   label,
   options,
-  optional,
+  showOptionalLabel,
   error,
   errorMessage,
+  helpMessage,
   disabled,
   required,
   value,
@@ -57,7 +58,7 @@ export const SelectField = ({
       disabled={disabled}>
       <Field.Label
         text={label}
-        optional={optional}
+        showOptionalLabel={showOptionalLabel}
         required={required}
         error={error}
         disabled={disabled}
@@ -146,7 +147,9 @@ export const SelectField = ({
           ))}
         </select>
       </div>
-      <Field.ErrorMessage hasError={!!error} message={errorMessage} />
+      <Field.Message hasError={!!error} errorMessage={errorMessage} helpMessage={helpMessage} />
+      
+      
     </Field.Root>
   )
 }
