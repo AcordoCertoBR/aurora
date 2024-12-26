@@ -3,6 +3,7 @@ import { CardEmphasis, CardEmphasisProps } from './Emphasis'
 import { CardImage, CardImageProps } from './Image'
 import { CardRoot, CardRootProps } from './Root'
 import { CardTag, CardTagProps } from './Tag'
+import './styles.scss'
 
 type Components = {
   Root: React.FC<CardRootProps>
