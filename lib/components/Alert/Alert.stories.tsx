@@ -113,6 +113,16 @@ export const VerticalOrientation: Story = {
   },
 }
 
+export const WithCloseButton: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'info',
+    orientation: 'vertical',
+    title: { content: 'Title' },
+    closeButton: true
+  },
+}
+
 export const WithSupportText: Story = {
   render: (args) => container(args),
   args: {
