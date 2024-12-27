@@ -32,7 +32,7 @@ export const Info: Story = {
   args: {
     status: 'info',
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -41,7 +41,7 @@ export const Success: Story = {
   args: {
     status: 'success',
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -50,7 +50,7 @@ export const Warning: Story = {
   args: {
     status: 'warning',
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -59,7 +59,7 @@ export const Error: Story = {
   args: {
     status: 'error',
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -69,7 +69,7 @@ export const InfoTwoType: Story = {
     status: 'info',
     type: 2,
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -79,7 +79,7 @@ export const SuccessTwoType: Story = {
     status: 'success',
     type: 2,
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -89,7 +89,7 @@ export const WarningTwoType: Story = {
     status: 'warning',
     type: 2,
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -99,7 +99,7 @@ export const ErrorTwoType: Story = {
     status: 'error',
     type: 2,
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -109,7 +109,7 @@ export const VerticalOrientation: Story = {
     status: 'info',
     orientation: 'vertical',
     title: { content: 'Title' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
   },
 }
 
@@ -128,7 +128,7 @@ export const WithSupportText: Story = {
   args: {
     status: 'info',
     title: { content: 'Title', weight: 'bold' },
-    action: 'Action',
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
     text: 'Support Text',
   },
 }

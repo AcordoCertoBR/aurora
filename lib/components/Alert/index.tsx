@@ -23,7 +23,7 @@ export type AlertProps = {
   orientation?: 'horizontal' | 'vertical'
   title?: { content?: string; weight?: 'bold' | 'normal' }
   text?: string
-  action?: string
+  actionButton?: { content?: string; onClick?: () => void }
   closeButton?: boolean
   children?: React.ReactNode
 }
@@ -34,7 +34,7 @@ export const Alert = ({
   orientation = 'horizontal',
   title,
   text,
-  action,
+  actionButton,
   closeButton = false,
   children,
 }: AlertProps) => {
@@ -76,9 +76,13 @@ export const Alert = ({
           </div>
           {children}
           <Conditional
-            condition={!!action}
+            condition={!!actionButton}
             renderIf={
-              <button className="au-alert__action-btn">{action}</button>
+              <button
+                className="au-alert__action-btn"
+                onClick={actionButton?.onClick}>
+                {actionButton?.content}
+              </button>
             }
           />
         </div>
