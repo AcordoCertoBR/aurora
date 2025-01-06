@@ -191,6 +191,10 @@ export const useSelectField = (
     const value = e.target.value
     setSearchValue(value)
 
+    if (onChange) {
+      onChange(value)
+    }
+
     if (value === '') {
       setSelectedOption({ value: '', label: '' })
     }
