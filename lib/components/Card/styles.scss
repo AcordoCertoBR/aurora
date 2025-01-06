@@ -1,0 +1,81 @@
+.au-card {
+  font-family: $font-body;
+
+  &__root {
+    background-color: $color-neutral-00;
+    border-radius: 16px;
+    border: 1px solid $color-neutral-20;
+    padding: 16px;
+
+    &--border-none {
+      border: none;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+
+    &--direction-row {
+      flex-direction: row;
+    }
+
+    &--align-items-center {
+      align-items: center;
+    }
+
+    &--justify-content {
+      &-center {
+        justify-content: center;
+      }
+      &-space-between {
+        justify-content: space-between;
+      }
+    }
+  }
+
+  &__emphasis {
+    background-color: $color-brand-blue-00;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px;
+    margin: 0 -16px;
+    width: calc(100% + (16px * 2));
+
+    &-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-align: end;
+    }
+  }
+
+  &__tag {
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 16px;
+    width: 100%;
+
+    color: $color-neutral-70;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+
+    &--primary {
+      background-color: $color-brand-emerald-30;
+    }
+
+    &--secondary {
+      background-color: $color-info-10;
+    }
+  }
+}

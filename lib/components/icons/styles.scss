@@ -15,6 +15,12 @@
     height: 32px;
   }
 
+  &--size-small,
+  &--size-small svg {
+    width: 16px;
+    height: 16px;
+  }
+
   &--color-dark > svg {
     color: $color-neutral-50;
   }
