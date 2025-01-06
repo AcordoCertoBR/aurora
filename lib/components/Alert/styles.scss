@@ -1,8 +1,16 @@
 .au-alert {
+  font-family: $font-body;
   border-radius: 16px;
   display: flex;
+  justify-content: space-between;
   gap: 16px;
   padding: 16px;
+
+  &__content {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+  }
 
   &__container {
     &--horizontal {
@@ -45,6 +53,13 @@
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
+  }
+
+  &__close-btn {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    display: flex;
   }
 
   &--info {
