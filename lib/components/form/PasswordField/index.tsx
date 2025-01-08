@@ -57,7 +57,8 @@ export const PasswordField = ({
         <button
           className="au-password-field__btn"
           onClick={changeVisibility}
-          disabled={disabled}>
+          disabled={disabled}
+					type="button">
           {textButton}
         </button>
       </div>
