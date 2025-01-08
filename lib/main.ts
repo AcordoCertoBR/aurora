@@ -21,6 +21,7 @@ export { TextAreaField } from './components/form/TextareaField'
 export { Checkbox } from './components/form/Checkbox'
 export { Radio } from './components/form/Radio'
 export { Alert } from './components/Alert'
+export { Card } from './components/Card'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
