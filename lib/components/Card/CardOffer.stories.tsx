@@ -4,6 +4,7 @@ import { IconGift } from '@components/icons'
 import { COLOR_INFO_50 } from '@core/tokens'
 import { Text } from '@components/Text'
 import { Button } from '@components/Button'
+import { Skeleton } from '@components/Skeleton'
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card/Offer',
@@ -105,7 +106,7 @@ export const PreApprovedOfferCard: Story = {
 export const SmallDefaultOfferCard: Story = {
   render: () => {
     return (
-      <Card.Root maxWidth={288} border={false}>
+      <Card.Root maxWidth={288} border={false} color='secondary'>
         <Card.Container gap={16}>
           <Card.Tag
             color="secondary"
@@ -133,26 +134,45 @@ export const SmallDefaultOfferCard: Story = {
   },
 }
 
-export const SmallPreApprovedOfferCard: Story = {
+export const LoadingOfferCard: Story = {
+  render: () => {
+    return (
+      <Card.Root maxWidth={308}>
+        <Card.Container gap={16} alignItems="center">
+          <Skeleton height={29} block />
+          <Skeleton height={72} width={88} />
+          <Card.Container alignItems="center">
+            <Skeleton width={194} />
+          </Card.Container>
+          <Skeleton shape="square" height={111} block />
+          <Card.Container gap={8}>
+            <Skeleton height={48} block shape="circle" />
+            <Skeleton height={48} block shape="circle" />
+          </Card.Container>
+        </Card.Container>
+      </Card.Root>
+    )
+  },
+}
+
+export const LoadingSmallOfferCard: Story = {
   render: () => {
     return (
       <Card.Root maxWidth={288} border={false}>
         <Card.Container gap={16}>
-          <Card.Tag>{data.tag.preApproved}</Card.Tag>
+          <Skeleton height={29} block />
           <Card.Container direction="row" alignItems="center" gap={16}>
-            <Card.Image height={64} src={data.img} />
-            <Card.Container>
-              <Text variant="body-small" color="secondary" weight="semibold">
-                {data.product}
-              </Text>
-              <Text variant="heading-small" weight="bold">
-                {data.limit}
-              </Text>
+            <Card.Container width={80}>
+              <Skeleton width={80} height={64} />
+            </Card.Container>
+            <Card.Container gap={8}>
+              <Skeleton block height={22} />
+              <Skeleton block height={40} />
             </Card.Container>
           </Card.Container>
           <Card.Container direction="row" alignItems="center" gap={8}>
-            <Button type="outlined">{data.button.secondary}</Button>
-            <Button>{data.button.primary}</Button>
+            <Skeleton height={48} block shape="circle" />
+            <Skeleton height={48} block shape="circle" />
           </Card.Container>
         </Card.Container>
       </Card.Root>
