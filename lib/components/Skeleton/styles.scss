@@ -1,0 +1,34 @@
+.au-skeleton {
+  background-color: $color-neutral-10;
+  border-radius: 8px;
+
+  &--color-secondary {
+    background-color: #ECEDF1;
+  }
+
+  &--active {
+    background: linear-gradient(90deg, $color-neutral-10 25%, #ECEDF1 50%, $color-neutral-10 75%);
+    background-size: 200% 100%;
+    animation: loadingAnimation 1.5s infinite;
+  }
+
+  &--shape {
+    border-radius: 8px;
+
+    &-square {
+      border-radius: 0px;
+    }
+    &-circle {
+      border-radius: 100px;
+    }
+  }
+}
+
+@keyframes loadingAnimation {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

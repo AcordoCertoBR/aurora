@@ -10,6 +10,10 @@
     &--border-none {
       border: none;
     }
+
+    &--color-secondary {
+      background-color: $color-neutral-10;
+    }
   }
 
   &__container {

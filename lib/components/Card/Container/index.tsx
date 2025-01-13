@@ -6,6 +6,7 @@ export type CardContainerProps = {
   alignItems?: 'center' | 'start'
   justifyContent?: 'center' | 'space-between'
   gap?: number
+  width?: number
   children: ReactNode
 }
 export const CardContainer = ({
@@ -13,6 +14,7 @@ export const CardContainer = ({
   alignItems,
   justifyContent,
   gap,
+  width,
   children,
 }: CardContainerProps) => {
   const containerClasses = classNames('au-card__container', {
@@ -23,6 +25,7 @@ export const CardContainer = ({
 
   const containerStyle: CSSProperties = {
     gap: `${gap}px`,
+    width: `${width}px`
   }
   return (
     <div style={containerStyle} className={containerClasses}>
