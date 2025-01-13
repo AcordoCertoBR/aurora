@@ -3,6 +3,7 @@ import { CSSProperties, ReactNode } from 'react'
 
 export type CardRootProps = {
   border?: boolean
+  color?: 'primary' | 'secondary'
   width?: number
   height?: number
   maxWidth?: number
@@ -11,6 +12,7 @@ export type CardRootProps = {
 }
 export const CardRoot = ({
   border = true,
+  color = 'primary',
   width,
   height,
   maxWidth,
@@ -19,6 +21,7 @@ export const CardRoot = ({
 }: CardRootProps) => {
   const rootClasses = classNames('au-card__root', {
     'au-card__root--border-none': !border,
+    'au-card__root--color-secondary': color === 'secondary',
   })
   const rootSize: CSSProperties = {
     width: `${width}px`,
