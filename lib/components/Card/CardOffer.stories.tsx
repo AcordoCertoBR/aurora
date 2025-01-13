@@ -106,7 +106,7 @@ export const PreApprovedOfferCard: Story = {
 export const SmallDefaultOfferCard: Story = {
   render: () => {
     return (
-      <Card.Root maxWidth={288} border={false} color='secondary'>
+      <Card.Root maxWidth={288} border={false} color="secondary">
         <Card.Container gap={16}>
           <Card.Tag
             color="secondary"
@@ -121,6 +121,33 @@ export const SmallDefaultOfferCard: Story = {
               </Text>
               <Text variant="body-small" color="secondary">
                 {data.description}
+              </Text>
+            </Card.Container>
+          </Card.Container>
+          <Card.Container direction="row" alignItems="center" gap={8}>
+            <Button type="outlined">{data.button.secondary}</Button>
+            <Button>{data.button.primary}</Button>
+          </Card.Container>
+        </Card.Container>
+      </Card.Root>
+    )
+  },
+}
+
+export const SmallPreApprovedOfferCard: Story = {
+  render: () => {
+    return (
+      <Card.Root maxWidth={288} border={false}>
+        <Card.Container gap={16}>
+          <Card.Tag>{data.tag.preApproved}</Card.Tag>
+          <Card.Container direction="row" alignItems="center" gap={16}>
+            <Card.Image height={64} src={data.img} />
+            <Card.Container>
+              <Text variant="body-small" color="secondary" weight="semibold">
+                {data.product}
+              </Text>
+              <Text variant="heading-small" weight="bold">
+                {data.limit}
               </Text>
             </Card.Container>
           </Card.Container>
