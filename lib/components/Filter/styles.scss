@@ -1,8 +1,12 @@
 .au-filter {
   display: flex;
   gap: 8px;
-  .au-btn{
+  .au-filter__btn{
     border-color: $color-neutral-50;
     color: $color-neutral-50;
+    &.btn-clicked{
+      border-color: $color-brand-blue-40;
+      color: $color-brand-blue-40;
+    }
   }
 }
