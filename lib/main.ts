@@ -22,6 +22,7 @@ export { Checkbox } from './components/form/Checkbox'
 export { Radio } from './components/form/Radio'
 export { Alert } from './components/Alert'
 export { Card } from './components/Card'
+export { Filter } from './components/Filter'
 export { Skeleton } from './components/Skeleton'
 
 // Hooks
