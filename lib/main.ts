@@ -23,6 +23,7 @@ export { Radio } from './components/form/Radio'
 export { Alert } from './components/Alert'
 export { Card } from './components/Card'
 export { Skeleton } from './components/Skeleton'
+export { Spinner } from './components/Spinner'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
