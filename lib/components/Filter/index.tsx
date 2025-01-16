@@ -16,15 +16,15 @@ export const Filter= ({
 }: FilterProps) => {
 
   const [isClicked, setIsClicked] = useState(false);
-  const [currBut, setCurBut] = useState('')
+  const [currButton, setCurrButton] = useState('')
 
    const handleClick = (item: ContentItem) => {
         setIsClicked(true);
-        setCurBut(item.category)
+        setCurrButton(item.category)
         item.onClick()
     };
 const buttonClass = (item: ContentItem) => {
-    const isActive = isClicked && item.category === currBut
+    const isActive = isClicked && item.category === currButton
     return classNames('au-filter__btn', {
       'btn-clicked': isActive
     });
