@@ -1,10 +1,14 @@
-.au-filter {
-  display: flex;
-  gap: 8px;
-  .au-filter__btn{
+.au-tabs {
+  &__container {
+    display: flex;
+    white-space: nowrap;
+    gap: 16px;
+  }
+
+  &__button {
     border-color: $color-neutral-50;
     color: $color-neutral-50;
-    &.btn-clicked{
+    &.active{
       border-color: $color-brand-blue-40;
       color: $color-brand-blue-40;
     }
