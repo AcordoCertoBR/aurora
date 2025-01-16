@@ -3,32 +3,43 @@ import { useState } from 'react'
 import classNames from 'classnames'
 import './styles.scss'
 
-export type FilterProps = {
-  content: { title: string;  onClick: () => void; type?: 'primary' | 'outlined' | 'ghost' } []
+type ContentItem = {
+   title: string;  category: string; onClick: () => void; type?: 'primary' | 'outlined' | 'ghost' 
 }
 
-
+export type FilterProps = {
+  content: ContentItem []
+}
 
 export const Filter= ({
   content
 }: FilterProps) => {
 
-const [isClicked, setIsClicked] = useState(false);
-  const buttonClass = classNames('au-filter__btn', {
-      'btn-clicked': isClicked
-    })
+  const [isClicked, setIsClicked] = useState(false);
+  const [currBut, setCurBut] = useState('')
+
+   const handleClick = (item: ContentItem) => {
+        setIsClicked(true);
+        setCurBut(item.category)
+        item.onClick()
+    };
+const buttonClass = (item: ContentItem) => {
+    const isActive = isClicked && item.category === currBut
+    return classNames('au-filter__btn', {
+      'btn-clicked': isActive
+    });
+  };
 
   return (
     <div className="au-filter">
       {content?.map((item) => {
-        const handleClick = () => {
-          setIsClicked(!isClicked);
-          item.onClick()
-        };
+       
           return (
-            <Button className={buttonClass} type={item.type ?? 'primary'} onClick={handleClick} key={`item-${item}`}>
+            <div>
+            <Button className={buttonClass(item)} type={item.type ?? 'primary'} onClick={() => handleClick(item)} key={`item-${item}`}>
               {item.title}
             </Button>
+            </div>
           )
         })}
     </div>

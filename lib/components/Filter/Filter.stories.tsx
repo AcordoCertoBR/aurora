@@ -20,6 +20,6 @@ type Story = StoryObj<FilterProps>
 
 export const CustomContent: Story = {
   args: {
-    content: [{ title: 'Todas as ofertas', onClick: () => console.log('action!'), type: 'outlined' }, { title: 'Cartões', onClick: () => console.log('action!'), type: 'outlined' }]
+    content: [{ title: 'Todas as ofertas', category: 'all', onClick: () => console.log('action!'), type: 'outlined' }, { title: 'Cartões', category: 'cards', onClick: () => console.log('action!'), type: 'outlined' }]
   },
 }
