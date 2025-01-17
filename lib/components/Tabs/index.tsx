@@ -39,7 +39,7 @@ export const Tabs = ({ tabs, initialTab, onClick, areTabsHidden }: TabsProps) =>
 
   return (
     <>
-      {!areTabsHidden ? <div className="tabs">
+      <Conditional condition={!areTabsHidden} renderIf={<div className="tabs">
         <div className="au-tabs__container">
           {tabs.map((item: TabProps) => {
             return (
@@ -50,7 +50,7 @@ export const Tabs = ({ tabs, initialTab, onClick, areTabsHidden }: TabsProps) =>
             );
           })}
         </div>
-      </div> : null}
+      </div>} renderElse={null}/>
 
       {tabs.map(({ children, tab }: TabProps) => {
         return (
