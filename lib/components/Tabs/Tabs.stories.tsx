@@ -1,6 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { TabsProps } from '.'
 import { Tabs } from '.'
+import { LogoBadgetAC } from '@components/Logo'
+import { LogoBadgetCP } from '@components/Logo'
+import { LogoPrimaryNegativeAC } from '@components/Logo'
 
 const meta: Meta<TabsProps> = {
   title: 'Components/Tabs',
@@ -22,21 +25,24 @@ export const CustomContent: Story = {
   args: {
     tabs: [
     {
-      title: 'Todas as ofertas',
+      title: 'Logo do AC',
       tab: 'tab 1',
+      children: <LogoBadgetAC/>
     },
     {
-      title: 'Cartões',
+      title: 'Logo do CP',
       tab: 'tab 2',
+      children: <LogoBadgetCP/>
     },
     {
-      title: 'Empréstimos',
+      title: 'Logo do AC Negativo',
       tab: 'tab 3',
+      children: <LogoPrimaryNegativeAC/>
     },
   ],
-  activeTab: 'tab 3',
+  initialTab: 'tab 1',
   onClick: () => {
-    alert('tab clicked');
+    console.log('tab clicked');
   },
   },
 }

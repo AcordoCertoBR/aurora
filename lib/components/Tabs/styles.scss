@@ -8,9 +8,14 @@
   &__button {
     border-color: $color-neutral-50;
     color: $color-neutral-50;
-    &.active{
+    &.active {
       border-color: $color-brand-blue-40;
       color: $color-brand-blue-40;
     }
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  &__children{
+    margin: 32px 20px 0px;
   }
 }
