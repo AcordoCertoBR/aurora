@@ -7,7 +7,7 @@ type SpinnerProps = {
 
 export const Spinner: React.FC<SpinnerProps> = ({ size, color }) => {
   return (
-    <div className="spinner">
+    <div className="au-spinner">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 64 64"
@@ -16,7 +16,7 @@ export const Spinner: React.FC<SpinnerProps> = ({ size, color }) => {
         color={color}>
         <defs>
           <linearGradient
-            id={`ac-loading-${color}`}
+            id={`au-loading-${color}`}
             gradientUnits="objectBoundingBox"
             x1="10%"
             y1="0%"
@@ -31,7 +31,7 @@ export const Spinner: React.FC<SpinnerProps> = ({ size, color }) => {
 
           <path
             d="M60,32 A28,28.5 0 1 0 4,32"
-            stroke={`url(#ac-loading-${color})`}
+            stroke={`url(#au-loading-${color})`}
           />
         </g>
       </svg>
