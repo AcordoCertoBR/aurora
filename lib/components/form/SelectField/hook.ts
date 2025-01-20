@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { OptionProps } from './types'
 
 export const useSelectField = (
@@ -205,23 +205,28 @@ export const useSelectField = (
     }
   }
 
-  const handleOnBlur = useCallback(
-    (e: React.FocusEvent<Element>) => {
-      if (onBlur && !isDropdownOpen) {
-        const targetValue = !selectedOption.value
-          ? { value: (e.target as HTMLInputElement).value }
-          : selectedOption
+  const handleOnBlur = (event?: React.FocusEvent<Element>) => {
+    if (onBlur) {
+      setTimeout(() => {
+        const getOptionByLabel = (label: string) =>
+          options.find((option) => option.label === label)
+
+        const elementValue = (event?.target as HTMLInputElement).value
+        const selectedOptionFromElement = getOptionByLabel(elementValue)
+
+        const targetValue = selectedOption?.value
+          ? selectedOption
+          : selectedOptionFromElement || { value: elementValue, label: '' }
 
         onBlur({
-          ...e,
+          ...event,
           target: targetValue,
         } as React.FocusEvent<Element> & {
           target: OptionProps
         })
-      }
-    },
-    [isDropdownOpen],
-  )
+      }, 200)
+    }
+  }
 
   return {
     isDropdownOpen,
