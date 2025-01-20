@@ -16,7 +16,6 @@ export type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   placeholder?: string
   value?: string
   onChange?: (value: string) => void
-  onBlur?: () => void
   name?: string
   register?: (instance: HTMLSelectElement | null) => void
   autocomplete?: boolean
