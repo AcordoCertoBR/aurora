@@ -40,7 +40,16 @@ export const SelectField = ({
     selectedOption,
     handleInputChange,
     dropdownMaxHeight,
-  } = useSelectField(options, value, onChange, disabled, register, autocomplete)
+    handleOnBlur
+  } = useSelectField(
+    options,
+    value,
+    onChange,
+    onBlur,
+    disabled,
+    register,
+    autocomplete,
+  )
 
   const dropdownClasses = classNames('au-field__select', {
     'au-field__select--disabled': disabled,
@@ -79,7 +88,7 @@ export const SelectField = ({
               ? filteredOptions[activeOptionIndex].value
               : undefined
           }
-          onBlur={onBlur}>
+          onBlur={handleOnBlur}>
           <input
             className="au-field__select-input"
             value={searchValue || selectedOption.label}
@@ -138,8 +147,7 @@ export const SelectField = ({
           value={selectedOption.value}
           onChange={(e) => selectOption(e.target.value)}
           ref={selectElementRef}
-          name={name}
-          onBlur={onBlur}>
+          name={name}>
           {options.map((option, index) => (
             <option key={index} value={option.value}>
               {option.label}
@@ -147,9 +155,11 @@ export const SelectField = ({
           ))}
         </select>
       </div>
-      <Field.Message hasError={!!error} errorMessage={errorMessage} helpMessage={helpMessage} />
-      
-      
+      <Field.Message
+        hasError={!!error}
+        errorMessage={errorMessage}
+        helpMessage={helpMessage}
+      />
     </Field.Root>
   )
 }

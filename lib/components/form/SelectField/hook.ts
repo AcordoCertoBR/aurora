@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { OptionProps } from './types'
 
 export const useSelectField = (
   options: OptionProps[],
   initialValue?: string,
   onChange?: (value: string) => void,
+  onBlur?: React.FocusEventHandler,
   disabled?: boolean,
   register?: (instance: HTMLSelectElement | null) => void,
   autocomplete: boolean = false,
@@ -204,6 +205,24 @@ export const useSelectField = (
     }
   }
 
+  const handleOnBlur = useCallback(
+    (e: React.FocusEvent<Element>) => {
+      if (onBlur && !isDropdownOpen) {
+        const targetValue = !selectedOption.value
+          ? { value: (e.target as HTMLInputElement).value }
+          : selectedOption
+
+        onBlur({
+          ...e,
+          target: targetValue,
+        } as React.FocusEvent<Element> & {
+          target: OptionProps
+        })
+      }
+    },
+    [isDropdownOpen],
+  )
+
   return {
     isDropdownOpen,
     selectRef,
@@ -221,5 +240,6 @@ export const useSelectField = (
     dropdownMaxHeight,
     selectedOption,
     setSelectedOption,
+    handleOnBlur,
   }
 }
