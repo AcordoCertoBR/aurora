@@ -3,6 +3,14 @@
     display: flex;
     white-space: nowrap;
     gap: 16px;
+    white-space: nowrap;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    @include aboveMedium() {
+      overflow: unset;
+    }
   }
 
   &__button {
