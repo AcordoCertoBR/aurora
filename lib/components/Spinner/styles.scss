@@ -1,0 +1,14 @@
+.au-spinner {
+  svg {
+    animation: rotate 1.2s linear infinite;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}
