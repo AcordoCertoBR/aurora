@@ -2,7 +2,7 @@ import { Text } from '@components/Text'
 import { CSSProperties } from 'react'
 
 export type CardEmphasisProps = {
-  content: { title: string; description: string }[]
+  content: { title: string; description?: string }[]
   height?: number
   maxHeight?: number
 }
