@@ -1,14 +1,3 @@
-import fintech2022Logo from '@assets/certifications/fintech-2022.png'
-import fintech2023Logo from '@assets/certifications/fintech-2023.png'
-import pcidssLogo from '@assets/certifications/pci-dss.png'
-import quintessaLogo from '@assets/certifications/quintessa.png'
-import ra1000Logo from '@assets/certifications/ra1000.png'
-import reclameaquiLogo from '@assets/certifications/reclame-aqui.png'
-import scaleupLogo from '@assets/certifications/scale-up.png'
-import sslblindadoLogo from '@assets/certifications/ssl-blindado.png'
-import appStoreLogo from '@assets/stores/app-store.png'
-import googlePlayLogo from '@assets/stores/google-play.png'
-
 import {
   IconInstagram,
   IconFacebook,
@@ -19,35 +8,35 @@ import {
 
 export const certificatesMap = {
   fintech2022: {
-    logo: fintech2022Logo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/47x62/6ffd0990ed/fintech-2022.png',
     name: 'Melhores Fintechs 2022',
   },
   fintech2023: {
-    logo: fintech2023Logo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/84x73/b48cc08aa5/fintech-2023.png',
     name: 'Melhores Fintechs 2023',
   },
   pcidss: {
-    logo: pcidssLogo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/85x36/8be091fa1c/pci-dss.png',
     name: 'PCI DSS Compliant',
   },
   quintessa: {
-    logo: quintessaLogo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/122x40/16f41476c0/quintessa.png',
     name: 'Quintessa',
   },
   ra1000: {
-    logo: ra1000Logo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/100x58/ad8bed26c8/ra1000.png',
     name: 'RA 1000',
   },
   reclameaqui: {
-    logo: reclameaquiLogo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/60x60/b85fcf03dd/reclame-aqui.png',
     name: 'Ótimo Reclame Aqui',
   },
   scaleup: {
-    logo: scaleupLogo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/104x50/07c8b89dbe/scale-up.png',
     name: 'Scale Up',
   },
   sslblindado: {
-    logo: sslblindadoLogo,
+    logo: 'https://assets.acordocerto.com.br/f/114280/75x54/60734a2cc4/ssl-blindado.png',
     name: 'SSL Blindado',
   },
 }
@@ -77,10 +66,10 @@ export const socialsMap = {
 export const storesMap = {
   googleplay: {
     name: 'Google Play',
-    icon: googlePlayLogo,
+    icon: 'https://assets.acordocerto.com.br/f/114280/117x36/e0e7eda65d/google-play.png',
   },
   appstore: {
     name: 'App Store',
-    icon: appStoreLogo,
+    icon: 'https://assets.acordocerto.com.br/f/114280/117x36/38b0d1ecc9/app-store.png',
   },
 }
