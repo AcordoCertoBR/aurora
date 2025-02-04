@@ -17,6 +17,6 @@
     "breakpoint-md": "600px",
     "breakpoint-lg": "1024px",
     "breakpoint-xlg": "1920px",
-    "container-size": "1232px"
+    "container-size": "1200px"
   }
 }

@@ -4,6 +4,7 @@
     @content;
   }
 }
+
 @mixin aboveSmall {
   @media (min-width: $breakpoint-sm) {
     @content;
@@ -24,6 +25,30 @@
 
 @mixin aboveXLarge {
   @media (min-width: $breakpoint-xlg) {
+    @content;
+  }
+}
+
+@mixin belowSmall {
+  @media (max-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin belowMedium {
+  @media (max-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin belowLarge {
+  @media (max-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin belowXLarge {
+  @media (max-width: $breakpoint-xlg) {
     @content;
   }
 }
