@@ -17,7 +17,7 @@ export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
 
   return (
     <Text
-      as={isDropdown ? 'p' : 'a'}
+      as={isDropdown ? 'div' : 'a'}
       variant="heading-micro"
       weight="light"
       href={href}
