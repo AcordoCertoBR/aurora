@@ -15,10 +15,12 @@ type TextVariant =
 
 type TextWeight = 'bold' | 'semibold' | 'medium' | 'regular' | 'light'
 
+type TextColor = 'common' | 'secondary' | 'white'
+
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   as?: keyof React.ReactHTML
   className?: string
-  color?: 'common' | 'secondary'
+  color?: TextColor
   href?: string
   variant?: TextVariant
   variantDesk?: TextVariant
