@@ -20,7 +20,7 @@ export const CardEmphasis = ({
     <div style={emphasisSize} className="au-card__emphasis">
       {content?.map((item, index) => {
         return (
-          <div key={`au-card-emphasis-${index}`} className="au-card__emphasis-container">
+          <div key={`au-card-emphasis-${item.title}-${index}`} className="au-card__emphasis-container">
             <Text variant="body-small" color="secondary">
               {item.title}
             </Text>
