@@ -47,7 +47,7 @@ const NavbarVerticalLink = ({
   href,
   active = false,
 }: NavbarVerticalDataProps) => {
-  const [open, setOpen] = useState<boolean>(active)
+  const [open, setOpen] = useState<boolean>(!!dropdown && active)
 
   function handleClick(ev: React.MouseEvent) {
     if (dropdown) {
