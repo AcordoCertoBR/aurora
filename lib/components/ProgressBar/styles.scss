@@ -1,0 +1,54 @@
+.au-progress-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__bar {
+    background-color: $color-neutral-20;
+    overflow: hidden;
+    border-radius: 4px;
+    width: 100%;
+    height: 8px;
+  }
+
+  &__bar-filled {
+    background-color: $color-brand-blue-40;
+    transition: width 0.3s ease-in-out;
+    border-radius: 500px;
+    height: 8px;
+  }
+
+  &__steps {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+  }
+
+  &__step-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-neutral-20;
+    border-radius: 4px;
+    width: 100%;
+    height: 8px;
+  }
+
+  &__step-filled {
+    transition: background-color 0.3s ease-in-out;
+    background-color: transparent;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+
+    &--is-active {
+      background-color: $color-brand-blue-40;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
