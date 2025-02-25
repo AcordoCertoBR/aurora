@@ -25,6 +25,7 @@ export { Card } from './components/Card'
 export { Tabs } from './components/Tabs'
 export { Skeleton } from './components/Skeleton'
 export { Spinner } from './components/Spinner'
+export { Image } from '@components/Image'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
