@@ -26,6 +26,7 @@ export { Tabs } from './components/Tabs'
 export { Skeleton } from './components/Skeleton'
 export { Spinner } from './components/Spinner'
 export { Image } from '@components/Image'
+export { ProgressBar } from './components/ProgressBar'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
