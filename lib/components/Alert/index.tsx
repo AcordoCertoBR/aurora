@@ -46,6 +46,7 @@ export const Alert = ({
 }: AlertProps) => {
   const [isClosed, setIsClosed] = useState(false)
   const [timeLeft, setTimeLeft] = useState(countdown)
+  const [isCountdownFinished, setIsCountdownFinished] = useState(false)
 
   useEffect(() => {
     if (status !== 'timer' || timeLeft <= 0) return
@@ -54,6 +55,7 @@ export const Alert = ({
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer)
+          setIsCountdownFinished(true)
           if (onCountdownEnd) onCountdownEnd()
         }
         return prev - 1
@@ -82,7 +84,9 @@ export const Alert = ({
       icon: (
         <div className="au-alert__timer">
           <IconClock rawColor={COLOR_WARNING_50} />
-          <Text className="au-alert__countdown" variant="body-small" weight="bold">{timeLeft}s</Text>
+          {!isCountdownFinished && (
+            <Text className="au-alert__countdown" variant="body-small" weight="bold">{timeLeft}s</Text>
+          )}
         </div>
       ),
     },
@@ -108,7 +112,7 @@ export const Alert = ({
           </div>
           {children}
           <Conditional
-            condition={!!actionButton}
+            condition={!!actionButton && (status !== 'timer' || isCountdownFinished)}
             renderIf={
               <button
                 className="au-alert__action-btn"

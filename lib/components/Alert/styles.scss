@@ -104,6 +104,19 @@
     }
   }
 
+  &--timer {
+    &--type-1 {
+      .au-alert__content {
+        align-items: center;
+      }
+    }
+    &--type-2 {
+      .au-alert__content {
+        align-items: center;
+      }
+    }
+  }
+
   &--error {
     &--type-1 {
       background-color: $color-error-00;
