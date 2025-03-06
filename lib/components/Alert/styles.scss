@@ -62,6 +62,14 @@
     display: flex;
   }
 
+  &__timer {
+    text-align: center;
+  }
+
+  &__countdown {
+    color: $color-warning-50;
+  }
+
   &--info {
     &--type-1 {
       background-color: $color-info-00;
@@ -84,7 +92,8 @@
     }
   }
 
-  &--warning {
+  &--warning,
+  &--timer {
     &--type-1 {
       background-color: $color-warning-00;
       border: 1px solid $color-warning-50;
@@ -92,6 +101,19 @@
     &--type-2 {
       background-color: $color-warning-10;
       border: none;
+    }
+  }
+
+  &--timer {
+    &--type-1 {
+      .au-alert__content {
+        align-items: center;
+      }
+    }
+    &--type-2 {
+      .au-alert__content {
+        align-items: center;
+      }
     }
   }
 

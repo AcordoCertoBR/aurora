@@ -63,6 +63,15 @@ export const Error: Story = {
   },
 }
 
+export const Timer: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'timer',
+    title: { content: 'Title' },
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
+  },
+}
+
 export const InfoTwoType: Story = {
   render: (args) => container(args),
   args: {
@@ -97,6 +106,16 @@ export const ErrorTwoType: Story = {
   render: (args) => container(args),
   args: {
     status: 'error',
+    type: 2,
+    title: { content: 'Title' },
+    actionButton: {content: 'Action', onClick: () => console.log('action!')},
+  },
+}
+
+export const TimerTwoType: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'timer',
     type: 2,
     title: { content: 'Title' },
     actionButton: {content: 'Action', onClick: () => console.log('action!')},
