@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import {
   IconAlertOctagon,
@@ -6,6 +6,7 @@ import {
   IconCheck,
   IconInfo,
   IconX,
+  IconClock,
 } from '@components/icons'
 import {
   COLOR_ERROR_50,
@@ -15,10 +16,11 @@ import {
   COLOR_WARNING_50,
 } from '@core/tokens'
 import { Conditional } from '@components/misc'
+import { Text } from '@components/Text'
 import './styles.scss'
 
 export type AlertProps = {
-  status?: 'success' | 'error' | 'warning' | 'info'
+  status?: 'success' | 'error' | 'warning' | 'info' | 'timer'
   type?: 1 | 2
   orientation?: 'horizontal' | 'vertical'
   title?: { content?: string; weight?: 'bold' | 'normal' }
@@ -26,6 +28,8 @@ export type AlertProps = {
   actionButton?: { content?: string; onClick?: () => void }
   closeButton?: boolean
   children?: React.ReactNode
+  countdown?: number
+  onCountdownEnd?: () => void
 }
 
 export const Alert = ({
@@ -37,8 +41,27 @@ export const Alert = ({
   actionButton,
   closeButton = false,
   children,
+  countdown = 59,
+  onCountdownEnd,
 }: AlertProps) => {
   const [isClosed, setIsClosed] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(countdown)
+
+  useEffect(() => {
+    if (status !== 'timer' || timeLeft <= 0) return
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          if (onCountdownEnd) onCountdownEnd()
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [status, timeLeft, onCountdownEnd])
 
   const statusMap = {
     success: {
@@ -54,6 +77,15 @@ export const Alert = ({
       icon: <IconAlertTriangle rawColor={COLOR_WARNING_50} />,
     },
     info: { option: 'info', icon: <IconInfo rawColor={COLOR_INFO_50} /> },
+    timer: {
+      option: 'timer',
+      icon: (
+        <div className="au-alert__timer">
+          <IconClock rawColor={COLOR_WARNING_50} />
+          <Text className="au-alert__countdown" variant="body-small" weight="bold">{timeLeft}s</Text>
+        </div>
+      ),
+    },
   }
 
   const alertClasses = classNames('au-alert', {
