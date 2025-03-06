@@ -1,7 +1,7 @@
 import { CheckboxField } from './Field'
 
 export type CheckboxFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  label?: string
+  label?: string | React.ReactNode
   error?: boolean
   errorMessage?: string
 }
