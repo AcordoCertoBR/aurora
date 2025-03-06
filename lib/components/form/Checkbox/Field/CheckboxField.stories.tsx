@@ -69,3 +69,10 @@ export const DisabledChecked: Story = {
       ...commonArgs
     },
   }
+
+export const ComponentAsLabel: Story = {
+  args: {
+    id: 'default-input',
+    label: <>Component as <a href="/">label</a></>,
+  },
+}
