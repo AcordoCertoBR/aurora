@@ -22,11 +22,11 @@ export const Spinner: React.FC<SpinnerProps> = ({ size, color }) => {
             y1="0%"
             x2="90%"
             y2="10%">
-            <stop offset="0" stop-color={color} stop-opacity="1" />
-            <stop offset="1" stop-color={color} stop-opacity="0" />
+            <stop offset="0" stopColor={color} stopOpacity="1" />
+            <stop offset="1" stopColor={color} stopOpacity="0" />
           </linearGradient>
         </defs>
-        <g stroke-width="7" stroke-linecap="round" fill="none">
+        <g strokeWidth="7" strokeLinecap="round" fill="none">
           <path stroke={color} d="M60,32 A28,28 0 1 1 4,32" />
 
           <path
