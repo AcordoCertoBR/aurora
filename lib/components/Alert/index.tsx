@@ -124,7 +124,7 @@ export const Alert = ({
           </div>
           {children}
           <Conditional
-            condition={!!actionButton && isCountdownFinished}
+            condition={!!actionButton && (status !== 'timer' || isCountdownFinished)}
             renderIf={
               <button
                 className="au-alert__action-btn"
