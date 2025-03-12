@@ -65,6 +65,18 @@ export const Alert = ({
     return () => clearInterval(timer)
   }, [status, timeLeft, onCountdownEnd])
 
+  useEffect(() => {
+    if (timeLeft > 0) {
+      setIsCountdownFinished(false)
+    }
+  }, [timeLeft])
+
+  const handleActionClick = () => {
+    setTimeLeft(countdown)
+    setIsCountdownFinished(false)
+    actionButton?.onClick?.()
+  }
+
   const statusMap = {
     success: {
       option: 'success',
@@ -112,11 +124,11 @@ export const Alert = ({
           </div>
           {children}
           <Conditional
-            condition={!!actionButton && (status !== 'timer' || isCountdownFinished)}
+            condition={!!actionButton && isCountdownFinished}
             renderIf={
               <button
                 className="au-alert__action-btn"
-                onClick={actionButton?.onClick}>
+                onClick={handleActionClick}>
                 {actionButton?.content}
               </button>
             }
