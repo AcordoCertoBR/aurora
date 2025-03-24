@@ -11,6 +11,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string
   inputStyle?: React.CSSProperties
   inputRef?: React.RefObject<HTMLInputElement>
+  numericKeypad?: boolean
 }
 
 export const InputField = ({
@@ -28,6 +29,7 @@ export const InputField = ({
   inputStyle,
   rightSlot,
   inputRef,
+  numericKeypad,
   ...props
 }: InputProps) => {
 
@@ -51,6 +53,7 @@ export const InputField = ({
         <Field.Input
           id={id}
           inputRef={inputRef}
+          inputMode={numericKeypad ? "numeric" : undefined}
           disabled={disabled}
           style={inputStyle}
           {...props}
