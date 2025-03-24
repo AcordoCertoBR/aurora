@@ -11,6 +11,7 @@ type PasswordFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   errorMessage?: string
   label?: string
   inputRef?: React.RefObject<HTMLInputElement>
+  numericKeypad?: boolean
 }
 
 export const PasswordField = ({
@@ -25,6 +26,7 @@ export const PasswordField = ({
   disabled,
   style,
   className,
+  numericKeypad,
   ...props
 }: PasswordFieldProps) => {
   const { fieldType, textButton, changeVisibility } = usePasswordField()
@@ -51,6 +53,7 @@ export const PasswordField = ({
           type={fieldType}
           id={id}
           inputRef={inputRef}
+          inputMode={numericKeypad ? "numeric" : undefined}
           disabled={disabled}
           {...props}
         />
