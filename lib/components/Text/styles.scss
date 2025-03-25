@@ -9,17 +9,17 @@ $desk-variation: 'desk-';
 
   &--#{$viewport}display-large {
     font-size: 56px;
-    line-height: 76px;
+    line-height: 78px;
   }
 
   &--#{$viewport}display-medium {
     font-size: 48px;
-    line-height: 68px;
+    line-height: 67px;
   }
 
   &--#{$viewport}display-small {
     font-size: 40px;
-    line-height: 60px;
+    line-height: 56px;
   }
 }
 
@@ -34,17 +34,17 @@ $desk-variation: 'desk-';
 
   &--#{$viewport}heading-big {
     font-size: 32px;
-    line-height: 52px;
+    line-height: 45px;
   }
 
   &--#{$viewport}heading-large {
     font-size: 28px;
-    line-height: 48px;
+    line-height: 39px;
   }
 
   &--#{$viewport}heading-medium {
     font-size: 24px;
-    line-height: 44px;
+    line-height: 34px;
   }
 
   &--#{$viewport}heading-small {
@@ -68,12 +68,12 @@ $desk-variation: 'desk-';
 
   &--#{$viewport}body-big {
     font-size: 24px;
-    line-height: 36px;
+    line-height: 34px;
   }
 
   &--#{$viewport}body-large {
     font-size: 20px;
-    line-height: 30px;
+    line-height: 28px;
   }
 
   &--#{$viewport}body-medium {
@@ -83,7 +83,7 @@ $desk-variation: 'desk-';
 
   &--#{$viewport}body-small {
     font-size: 14px;
-    line-height: 21px;
+    line-height: 22px;
   }
 }
 
@@ -91,7 +91,7 @@ $desk-variation: 'desk-';
   &--#{$viewport}caption {
     font-family: $font-body;
     font-size: 12px;
-    line-height: 18px;
+    line-height: 19px;
   }
 }
 
