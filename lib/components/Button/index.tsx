@@ -22,7 +22,7 @@ type ButtonProps = (
   htmlType?: 'button' | 'submit' | 'reset'
   loading?: boolean
   size?: 'large' | 'medium'
-  type?: 'primary' | 'outlined' | 'ghost'
+  type?: 'primary' | 'outlined' | 'ghost' | 'link'
   target?: string
   negative?: boolean
   btnText?: boolean
