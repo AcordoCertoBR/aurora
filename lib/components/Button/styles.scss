@@ -102,6 +102,11 @@
 		color: $color-brand-blue-40;
 		padding: 0px;
 		background: transparent;
+
+		&:hover,
+    &:focus {
+      background-color: transparent;
+    }
 	}
 
   &--expand-x {
