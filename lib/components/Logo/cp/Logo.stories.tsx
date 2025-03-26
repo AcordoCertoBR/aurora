@@ -7,6 +7,7 @@ import {
   LogoPrimaryNegativeCP,
   LogoPrimaryWhiteCP,
   LogoBadgetCP,
+	LogoBadgeWhiteStrokeCP
 } from '..'
 
 const meta: Meta = {
@@ -56,5 +57,11 @@ export const PrimaryFullWhite: StoryObj = {
 export const BadgetCP: StoryObj = {
   render: (args) => {
     return <LogoBadgetCP {...args} />
+  },
+}
+
+export const BadgeWhiteStrokeCP: StoryObj = {
+  render: (args) => {
+    return <LogoBadgeWhiteStrokeCP {...args} />
   },
 }
