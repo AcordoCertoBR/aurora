@@ -221,6 +221,13 @@ export const RoundLargeSize: Story = {
   },
 }
 
+export const LinkButton: Story = {
+  args: {
+    children: 'Link button',
+    type: 'link',
+  },
+}
+
 // export const Negative: Story = {
 //   args: {
 //     children: 'Negative',
