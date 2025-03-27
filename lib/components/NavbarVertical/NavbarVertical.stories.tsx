@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import {
+  IconStar,
   IconBarChart,
   IconCreditCard,
   IconFileText,
@@ -11,6 +12,7 @@ import {
   IconUser,
 } from '../icons/default'
 import { NavbarVertical } from './index'
+import { Text } from '../Text'
 import { Button } from '../Button'
 
 const meta: Meta<typeof NavbarVertical> = {
@@ -78,6 +80,15 @@ export const Organic: Story = {
           name={link.name}
           onClick={link.onClick}
         />
+      )
+    },
+    renderAlert: () => {
+      return (
+        <>
+          <IconStar />
+          <Text color="secondary">Como está sendo a sua experiência na Consumidor Positivo?</Text>
+          <Button type="link">Avaliar aplicativo</Button>
+        </>
       )
     },
     renderActions: () => {
