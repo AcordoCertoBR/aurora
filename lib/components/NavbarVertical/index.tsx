@@ -21,12 +21,14 @@ type NavbarVerticalProps = {
     link: NavbarVerticalDataProps,
     idx?: number
   ) => ReactNode | string | JSX.Element | JSX.Element[]
+  renderAlert?: () => ReactNode | string | JSX.Element | JSX.Element[]
   renderActions: () => ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const NavbarVertical = ({
   data,
   renderItem,
+  renderAlert,
   renderActions,
 }: NavbarVerticalProps) => {
   return (
@@ -34,6 +36,7 @@ export const NavbarVertical = ({
       {data?.map((link, idx) => {
         return renderItem(link, idx)
       })}
+      {renderAlert && <div className="au-navbar-vertical__alert">{renderAlert()}</div>}
       <div className="au-navbar-vertical__actions">{renderActions()}</div>
     </div>
   )
@@ -76,8 +79,10 @@ const NavbarVerticalLink = ({
         condition={!!dropdown?.length}
         renderIf={
           <>
-            <Conditional condition={!!open} renderIf={<IconChevronUp />} />
-            <Conditional condition={!open} renderIf={<IconChevronDown />} />
+            <div className="au-navbar-vertical__toggle">
+              <Conditional condition={!!open} renderIf={<IconChevronUp />} />
+              <Conditional condition={!open} renderIf={<IconChevronDown />} />
+            </div>
             <div className="au-navbar-vertical__dropdown">
               {dropdown?.map((item, idx) => {
                 return (

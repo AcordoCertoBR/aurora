@@ -39,6 +39,10 @@
     }
   }
 
+  &__toggle {
+    margin-left: auto;
+  }
+
   &__dropdown {
     display: block;
     width: 100%;
@@ -52,6 +56,12 @@
       padding: 12px 0;
       text-decoration: none;
 
+      &::before {
+        content: "\2022";
+        font-weight: 700;
+        margin-inline: 10px;
+      }
+
       &:hover,
       &:focus {
         font-weight: 700;
@@ -63,6 +73,14 @@
         font-weight: 700;
       }
     }
+  }
+
+  &__alert {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 24px 24px 0;
   }
 
   &__actions {
