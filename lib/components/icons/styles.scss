@@ -29,6 +29,10 @@
     color: $color-info-40;
   }
 
+  &--color-success > svg {
+    color: $color-brand-emerald-50;
+  }
+
   &--color-raw > svg {
     color: inherit;
   }
