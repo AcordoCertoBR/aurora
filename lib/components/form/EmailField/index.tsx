@@ -63,7 +63,13 @@ export const EmailField = ({
           type="email"
           inputRef={inputRef}
           value={inputValue}
-          onChange={handleChange}
+          onChange={(e) => {
+						handleChange(e);
+						
+						if (props.onChange) {
+							onChange(e);
+						}
+					}}
           disabled={disabled}
           style={inputStyle}
           {...props}
