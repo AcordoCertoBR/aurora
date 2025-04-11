@@ -20,6 +20,7 @@ import { Text } from '@components/Text'
 import './styles.scss'
 
 export type AlertProps = {
+  showIcon?: boolean
   status?: 'success' | 'error' | 'warning' | 'info' | 'timer'
   type?: 1 | 2
   orientation?: 'horizontal' | 'vertical'
@@ -30,9 +31,11 @@ export type AlertProps = {
   children?: React.ReactNode
   countdown?: number
   onCountdownEnd?: () => void
+  onCloseButton?: () => void
 }
 
 export const Alert = ({
+  showIcon = true,
   status = 'info',
   type = 1,
   orientation = 'horizontal',
@@ -43,6 +46,7 @@ export const Alert = ({
   children,
   countdown = 59,
   onCountdownEnd,
+  onCloseButton,
 }: AlertProps) => {
   const [isClosed, setIsClosed] = useState(false)
   const [timeLeft, setTimeLeft] = useState(countdown)
@@ -75,6 +79,11 @@ export const Alert = ({
     setTimeLeft(countdown)
     setIsCountdownFinished(false)
     actionButton?.onClick?.()
+  }
+
+  const handleCloseButtonClick = () => {
+    setIsClosed(true)
+    onCloseButton?.()
   }
 
   const statusMap = {
@@ -114,7 +123,10 @@ export const Alert = ({
   return (
     <div className={alertClasses}>
       <div className="au-alert__content">
-        {statusMap[status].icon}
+        <Conditional 
+          condition={showIcon}
+          renderIf={statusMap[status].icon}
+        />
         <div className={`au-alert__container--${orientation}`}>
           <div>
             <h4 className={`au-alert__title au-alert__title--${title?.weight}`}>
@@ -142,7 +154,7 @@ export const Alert = ({
           <button className="au-alert__close-btn">
             <IconX
               rawColor={COLOR_NEUTRAL_70}
-              onClick={() => setIsClosed(true)}
+              onClick={handleCloseButtonClick}
             />
           </button>
         }
