@@ -67,7 +67,7 @@ export const EmailField = ({
 						handleChange(e);
 						
 						if (props.onChange) {
-							onChange(e);
+							props.onChange(e);
 						}
 					}}
           disabled={disabled}
