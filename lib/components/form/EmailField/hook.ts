@@ -14,7 +14,7 @@ const emailDomains = [
   'msn.com',
 ]
 
-export const useEmailAutocomplete = () => {
+export const useEmailAutocomplete = (propsOnChange?: (value: string) => void) => {
   const [inputValue, setInputValue] = useState('')
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -41,7 +41,9 @@ export const useEmailAutocomplete = () => {
   const handleSuggestionClick = (suggestion: string) => {
     const atIndex = inputValue.indexOf('@')
     if (atIndex > -1) {
-      setInputValue(inputValue.slice(0, atIndex + 1) + suggestion)
+			const completedEmailValue = inputValue.slice(0, atIndex + 1) + suggestion;
+      setInputValue(completedEmailValue);
+			if(propsOnChange) propsOnChange(completedEmailValue);
     }
     setSuggestions([])
     setIsDropdownOpen(false)

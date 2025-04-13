@@ -39,9 +39,7 @@ export const EmailField = ({
     isDropdownOpen,
     handleChange,
     handleSuggestionClick,
-  } = useEmailAutocomplete();
-
-	console.log("nova versão");
+  } = useEmailAutocomplete(props.onChange);
 
   return (
     <Field.Root
@@ -69,10 +67,8 @@ export const EmailField = ({
           style={inputStyle}
           {...props}
 					onChange={(e) => {
-						console.log(e)
 						handleChange(e);
 					
-						console.log(props.onChange)
 						if (props.onChange) {
 							props.onChange(e);
 						}
