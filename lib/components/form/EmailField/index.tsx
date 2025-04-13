@@ -39,7 +39,9 @@ export const EmailField = ({
     isDropdownOpen,
     handleChange,
     handleSuggestionClick,
-  } = useEmailAutocomplete()
+  } = useEmailAutocomplete();
+
+	console.log("nova versão");
 
   return (
     <Field.Root
@@ -63,7 +65,10 @@ export const EmailField = ({
           type="email"
           inputRef={inputRef}
           value={inputValue}
-          onChange={(e) => {
+          disabled={disabled}
+          style={inputStyle}
+          {...props}
+					onChange={(e) => {
 						console.log(e)
 						handleChange(e);
 					
@@ -72,9 +77,6 @@ export const EmailField = ({
 							props.onChange(e);
 						}
 					}}
-          disabled={disabled}
-          style={inputStyle}
-          {...props}
         />
         <ul
           className={classNames('au-field__input-autocomplete', {
