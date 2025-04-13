@@ -14,6 +14,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string
   inputStyle?: React.CSSProperties
   inputRef?: React.RefObject<HTMLInputElement>
+	setValue?: (value: string) => void
 }
 
 export const EmailField = ({
@@ -31,6 +32,7 @@ export const EmailField = ({
   inputStyle,
   rightSlot,
   inputRef,
+	setValue,
   ...props
 }: InputProps) => {
   const {
@@ -70,7 +72,7 @@ export const EmailField = ({
 						handleChange(e);
 					
 						if (props.onChange) {
-							props.onChange(inputValue);
+							setValue(inputValue);
 						}
 					}}
         />
