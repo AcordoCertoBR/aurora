@@ -69,6 +69,8 @@ export const TokenField = ({
               onKeyUp={(e) => onKeyUpHandler(e, i)}
               onPaste={(e) => onPasteNumber(e)}
               data-token-i={i}
+							inputMode="numeric"
+							autoComplete="one-time-code"
             />
           </div>
         ))}
