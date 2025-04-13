@@ -71,7 +71,7 @@ export const EmailField = ({
 					onChange={(e) => {
 						handleChange(e);
 					
-						if (props.onChange) {
+						if (setValue) {
 							setValue(inputValue);
 						}
 					}}
