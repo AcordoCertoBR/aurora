@@ -64,8 +64,10 @@ export const EmailField = ({
           inputRef={inputRef}
           value={inputValue}
           onChange={(e) => {
+						console.log(e)
 						handleChange(e);
-						
+					
+						console.log(props.onChange)
 						if (props.onChange) {
 							props.onChange(e);
 						}
