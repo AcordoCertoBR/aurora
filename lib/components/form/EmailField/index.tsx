@@ -32,7 +32,6 @@ export const EmailField = ({
   inputStyle,
   rightSlot,
   inputRef,
-	setValue,
   ...props
 }: InputProps) => {
   const {
