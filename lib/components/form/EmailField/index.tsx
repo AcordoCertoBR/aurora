@@ -39,7 +39,7 @@ export const EmailField = ({
     isDropdownOpen,
     handleChange,
     handleSuggestionClick,
-  } = useEmailAutocomplete(props.onChange);
+  } = useEmailAutocomplete();
 
   return (
     <Field.Root
@@ -70,7 +70,7 @@ export const EmailField = ({
 						handleChange(e);
 					
 						if (props.onChange) {
-							props.onChange(e);
+							props.onChange(inputValue);
 						}
 					}}
         />
