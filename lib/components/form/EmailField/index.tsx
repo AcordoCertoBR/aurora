@@ -14,7 +14,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string
   inputStyle?: React.CSSProperties
   inputRef?: React.RefObject<HTMLInputElement>
-	setValue?: (value: string) => void
+	onChange?: (value: string) => void;
 }
 
 export const EmailField = ({
