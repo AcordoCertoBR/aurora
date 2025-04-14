@@ -1,0 +1,132 @@
+.au-tag {
+  font-family: $font-body;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+
+  &__content {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+  }
+
+  &__container {
+    &--horizontal {
+      .au-tag__action-btn {
+        margin-top: 8px;
+      }
+    }
+
+    &--vertical {
+      display: flex;
+      gap: 16px;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  &__title {
+    color: $color-neutral-70;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+
+    &--bold {
+      font-weight: 600;
+    }
+  }
+
+  &__support-text {
+    color: $color-neutral-50;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  &__action-btn {
+    font-family: $font-body;
+    background-color: transparent;
+    border: none;
+    color: $color-brand-blue-40;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  &__close-btn {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    display: flex;
+  }
+
+  &__timer {
+    text-align: center;
+    align-self: flex-start;
+  }
+
+  &__countdown {
+    color: $color-warning-50;
+  }
+
+  &--info {
+    &--type-1 {
+      background-color: $color-info-00;
+      border: 1px solid $color-info-50;
+    }
+    &--type-2 {
+      background-color: $color-info-10;
+      border: none;
+    }
+  }
+
+  &--success {
+    &--type-1 {
+      background-color: $color-success-00;
+      border: 1px solid $color-success-50;
+    }
+    &--type-2 {
+      background-color: $color-success-10;
+      border: none;
+    }
+  }
+
+  &--warning,
+  &--timer {
+    &--type-1 {
+      background-color: $color-warning-00;
+      border: 1px solid $color-warning-50;
+    }
+    &--type-2 {
+      background-color: $color-warning-10;
+      border: none;
+    }
+  }
+
+  &--timer {
+    &--type-1 {
+      .au-tag__content {
+        align-items: center;
+      }
+    }
+    &--type-2 {
+      .au-tag__content {
+        align-items: center;
+      }
+    }
+  }
+
+  &--error {
+    &--type-1 {
+      background-color: $color-error-00;
+      border: 1px solid $color-error-50;
+    }
+    &--type-2 {
+      background-color: $color-error-10;
+      border: none;
+    }
+  }
+}
