@@ -176,3 +176,22 @@ export const CustomContent: Story = {
     ),
   },
 }
+
+export const WithoutIcon: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'info',
+    title: { content: 'Title' },
+    showIcon: false,
+  },
+}
+
+export const WithOnCloseButton: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'info',
+    title: { content: 'Title' },
+    closeButton: true,
+    onCloseButton: () => console.log('close button clicked'),
+  },
+}
