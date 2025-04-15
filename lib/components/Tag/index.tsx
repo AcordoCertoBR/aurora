@@ -4,7 +4,7 @@ import {
   IconAlertTriangle,
   IconCheck,
   IconInfo,
-  IconSlash
+  IconSlash,
 } from '@components/icons'
 import {
   COLOR_ERROR_50,
@@ -12,27 +12,39 @@ import {
   COLOR_SUCCESS_50,
   COLOR_WARNING_50,
   COLOR_BRAND_CYAN_50,
-  COLOR_NEUTRAL_70
+  COLOR_NEUTRAL_70,
 } from '@core/tokens'
 import './styles.scss'
+import { Conditional } from '@components/misc'
+
+//TODO:
+// 1. Pensar o que quero fazer no custom... cor, borda vai ser tudo definivel ou so o icone?
 
 export type TagProps = {
-  status?: 'info' | 'success' | 'error' | 'warning' | 'support' | 'neutral'
+  status:
+    | 'info'
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'support'
+    | 'neutral'
+    | 'custom'
   border?: 'rounded' | 'square'
   type?: 'read-only' | 'badge'
   color?: 'primary' | 'secondary'
   size: 'small' | 'medium' | 'large'
   text: string
   children?: React.ReactNode
+  customIcon?: string | JSX.Element
 }
 
 export const Tag = ({
-  status = 'info',
-  border = 'rounded',
+  status,
+  border = 'square',
+  size,
   type = 'read-only',
   color = 'primary',
-  size,
-  icon,
+  customIcon,
   text,
   children,
 }: TagProps) => {
@@ -52,33 +64,35 @@ export const Tag = ({
     info: { option: 'info', icon: <IconInfo rawColor={COLOR_INFO_50} /> },
     support: {
       option: 'support',
-      icon: <IconInfo rawColor={COLOR_BRAND_CYAN_50} />
+      icon: <IconInfo rawColor={COLOR_BRAND_CYAN_50} />,
     },
     neutral: {
       option: 'neutral',
-      icon: <IconSlash rawColor={COLOR_NEUTRAL_70} />
-    }
+      icon: <IconSlash rawColor={COLOR_NEUTRAL_70} />,
+    },
+    custom: {
+      option: 'custom',
+      icon: customIcon,
+    },
   }
 
   const tagClasses = classNames('au-tag', {
-    [`au-tag--${statusMap[status].option}--type-${type}`]:
-      statusMap[status].option,
+    [`au-tag--${statusMap[status].option}`]: statusMap[status].option,
+    [`au-tag--size-${size}`]: !!size,
+    [`au-tag--type-${type}`]: !!type,
+    [`au-tag--border-${border}`]: !!border,
+    [`au-tag--color-${color}`]: !!color,
   })
+
+  const isBadgeTag = type === 'badge'
 
   return (
     <div className={tagClasses}>
-      {/* <div className="au-tag__content">
-        {statusMap[status].icon}
-        <div className={`au-tag__container--${orientation}`}>
-          <div>
-            <h4 className={`au-tag__title au-tag__title--${title?.weight}`}>
-              {title?.content}
-            </h4>
-            <p className={`au-tag__support-text`}>{text}</p>
-          </div>
-          {children}
-        </div>
-      </div> */}
+      <div className="au-tag__content">
+        <Conditional condition={!isBadgeTag} renderIf={<div className="au-tag__content-icon">{statusMap[status].icon}</div>}/>
+        <p className={`au-tag__content-support-text`}>{text}</p>
+      </div>
+      {children}
     </div>
   )
 }
