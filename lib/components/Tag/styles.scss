@@ -48,63 +48,63 @@
     border-radius: 500px;
   }
 
-  &--info {
-    &.au-tag--color-primary {
+  &--color-primary {
+    &.au-tag--info {
       background-color: $color-info-10;
     }
-
-    &.au-tag--color-secondary {
-      background-color: $color-info-20;
-    }
-  }
-
-  &--success {
-    &.au-tag--color-primary {
+    &.au-tag--success {
       background-color: $color-success-10;
     }
-
-    &.au-tag--color-secondary {
-      background-color: $color-success-20;
-    }
-  }
-
-  &--error {
-    &.au-tag--color-primary {
+    &.au-tag--error {
       background-color: $color-error-10;
     }
-
-    &.au-tag--color-secondary {
-      background-color: $color-error-20;
-    }
-  }
-
-  &--warning {
-    &.au-tag--color-primary {
+    &.au-tag--warning {
       background-color: $color-warning-10;
     }
-
-    &.au-tag--color-secondary {
-      background-color: $color-warning-20;
-    }
-  }
-
-  &--support {
-    &.au-tag--color-primary {
+    &.au-tag--support {
       background-color: $color-brand-cyan-10;
     }
-
-    &.au-tag--color-secondary {
-      background-color: $color-brand-cyan-20;
+    &.au-tag--neutral {
+      background-color: $color-neutral-20;
     }
   }
 
-  &--neutral {
-    &.au-tag--color-primary {
-      background-color: $color-neutral-20;
+  &--color-secondary {
+    &.au-tag--info {
+      background-color: $color-info-20;
     }
-
-    &.au-tag--color-secondary {
+    &.au-tag--success {
+      background-color: $color-success-20;
+    }
+    &.au-tag--error {
+      background-color: $color-error-20;
+    }
+    &.au-tag--warning {
+      background-color: $color-warning-20;
+    }
+    &.au-tag--support {
+      background-color: $color-brand-cyan-20;
+    }
+    &.au-tag--neutral {
       background-color: $color-neutral-30;
+    }
+  }
+
+  &--type-badge {
+    &.au-tag--info p{
+      color: $color-info-60;
+    }
+    &.au-tag--error p{
+      color: $color-error-60;
+    }
+    &.au-tag--success p{
+      color: $color-success-60;
+    }
+    &.au-tag--warning p{
+      color: $color-warning-60;
+    }
+    &.au-tag--support p{
+      color: $color-brand-cyan-60;
     }
   }
 }

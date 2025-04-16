@@ -17,22 +17,12 @@ import {
 import './styles.scss'
 import { Conditional } from '@components/misc'
 
-//TODO:
-// 1. Pensar o que quero fazer no custom... cor, borda vai ser tudo definivel ou so o icone?
-
 export type TagProps = {
-  status:
-    | 'info'
-    | 'success'
-    | 'error'
-    | 'warning'
-    | 'support'
-    | 'neutral'
-    | 'custom'
+  status: 'info' | 'success' | 'error' | 'warning' | 'support' | 'neutral'
   border?: 'rounded' | 'square'
   type?: 'read-only' | 'badge'
   color?: 'primary' | 'secondary'
-  size: 'small' | 'medium' | 'large'
+  size?: 'small' | 'medium' | 'large'
   text: string
   children?: React.ReactNode
   customIcon?: string | JSX.Element
@@ -41,13 +31,14 @@ export type TagProps = {
 export const Tag = ({
   status,
   border = 'square',
-  size,
+  size = 'medium',
   type = 'read-only',
   color = 'primary',
   customIcon,
   text,
   children,
 }: TagProps) => {
+
   const statusMap = {
     success: {
       option: 'success',
@@ -84,13 +75,21 @@ export const Tag = ({
     [`au-tag--color-${color}`]: !!color,
   })
 
-  const isBadgeTag = type === 'badge'
+  const isBadgeTag = type === 'badge';
+  const supportText = isBadgeTag ? text.toUpperCase() : text
 
   return (
     <div className={tagClasses}>
       <div className="au-tag__content">
-        <Conditional condition={!isBadgeTag} renderIf={<div className="au-tag__content-icon">{statusMap[status].icon}</div>}/>
-        <p className={`au-tag__content-support-text`}>{text}</p>
+        <Conditional
+          condition={!isBadgeTag}
+          renderIf={
+            <div className="au-tag__content-icon">
+              <Conditional condition={!!customIcon} renderIf={customIcon} renderElse={statusMap[status].icon}/>
+            </div>
+          }
+        />
+        <p className={`au-tag__content-support-text`}>{supportText}</p>
       </div>
       {children}
     </div>

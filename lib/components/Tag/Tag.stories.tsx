@@ -25,7 +25,7 @@ const container = (args: TagProps) => {
   )
 }
 
-export const Info: Story = {
+export const InfoReadOnly: Story = {
   render: (args) => container(args),
   args: {
     status: 'info',
@@ -33,7 +33,7 @@ export const Info: Story = {
   },
 }
 
-export const Success: Story = {
+export const SuccessReadOnly: Story = {
   render: (args) => container(args),
   args: {
     status: 'success',
@@ -41,52 +41,83 @@ export const Success: Story = {
   },
 }
 
-export const Warning: Story = {
+export const WarningReadOnlySmall: Story = {
   render: (args) => container(args),
   args: {
+    size: 'small',
     status: 'warning',
     text: 'support text',
   },
 }
 
-export const Error: Story = {
+export const SupportReadOnlyMedium: Story = {
   render: (args) => container(args),
   args: {
+    status: 'support',
+    text: 'support text',
+  },
+}
+
+export const ErrorReadOnlyLarge: Story = {
+  render: (args) => container(args),
+  args: {
+    size: 'large',
     status: 'error',
     text: 'support text',
   },
 }
 
-export const Custom: Story = {
+export const CustomIconReadOnly: Story = {
   render: (args) => container(args),
   args: {
-    status: 'custom',
+    status: 'success',
     text: 'support text',
     customIcon: '🔥'
   },
 }
 
-//COLOCAR AS OUTRAS VARIAÇÕES AQUI DEPOIS!!
+export const InfoBadge: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'info',
+    type: 'badge',
+    text: 'info',
+  },
+}
 
+export const ErrorBadge: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'error',
+    type: 'badge',
+    text: 'error',
+  },
+}
 
+export const WarningBadge: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'warning',
+    type: 'badge',
+    text: 'warning',
+  },
+}
 
+export const SupportBadge: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'support',
+    type: 'badge',
+    text: 'support',
+  },
+}
 
+export const NeutralBadge: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    type: 'badge',
+    text: 'neutral',
+  },
+}
 
-
-
-// export const CustomContent: Story = {
-//   render: (args) => container(args),
-//   args: {
-//     status: 'info',
-//     children: (
-//       <div style={{ width: '100%' }}>
-//         <Text as="p" variant="body-large">
-//           Hello World
-//         </Text>
-//         <Button expand="x" type="outlined">
-//           Click
-//         </Button>
-//       </div>
-//     ),
-//   },
-// }
