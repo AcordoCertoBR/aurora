@@ -19,9 +19,7 @@ type Story = StoryObj<typeof Tag>
 
 const container = (args: TagProps) => {
   return (
-    <div style={{ width: '300px' }}>
       <Tag {...args} />
-    </div>
   )
 }
 
