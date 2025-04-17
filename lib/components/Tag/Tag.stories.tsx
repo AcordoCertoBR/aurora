@@ -110,11 +110,22 @@ export const SupportBadge: Story = {
   },
 }
 
-export const NeutralBadge: Story = {
+export const NeutralBadgeSmall: Story = {
   render: (args) => container(args),
   args: {
     status: 'neutral',
     type: 'badge',
+    size: 'small',
+    text: 'neutral',
+  },
+}
+
+export const NeutralBadgeMedium: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    type: 'badge',
+    size: 'medium',
     text: 'neutral',
   },
 }
