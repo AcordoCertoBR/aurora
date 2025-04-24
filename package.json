@@ -15,7 +15,8 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/main.es.js"
+      "import": "./dist/main.es.js",
+      "types": "./dist/main.d.ts"
     },
     "./package.json": "./package.json",
     "./dist/*.scss": {
