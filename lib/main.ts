@@ -28,6 +28,7 @@ export { Skeleton } from './components/Skeleton'
 export { Spinner } from './components/Spinner'
 export { Image } from '@components/Image'
 export { ProgressBar } from './components/ProgressBar'
+export { Tag } from './components/Tag'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
