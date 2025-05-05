@@ -3,9 +3,9 @@ import classNames from 'classnames'
 
 type ModalProps = {
   isOpen: boolean
-  onClose: () => void
-  headerContent: React.ReactNode | string | JSX.Element | JSX.Element[]
-  content: React.ReactNode | string | JSX.Element | JSX.Element[]
+  onClose?: () => void
+  headerContent?: React.ReactNode | string | JSX.Element | JSX.Element[]
+  content?: React.ReactNode | string | JSX.Element | JSX.Element[]
 }
 
 export const Modal = ({

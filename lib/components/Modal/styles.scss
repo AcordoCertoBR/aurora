@@ -34,7 +34,6 @@
     position: fixed;
     z-index: 6;
     bottom: 0;
-    overflow: hidden;
 
     @include aboveMedium() {
       border-radius: $border-radius-big 0 0 $border-radius-big;
@@ -53,7 +52,6 @@
 
   &__header {
     position: relative;
-    height: 80px;
 
     &-close {
       cursor: pointer;

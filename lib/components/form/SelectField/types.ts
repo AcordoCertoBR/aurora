@@ -20,4 +20,5 @@ export type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   register?: (instance: HTMLSelectElement | null) => void
   autocomplete?: boolean
   EmptyText?: string
+  fullScreenOptions?: boolean
 }
