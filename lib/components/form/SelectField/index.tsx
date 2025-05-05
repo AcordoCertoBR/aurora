@@ -33,7 +33,7 @@ export const SelectField = ({
   onBlur,
   autocomplete = false,
   EmptyText = 'Nada encontrado',
-  fullScreenOptions = true,
+  fullScreenOptions = false,
 }: SelectFieldProps) => {
   const {
     isDropdownOpen,
