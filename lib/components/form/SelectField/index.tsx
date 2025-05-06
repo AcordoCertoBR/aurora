@@ -13,6 +13,7 @@ import { Modal } from '@components/Modal'
 import { Text } from '@components/Text'
 import { COLOR_NEUTRAL_40 } from '@core/tokens'
 import { Conditional } from '@components/misc'
+import { createPortal } from 'react-dom'
 
 export const SelectField = ({
   label,
@@ -199,69 +200,75 @@ export const SelectField = ({
       <Conditional
         condition={fullScreenOptions}
         renderIf={
-          <Modal
-            isOpen={isDropdownOpen}
-            onClose={() => console.log('fechou')}
-            headerContent={
-              <div>
-                <Text as="label" variant="heading-small" weight="bold">
-                  {label}
-                </Text>
-                <div
-                  className="au-field__fullscreen-options-select-search-bar"
-                  onClick={toggleDropdown}
-                  onKeyDown={onKeyDownDropdown}
-                  tabIndex={disabled ? -1 : 0}
-                  ref={selectRef}
-                  role="combobox"
-                  aria-haspopup="listbox"
-                  aria-expanded={isDropdownOpen}
-                  aria-labelledby="select-label"
-                  aria-activedescendant={
-                    activeOptionIndex !== null &&
-                    filteredOptions[activeOptionIndex]
-                      ? filteredOptions[activeOptionIndex].value
-                      : undefined
-                  }
-                  onBlur={handleOnBlur}>
-                  <input
-                    className="au-field__select-input"
-                    value={searchValue || selectedOption.label}
-                    placeholder={'Buscar'}
-                    onChange={handleInputChange}
-                    disabled={disabled}
-                  />
-                  <div className="au-field__select-icon">
-                    <IconSearch rawColor={COLOR_NEUTRAL_40} />
+          <>
+            {createPortal(
+              <Modal
+                isOpen={isDropdownOpen}
+                onClose={() => console.log('fechou')}
+                headerContent={
+                  <div>
+                    <Text as="label" variant="heading-small" weight="bold">
+                      {label}
+                    </Text>
+                    <div
+                      className="au-field__fullscreen-options-select-search-bar"
+                      onKeyDown={onKeyDownDropdown}
+                      tabIndex={disabled ? -1 : 0}
+                      ref={selectRef}
+                      role="combobox"
+                      aria-haspopup="listbox"
+                      aria-expanded={isDropdownOpen}
+                      aria-labelledby="select-label"
+                      aria-activedescendant={
+                        activeOptionIndex !== null &&
+                        filteredOptions[activeOptionIndex]
+                          ? filteredOptions[activeOptionIndex].value
+                          : undefined
+                      }
+                      onBlur={handleOnBlur}>
+                      <input
+                        className="au-field__select-input"
+                        value={searchValue || selectedOption.label}
+                        placeholder={'Buscar'}
+                        onChange={handleInputChange}
+                        disabled={disabled}
+                      />
+                      <div className="au-field__select-icon">
+                        <IconSearch rawColor={COLOR_NEUTRAL_40} />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            }
-            content={
-              <div className="au-field__fullscreen-options-select-options">
-                {filteredOptions.map((option, index) => (
-                  <li
-                    key={index}
-                    className={fullScreenOptionClasses(option, index)}
-                    ref={activeOptionIndex === index ? activeOptionRef : null}
-                    role="option"
-                    aria-selected={option.value === selectedOption.value}
-                    aria-disabled={option.disabled}
-                    onPointerUp={() =>
-                      selectOption(option.value, option.disabled)
-                    }
-                    onMouseEnter={() => setActiveOptionIndex(index)}>
-                    {option.label}
-                    {option.disabled ? (
-                      <IconSlash />
-                    ) : option.value === selectedOption.value ? (
-                      <IconCheck />
-                    ) : null}
-                  </li>
-                ))}
-              </div>
-            }
-          />
+                }
+                content={
+                  <div className="au-field__fullscreen-options-select-options">
+                    {filteredOptions.map((option, index) => (
+                      <li
+                        key={index}
+                        className={fullScreenOptionClasses(option, index)}
+                        ref={
+                          activeOptionIndex === index ? activeOptionRef : null
+                        }
+                        role="option"
+                        aria-selected={option.value === selectedOption.value}
+                        aria-disabled={option.disabled}
+                        onPointerUp={() =>
+                          selectOption(option.value, option.disabled)
+                        }
+                        onMouseEnter={() => setActiveOptionIndex(index)}>
+                        {option.label}
+                        {option.disabled ? (
+                          <IconSlash />
+                        ) : option.value === selectedOption.value ? (
+                          <IconCheck />
+                        ) : null}
+                      </li>
+                    ))}
+                  </div>
+                }
+              />,
+              document.body,
+            )}
+          </>
         }
       />
     </>
