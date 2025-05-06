@@ -58,10 +58,12 @@ export const useSelectField = (
 
   useEffect(() => {
     const handleClickOutside = (event: PointerEvent) => {
-      if (
+      const isClickedOutside =
         selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
-      ) {
+        !selectRef.current.contains(event.target as Node) &&
+        activeOptionRef.current
+
+      if (isClickedOutside) {
         setIsDropdownOpen(false)
       }
     }
@@ -181,8 +183,9 @@ export const useSelectField = (
     }
 
     setActiveOptionIndex(null)
-    setIsDropdownOpen(false)
     setSearchValue('')
+    setTimeout(() => setIsDropdownOpen(false), 500)
+
     if (onChange) {
       onChange(optionValue)
     }
