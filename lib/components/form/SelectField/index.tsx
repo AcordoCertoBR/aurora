@@ -52,6 +52,7 @@ export const SelectField = ({
     handleInputChange,
     dropdownMaxHeight,
     handleOnBlur,
+    onCloseOptions
   } = useSelectField(
     options,
     value,
@@ -60,7 +61,7 @@ export const SelectField = ({
     disabled,
     register,
     autocomplete,
-    fullScreenOptions
+    fullScreenOptions,
   )
 
   const selectClasses = classNames('au-field__select', {
@@ -205,7 +206,7 @@ export const SelectField = ({
             {createPortal(
               <Modal
                 isOpen={isDropdownOpen}
-                onClose={() => console.log('fechou')}
+                onClose={onCloseOptions}
                 headerContent={
                   <div>
                     <Text as="label" variant="heading-small" weight="bold">

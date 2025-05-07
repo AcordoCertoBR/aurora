@@ -232,6 +232,10 @@ export const useSelectField = (
     }
   }
 
+  const onCloseOptions = () => {
+    setIsDropdownOpen(false)
+  }
+
   return {
     isDropdownOpen,
     selectRef,
@@ -250,5 +254,6 @@ export const useSelectField = (
     selectedOption,
     setSelectedOption,
     handleOnBlur,
+    onCloseOptions,
   }
 }
