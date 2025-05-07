@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 import {
   IconChevronDown,
@@ -5,15 +6,15 @@ import {
   IconCheck,
   IconSearch,
 } from '@components/icons'
+import { Modal } from '@components/Modal'
+import { Text } from '@components/Text'
+import { Conditional } from '@components/misc'
+import { COLOR_NEUTRAL_40 } from '@core/tokens'
+
 import Field from '../Field'
 import { OptionProps, SelectFieldProps } from './types'
 import { useSelectField } from './hook'
 import './styles.scss'
-import { Modal } from '@components/Modal'
-import { Text } from '@components/Text'
-import { COLOR_NEUTRAL_40 } from '@core/tokens'
-import { Conditional } from '@components/misc'
-import { createPortal } from 'react-dom'
 
 export const SelectField = ({
   label,
