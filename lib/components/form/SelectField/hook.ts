@@ -9,6 +9,7 @@ export const useSelectField = (
   disabled?: boolean,
   register?: (instance: HTMLSelectElement | null) => void,
   autocomplete: boolean = false,
+  fullScreenOptions: boolean = false,
 ) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState<OptionProps>({
@@ -26,7 +27,7 @@ export const useSelectField = (
   const [searchValue, setSearchValue] = useState<string>('')
   const activeOptionRef = useRef<HTMLLIElement | null>(null)
 
-  const filteredOptions = autocomplete
+  const filteredOptions = autocomplete || fullScreenOptions
     ? options.filter((option) =>
         option.label.toLowerCase().includes(searchValue.toLowerCase()),
       )

@@ -60,6 +60,7 @@ export const SelectField = ({
     disabled,
     register,
     autocomplete,
+    fullScreenOptions
   )
 
   const selectClasses = classNames('au-field__select', {
