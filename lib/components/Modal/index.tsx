@@ -1,6 +1,8 @@
 import { IconX } from '@components/icons'
 import classNames from 'classnames'
 
+import './styles.scss'
+
 type ModalProps = {
   isOpen: boolean
   onClose?: () => void
