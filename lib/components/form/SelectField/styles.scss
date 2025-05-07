@@ -203,6 +203,7 @@
       border-radius: 8px;
       border: 1px solid $color-neutral-20;
       color: $color-neutral-70;
+      transition: all 0.2s ease-in-out;
 
       &:not(&--selected):hover,
       &--highlighted:not(&--selected) {

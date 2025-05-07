@@ -10,20 +10,37 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
   z-index: 5;
+
+  @keyframes slideInY {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInX {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 
   &--is-open {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
-    transition: opacity 0.3s ease;
 
     .au-modal__container {
-      transform: translateY(0);
+      animation: slideInY 0.3s ease forwards;
 
       @include aboveMedium() {
-        transform: translateX(0);
+        animation: slideInX 0.3s ease forwards;
       }
     }
   }
@@ -38,14 +55,10 @@
     position: fixed;
     z-index: 6;
     bottom: 0;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
 
     @include aboveMedium() {
       border-radius: $border-radius-big 0 0 $border-radius-big;
       box-shadow: $shadow-04;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
       top: 0;
       right: 0;
       margin: 0;
