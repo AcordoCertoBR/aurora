@@ -10,6 +10,7 @@ import { Modal } from '@components/Modal'
 import { Text } from '@components/Text'
 import { Conditional } from '@components/misc'
 import { COLOR_NEUTRAL_40 } from '@core/tokens'
+import { isMobile } from '@core/utils/isMobile'
 
 import Field from '../Field'
 import { OptionProps, SelectFieldProps } from './types'
@@ -138,7 +139,7 @@ export const SelectField = ({
             </div>
           </div>
           <Conditional
-            condition={!fullScreenOptions}
+            condition={!fullScreenOptions || !isMobile()}
             renderIf={
               <ul
                 className={optionsClasses}
@@ -201,7 +202,7 @@ export const SelectField = ({
       </Field.Root>
 
       <Conditional
-        condition={fullScreenOptions}
+        condition={fullScreenOptions && Boolean(isMobile())}
         renderIf={
           <>
             {createPortal(
