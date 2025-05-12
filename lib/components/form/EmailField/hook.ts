@@ -25,16 +25,22 @@ export const useEmailAutocomplete = (propsOnChange?: (value: string) => void) =>
     setInputValue(value)
 		if(propsOnChange) propsOnChange(value);
 
-    const atIndex = value.indexOf('@')
+    const atIndex = value.indexOf('@');
+		let filteredDomains: string[] = [];
+
     if (atIndex > -1) {
       const domainPart = value.slice(atIndex + 1)
-      const filteredDomains = emailDomains.filter((domain) =>
+      filteredDomains = emailDomains.filter((domain) =>
         domain.startsWith(domainPart),
       )
       setSuggestions(filteredDomains)
       setIsDropdownOpen(filteredDomains.length > 0)
     } else {
       setSuggestions([])
+      setIsDropdownOpen(false)
+    }
+
+    if (filteredDomains.some(domain => value.endsWith(domain))) {
       setIsDropdownOpen(false)
     }
   }
