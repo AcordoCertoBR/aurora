@@ -44,6 +44,21 @@ export const Default: Story = {
   },
 }
 
+export const FullScreenOptions: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <SelectField {...args} />
+      </div>
+    )
+  },
+  args: {
+    id: 'fullscreen-select',
+    fullScreenOptions: true,
+    ...commonArgs,
+  },
+}
+
 export const Autocomplete: Story = {
   render: (args) => {
     return (

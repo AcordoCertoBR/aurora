@@ -29,6 +29,7 @@ export { Spinner } from './components/Spinner'
 export { Image } from '@components/Image'
 export { ProgressBar } from './components/ProgressBar'
 export { Tag } from './components/Tag'
+export { Modal } from './components/Modal'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'

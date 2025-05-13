@@ -9,6 +9,7 @@ export const useSelectField = (
   disabled?: boolean,
   register?: (instance: HTMLSelectElement | null) => void,
   autocomplete: boolean = false,
+  fullScreenOptions: boolean = false,
 ) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState<OptionProps>({
@@ -26,7 +27,7 @@ export const useSelectField = (
   const [searchValue, setSearchValue] = useState<string>('')
   const activeOptionRef = useRef<HTMLLIElement | null>(null)
 
-  const filteredOptions = autocomplete
+  const filteredOptions = autocomplete || fullScreenOptions
     ? options.filter((option) =>
         option.label.toLowerCase().includes(searchValue.toLowerCase()),
       )
@@ -58,10 +59,12 @@ export const useSelectField = (
 
   useEffect(() => {
     const handleClickOutside = (event: PointerEvent) => {
-      if (
+      const isClickedOutside =
         selectRef.current &&
-        !selectRef.current.contains(event.target as Node)
-      ) {
+        !selectRef.current.contains(event.target as Node) &&
+        activeOptionRef.current
+
+      if (isClickedOutside) {
         setIsDropdownOpen(false)
       }
     }
@@ -181,8 +184,9 @@ export const useSelectField = (
     }
 
     setActiveOptionIndex(null)
-    setIsDropdownOpen(false)
     setSearchValue('')
+    setTimeout(() => setIsDropdownOpen(false), 500)
+
     if (onChange) {
       onChange(optionValue)
     }
@@ -228,6 +232,10 @@ export const useSelectField = (
     }
   }
 
+  const onCloseOptions = () => {
+    setIsDropdownOpen(false)
+  }
+
   return {
     isDropdownOpen,
     selectRef,
@@ -246,5 +254,6 @@ export const useSelectField = (
     selectedOption,
     setSelectedOption,
     handleOnBlur,
+    onCloseOptions,
   }
 }
