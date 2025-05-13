@@ -1,14 +1,18 @@
 import classNames from 'classnames'
 import { Scrollbar } from './Scrollbar'
 import { Pagination } from './Pagination'
-
-import useCarousel from './useCarousel'
-import { CarouselProps } from './types'
-
-import './styles.scss'
 import { Conditional } from '@components/misc'
 import { Button } from '@components/Button'
 import { IconChevronLeft, IconChevronRight } from '@components/icons'
+
+import useCarousel from './useCarousel'
+import './styles.scss'
+
+export interface CarouselProps {
+    items: JSX.Element[];
+    type: 'pages' | 'scrollbar';
+    mobileText?: string;
+  }
 
 export const Carousel = ({ items, type, mobileText = '' }: CarouselProps) => {
   const {

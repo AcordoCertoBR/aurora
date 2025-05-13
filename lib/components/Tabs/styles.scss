@@ -16,11 +16,11 @@
   &__button {
     border-color: $color-neutral-50;
     color: $color-neutral-50;
+    -webkit-tap-highlight-color: transparent !important;
     &.active {
       border-color: $color-brand-blue-40;
       color: $color-brand-blue-40;
     }
-    -webkit-tap-highlight-color: transparent !important;
   }
 
   &__children{
