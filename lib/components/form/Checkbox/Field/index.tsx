@@ -39,7 +39,10 @@ export const CheckboxField = ({
         <span className="au-checkbox__check">
           <IconCheck rawColor={COLOR_NEUTRAL_00} />
         </span>
-        <span className="au-checkbox__label">{label}</span>
+        <span
+          className="au-checkbox__label"
+          dangerouslySetInnerHTML={{ __html: label || '' }}
+        />
       </label>
       <Field.ErrorMessage hasError={!!error} message={errorMessage} />
     </div>
