@@ -1,7 +1,6 @@
 .au-header {
   & {
     height: 80px;
-    padding: 16px 0;
     border-bottom: 1px solid $color-neutral-20;
     background-color: $color-neutral-00;
   }
@@ -95,6 +94,7 @@
   }
 
   &__navigation {
+    height: 100%;
     display: flex;
 
     > * + * {
@@ -109,7 +109,7 @@
     @include aboveLarge() {
       display: flex;
       align-items: center;
-      gap: 40px;
+      gap: $spacing-300;
     }
   }
 
@@ -118,6 +118,9 @@
     text-decoration: none;
 
     &--is-dropdown {
+      height: calc(100% + 8px);
+      align-self: flex-start;
+      padding-bottom: 8px;
       position: relative;
       display: flex;
       align-items: center;
@@ -137,7 +140,7 @@
         .au-header__dropdown {
           opacity: 1;
           visibility: visible;
-          transform: translateY(10px);
+          transform: translateY(0);
         }
       }
     }
@@ -145,8 +148,8 @@
     &--is-active,
     &:hover,
     &:focus {
-      font-weight: 700;
-      letter-spacing: -0.6px;
+      font-weight: 500;
+      letter-spacing: -0.3px;
     }
 
     &:hover,
@@ -172,6 +175,7 @@
     max-width: 230px;
     min-width: 230px;
     position: absolute;
+    overflow: hidden;
     z-index: 2;
     top: 100%;
     width: 100%;
@@ -196,8 +200,8 @@
     &--is-active,
     &:hover,
     &:focus {
-      font-weight: 700;
-      letter-spacing: -0.6px;
+      font-weight: 500;
+      letter-spacing: -0.65px;
     }
 
     &--is-active {
@@ -210,13 +214,13 @@
   &__actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: $spacing-100;
 
     &--divider {
       @include aboveLarge() {
         border-left: 1px solid $color-neutral-20;
-        padding-left: 24px;
-        margin-left: 24px;
+        padding-left: $spacing-200;
+        margin-left: $spacing-200;
       }
     }
   }
@@ -224,7 +228,7 @@
   &__profile {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: $spacing-300;
 
     &-notifications {
       cursor: pointer;
