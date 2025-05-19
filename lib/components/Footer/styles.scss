@@ -1,10 +1,10 @@
 .au-footer {
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  padding-block: $spacing-600;
+  padding-block: $spacing-400;
 
-  @include aboveLarge() {
-    padding-block: $spacing-800;
+  @include aboveMedium() {
+    padding-block: $spacing-600;
   }
 
   &__container {
@@ -16,23 +16,29 @@
     }
   }
 
-  &__top {
+  &__content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid $color-neutral-20;
-    padding-bottom: $spacing-500;
-    @include aboveLarge() {
-      padding-bottom: $spacing-600;
+
+    @include belowMedium() {
+      gap: $spacing-400;
+      flex-direction: column;
     }
   }
-  &__top-logos {
+
+  &__content-logos {
     display: flex;
-    gap: $spacing-300;
+    gap: $spacing-200;
     align-items: center;
+
+    @include belowLarge() {
+      gap: $spacing-400;
+      flex-direction: column;
+    }
   }
 
-  &__top-divider {
+  &__content-divider {
     display: none;
     @include aboveLarge() {
       display: block;
@@ -42,89 +48,31 @@
     }
   }
 
-  &__top-certificates {
-    display: none;
+  &__content-certificates {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-200;
+
+    @include belowLarge() {
+      padding-top: $spacing-400;
+      border-top: 1px solid $color-neutral-20;
+    }
+
     @include aboveLarge() {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 33px;
       margin-right: $spacing-100;
     }
   }
 
-  &__top-social {
-    display: none;
+  &__content-copyrights {
+    max-width: 385px;
+    text-align: center;
+
     @include aboveLarge() {
-      display: flex;
-      flex-direction: column;
-      gap: $spacing-200;
+      text-align: right;
     }
   }
 
-  &__top-social-links {
-    display: none;
-    @include aboveLarge() {
-      display: flex;
-      align-items: center;
-      gap: $spacing-200;
-      & svg {
-        cursor: pointer;
-        &:hover {
-          opacity: 0.7;
-        }
-      }
-    }
-  }
-  &__content {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-400;
-    border-bottom: 1px solid $color-neutral-20;
-    padding-bottom: $spacing-600;
-    @include aboveLarge() {
-      display: none;
-    }
-  }
-
-  &__content-certificates {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: $spacing-400 0px;
-
-    @include aboveLarge() {
-      display: none;
-    }
-  }
-
-  &__content-notes {
-    display: flex;
-    @include aboveLarge() {
-      display: none;
-    }
-  }
-
-  &__content-social {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-200;
-    @include aboveLarge() {
-      display: none;
-    }
-  }
-  &__content-social-links {
-    display: flex;
-    align-items: center;
-    gap: $spacing-200;
-    & svg {
-      cursor: pointer;
-      &:hover {
-        opacity: 0.7;
-      }
-    }
-  }
   &__bottom {
     display: flex;
     align-items: center;
@@ -136,7 +84,11 @@
 .au-footer-full {
   background-color: $color-neutral-00;
   border-top: 1px solid $color-neutral-20;
-  padding-block: $spacing-600;
+  padding-block: $spacing-400;
+
+  @include aboveMedium() {
+    padding-block: $spacing-600;
+  }
 
   @include aboveLarge() {
     padding-block: $spacing-800;
@@ -145,9 +97,13 @@
   &__container {
     @include container;
     & {
-      gap: $spacing-600;
+      gap: $spacing-400;
       display: flex;
       flex-direction: column;
+
+      @include aboveLarge() {
+        gap: $spacing-600;
+      }
     }
   }
 
@@ -177,7 +133,11 @@
     max-width: 272px;
     display: flex;
     flex-direction: column;
-    gap: $spacing-200;
+    gap: $spacing-300;
+
+    @include aboveLarge() {
+      gap: $spacing-200;
+    }
   }
 
   &__links-socials {
@@ -186,17 +146,27 @@
     gap: $spacing-200;
   }
 
+  &__company-overview {
+    padding-top: $spacing-400;
+    border-top: 1px solid $color-neutral-20;
+
+    @include aboveLarge() {
+      padding-top: $spacing-600;
+    }
+  }
+
   &__bottom {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid $color-neutral-20;
-    padding-top: $spacing-500;
-    gap: $spacing-600;
+    gap: $spacing-400;
+
     @include aboveLarge() {
+      gap: $spacing-600;
       flex-direction: row;
       padding-top: $spacing-600;
+      border-top: 1px solid $color-neutral-20;
     }
   }
 
@@ -233,17 +203,30 @@
   &__stores {
     display: flex;
     gap: 13px;
-    padding-top: $spacing-600;
+    flex-wrap: wrap;
+    align-items: center;
 
     @include aboveLarge {
       gap: $spacing-200;
-      padding-top: 0;
+    }
+
+    &-title {
+      text-align: left;
+
+      @include belowMedium {
+        width: 100%;
+      }
     }
   }
 
   &__stores-logo {
     cursor: pointer;
-    width: 129px;
+    max-width: 129px;
+
+    @include belowMedium {
+      flex: 1;
+    }
+
     @include aboveLarge {
       width: 117px;
     }
@@ -257,7 +240,7 @@
   }
 
   &__copyrights {
-    padding-top: $spacing-600;
+    padding-top: $spacing-400;
 
     @include aboveLarge() {
       padding-top: $spacing-200;

@@ -4,13 +4,16 @@ import { FooterProps } from './types'
 import { certificatesMap, socialsMap, storesMap } from './data'
 import { Conditional } from '../misc'
 import { LazyImage } from '../LazyImage'
+import { isMobile } from '@core/utils/isMobile'
 import './styles.scss'
 
 export const Footer = ({
   logo,
   categoryLinks,
   socialLinks,
+  cnpj,
   address,
+  companyOverview,
   certificates,
   copyrights,
   stores = {},
@@ -88,14 +91,65 @@ export const Footer = ({
                 })}
               </div>
               <Text
-                as="h2"
+                as="div"
                 variant="body-medium"
                 weight="regular"
                 color="secondary">
+                <Text
+                  as="strong"
+                  weight="bold"
+                  color="secondary">
+                  CNPJ:
+                </Text> {cnpj}
+              </Text>
+              <Text
+                as="div"
+                variant="body-medium"
+                weight="regular"
+                color="secondary">
+                <Text
+                  as="h2"
+                  variant="body-medium"
+                  weight="bold"
+                  color="secondary">
+                  Localização:
+                </Text>
                 {address}
               </Text>
             </div>
           </div>
+          <Conditional
+            condition={!!usedStores.length && Boolean(isMobile())}
+            renderIf={
+              <div className="au-footer-full__stores">
+                <Text
+                  className="au-footer-full__stores-title"
+                  as="h2"
+                  variant="heading-micro"
+                  weight="bold">
+                  Baixe nosso app
+                </Text>
+                {usedStores.map(({ icon, url, name }, index) => {
+                  return (
+                    <LazyImage
+                      className={classNames('au-footer-full__stores-logo', {
+                        'au-footer-full__stores-logo--is-clickable': !!url,
+                      })}
+                      key={index}
+                      src={icon}
+                      alt={name}
+                      onClick={() => url && handleClick(url)}
+                    />
+                  )
+                })}
+              </div>
+            }
+          />
+          {companyOverview && (
+            <div className="au-footer-full__company-overview">
+              <Text color="secondary">{companyOverview}</Text>
+            </div>
+          )}
           <div className="au-footer-full__bottom">
             <div className="au-footer-full__bottom-certificates">
               {usedCertificates.map(({ logo, name }, index) => {
@@ -104,9 +158,16 @@ export const Footer = ({
             </div>
             <div className="au-footer-full__bottom-side">
               <Conditional
-                condition={!!usedStores.length}
+                condition={!!usedStores.length && !isMobile()}
                 renderIf={
                   <div className="au-footer-full__stores">
+                    <Text
+                      className="au-footer-full__stores-title"
+                      as="h2"
+                      variant="heading-micro"
+                      weight="bold">
+                      Baixe nosso app
+                    </Text>
                     {usedStores.map(({ icon, url, name }, index) => {
                       return (
                         <LazyImage
@@ -141,60 +202,25 @@ export const Footer = ({
   return (
     <footer role="contentinfo" className="au-footer">
       <div className="au-footer__container">
-        <div className="au-footer__top">
-          <div className="au-footer__top-logos">
+        <div className="au-footer__content">
+          <div className="au-footer__content-logos">
             {logo}
-            <div className="au-footer__top-divider" />
-            <div className="au-footer__top-certificates">
+            <div className="au-footer__content-divider" />
+            <div className="au-footer__content-certificates">
               {usedCertificates.map(({ logo, name }, index) => {
                 return <LazyImage key={index} src={logo} alt={name} />
               })}
             </div>
           </div>
-          <div className="au-footer__top-social">
-            <Text as="h2" variant="heading-micro" weight="bold">
-              Siga a gente
+          <div className="au-footer__content-copyrights">
+            <Text
+              as="h2"
+              variant="body-medium"
+              weight="regular"
+              color="secondary">
+              {copyrights}
             </Text>
-            <div className="au-footer__top-social-links">
-              {usedSocials.map(({ icon, url }, index) => {
-                return (
-                  <div key={index} onClick={() => url && handleClick(url)}>
-                    {icon}
-                  </div>
-                )
-              })}
-            </div>
           </div>
-        </div>
-        <div className="au-footer__content">
-          <div className="au-footer__content-certificates">
-            {usedCertificates.map(({ logo, name }, index) => {
-              return <LazyImage key={index} src={logo} alt={name} />
-            })}
-          </div>
-          <div className="au-footer__content-social">
-            <Text as="h2" variant="heading-micro" weight="bold">
-              Siga a gente
-            </Text>
-            <div className="au-footer__content-social-links">
-              {usedSocials.map(({ icon, url }, index) => {
-                return (
-                  <div key={index} onClick={() => url && handleClick(url)}>
-                    {icon}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-        <div className="au-footer__bottom">
-          <Text
-            as="h2"
-            variant="body-medium"
-            weight="regular"
-            color="secondary">
-            {copyrights}
-          </Text>
         </div>
       </div>
     </footer>
