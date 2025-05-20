@@ -215,6 +215,7 @@
     display: flex;
     align-items: center;
     gap: $spacing-100;
+    margin-block: $spacing-200;
 
     &--divider {
       @include aboveLarge() {
