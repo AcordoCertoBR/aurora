@@ -4,6 +4,8 @@ import { IconCheck } from '@components/icons'
 import { COLOR_NEUTRAL_00 } from '@core/tokens'
 import Field from '../../Field'
 
+import { Conditional } from '@components/misc'
+
 import { CheckboxFieldProps } from '../types'
 import './styles.scss'
 
@@ -39,9 +41,19 @@ export const CheckboxField = ({
         <span className="au-checkbox__check">
           <IconCheck rawColor={COLOR_NEUTRAL_00} />
         </span>
-        <span
-          className="au-checkbox__label"
-          dangerouslySetInnerHTML={{ __html: label || '' }}
+        <Conditional
+          condition={typeof label === 'string'}
+          renderIf={
+            <span
+              className="au-checkbox__label"
+              dangerouslySetInnerHTML={{ __html: label || '' }}
+            />
+          }
+          renderElse={
+            <span className="au-checkbox__label">
+              {label}
+            </span>
+          }
         />
       </label>
       <Field.ErrorMessage hasError={!!error} message={errorMessage} />
