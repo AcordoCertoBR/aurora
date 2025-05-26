@@ -55,6 +55,7 @@ export const FullScreenOptions: Story = {
   args: {
     id: 'fullscreen-select',
     fullScreenOptions: true,
+    autocomplete: true,
     ...commonArgs,
   },
 }

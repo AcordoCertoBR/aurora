@@ -37,6 +37,7 @@ export const SelectField = ({
   autocomplete = false,
   EmptyText = 'Nada encontrado',
   fullScreenOptions = false,
+  htmlType = 'text'
 }: SelectFieldProps) => {
   const {
     isDropdownOpen,
@@ -131,8 +132,9 @@ export const SelectField = ({
               value={searchValue || selectedOption.label}
               placeholder={placeholder || 'Selecionar...'}
               onChange={handleInputChange}
-              readOnly={!autocomplete}
+              readOnly={!autocomplete || (fullScreenOptions && isMobile())}
               disabled={disabled}
+              type={htmlType}
             />
             <div className="au-field__select-icon">
               <IconChevronDown />
@@ -236,6 +238,7 @@ export const SelectField = ({
                         placeholder={'Buscar'}
                         onChange={handleInputChange}
                         disabled={disabled}
+                        type={htmlType}
                       />
                       <div className="au-field__select-icon">
                         <IconSearch rawColor={COLOR_NEUTRAL_40} />
