@@ -21,4 +21,5 @@ export type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   autocomplete?: boolean
   EmptyText?: string
   fullScreenOptions?: boolean
+  htmlType?: 'text' | 'number'
 }
