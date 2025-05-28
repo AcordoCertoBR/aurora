@@ -15,6 +15,7 @@ export interface TabItem {
   tab: string
   title: string
   children?: React.ReactElement
+  icon?: React.ReactNode
 }
 
 export const Tabs = ({
@@ -56,6 +57,7 @@ export const Tabs = ({
                     className={buttonClass(item)}
                     type={'outlined'}
                     onClick={() => handleClick(item)}>
+                    {item.icon}
                     {item.title}
                   </Button>
                 )

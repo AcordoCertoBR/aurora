@@ -4,6 +4,7 @@ import { Tabs } from '.'
 import { LogoBadgetAC } from '@components/Logo'
 import { LogoBadgetCP } from '@components/Logo'
 import { LogoPrimaryNegativeAC } from '@components/Logo'
+import { IconCheckCircle } from '@components/icons'
 
 const meta: Meta<TabsProps> = {
   title: 'Components/Tabs',
@@ -27,6 +28,7 @@ export const CustomContent: Story = {
     {
       title: 'Logo do AC',
       tab: 'tab 1',
+      icon: <IconCheckCircle />,
       children: <LogoBadgetAC/>
     },
     {
