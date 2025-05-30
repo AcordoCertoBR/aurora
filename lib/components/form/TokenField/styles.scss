@@ -15,5 +15,9 @@
     &[type='number']::-webkit-outer-spin-button {
       display: none;
     }
+
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
   }
 }
