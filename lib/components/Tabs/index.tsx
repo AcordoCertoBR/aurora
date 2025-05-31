@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { Conditional } from '@components/misc'
 import { Button } from '@components/Button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles.scss'
 
 export interface TabsProps {
@@ -27,6 +27,10 @@ export const Tabs = ({
   const [isClicked, setIsClicked] = useState(false)
   const [currButton, setCurrButton] = useState(initialTab ?? '')
   const [activeTab, setActiveTab] = useState(initialTab)
+
+  useEffect(() => {
+    setActiveTab(initialTab)
+  }, [initialTab])
 
   const handleClick = (item: TabItem) => {
     onClick(item.tab)
