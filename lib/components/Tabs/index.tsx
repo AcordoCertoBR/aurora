@@ -4,14 +4,14 @@ import { Button } from '@components/Button'
 import { useEffect, useState } from 'react'
 import './styles.scss'
 
-export interface TabsProps {
-  tabs: TabItem[]
+export type TabsProps = {
+  tabs: TabItemProps[]
   areTabsHidden?: boolean
   initialTab?: string
   onClick: (value: string) => void
 }
 
-export interface TabItem {
+export type TabItemProps = {
   tab: string
   title: string
   children?: React.ReactElement
@@ -32,14 +32,14 @@ export const Tabs = ({
     setActiveTab(initialTab)
   }, [initialTab])
 
-  const handleClick = (item: TabItem) => {
+  const handleClick = (item: TabItemProps) => {
     onClick(item.tab)
     setCurrButton(item.tab)
     setActiveTab(item.tab)
     setIsClicked(true)
   }
 
-  const buttonClass = (item: TabItem) => {
+  const buttonClass = (item: TabItemProps) => {
     const isActive =
       (isClicked && item.tab === currButton) || activeTab === item.tab
     return classNames('au-tabs__button', {
@@ -54,7 +54,7 @@ export const Tabs = ({
         renderIf={
           <div className="au-tabs">
             <div className="au-tabs__container">
-              {tabs.map((item: TabItem) => {
+              {tabs.map((item: TabItemProps) => {
                 return (
                   <Button
                     key={`au-tabs-${item.tab}`}
@@ -72,7 +72,7 @@ export const Tabs = ({
         renderElse={null}
       />
 
-      {tabs.map(({ children, tab }: TabItem) => {
+      {tabs.map(({ children, tab }: TabItemProps) => {
         return (
           <div
             className={`au-tabs__children children-${tab}`}
