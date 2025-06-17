@@ -39,6 +39,9 @@ export const Footer = ({
   const handleClick = (url: string) => {
     window.open(url, '_blank')
   }
+
+  const showCertificatesBorder = usedCertificates.length > 3 && !!isMobile()
+  
   if (categoryLinks) {
     return (
       <footer role="contentinfo" className="au-footer-full">
@@ -72,7 +75,7 @@ export const Footer = ({
                 </div>
               )
             })}
-            <div className="au-footer-full__links-category">
+            <div className="au-footer-full__company-info">
               <Text as="h2" variant="heading-micro" weight="bold">
                 Siga a gente
               </Text>
@@ -151,7 +154,9 @@ export const Footer = ({
             </div>
           )}
           <div className="au-footer-full__bottom">
-            <div className="au-footer-full__bottom-certificates">
+            <div className={classNames("au-footer-full__bottom-certificates", {
+              'au-footer-full__bottom-certificates--with-border': showCertificatesBorder,
+            })}>
               {usedCertificates.map(({ logo, name }, index) => {
                 return <LazyImage key={index} src={logo} alt={name} />
               })}

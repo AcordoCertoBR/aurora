@@ -20,11 +20,11 @@ export const LoggedOut: Story = {
         categoryTitle: 'Institucional',
         links: [
           {
-            title: 'Como Funciona',
+            title: 'Como funciona',
             url: 'https://google.com',
           },
           {
-            title: 'Quems Somos',
+            title: 'Quem Somos',
             url: 'https://google.com',
           },
           {
@@ -40,7 +40,7 @@ export const LoggedOut: Story = {
             url: 'https://google.com',
           },
           {
-            title: 'Políticas do Site',
+            title: 'Políticas do site',
             url: 'https://google.com',
           },
           {
@@ -78,7 +78,7 @@ export const LoggedOut: Story = {
             url: 'https://google.com',
           },
           {
-            title: 'Minhas Finanças',
+            title: 'Minhas finanças',
             url: 'https://google.com',
           },
           {
@@ -118,20 +118,26 @@ export const LoggedOut: Story = {
       },
     ],
     socialLinks: {
-      facebook: 'https://facebook.com',
-      instagram: 'https://instagram.com',
-      linkedin: 'https://linkedin.com',
-      youtube: 'https://youtube.com',
-      tiktok: 'https://tiktok.com',
+      facebook: 'https://www.facebook.com/oficialacordocerto',
+      instagram: 'https://www.instagram.com/acordocerto/',
+      linkedin: 'https://www.linkedin.com/company/acordo-certo/',
+      youtube: 'https://www.youtube.com/channel/UCCMYRKpWD4aC_t3UUz3uaPQ',
+      tiktok: 'https://www.tiktok.com/@acordocerto',
     },
     stores: {
-      googleplay: 'https://play.google.com',
-      appstore: 'https://appstore.com',
+      appstore: 'https://consumidorpositivo.onelink.me/3ote/x1wo22j1',
+      googleplay: 'https://consumidorpositivo.onelink.me/3ote/gyg2vq0q',
     },
     cnpj: '30.247.128/0001-15',
     address:
       'Rua Cardeal Arcoverde nº 2365, Conjuntos. 81 a 84, Sala 03, Bairro: Pinheiros, na cidade de São Paulo, Estado de São Paulo, CEP 05407-003',
-    certificates: ['ra1000', 'fintech2023', 'fintech2022', 'scaleup', 'quintessa'],
+    certificates: [
+      'ra1000',
+      'fintech2022',
+      'scaleup',
+      'quintessa',
+      'fintech2023',
+    ],
     copyrights:
       '© 2025 Consumidor Positivo Ltda. - Todos os direitos reservados',
   },
@@ -146,7 +152,13 @@ export const LoggedIn: Story = {
       youtube: 'https://youtube.com',
       linkedin: 'https://linkedin.com',
     },
-    certificates: ['ra1000', 'fintech2023', 'fintech2022', 'scaleup', 'quintessa'],
+    certificates: [
+      'ra1000',
+      'fintech2023',
+      'fintech2022',
+      'scaleup',
+      'quintessa',
+    ],
     copyrights: (
       <>
         © Copyright 2025 Consumidor Positivo Ltda. <br />
