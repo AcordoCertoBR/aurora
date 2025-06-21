@@ -18,7 +18,9 @@
 
     &:hover,
     &:focus {
-      font-weight: 700;
+      @include aboveMedium() {
+        font-weight: 700;
+      }
     }
 
     &--is-active,
@@ -28,13 +30,9 @@
       font-weight: 700;
     }
 
-    &:not(&--is-open) {
-      font-weight: 300;
-    }
-
     &--is-open {
       .au-navbar-vertical__dropdown {
-        display:block;
+        display: block;
       }
     }
   }
@@ -57,7 +55,7 @@
       text-decoration: none;
 
       &::before {
-        content: "\2022";
+        content: '\2022';
         font-weight: 700;
         margin-inline: 10px;
       }
