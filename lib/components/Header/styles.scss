@@ -113,18 +113,16 @@
     }
   }
 
-  &__navbar-link {
-    cursor: pointer;
-    text-decoration: none;
+  &__navbar-item {
+    position: relative;
 
     &--is-dropdown {
       height: calc(100% + 8px);
       align-self: flex-start;
-      padding-bottom: 8px;
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-bottom: 8px;
       gap: 8px;
 
       > .au-icon {
@@ -144,12 +142,25 @@
         }
       }
     }
+  }
+
+  &__navbar-link {
+    cursor: pointer;
+    text-decoration: none;
+
+    &--is-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
 
     &--is-active,
     &:hover,
     &:focus {
-      font-weight: 500;
-      letter-spacing: -0.3px;
+      font-weight: 700;
+      letter-spacing: -0.6px;
     }
 
     &:hover,
@@ -179,14 +190,14 @@
     z-index: 2;
     top: 100%;
     width: 100%;
-    left: 0;
-    opacity: 0.2;
+    left: -8px;
+    opacity: 0;
     visibility: hidden;
     transition:
-      opacity 0.3s ease,
+      opacity 0.25s ease-in-out,
       transform 0.2s linear,
-      visibility 0.3s ease;
-    transform: translateY(20px);
+      visibility 0.25s ease-in-out;
+    transform: translateY(-8px);
   }
 
   &__dropdown-link {
@@ -200,8 +211,8 @@
     &--is-active,
     &:hover,
     &:focus {
-      font-weight: 500;
-      letter-spacing: -0.65px;
+      font-weight: 700;
+      letter-spacing: -0.6px;
     }
 
     &--is-active {
