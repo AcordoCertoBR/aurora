@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { Text } from '@components/Text'
-import { IconChevronDown, IconChevronLeft } from '@components/icons/default'
+import { IconChevronDown } from '@components/icons/default'
 import { Conditional } from '@components/misc'
 import { NavbarDataProps } from '../types'
 
@@ -16,24 +16,33 @@ export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
   }
 
   return (
-    <Text
-      as={isDropdown ? 'div' : 'a'}
-      variant="heading-micro"
-      weight="light"
-      href={href}
-      onClick={(ev) => handleItemClick(navItem, ev)}
-      title={name}
-      className={classNames('au-header__navbar-link', {
-        'au-header__navbar-link--is-dropdown': dropdown,
-        'au-header__navbar-link--is-active': active,
+    <div
+      className={classNames('au-header__navbar-item', {
+        'au-header__navbar-item--is-dropdown': dropdown,
+        'au-header__navbar-item--is-active': active,
       })}>
-      {name}
+      <Text
+        as={isDropdown ? 'div' : 'a'}
+        variant="heading-micro"
+        weight="light"
+        href={href}
+        onClick={(ev) => handleItemClick(navItem, ev)}
+        title={name}
+        className={classNames('au-header__navbar-link', {
+          'au-header__navbar-link--is-dropdown': dropdown,
+          'au-header__navbar-link--is-active': active,
+        })}>
+        {name}
+        <Conditional
+          condition={!!dropdown?.length}
+          renderIf={<IconChevronDown />}
+        />
+      </Text>
 
       <Conditional
         condition={!!dropdown?.length}
         renderIf={
           <>
-            <IconChevronDown />
             <div className="au-header__dropdown">
               {dropdown?.map((item) => {
                 return (
@@ -49,10 +58,6 @@ export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
                     })}
                     title={item.name}>
                     {item.name}
-                    <Conditional
-                      condition={!!item.active}
-                      renderIf={<IconChevronLeft />}
-                    />
                   </Text>
                 )
               })}
@@ -60,6 +65,6 @@ export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
           </>
         }
       />
-    </Text>
+    </div>
   )
 }
