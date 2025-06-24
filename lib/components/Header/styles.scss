@@ -125,13 +125,13 @@
       padding-bottom: 8px;
       gap: 8px;
 
-      > .au-icon {
-        transition: transform 0.3s ease;
+      .au-icon {
+        transition: transform 0.25s ease;
       }
 
       &:hover,
       &:focus {
-        > .au-icon {
+        .au-icon {
           transform: rotate(-180deg);
         }
 
