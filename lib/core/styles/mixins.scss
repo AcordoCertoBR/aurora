@@ -30,25 +30,25 @@
 }
 
 @mixin belowSmall {
-  @media (max-width: $breakpoint-sm) {
+  @media (max-width: #{$breakpoint-sm - 1}) {
     @content;
   }
 }
 
 @mixin belowMedium {
-  @media (max-width: $breakpoint-md) {
+  @media (max-width: #{$breakpoint-md - 1}) {
     @content;
   }
 }
 
 @mixin belowLarge {
-  @media (max-width: $breakpoint-lg) {
+  @media (max-width: #{$breakpoint-lg - 1}) {
     @content;
   }
 }
 
 @mixin belowXLarge {
-  @media (max-width: $breakpoint-xlg) {
+  @media (max-width: #{$breakpointxlg - 1}) {
     @content;
   }
 }
