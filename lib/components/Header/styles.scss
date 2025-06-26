@@ -85,10 +85,14 @@
     }
 
     .au-logo {
-      max-width: 56px;
-
       img {
         width: 100%;
+      }
+    }
+
+    &--limited-width {
+      .au-logo {
+        max-width: 56px;
       }
     }
   }
