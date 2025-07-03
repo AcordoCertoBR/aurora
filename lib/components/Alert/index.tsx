@@ -106,7 +106,12 @@ export const Alert = ({
         <div className="au-alert__timer">
           <IconClock rawColor={COLOR_WARNING_50} />
           {!isCountdownFinished && (
-            <Text className="au-alert__countdown" variant="body-small" weight="bold">{timeLeft}s</Text>
+            <Text
+              className="au-alert__countdown"
+              variant="body-small"
+              weight="bold">
+              {timeLeft}s
+            </Text>
           )}
         </div>
       ),
@@ -123,20 +128,26 @@ export const Alert = ({
   return (
     <div className={alertClasses}>
       <div className="au-alert__content">
-        <Conditional 
-          condition={showIcon}
-          renderIf={statusMap[status].icon}
-        />
+        <Conditional condition={showIcon} renderIf={statusMap[status].icon} />
         <div className={`au-alert__container--${orientation}`}>
-          <div>
-            <h4 className={`au-alert__title au-alert__title--${title?.weight}`}>
-              {title?.content}
-            </h4>
-            <p className={`au-alert__support-text`}>{text}</p>
-          </div>
+          <Conditional
+            condition={!!title || !!text}
+            renderIf={
+              <div>
+                <h4
+                  className={`au-alert__title au-alert__title--${title?.weight}`}>
+                  {title?.content}
+                </h4>
+                <p className={`au-alert__support-text`}>{text}</p>
+              </div>
+            }
+          />
+
           {children}
           <Conditional
-            condition={!!actionButton && (status !== 'timer' || isCountdownFinished)}
+            condition={
+              !!actionButton && (status !== 'timer' || isCountdownFinished)
+            }
             renderIf={
               <button
                 className="au-alert__action-btn"
