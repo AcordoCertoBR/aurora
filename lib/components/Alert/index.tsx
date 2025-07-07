@@ -24,8 +24,8 @@ export type AlertProps = {
   status?: 'success' | 'error' | 'warning' | 'info' | 'timer'
   type?: 1 | 2
   orientation?: 'horizontal' | 'vertical'
-  title?: { content?: string; weight?: 'bold' | 'normal' }
-  text?: string
+  title?: { content?: React.ReactNode; weight?: 'bold' | 'normal' }
+  text?: React.ReactNode
   actionButton?: { content?: string; onClick?: () => void }
   closeButton?: boolean
   children?: React.ReactNode
@@ -138,7 +138,7 @@ export const Alert = ({
                   className={`au-alert__title au-alert__title--${title?.weight}`}>
                   {title?.content}
                 </h4>
-                <p className={`au-alert__support-text`}>{text}</p>
+                <p className="au-alert__support-text">{text}</p>
               </div>
             }
           />
