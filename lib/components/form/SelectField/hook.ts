@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { OptionProps } from './types'
+import { isMobile } from '@core/utils/isMobile'
 
 export const useSelectField = (
   options: OptionProps[],
@@ -27,11 +28,14 @@ export const useSelectField = (
   const [searchValue, setSearchValue] = useState<string>('')
   const activeOptionRef = useRef<HTMLLIElement | null>(null)
 
-  const filteredOptions = autocomplete || fullScreenOptions
-    ? options.filter((option) =>
-        option.label.toLowerCase().includes(searchValue.toLowerCase()),
-      )
-    : options
+  const fullScreenOptionsEnabled = fullScreenOptions && Boolean(isMobile())
+
+  const filteredOptions =
+    autocomplete || fullScreenOptions
+      ? options.filter((option) =>
+          option.label.toLowerCase().includes(searchValue.toLowerCase()),
+        )
+      : options
 
   useEffect(() => {
     if (initialValue) {
@@ -217,10 +221,13 @@ export const useSelectField = (
 
         const elementValue = (event?.target as HTMLInputElement).value
         const selectedOptionFromElement = getOptionByLabel(elementValue)
+        const customValue = fullScreenOptionsEnabled
+          ? { value: '', label: '' }
+          : { value: elementValue, label: '' }
 
         const targetValue = selectedOption?.value
           ? selectedOption
-          : selectedOptionFromElement || { value: elementValue, label: '' }
+          : selectedOptionFromElement || customValue
 
         onBlur({
           ...event,
@@ -255,5 +262,6 @@ export const useSelectField = (
     setSelectedOption,
     handleOnBlur,
     onCloseOptions,
+    fullScreenOptionsEnabled
   }
 }

@@ -55,7 +55,8 @@ export const SelectField = ({
     handleInputChange,
     dropdownMaxHeight,
     handleOnBlur,
-    onCloseOptions
+    onCloseOptions,
+    fullScreenOptionsEnabled
   } = useSelectField(
     options,
     value,
@@ -129,10 +130,10 @@ export const SelectField = ({
             onBlur={handleOnBlur}>
             <input
               className="au-field__select-input"
-              value={searchValue || selectedOption.label}
+              value={(!fullScreenOptionsEnabled ? searchValue : null) || selectedOption.label}
               placeholder={placeholder || 'Selecionar...'}
               onChange={handleInputChange}
-              readOnly={!autocomplete || (fullScreenOptions && isMobile())}
+              readOnly={!autocomplete || fullScreenOptionsEnabled}
               disabled={disabled}
               type={htmlType}
             />
@@ -141,7 +142,7 @@ export const SelectField = ({
             </div>
           </div>
           <Conditional
-            condition={!fullScreenOptions || !isMobile()}
+            condition={!fullScreenOptionsEnabled || !isMobile()}
             renderIf={
               <ul
                 className={optionsClasses}
@@ -204,7 +205,7 @@ export const SelectField = ({
       </Field.Root>
 
       <Conditional
-        condition={fullScreenOptions && Boolean(isMobile())}
+        condition={fullScreenOptionsEnabled}
         renderIf={
           <>
             {createPortal(
