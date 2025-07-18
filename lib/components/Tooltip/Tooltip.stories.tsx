@@ -15,7 +15,7 @@ const meta: Meta<typeof Tooltip> = {
   decorators: [
     (story) => {
       return (
-        <div style={{ padding: '50px' }}>
+        <div style={{ padding: '60px' }}>
           {story()}
         </div>
       )
