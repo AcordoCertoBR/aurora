@@ -3,6 +3,7 @@
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: max-content;
 
   .tooltip {
@@ -10,7 +11,7 @@
     background-color: $color-neutral-70;
     border-radius: 8px;
     max-width: 204px;
-    width: 120px;
+    width: max-content;
     padding: 8px;
     position: absolute;
     z-index: 1;
@@ -58,21 +59,18 @@
   }
 
   &.tooltip-left .tooltip {
-    top: 50%;
     right: 125%;
-    margin-top: -16px;
 
     &::after {
       top: 50%;
       left: 100%;
+      margin-top: -5px;
       border-color: transparent transparent transparent $color-neutral-70;
     }
   }
 
   &.tooltip-right .tooltip {
-    top: 50%;
     left: 125%;
-    margin-top: -16px;
 
     &::after {
       top: 50%;

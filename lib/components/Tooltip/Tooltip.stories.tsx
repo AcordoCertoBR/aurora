@@ -12,6 +12,15 @@ const meta: Meta<typeof Tooltip> = {
       values: [{ name: 'default', value: '#f1f1f1' }],
     },
   },
+  decorators: [
+    (story) => {
+      return (
+        <div style={{ padding: '50px' }}>
+          {story()}
+        </div>
+      )
+    },
+  ],
 }
 
 export default meta
@@ -19,57 +28,33 @@ export default meta
 type Story = StoryObj<typeof Tooltip>
 
 export const Top: Story = {
-  render: (args) => (
-    <div style={{ padding: '50px' }}>
-      <Tooltip {...args}>
-        <IconHelpCircle />
-      </Tooltip>
-    </div>
-  ),
   args: {
     text: 'Tooltip text',
     position: 'top',
+    children: <IconHelpCircle />,
   },
 }
 
 export const Bottom: Story = {
-  render: (args) => (
-    <div style={{ padding: '50px' }}>
-      <Tooltip {...args}>
-        <IconHelpCircle />
-      </Tooltip>
-    </div>
-  ),
   args: {
     text: 'Tooltip text',
     position: 'bottom',
+    children: <IconHelpCircle />,
   },
 }
 
 export const Left: Story = {
-  render: (args) => (
-    <div style={{ padding: '100px' }}>
-      <Tooltip {...args}>
-        <IconHelpCircle />
-      </Tooltip>
-    </div>
-  ),
   args: {
     text: 'Tooltip text',
     position: 'left',
+    children: <IconHelpCircle />,
   },
 }
 
 export const Right: Story = {
-  render: (args) => (
-    <div style={{ padding: '50px' }}>
-      <Tooltip {...args}>
-        <IconHelpCircle />
-      </Tooltip>
-    </div>
-  ),
   args: {
     text: 'Tooltip text',
     position: 'right',
+    children: <IconHelpCircle />,
   },
 }
