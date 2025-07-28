@@ -31,6 +31,7 @@ export { Image } from '@components/Image'
 export { ProgressBar } from './components/ProgressBar'
 export { Tag } from './components/Tag'
 export { Modal } from './components/Modal'
+export { Tooltip } from './components/Tooltip'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
