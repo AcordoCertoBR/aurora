@@ -31,7 +31,7 @@
     }
   }
 
-  &:hover .tooltip {
+  &:hover .tooltip, &.tooltip-open .tooltip {
     visibility: visible;
     opacity: 1;
   }
