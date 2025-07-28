@@ -58,3 +58,12 @@ export const Right: Story = {
     children: <IconHelpCircle />,
   },
 }
+
+export const OpenManually: Story = {
+  args: {
+    text: 'Tooltip text',
+    position: 'top',
+    open: true,
+    children: <IconHelpCircle />,
+  },
+}
