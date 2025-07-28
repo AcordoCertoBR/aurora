@@ -8,7 +8,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   errorMessage?: string
   helpMessage?: string
   rightSlot?: React.ReactNode
-  label?: string
+  label?: string | React.ReactNode
   inputStyle?: React.CSSProperties
   inputRef?: React.RefObject<HTMLInputElement>
   numericKeypad?: boolean

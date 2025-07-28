@@ -7,7 +7,7 @@ import {
 
 type FieldLabelProps = {
   id?: string
-  text?: string
+  text?: string | React.ReactNode
   required?: boolean
   success?: boolean
   error?: boolean
