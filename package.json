@@ -1,7 +1,7 @@
 {
   "name": "@consumidor-positivo/aurora",
   "private": false,
-  "version": "0.0.183",
+  "version": "0.0.184",
   "type": "module",
   "main": "./dist/main.es.js",
   "modules": "./dist/main.es.js",
