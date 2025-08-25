@@ -92,25 +92,29 @@
   }
 
   &--type-badge {
-    &.au-tag--info p{
+    &.au-tag--info p {
       color: $color-info-60;
     }
-    &.au-tag--error p{
+    &.au-tag--error p {
       color: $color-error-60;
     }
-    &.au-tag--success p{
+    &.au-tag--success p {
       color: $color-success-60;
     }
-    &.au-tag--warning p{
+    &.au-tag--warning p {
       color: $color-warning-60;
     }
-    &.au-tag--support p{
+    &.au-tag--support p {
       color: $color-brand-cyan-60;
     }
-    &.au-tag--size-large{
+    &.au-tag--size-large {
       height: 36px;
       font-size: 12px;
       line-height: 18px;
     }
+  }
+
+  &--full-width {
+    width: 100%;
   }
 }

@@ -26,6 +26,7 @@ export type TagProps = {
   text: string
   children?: React.ReactNode
   customIcon?: string | JSX.Element
+  fullWidth?: boolean
 }
 
 export const Tag = ({
@@ -37,8 +38,8 @@ export const Tag = ({
   customIcon,
   text,
   children,
+  fullWidth,
 }: TagProps) => {
-
   const statusMap = {
     success: {
       option: 'success',
@@ -73,9 +74,10 @@ export const Tag = ({
     [`au-tag--type-${type}`]: !!type,
     [`au-tag--border-${border}`]: !!border,
     [`au-tag--color-${color}`]: !!color,
+    [`au-tag--full-width`]: !!fullWidth,
   })
 
-  const isBadgeTag = type === 'badge';
+  const isBadgeTag = type === 'badge'
   const supportText = isBadgeTag ? text.toUpperCase() : text
 
   return (
@@ -85,7 +87,11 @@ export const Tag = ({
           condition={!isBadgeTag}
           renderIf={
             <div className="au-tag__content-icon">
-              <Conditional condition={!!customIcon} renderIf={customIcon} renderElse={statusMap[status].icon}/>
+              <Conditional
+                condition={!!customIcon}
+                renderIf={customIcon}
+                renderElse={statusMap[status].icon}
+              />
             </div>
           }
         />
