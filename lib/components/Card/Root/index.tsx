@@ -8,6 +8,8 @@ export type CardRootProps = {
   height?: number
   maxWidth?: number
   maxHeight?: number
+  paddingLess?: boolean;
+  hoverShadow?: boolean
   children: ReactNode
 }
 export const CardRoot = ({
@@ -17,11 +19,15 @@ export const CardRoot = ({
   height,
   maxWidth,
   maxHeight,
+  hoverShadow,
+  paddingLess,
   children,
 }: CardRootProps) => {
   const rootClasses = classNames('au-card__root', {
     'au-card__root--border-none': !border,
     'au-card__root--color-secondary': color === 'secondary',
+    'au-card__root--with-hover-shadow': !!hoverShadow,
+    'au-card__root--paddingless': !!paddingLess
   })
   const rootSize: CSSProperties = {
     width: `${width}px`,
