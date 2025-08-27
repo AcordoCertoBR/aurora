@@ -1,0 +1,18 @@
+.au-card-switch {
+	background: $color-neutral-00;
+	border: 1px solid black;
+	border-radius: 16px;
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	-webkit-box-shadow: 0px 0px 0px 5px $color-brand-blue-00; 
+	box-shadow: 0px 0px 0px 5px $color-brand-blue-00;
+	border: 1px solid $color-neutral-20;
+	margin: 24px;
+	transition: border-color 0.3s ease-in-out;
+
+	&--active {
+		border: 1px solid $color-brand-blue-40;
+	}
+}

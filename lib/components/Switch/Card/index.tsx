@@ -1,23 +1,26 @@
-//import './styles.scss'
+import classNames from 'classnames';
+import { PureSwitch } from '../Pure';
 
-type SwitchProps = {
-  isActive: boolean;
-	activateCallBack: () => void;
-	deactivateCallBack?: () => void;
-	shouldFadeOut?: boolean;
-	fadeOutDelayInSeconds?: number;
-}
+import './styles.scss';
+import { CardSwitchProps } from './types';
 
-export const Switch: React.FC<SwitchProps> = ({ isActive, activateCallBack, deactivateCallBack , shouldFadeOut, fadeOutDelayInSeconds}) => {
-  console.log(isActive)
-  console.log(activateCallBack)
-  console.log(deactivateCallBack)
-  console.log(shouldFadeOut)
-  console.log(fadeOutDelayInSeconds)
+export const CardSwitch: React.FC<CardSwitchProps> = ({ isActive, label, id, disabled, activateCallBack, deactivateCallBack , shouldFadeOut }) => {
 	
+	const cardSwitchClassNames = classNames("au-card-switch",  {
+		"au-card-switch--active": isActive,
+		"au-card-switch--fade-out": shouldFadeOut
+	});
+
 	return (
-    <div className="au-spinner">
-      
+    <div className={cardSwitchClassNames}>
+			<PureSwitch 
+				isActive={isActive}
+				label={label}
+				id={id}
+				activateCallBack={activateCallBack}
+				deactivateCallBack={deactivateCallBack}
+				disabled={disabled}
+			/>
     </div>
   )
 }
