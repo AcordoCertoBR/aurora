@@ -4,15 +4,20 @@ import { PureSwitch } from '../Pure';
 import './styles.scss';
 import { CardSwitchProps } from './types';
 
-export const CardSwitch: React.FC<CardSwitchProps> = ({ isActive, label, id, disabled, activateCallBack, deactivateCallBack , shouldFadeOut }) => {
+export const CardSwitch: React.FC<CardSwitchProps> = ({ isActive, label, id, disabled, activateCallBack, deactivateCallBack , shouldFadeOutAfterActivate }) => {
 	
 	const cardSwitchClassNames = classNames("au-card-switch",  {
-		"au-card-switch--active": isActive,
-		"au-card-switch--fade-out": shouldFadeOut
+		
+	});
+
+	const cardSwitchWrapperClassNames = classNames("au-card-switch-wrapper",  {
+		"au-card-switch-wrapper--fade-out": shouldFadeOutAfterActivate && isActive,
+		"au-card-switch-wrapper--active": isActive
 	});
 
 	return (
     <div className={cardSwitchClassNames}>
+    <div className={cardSwitchWrapperClassNames}>
 			<PureSwitch 
 				isActive={isActive}
 				label={label}
@@ -22,5 +27,6 @@ export const CardSwitch: React.FC<CardSwitchProps> = ({ isActive, label, id, dis
 				disabled={disabled}
 			/>
     </div>
+</div>
   )
 }

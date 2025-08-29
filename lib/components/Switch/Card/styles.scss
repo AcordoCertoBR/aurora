@@ -1,18 +1,70 @@
 .au-card-switch {
 	background: $color-neutral-00;
-	border: 1px solid black;
-	border-radius: 16px;
-	padding: 16px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	-webkit-box-shadow: 0px 0px 0px 5px $color-brand-blue-00; 
-	box-shadow: 0px 0px 0px 5px $color-brand-blue-00;
-	border: 1px solid $color-neutral-20;
-	margin: 24px;
-	transition: border-color 0.3s ease-in-out;
 
-	&--active {
-		border: 1px solid $color-brand-blue-40;
+	.au-card-switch-wrapper {
+		margin: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 150px; 
+		padding: 16px; 
+		box-sizing: border-box;
+		overflow: hidden;
+		transition: all 0.3s ease-in-out;
+		border: 1px solid $color-neutral-20;
+		-webkit-box-shadow: 0px 0px 0px 5px $color-brand-blue-00;
+		box-shadow: 0px 0px 0px 5px $color-brand-blue-00;
+		border-radius: 16px;
+		
+		@include aboveMedium() {
+			height: 80px;
+		}
+
+		&--active {
+			border: 1px solid $color-brand-blue-40;
+		}
+
+		&--fade-out {
+			animation: collapseAndFadeOutMobile .3s ease-in-out 1s forwards;
+
+			@include aboveMedium() {
+				animation: collapseAndFadeOutDesktop .3s ease-in-out 1s forwards;
+			}
+		}
+	}
+
+	
+	@keyframes collapseAndFadeOutMobile {
+		from {
+			opacity: 1;
+			height: 150px;
+			padding: 16px; 
+			margin: 24px; 
+		}
+		to {
+			opacity: 0;
+			height: 0;
+			padding: 0; 
+			margin: 0;
+			border: 0px;
+			box-shadow: none;
+		}
+	}
+
+		@keyframes collapseAndFadeOutDesktop {
+		from {
+			opacity: 1;
+			height: 80px;
+			padding: 16px; 
+			margin: 24px; 
+		}
+		to {
+			opacity: 0;
+			height: 0;
+			padding: 0;
+			margin: 0;
+			border: 0px;
+			box-shadow: none;
+		}
 	}
 }

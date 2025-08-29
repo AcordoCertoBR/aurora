@@ -5,6 +5,6 @@ export type CardSwitchProps = {
 	disabled: boolean;
 	activateCallBack: () => void;
 	deactivateCallBack?: () => void;
-	shouldFadeOut?: boolean;
+	shouldFadeOutAfterActivate?: boolean;
 	fadeOutDelayInSeconds?: number;
 }
