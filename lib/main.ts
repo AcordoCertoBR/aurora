@@ -3,6 +3,8 @@ import './core/styles/GlobalStyles.scss'
 
 // Components
 export { Button } from './components/Button'
+export { PureSwitch } from './components/Switch/Pure'
+export { CardSwitch } from './components/Switch/Card'
 export { Conditional } from './components/misc/Conditional'
 export { Drawer } from './components/Drawer'
 export { Header } from './components/Header'
