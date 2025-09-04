@@ -2,6 +2,8 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Alert, AlertProps } from '.'
 import { Text } from '@components/Text'
 import { Button } from '@components/Button'
+import { IconStar } from '@components/icons'
+import { COLOR_INFO_50 } from '@core/tokens'
 
 const meta: Meta<AlertProps> = {
   title: 'Components/Alert',
@@ -193,5 +195,16 @@ export const WithOnCloseButton: Story = {
     title: { content: 'Title' },
     closeButton: true,
     onCloseButton: () => console.log('close button clicked'),
+  },
+}
+
+export const WithCustomIcon: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'info',
+    title: { content: 'Featured Content' },
+    text: 'This alert uses a custom star icon instead of the default info icon.',
+    customIcon: <IconStar rawColor={COLOR_INFO_50} />,
+    actionButton: { content: 'View More', onClick: () => console.log('view more!') },
   },
 }

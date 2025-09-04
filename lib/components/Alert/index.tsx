@@ -28,6 +28,7 @@ export type AlertProps = {
   text?: React.ReactNode
   actionButton?: { content?: string; onClick?: () => void }
   closeButton?: boolean
+  customIcon?: JSX.Element
   children?: React.ReactNode
   countdown?: number
   onCountdownEnd?: () => void
@@ -47,6 +48,7 @@ export const Alert = ({
   countdown = 59,
   onCountdownEnd,
   onCloseButton,
+  customIcon
 }: AlertProps) => {
   const [isClosed, setIsClosed] = useState(false)
   const [timeLeft, setTimeLeft] = useState(countdown)
@@ -128,7 +130,7 @@ export const Alert = ({
   return (
     <div className={alertClasses}>
       <div className="au-alert__content">
-        <Conditional condition={showIcon} renderIf={statusMap[status].icon} />
+        <Conditional condition={showIcon} renderIf={ customIcon ? customIcon : statusMap[status].icon} />
         <div className={`au-alert__container--${orientation}`}>
           <Conditional
             condition={!!title || !!text}
