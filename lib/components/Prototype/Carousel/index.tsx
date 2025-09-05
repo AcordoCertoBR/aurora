@@ -9,16 +9,12 @@
 import classNames from 'classnames'
 import { Scrollbar } from './Scrollbar'
 import { Pagination } from './Pagination'
-
-import {
-  Button,
-  Conditional,
-  IconChevronLeft,
-  IconChevronRight,
-} from '@consumidor-positivo/aurora'
-
 import useCarousel from './useCarousel'
 import { CarouselProps } from './types'
+
+import { Button } from '@components/Button'
+import { Conditional } from '@components/misc'
+import { IconChevronLeft, IconChevronRight } from '@components/icons'
 
 import './styles.scss'
 
