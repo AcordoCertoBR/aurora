@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import {
   LogoPrimaryAC,
   LogoTertiaryAC,
+  LogoTertiaryWhiteAC,
   LogoPrimaryFillWhiteAC,
   LogoPrimaryNegativeAC,
   LogoPrimaryWhiteAC,
@@ -52,6 +53,12 @@ export const PrimaryFullWhite: StoryObj = {
 export const Tertiary: StoryObj = {
   render: (args) => {
     return <LogoTertiaryAC {...args} />
+  },
+}
+
+export const TertiaryWhite: StoryObj = {
+  render: (args) => {
+    return <LogoTertiaryWhiteAC {...args} />
   },
 }
 
