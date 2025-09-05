@@ -38,7 +38,8 @@
   },
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "react-snap-carousel": ">=0.3.0"
   },
   "dependencies": {
     "dotenv": "16.4.5",
@@ -77,6 +78,7 @@
     "prettier": "3.3.3",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
+    "react-snap-carousel": "0.5.1",
     "rimraf": "6.0.1",
     "rollup-plugin-css-only": "4.5.2",
     "sass": "1.77.8",

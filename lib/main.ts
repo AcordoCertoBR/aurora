@@ -34,6 +34,7 @@ export { ProgressBar } from './components/ProgressBar'
 export { Tag } from './components/Tag'
 export { Modal } from './components/Modal'
 export { Tooltip } from './components/Tooltip'
+export { Container } from './components/Container'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
@@ -49,3 +50,6 @@ export * from './components/misc'
 
 // Tokens
 export * from './core/tokens'
+
+// Prototypes
+export { Carousel } from './components/Prototype/Carousel'
