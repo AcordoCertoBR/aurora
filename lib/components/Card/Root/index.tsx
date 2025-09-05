@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { CSSProperties, ReactNode } from 'react'
+import { CSSProperties, ReactNode, Ref } from 'react'
 
 export type CardRootProps = {
   border?: boolean
@@ -12,6 +12,7 @@ export type CardRootProps = {
   hoverShadow?: boolean
   className?: string;
   children: ReactNode
+  ref?: Ref<HTMLDivElement>
 }
 export const CardRoot = ({
   border = true,
@@ -23,7 +24,8 @@ export const CardRoot = ({
   hoverShadow,
   paddingLess,
   children,
-  className
+  className,
+  ref
 }: CardRootProps) => {
   const rootClasses = classNames('au-card__root', {
     'au-card__root--border-none': !border,
@@ -41,6 +43,7 @@ export const CardRoot = ({
 
   return (
     <div
+      ref={ref}
       style={rootSize}
       className={rootClasses}>
       {children}
