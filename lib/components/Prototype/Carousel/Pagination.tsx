@@ -1,5 +1,6 @@
-import { Conditional, Text } from '@consumidor-positivo/aurora'
+import { Conditional } from '@components/misc'
 import { isMobile } from './helpers'
+import { Text } from '@components/Text'
 
 type PaginationProps = {
   pages: number[][]
