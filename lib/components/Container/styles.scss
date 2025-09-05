@@ -1,0 +1,10 @@
+.au-container {
+  width: 100%;
+  max-width: $container-size;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  @include aboveLarge() {
+    padding: 0 16px;
+  }
+}

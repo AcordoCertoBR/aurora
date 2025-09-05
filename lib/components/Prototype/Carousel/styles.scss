@@ -1,0 +1,85 @@
+.au-carousel {
+  overflow-x: hidden;
+
+  &--draggable &__rail {
+    cursor: grab;
+  }
+
+  &__rail {
+    position: relative;
+    display: flex;
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    list-style-type: none;
+    @include belowMedium {
+      width: calc(100% + 24px);
+    }
+
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, and Opera */
+    }
+  }
+
+  &__item {
+    flex-shrink: 0;
+    user-select: none;
+    &--snap {
+      scroll-snap-align: start;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+    @include belowMedium {
+      margin-top: 24px;
+    }
+
+    position: relative;
+  }
+
+  &__scrollbar {
+    width: calc(100% - 114px);
+    background: #e2e4e9;
+    height: 8px;
+    border-radius: 500px;
+    flex-grow: 0;
+  }
+
+  &__scrollbar-scroll {
+    height: 100%;
+    width: 272px;
+    background-color: #0048db;
+    -webkit-transition: -webkit-transform 0.5s ease-out;
+    transition: transform 0.5s ease-out;
+    border-radius: 500px;
+  }
+
+  &__pagination {
+    @include belowMedium {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__btns {
+    display: flex;
+    gap: 16px;
+
+    &--pages {
+      @include belowMedium {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+}

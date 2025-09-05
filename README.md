@@ -28,3 +28,32 @@ O Projeto Aurora é uma abordagem estruturada e abrangente para o Design System 
 > Acordo Certo
 
 - [https://www.acordocerto.com.br/](https://www.acordocerto.com.br/)
+
+## Instalação e Uso
+
+### Instalação Básica
+
+```bash
+npm install @consumidor-positivo/aurora
+```
+
+### Componentes Opcionais
+
+Alguns componentes requerem dependências adicionais que não são instaladas por padrão para evitar aumentar o bundle desnecessariamente.
+
+#### Carousel
+
+O componente Carousel requer a instalação do `react-snap-carousel`:
+
+```bash
+npm install react-snap-carousel
+```
+
+```tsx
+import { Carousel } from '@consumidor-positivo/aurora'
+
+// Agora você pode usar o Carousel
+<Carousel items={items} />
+```
+
+> **Nota:** Se você tentar usar o Carousel sem instalar o `react-snap-carousel`, receberá um erro de dependência em tempo de execução.
