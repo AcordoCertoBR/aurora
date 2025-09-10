@@ -115,7 +115,7 @@ export const Footer = ({
                   variant="body-medium"
                   weight="bold"
                   color="secondary">
-                  Localização:
+                  Localização (sem atendimento ao público):
                 </Text>
                 {address}
               </Text>

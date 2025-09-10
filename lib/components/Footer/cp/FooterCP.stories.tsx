@@ -139,7 +139,7 @@ export const LoggedOut: Story = {
     },
     cnpj: '30.247.128/0001-15',
     address:
-      'Rua Cardeal Arcoverde nº 2365, Conjuntos. 81 a 84, Sala 03, Bairro: Pinheiros, na cidade de São Paulo, Estado de São Paulo, CEP 05407-003',
+      'Rua: Cardeal Arcoverde nº 2365 - Conjuntos 81 a 84 - Bairro: Pinheiros - São Paulo/SP - CEP: 05407-003',
     companyOverview: 'A Consumidor Positivo é uma joint venture entre a Boa Vista Serviços S.A. (CNPJ 11.725.176/0001-27) e RV TECHNOLOGY, LLC (21.688.316/0001-98). Somos uma plataforma digital que atua como Correspondente Bancário para facilitar o processo de contratação de produtos de crédito e débito. Como Correspondente Bancário, seguimos as diretrizes da Resolução nº 3.954 do Banco Central do Brasil.',
     certificates: ['sslblindado', 'reclameaqui', 'pcidss'],
     copyrights:
