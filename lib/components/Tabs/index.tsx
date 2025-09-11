@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { Conditional } from '@components/misc'
+import { If } from '@components/misc'
 import { Button } from '@components/Button'
 import { useEffect, useState } from 'react'
 import './styles.scss'
@@ -8,7 +8,8 @@ export type TabsProps = {
   tabs: TabItemProps[]
   areTabsHidden?: boolean
   initialTab?: string
-  onClick: (value: string) => void
+  headerChildren?: React.ReactNode
+  onClick?: (value: string) => void
 }
 
 export type TabItemProps = {
@@ -23,6 +24,7 @@ export const Tabs = ({
   initialTab,
   onClick,
   areTabsHidden,
+  headerChildren,
 }: TabsProps) => {
   const [isClicked, setIsClicked] = useState(false)
   const [currButton, setCurrButton] = useState(initialTab ?? '')
@@ -33,7 +35,7 @@ export const Tabs = ({
   }, [initialTab])
 
   const handleClick = (item: TabItemProps) => {
-    onClick(item.tab)
+    onClick && onClick(item.tab)
     setCurrButton(item.tab)
     setActiveTab(item.tab)
     setIsClicked(true)
@@ -49,11 +51,10 @@ export const Tabs = ({
 
   return (
     <>
-      <Conditional
-        condition={!areTabsHidden}
-        renderIf={
-          <div className="au-tabs">
-            <div className="au-tabs__container">
+      <If condition={!areTabsHidden}>
+        <div className="au-tabs">
+          <div className="au-tabs__container">
+            <div className="au-tabs__btns-panel">
               {tabs.map((item: TabItemProps) => {
                 return (
                   <Button
@@ -67,20 +68,19 @@ export const Tabs = ({
                 )
               })}
             </div>
+            <If condition={!!headerChildren}>{headerChildren}</If>
           </div>
-        }
-        renderElse={null}
-      />
+        </div>
+      </If>
 
       {tabs.map(({ children, tab }: TabItemProps) => {
         return (
           <div
             className={`au-tabs__children children-${tab}`}
             key={`au-tabs-${tab}`}>
-            <Conditional
-              condition={currButton === tab || activeTab === tab}
-              renderIf={children}
-            />
+            <If condition={currButton === tab || activeTab === tab}>
+              {children}
+            </If>
           </div>
         )
       })}
