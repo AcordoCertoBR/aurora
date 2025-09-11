@@ -1,7 +1,7 @@
 // Global Styles
 import './core/styles/GlobalStyles.scss'
 
-export { When as If, Switch, Case, Default } from 'react-if'
+export { If, Switch, Case, Default } from 'react-if'
 // Components
 export { Button } from './components/Button'
 export { PureSwitch } from './components/Switch/Pure'
