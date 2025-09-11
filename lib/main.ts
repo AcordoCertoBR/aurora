@@ -1,11 +1,12 @@
 // Global Styles
 import './core/styles/GlobalStyles.scss'
 
+export { When as If, Switch, Case, Default } from 'react-if'
 // Components
 export { Button } from './components/Button'
 export { PureSwitch } from './components/Switch/Pure'
 export { CardSwitch } from './components/Switch/Card'
-export { Conditional } from './components/misc/Conditional'
+export { Conditional } from './components/misc/Conditional' // DEPRECATE
 export { Drawer } from './components/Drawer'
 export { Header } from './components/Header'
 export { LazyImage } from './components/LazyImage'
