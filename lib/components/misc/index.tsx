@@ -1,4 +1,4 @@
 /** Deprecate */
 export { Conditional } from './Conditional'
 
-export { If, Switch, Case, Default } from 'react-if'
+export { If, Then, Else, Switch, Case, Default } from 'react-if'
