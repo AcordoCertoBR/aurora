@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSnapCarousel } from 'react-snap-carousel'
+import { SnapCarouselResult, useSnapCarousel } from 'react-snap-carousel'
 import { useCarouselDrag } from './useCarouselDrag'
 
 type UseCarouselArgs = {
@@ -17,7 +17,7 @@ export default function useCarousel({ items }: UseCarouselArgs) {
     next,
     snapPointIndexes,
     refresh,
-  } = useSnapCarousel({ axis: 'x' })
+  }: SnapCarouselResult = useSnapCarousel({ axis: 'x' })
   const showControls = snapPointIndexes.size > 1
   const [numberOfItems, setNumberOfItems] = useState(items.length)
   const [nextPage, setNextPage] = useState(0)
