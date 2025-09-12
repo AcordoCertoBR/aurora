@@ -49,64 +49,182 @@ export const CustomContent: Story = {
   },
 }
 
-export const WithHeaderChildren: Story = {
+export const WithLabel: Story = {
   args: {
     tabs: [
       {
-        title: 'Configurações',
-        tab: 'config',
-        icon: <IconCheckCircle />,
+        title: 'Todos',
+        tab: 'all',
         children: (
           <div style={{ padding: '20px' }}>
-            <h3>Configurações do Sistema</h3>
-            <p>Aqui você pode alterar as configurações gerais do sistema.</p>
+            <h3>Todos os Itens</h3>
+            <p>Visualize todos os itens disponíveis no sistema.</p>
           </div>
         )
       },
       {
-        title: 'Usuários',
-        tab: 'users',
+        title: 'Ativos',
+        tab: 'active',
         children: (
           <div style={{ padding: '20px' }}>
-            <h3>Gerenciar Usuários</h3>
-            <p>Lista e gerenciamento de usuários do sistema.</p>
+            <h3>Itens Ativos</h3>
+            <p>Lista apenas os itens que estão atualmente ativos.</p>
           </div>
         )
       },
       {
-        title: 'Relatórios',
-        tab: 'reports',
+        title: 'Inativos',
+        tab: 'inactive',
         children: (
           <div style={{ padding: '20px' }}>
-            <h3>Relatórios</h3>
-            <p>Visualize e exporte relatórios do sistema.</p>
+            <h3>Itens Inativos</h3>
+            <p>Visualize os itens que foram desativados.</p>
           </div>
         )
       },
     ],
-    initialTab: 'config',
-    headerChildren: (
+    initialTab: 'all',
+    withLabel: true,
+    onClick: (tab) => {
+      console.log('Tab clicada:', tab);
+    },
+  },
+}
+
+export const WithRightSlot: Story = {
+  args: {
+    tabs: [
+      {
+        title: 'Dashboard',
+        tab: 'dashboard',
+        children: (
+          <div style={{ padding: '20px' }}>
+            <h3>Dashboard Principal</h3>
+            <p>Visão geral dos dados e métricas importantes.</p>
+          </div>
+        )
+      },
+      {
+        title: 'Vendas',
+        tab: 'sales',
+        children: (
+          <div style={{ padding: '20px' }}>
+            <h3>Relatório de Vendas</h3>
+            <p>Acompanhe o desempenho das vendas em tempo real.</p>
+          </div>
+        )
+      },
+      {
+        title: 'Clientes',
+        tab: 'customers',
+        children: (
+          <div style={{ padding: '20px' }}>
+            <h3>Gestão de Clientes</h3>
+            <p>Visualize e gerencie informações dos clientes.</p>
+          </div>
+        )
+      },
+    ],
+    initialTab: 'dashboard',
+    rightSlotChildren: (
       <div style={{ 
         display: 'flex', 
         alignItems: 'center', 
-        gap: '12px',
-        padding: '8px 16px',
-        backgroundColor: '#f8f9fa',
-        borderRadius: '6px',
-        border: '1px solid #e9ecef'
+        gap: '8px'
       }}>
-        <span style={{ fontSize: '14px', fontWeight: '500' }}>
-          Admin Panel
-        </span>
-        <div style={{ 
-          width: '8px', 
-          height: '8px', 
-          backgroundColor: '#28a745', 
-          borderRadius: '50%' 
-        }} />
-        <span style={{ fontSize: '12px', color: '#6c757d' }}>
-          Online
-        </span>
+        <button style={{
+          padding: '6px 12px',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '12px',
+          cursor: 'pointer'
+        }}>
+          + Novo
+        </button>
+        <button style={{
+          padding: '6px 8px',
+          backgroundColor: '#6c757d',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '12px',
+          cursor: 'pointer'
+        }}>
+          ⚙️
+        </button>
+      </div>
+    ),
+    onClick: (tab) => {
+      console.log('Tab clicada:', tab);
+    },
+  },
+}
+
+export const WithLabelAndRightSlot: Story = {
+  args: {
+    tabs: [
+      {
+        title: 'Projetos',
+        tab: 'projects',
+        children: (
+          <div style={{ padding: '20px' }}>
+            <h3>Meus Projetos</h3>
+            <p>Lista de todos os projetos ativos e em desenvolvimento.</p>
+          </div>
+        )
+      },
+      {
+        title: 'Arquivados',
+        tab: 'archived',
+        children: (
+          <div style={{ padding: '20px' }}>
+            <h3>Projetos Arquivados</h3>
+            <p>Visualize projetos que foram arquivados.</p>
+          </div>
+        )
+      },
+      {
+        title: 'Favoritos',
+        tab: 'favorites',
+        children: (
+          <div style={{ padding: '20px' }}>
+            <h3>Projetos Favoritos</h3>
+            <p>Seus projetos marcados como favoritos.</p>
+          </div>
+        )
+      },
+    ],
+    initialTab: 'projects',
+    withLabel: true,
+    rightSlotChildren: (
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '8px'
+      }}>
+        <button style={{
+          padding: '6px 12px',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '12px',
+          cursor: 'pointer'
+        }}>
+          + Novo Projeto
+        </button>
+        <button style={{
+          padding: '4px 8px',
+          backgroundColor: 'transparent',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          fontSize: '12px',
+          cursor: 'pointer'
+        }}>
+          ⚙️ Configurações
+        </button>
       </div>
     ),
     onClick: (tab) => {

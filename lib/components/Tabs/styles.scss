@@ -10,10 +10,24 @@
     }
   }
 
-  &__btns-panel {
+  &__left-panel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__label {
+    display: none;
+
+    @include aboveMedium() {
+      display: unset;
+    }
+  }
+
+  &__btns {
     display: flex;
     white-space: nowrap;
-    gap: 16px;
+    gap: 8px;
     white-space: nowrap;
     overflow-x: scroll;
     margin-bottom: 20px;
@@ -31,7 +45,7 @@
     font-size: 14px;
     font-weight: 600;
     padding: 8px 16px;
-    height: 40px;
+    height: 38px;
 
     border-color: $color-neutral-20;
     color: $color-neutral-50;
