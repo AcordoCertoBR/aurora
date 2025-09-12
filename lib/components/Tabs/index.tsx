@@ -1,14 +1,17 @@
+import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { If } from '@components/misc'
 import { Button } from '@components/Button'
-import { useEffect, useState } from 'react'
+import { Text } from '@components/Text'
+
 import './styles.scss'
 
 export type TabsProps = {
   tabs: TabItemProps[]
   areTabsHidden?: boolean
   initialTab?: string
-  headerChildren?: React.ReactNode
+  withLabel?: boolean
+  rightSlotChildren?: React.ReactNode
   onClick?: (value: string) => void
 }
 
@@ -24,7 +27,8 @@ export const Tabs = ({
   initialTab,
   onClick,
   areTabsHidden,
-  headerChildren,
+  rightSlotChildren,
+  withLabel = false,
 }: TabsProps) => {
   const [isClicked, setIsClicked] = useState(false)
   const [currButton, setCurrButton] = useState(initialTab ?? '')
@@ -54,21 +58,31 @@ export const Tabs = ({
       <If condition={!areTabsHidden}>
         <div className="au-tabs">
           <div className="au-tabs__container">
-            <div className="au-tabs__btns-panel">
-              {tabs.map((item: TabItemProps) => {
-                return (
-                  <Button
-                    key={`au-tabs-${item.tab}`}
-                    className={buttonClass(item)}
-                    type={'outlined'}
-                    onClick={() => handleClick(item)}>
-                    {item.icon}
-                    {item.title}
-                  </Button>
-                )
-              })}
+            <div className="au-tabs__left-panel">
+              <If condition={!!withLabel}>
+                <Text
+                  color="secondary"
+                  variant="body-small"
+                  className="au-tabs__label">
+                  Filtrar por:{' '}
+                </Text>
+              </If>
+              <div className="au-tabs__btns">
+                {tabs.map((item: TabItemProps) => {
+                  return (
+                    <Button
+                      key={`au-tabs-${item.tab}`}
+                      className={buttonClass(item)}
+                      type="outlined"
+                      onClick={() => handleClick(item)}>
+                      {item.icon}
+                      {item.title}
+                    </Button>
+                  )
+                })}
+              </div>
             </div>
-            <If condition={!!headerChildren}>{headerChildren}</If>
+            <If condition={!!rightSlotChildren}>{rightSlotChildren}</If>
           </div>
         </div>
       </If>
