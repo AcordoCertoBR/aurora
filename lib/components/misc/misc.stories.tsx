@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Conditional, If, Then, Else, Switch, Case, Default } from './index'
+import { Conditional, If, IfElse, Then, Else, Switch, Case, Default } from './index'
 import { Button } from '../Button'
 import { Text } from '../Text'
 
@@ -24,7 +24,7 @@ export default meta
 
 type Story = StoryObj
 
-// Stories para If (react-if)
+// Stories para If (condições simples)
 export const IfComponent: Story = {
   render: () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -55,13 +55,13 @@ export const IfComponent: Story = {
     docs: {
       description: {
         story:
-          'Componente If do react-if para renderização condicional simples.',
+          'Componente If para renderização condicional simples.',
       },
     },
   },
 }
 
-// Stories para If/Then/Else (react-if)
+// Stories para IfElse/Then/Else (react-if)
 export const IfThenElse: Story = {
   render: () => {
     const [age, setAge] = useState(18)
@@ -115,7 +115,7 @@ export const IfThenElse: Story = {
             Permissões:
           </Text>
 
-          <If condition={age >= 18}>
+          <IfElse condition={age >= 18}>
             <Then>
               <div style={{ marginBottom: '8px' }}>
                 <Text>✅ Pode votar</Text>
@@ -124,14 +124,14 @@ export const IfThenElse: Story = {
                 <Text>✅ Pode trabalhar em período integral</Text>
               </div>
 
-              <If condition={hasLicense}>
+              <IfElse condition={hasLicense}>
                 <Then>
                   <Text>🚗 Pode dirigir</Text>
                 </Then>
                 <Else>
                   <Text>🚫 Não pode dirigir (sem carteira)</Text>
                 </Else>
-              </If>
+              </IfElse>
             </Then>
             <Else>
               <div>
@@ -149,7 +149,7 @@ export const IfThenElse: Story = {
                 </ul>
               </div>
             </Else>
-          </If>
+          </IfElse>
         </div>
 
         <div
@@ -171,7 +171,7 @@ export const IfThenElse: Story = {
     docs: {
       description: {
         story:
-          'Componentes If, Then e Else do react-if para uma sintaxe mais explícita de condicionais com casos verdadeiro e falso.',
+          'Componentes IfElse, Then e Else do react-if para uma sintaxe mais explícita de condicionais com casos verdadeiro e falso.',
       },
     },
   },
