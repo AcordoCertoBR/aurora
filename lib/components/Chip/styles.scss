@@ -1,0 +1,54 @@
+.au-chip {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  height: 38px;
+  border-color: $color-neutral-20;
+  color: $color-neutral-50;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+
+  .au-icon svg,
+  svg {
+    color: $color-neutral-50;
+  }
+
+  &:hover {
+    border-color: $color-neutral-40;
+  }
+
+  &:disabled,
+  &--disabled,
+  &:disabled:hover,
+  &--disabled:hover {
+    background-color: $color-neutral-10;
+    color: $color-neutral-40;
+    border-color: $color-neutral-20;
+
+    .au-icon svg,
+    svg {
+      color: $color-neutral-50;
+    }
+  }
+
+  &:focus-visible {
+    border: 1px solid $color-neutral-10;
+    outline: 1px solid $color-brand-blue-40;
+  }
+
+  &--active {
+    background-color: $color-brand-blue-10;
+    border-color: $color-brand-blue-30;
+    color: $color-brand-blue-40;
+
+    &:hover {
+      color: $color-brand-blue-50;
+      border-color: $color-brand-blue-50;
+    }
+
+    .au-icon svg,
+    svg {
+      color: $color-brand-blue-40;
+    }
+  }
+}

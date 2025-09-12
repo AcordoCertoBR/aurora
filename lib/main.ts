@@ -5,6 +5,7 @@ import './core/styles/GlobalStyles.scss'
 export { Button } from './components/Button'
 export { PureSwitch } from './components/Switch/Pure'
 export { CardSwitch } from './components/Switch/Card'
+export { Chip } from './components/Chip'
 export { Conditional } from './components/misc/Conditional' // DEPRECATE
 export { Drawer } from './components/Drawer'
 export { Header } from './components/Header'
