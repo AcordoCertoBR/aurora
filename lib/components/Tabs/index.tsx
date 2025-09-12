@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import classNames from 'classnames'
 import { If } from '@components/misc'
-import { Button } from '@components/Button'
 import { Text } from '@components/Text'
+import { Chip } from '@components/Chip'
 
 import './styles.scss'
 
@@ -45,14 +44,6 @@ export const Tabs = ({
     setIsClicked(true)
   }
 
-  const buttonClass = (item: TabItemProps) => {
-    const isActive =
-      (isClicked && item.tab === currButton) || activeTab === item.tab
-    return classNames('au-tabs__button', {
-      active: isActive,
-    })
-  }
-
   return (
     <>
       <If condition={!areTabsHidden}>
@@ -70,14 +61,15 @@ export const Tabs = ({
               <div className="au-tabs__btns">
                 {tabs.map((item: TabItemProps) => {
                   return (
-                    <Button
-                      key={`au-tabs-${item.tab}`}
-                      className={buttonClass(item)}
-                      type="outlined"
-                      onClick={() => handleClick(item)}>
-                      {item.icon}
-                      {item.title}
-                    </Button>
+                    <Chip
+                      label={item.title}
+                      icon={item.icon}
+                      isActive={
+                        (isClicked && item.tab === currButton) ||
+                        activeTab === item.tab
+                      }
+                      onClick={() => handleClick(item)}
+                    />
                   )
                 })}
               </div>
