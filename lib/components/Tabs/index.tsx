@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { If } from '@components/misc'
 import { Button } from '@components/Button'
+import { Text } from '@components/Text'
 
 import './styles.scss'
-import { Text } from '@components/Text'
 
 export type TabsProps = {
   tabs: TabItemProps[]
