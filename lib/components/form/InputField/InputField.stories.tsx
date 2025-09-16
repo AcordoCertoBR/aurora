@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { InputField } from './index'
+import { IconEdit } from '@components/icons'
 
 const meta: Meta<typeof InputField> = {
   title: 'Components/form/InputField',
@@ -97,6 +98,15 @@ export const HelperMessage: Story = {
   args: {
     id: 'helper-input',
     helpMessage: 'Help text',
+    ...commonArgs,
+  },
+}
+
+
+export const WithRightSlot: Story = {
+  args: {
+    id: 'icon-input',
+    rightSlot: <IconEdit />,
     ...commonArgs,
   },
 }
