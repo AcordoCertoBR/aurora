@@ -31,6 +31,15 @@
     }
   }
 
+  @keyframes slideCentralized {
+    0% {
+      transform: translate(-50%, calc(100% + 12px));
+    }
+    100% {
+      transform: translate(-50%, -50%);
+    }
+  }
+
   &--is-open {
     opacity: 1;
     visibility: visible;
@@ -38,9 +47,17 @@
 
     .au-modal__container {
       animation: slideInY 0.3s ease forwards;
+    }
 
+    &.au-modal--default .au-modal__container {
       @include aboveMedium() {
         animation: slideInX 0.3s ease forwards;
+      }
+    }
+
+    &.au-modal--centralized .au-modal__container {
+      @include aboveMedium() {
+        animation: slideCentralized 0.3s ease forwards;
       }
     }
   }
@@ -56,16 +73,31 @@
     z-index: 6;
     bottom: 0;
 
-    @include aboveMedium() {
-      border-radius: $border-radius-big 0 0 $border-radius-big;
-      box-shadow: $shadow-04;
-      top: 0;
-      right: 0;
-      margin: 0;
-      height: 100vh;
-      height: 100dvh;
-      max-width: 414px;
-      max-height: 100vh;
+    &--default {
+      @include aboveMedium() {
+        border-radius: $border-radius-big 0 0 $border-radius-big;
+        box-shadow: $shadow-04;
+        top: 0;
+        right: 0;
+        margin: 0;
+        height: 100vh;
+        height: 100dvh;
+        max-width: 414px;
+        max-height: 100vh;
+      }
+    }
+
+    &--centralized {
+      @include aboveMedium() {
+        top: 50%;
+        left: 50%;
+        display: flex;
+        max-width: 500px;
+        gap: $spacing-200;
+        height: min-content;
+        flex-direction: column;
+        border-radius: $border-radius-big;
+      }
     }
   }
 
