@@ -59,7 +59,8 @@ export const Centralized: Story = {
   args: {
     isOpen: true,
     onClose: () => console.log('Modal closed'),
-    layout: 'centralized',
+    layoutMobile: 'centralized',
+    layoutDesktop: 'centralized',
     headerContent: (
       <>
         <Text variant="heading-small" weight="bold">
