@@ -3,12 +3,15 @@ import classNames from 'classnames'
 
 import './styles.scss'
 
+type ModalLayout = 'default' | 'centralized'
+
 type ModalProps = {
   isOpen: boolean
   onClose?: () => void
   headerContent?: React.ReactNode | string | JSX.Element | JSX.Element[]
   content?: React.ReactNode | string | JSX.Element | JSX.Element[]
-  layout?: 'default' | 'centralized'
+  layoutMobile?: ModalLayout
+  layoutDesktop?: ModalLayout
 }
 
 export const Modal = ({
@@ -16,23 +19,20 @@ export const Modal = ({
   onClose,
   headerContent,
   content,
-  layout = 'default',
+  layoutMobile = 'default',
+  layoutDesktop = 'default',
 }: ModalProps) => {
   if (!isOpen) return null
 
   const modalClasses = classNames('au-modal', {
     'au-modal--is-open': isOpen,
-    'au-modal--default': layout !== 'centralized',
-    'au-modal--centralized': layout === 'centralized',
+    'au-modal--mobile-centralized': layoutMobile === 'centralized',
+    'au-modal--desktop-centralized': layoutDesktop === 'centralized',
   })
 
   return (
     <div className={modalClasses}>
-      <div
-        className={classNames('au-modal__container', {
-          'au-modal__container--default': layout !== 'centralized',
-          'au-modal__container--centralized': layout === 'centralized',
-        })}>
+      <div className="au-modal__container">
         <div className="au-modal__header">
           <div className="au-modal__header-close" onClick={onClose}>
             <IconX />

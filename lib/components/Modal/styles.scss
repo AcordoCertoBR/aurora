@@ -49,15 +49,17 @@
       animation: slideInY 0.3s ease forwards;
     }
 
-    &.au-modal--default .au-modal__container {
-      @include aboveMedium() {
-        animation: slideInX 0.3s ease forwards;
-      }
+    &.au-modal--mobile-centralized .au-modal__container {
+      animation: slideCentralized 0.3s ease forwards;
     }
 
-    &.au-modal--centralized .au-modal__container {
-      @include aboveMedium() {
+    @include aboveMedium() {
+      &.au-modal--desktop-centralized .au-modal__container {
         animation: slideCentralized 0.3s ease forwards;
+      }
+
+      &:not(.au-modal--desktop-centralized) .au-modal__container {
+        animation: slideInX 0.3s ease forwards;
       }
     }
   }
@@ -72,13 +74,33 @@
     position: fixed;
     z-index: 6;
     bottom: 0;
+  }
 
-    &--default {
-      @include aboveMedium() {
+  &.au-modal--mobile-centralized {
+    .au-modal__container {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      bottom: auto;
+      width: 90%;
+      max-width: 500px;
+      height: min-content;
+      border-radius: $border-radius-big;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-200;
+    }
+  }
+
+  @include aboveMedium() {
+    &:not(.au-modal--desktop-centralized) {
+      .au-modal__container {
         border-radius: $border-radius-big 0 0 $border-radius-big;
         box-shadow: $shadow-04;
         top: 0;
         right: 0;
+        bottom: auto;
+        left: auto;
         margin: 0;
         height: 100vh;
         height: 100dvh;
@@ -87,10 +109,12 @@
       }
     }
 
-    &--centralized {
-      @include aboveMedium() {
+    &.au-modal--desktop-centralized {
+      .au-modal__container {
         top: 50%;
         left: 50%;
+        transform: translate(-50%, -50%);
+        bottom: auto;
         display: flex;
         max-width: 500px;
         gap: $spacing-200;
