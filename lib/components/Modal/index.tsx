@@ -1,5 +1,6 @@
 import { IconX } from '@components/icons'
 import classNames from 'classnames'
+import { If } from '../misc'
 
 import './styles.scss'
 
@@ -34,9 +35,11 @@ export const Modal = ({
     <div className={modalClasses}>
       <div className="au-modal__container">
         <div className="au-modal__header">
+          <If condition={!!onClose}>
           <div className="au-modal__header-close" onClick={onClose}>
             <IconX />
           </div>
+          </If>
           {headerContent}
         </div>
         <div className="au-modal__content">{content}</div>
