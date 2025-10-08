@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Modal>
 
 export const Default: Story = {
   render: (args) => {
-    return <Modal {...args} />
+    return <div style={{ minHeight: '400px' }}><Modal {...args} /></div>
   },
   args: {
     isOpen: true,
@@ -54,7 +54,7 @@ export const Default: Story = {
 
 export const Centralized: Story = {
   render: (args) => {
-    return <Modal {...args} />
+    return <div style={{ minHeight: '400px' }}><Modal {...args} /></div>
   },
   args: {
     isOpen: true,
