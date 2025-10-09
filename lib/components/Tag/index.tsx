@@ -27,6 +27,7 @@ export type TagProps = {
   children?: React.ReactNode
   customIcon?: string | JSX.Element
   fullWidth?: boolean
+  actionButton?: { content?: string; onClick?: () => void }
 }
 
 export const Tag = ({
@@ -39,6 +40,7 @@ export const Tag = ({
   text,
   children,
   fullWidth,
+  actionButton,
 }: TagProps) => {
   const statusMap = {
     success: {
@@ -96,6 +98,17 @@ export const Tag = ({
           }
         />
         <p className={`au-tag__content-support-text`}>{supportText}</p>
+
+        <Conditional
+          condition={!!actionButton}
+          renderIf={
+            <button
+              className="au-tag__action-btn"
+              onClick={actionButton?.onClick}>
+              {actionButton?.content}
+            </button>
+          }
+        />
       </div>
       {children}
     </div>

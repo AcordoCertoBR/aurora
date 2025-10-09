@@ -117,4 +117,15 @@
   &--full-width {
     width: 100%;
   }
+
+  &__action-btn {
+    font-family: $font-body;
+    background-color: transparent;
+    border: none;
+    color: $color-brand-blue-40;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 19px;
+  }
 }
