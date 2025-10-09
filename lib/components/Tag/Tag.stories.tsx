@@ -18,9 +18,7 @@ export default meta
 type Story = StoryObj<typeof Tag>
 
 const container = (args: TagProps) => {
-  return (
-      <Tag {...args} />
-  )
+  return <Tag {...args} />
 }
 
 export const InfoReadOnly: Story = {
@@ -70,7 +68,7 @@ export const CustomIconReadOnly: Story = {
   args: {
     status: 'success',
     text: 'support text',
-    customIcon: '🔥'
+    customIcon: '🔥',
   },
 }
 
@@ -130,3 +128,15 @@ export const NeutralBadgeMedium: Story = {
   },
 }
 
+export const WithAction: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'support',
+    text: 'As ofertas são por tempo limitado',
+    fullWidth: true,
+    actionButton: {
+      content: 'Entenda',
+      onClick: () => console.log('clicked'),
+    },
+  },
+}
