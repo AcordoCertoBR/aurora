@@ -57,3 +57,19 @@ import { Carousel } from '@consumidor-positivo/aurora'
 ```
 
 > **Nota:** Se você tentar usar o Carousel sem instalar o `react-snap-carousel`, receberá um erro de dependência em tempo de execução.
+
+## Testes
+
+Este projeto usa Vitest para testes unitáriåos e @testing-library/react para testes de componentes React.
+
+execute os testes com:
+
+```bash
+npm test
+```
+
+Para rodar em modo watch:
+
+```bash
+npm run test:watch
+```
