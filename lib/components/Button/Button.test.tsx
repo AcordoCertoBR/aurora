@@ -86,4 +86,17 @@ describe('Button', () => {
     const root = document.querySelector('.au-btn')
     expect(root).toHaveClass('au-btn--type-ghost')
   })
+
+  it('renders as an <a> tag when as="a" is provided', () => {
+    render(
+      <Button as="a" href="https://example.com">
+        Link Button
+      </Button>,
+    )
+
+    const link = screen.getByRole('link')
+    expect(link).toBeInTheDocument()
+    expect(link.tagName).toBe('A')
+    expect(link).toHaveAttribute('href', 'https://example.com')
+  })
 })
