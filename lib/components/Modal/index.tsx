@@ -36,9 +36,9 @@ export const Modal = ({
       <div className="au-modal__container">
         <div className="au-modal__header">
           <If condition={!!onClose}>
-          <div className="au-modal__header-close" onClick={onClose}>
+          <button className="au-modal__header-close" onClick={onClose}>
             <IconX />
-          </div>
+          </button>
           </If>
           {headerContent}
         </div>

@@ -133,6 +133,8 @@
     position: relative;
 
     &-close {
+      background-color: transparent;
+      border: none;
       cursor: pointer;
       display: flex;
       justify-content: end;
