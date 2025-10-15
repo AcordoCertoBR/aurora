@@ -29,3 +29,6 @@ storybook-static
 *.njsproj
 *.sln
 *.sw?
+
+# Coverage reports
+coverage
