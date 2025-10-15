@@ -16,6 +16,9 @@ export const Drawer = ({
   isOpen = false,
   handleOpen,
 }: DrawerProps) => {
+
+  if(!isOpen) return null
+  
   return (
     <div
       className={classNames('au-drawer', {
@@ -24,9 +27,9 @@ export const Drawer = ({
       <div className="au-drawer__container">
         <div className="au-drawer__header">
           {renderHeader}
-          <div className="au-drawer__header-close" onClick={handleOpen}>
+          <button className="au-drawer__header-close" onClick={handleOpen}>
             <IconX />
-          </div>
+          </button>
         </div>
         <div className="au-drawer__content">{renderContent}</div>
       </div>
