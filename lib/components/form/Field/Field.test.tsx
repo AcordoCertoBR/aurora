@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { render, fireEvent } from '@testing-library/react'
+import { describe, it, expect, vi } from 'vitest'
+import { createRef } from 'react'
 import Field from './index'
 
 describe('Field', () => {
@@ -80,5 +81,49 @@ describe('Field', () => {
 
     rerender(<Field.Message hasError={true} errorMessage="Error!" />)
     expect(queryByText('Error!')).toBeInTheDocument()
+  })
+})
+
+describe('Field.TextArea (hook integration)', () => {
+  it('renders and shows char counter when maxLength is provided', () => {
+    const { container, getByText } = render(<Field.TextArea maxLength={10} />)
+
+    expect(container.querySelector('.au-field__textarea')).toBeTruthy()
+    expect(getByText(/0\s*\/\s*10/)).toBeTruthy()
+  })
+
+  it('applies customClass and horizontalResize class', () => {
+    const { container } = render(
+      <Field.TextArea customClass="my-textarea" horizontalResize />,
+    )
+
+    const textarea = container.querySelector('.au-field__textarea')
+    expect(textarea).toBeTruthy()
+    expect(textarea?.classList.contains('my-textarea')).toBe(true)
+    expect(textarea?.classList.contains('au-field__textarea--horizontal-resize')).toBe(true)
+  })
+
+  it('updates charCount and forwards onChange', () => {
+    const onChange = vi.fn()
+    const { container, getByText } = render(
+      <Field.TextArea maxLength={5} onChange={onChange} />,
+    )
+
+    const textarea = container.querySelector('textarea') as HTMLTextAreaElement
+    fireEvent.change(textarea, { target: { value: 'abc' } })
+
+    expect(onChange).toHaveBeenCalled()
+    expect(getByText(/3\s*\/\s*5/)).toBeTruthy()
+  })
+
+  it('supports textareaRef and can be focused', () => {
+    const ref = createRef<HTMLTextAreaElement>()
+    const { container } = render(<Field.TextArea textareaRef={ref} />)
+
+    const textarea = container.querySelector('textarea') as HTMLTextAreaElement
+    expect(ref.current).toBe(textarea)
+
+    ref.current?.focus()
+    expect(document.activeElement).toBe(ref.current)
   })
 })

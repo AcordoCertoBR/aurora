@@ -17,8 +17,14 @@ export const FieldTextArea = ({
   maxLength,
   ...props
 }: FieldTextAreaProps) => {
+  // ensure the internal handler runs and forwards to an external onChange
+  const { onChange, ...rest } = props as FieldTextAreaProps
+  const forwardedOnChange = onChange
+    ? (e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e)
+    : undefined
+
   const { charCount, handleInputChange } = useFieldTextArea({
-    onChange: props.onChange,
+    onChange: forwardedOnChange,
   })
   const textareaClasses = classNames('au-field__textarea', customClass, {
     'au-field__textarea--horizontal-resize': horizontalResize,
@@ -30,8 +36,8 @@ export const FieldTextArea = ({
         ref={textareaRef}
         className={textareaClasses}
         maxLength={maxLength}
+        {...rest}
         onChange={handleInputChange}
-        {...props}
       />
       {maxLength && (
         <Text
