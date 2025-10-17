@@ -17,7 +17,6 @@ export const FieldTextArea = ({
   maxLength,
   ...props
 }: FieldTextAreaProps) => {
-  // ensure the internal handler runs and forwards to an external onChange
   const { onChange, ...rest } = props as FieldTextAreaProps
   const forwardedOnChange = onChange
     ? (e: React.ChangeEvent<HTMLTextAreaElement>) => onChange(e)
