@@ -17,7 +17,7 @@ export const Drawer = ({
   handleOpen,
 }: DrawerProps) => {
 
-  if(!isOpen) return null
+  if (!isOpen) return null
   
   return (
     <div

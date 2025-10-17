@@ -441,9 +441,14 @@ describe('DatepickerField component', () => {
   it('calls onChange when typing a valid date (controlled)', () => {
     const onChange = vi.fn()
     const { container } = render(
-      <DatepickerField value={AUCalendarDate(1, 1, 2020)} onChange={onChange} />,
+      <DatepickerField
+        value={AUCalendarDate(1, 1, 2020)}
+        onChange={onChange}
+      />,
     )
-    const input = container.querySelector('.au-datepicker__input input') as HTMLInputElement
+    const input = container.querySelector(
+      '.au-datepicker__input input',
+    ) as HTMLInputElement
 
     act(() => {
       fireEvent.change(input, { target: { value: '01012020' } })
@@ -454,7 +459,9 @@ describe('DatepickerField component', () => {
 
   it('opens calendar when clicking calendar holder and respects disabled', () => {
     const { container } = render(<DatepickerField />)
-    const holder = container.querySelector('.au-datepicker__calendar-holder') as HTMLElement
+    const holder = container.querySelector(
+      '.au-datepicker__calendar-holder',
+    ) as HTMLElement
 
     act(() => {
       holder.dispatchEvent(new MouseEvent('click', { bubbles: true }))
@@ -463,7 +470,9 @@ describe('DatepickerField component', () => {
     expect(document.querySelector('.au-datepicker__calendar')).toBeTruthy()
 
     const { container: c2 } = render(<DatepickerField disabled />)
-    const holder2 = c2.querySelector('.au-datepicker__calendar-holder') as HTMLElement
+    const holder2 = c2.querySelector(
+      '.au-datepicker__calendar-holder',
+    ) as HTMLElement
     act(() => {
       holder2?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     })
@@ -472,7 +481,9 @@ describe('DatepickerField component', () => {
 
   it('renders defaultValue now as formatted date for uncontrolled component', () => {
     const { container } = render(<DatepickerField defaultValue={'now'} />)
-    const input = container.querySelector('.au-datepicker__input input') as HTMLInputElement
+    const input = container.querySelector(
+      '.au-datepicker__input input',
+    ) as HTMLInputElement
     expect(input.value).toMatch(/\d{2}\/\d{2}\/\d{4}/)
   })
 })

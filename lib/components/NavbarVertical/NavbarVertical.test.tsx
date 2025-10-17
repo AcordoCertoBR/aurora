@@ -5,7 +5,10 @@ import { NavbarVertical } from './index'
 
 describe('NavbarVertical', () => {
   it('renders items via renderItem and actions/alert slots', () => {
-    const data: Array<{ name: string }> = [{ name: 'Home' }, { name: 'Settings' }]
+    const data: Array<{ name: string }> = [
+      { name: 'Home' },
+      { name: 'Settings' },
+    ]
     render(
       <NavbarVertical
         data={data}
@@ -53,12 +56,18 @@ describe('NavbarVertical', () => {
     expect(dropdownLink).toBeInTheDocument()
 
     const activeSub = screen.getByText('Sub2')
-    expect(activeSub.classList.contains('au-navbar-vertical__dropdown-link--is-active')).toBe(true)
+    expect(
+      activeSub.classList.contains(
+        'au-navbar-vertical__dropdown-link--is-active',
+      ),
+    ).toBe(true)
   })
 
   it('calls onClick for non-dropdown link', async () => {
     const onClick = vi.fn()
-  const data: Array<{ name: string; onClick: () => void }> = [{ name: 'ClickMe', onClick }]
+    const data: Array<{ name: string; onClick: () => void }> = [
+      { name: 'ClickMe', onClick },
+    ]
 
     render(
       <NavbarVertical

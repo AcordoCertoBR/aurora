@@ -3,10 +3,16 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { Footer } from './index'
 import * as isMobileModule from '@core/utils/isMobile'
+import { FooterProps } from './types'
 
 vi.mock('../LazyImage', () => ({
   LazyImage: (props: any) => (
-    <img data-testid={props.alt || 'lazy'} src={props.src} onClick={props.onClick} className={props.className} />
+    <img
+      data-testid={props.alt || 'lazy'}
+      src={props.src}
+      onClick={props.onClick}
+      className={props.className}
+    />
   ),
 }))
 
@@ -108,10 +114,14 @@ describe('Footer', () => {
       />,
     )
 
-    const socialDivs = document.querySelectorAll('.au-footer-full__links-socials .au-footer-full__links')
+    const socialDivs = document.querySelectorAll(
+      '.au-footer-full__links-socials .au-footer-full__links',
+    )
     expect(socialDivs.length).toBeGreaterThan(0)
 
-    socialDivs.forEach((el) => el.dispatchEvent(new MouseEvent('click', { bubbles: true })))
+    socialDivs.forEach((el) =>
+      el.dispatchEvent(new MouseEvent('click', { bubbles: true })),
+    )
 
     expect(openSpy).toHaveBeenCalled()
   })
@@ -150,7 +160,10 @@ describe('Footer', () => {
     expect(storeImgs.length).toBeGreaterThan(0)
 
     fireEvent.click(storeImgs[0])
-    expect(openSpy).toHaveBeenCalledWith('https://play.google.com/app', '_blank')
+    expect(openSpy).toHaveBeenCalledWith(
+      'https://play.google.com/app',
+      '_blank',
+    )
   })
 
   it('maps stores and renders bottom stores on desktop', () => {
@@ -182,12 +195,19 @@ describe('Footer', () => {
       />,
     )
 
-    expect(document.querySelector('.au-footer-full__bottom-side .au-footer-full__stores')).toBeTruthy()
+    expect(
+      document.querySelector(
+        '.au-footer-full__bottom-side .au-footer-full__stores',
+      ),
+    ).toBeTruthy()
   })
 
   it('renders simple footer (no categoryLinks) with certificates and copyrights', () => {
     const mockLogo = <div>Simple Logo</div>
-  const certificates = ['fintech2022', 'pcidss'] as const
+    const certificates = [
+      'fintech2022',
+      'pcidss',
+    ] as FooterProps['certificates']
     const copyrights = '© 2025 Company'
 
     render(
@@ -197,7 +217,7 @@ describe('Footer', () => {
         cnpj="00.000.000/0000-00"
         address="Mock Address"
         companyOverview={undefined}
-  certificates={certificates as any}
+        certificates={certificates}
         copyrights={copyrights}
       />,
     )

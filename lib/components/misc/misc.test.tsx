@@ -8,7 +8,11 @@ import { Portal } from './Portal'
 describe('Conditional', () => {
   it('renders renderIf when condition is true', () => {
     const { container } = render(
-      <Conditional condition={true} renderIf={<div>yes</div>} renderElse={<div>no</div>} />,
+      <Conditional
+        condition={true}
+        renderIf={<div>yes</div>}
+        renderElse={<div>no</div>}
+      />,
     )
     expect(screen.getByText('yes')).toBeInTheDocument()
     expect(container.textContent).not.toContain('no')
@@ -16,7 +20,11 @@ describe('Conditional', () => {
 
   it('renders renderElse when condition is false', () => {
     const { container } = render(
-      <Conditional condition={false} renderIf={<div>yes</div>} renderElse={<div>no</div>} />,
+      <Conditional
+        condition={false}
+        renderIf={<div>yes</div>}
+        renderElse={<div>no</div>}
+      />,
     )
     expect(screen.getByText('no')).toBeInTheDocument()
     expect(container.textContent).not.toContain('yes')
@@ -25,7 +33,9 @@ describe('Conditional', () => {
 
 describe('DynamicTagComponent', () => {
   it('renders as different html tags', () => {
-    const { rerender } = render(<DynamicTagComponent tag="button">Click</DynamicTagComponent>)
+    const { rerender } = render(
+      <DynamicTagComponent tag="button">Click</DynamicTagComponent>,
+    )
     expect(screen.getByText('Click').tagName.toLowerCase()).toBe('button')
 
     rerender(<DynamicTagComponent tag="div">Block</DynamicTagComponent>)
@@ -35,8 +45,11 @@ describe('DynamicTagComponent', () => {
 
 describe('Portal', () => {
   it('creates portal root and appends children', () => {
-    render(<Portal><div>inside portal</div></Portal>)
-    
+    render(
+      <Portal>
+        <div>inside portal</div>
+      </Portal>,
+    )
     expect(document.getElementById('au-portal')).toBeTruthy()
     expect(screen.getByText('inside portal')).toBeInTheDocument()
   })
