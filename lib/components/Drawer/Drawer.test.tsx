@@ -20,20 +20,6 @@ describe('Drawer', () => {
     expect(getByText('Drawer Content')).toBeInTheDocument()
   })
 
-  it('does not render when closed', () => {
-    const { queryByText } = render(
-      <Drawer
-        isOpen={false}
-        handleOpen={vi.fn()}
-        renderHeader={<h1>Header</h1>}
-        renderContent={<p>Drawer Content</p>}
-      />,
-    )
-
-    expect(queryByText('Header')).not.toBeInTheDocument()
-    expect(queryByText('Drawer Content')).not.toBeInTheDocument()
-  })
-
   it('calls handleOpen when the close button is clicked', () => {
     const handleOpenMock = vi.fn()
     const { container } = render(
