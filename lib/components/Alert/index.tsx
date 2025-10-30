@@ -77,7 +77,9 @@ export const Alert = ({
     }
   }, [timeLeft])
 
-  const handleActionClick = () => {
+  const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		
     setTimeLeft(countdown)
     setIsCountdownFinished(false)
     actionButton?.onClick?.()
@@ -153,7 +155,7 @@ export const Alert = ({
             renderIf={
               <button
                 className="au-alert__action-btn"
-                onClick={handleActionClick}>
+                onClick={(e) => handleActionClick(e)}>
                 {actionButton?.content}
               </button>
             }
