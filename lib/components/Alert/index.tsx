@@ -77,7 +77,6 @@ export const Alert = ({
     }
   }, [timeLeft])
 	
-
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 		
