@@ -1,7 +1,5 @@
 name: Publish Lib (npm)
 on:
-  # When Release Pull Request is merged
-  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -27,11 +25,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 18.18.0
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Git Identity
         run: |
@@ -45,15 +45,20 @@ jobs:
           npm ci
 
       - name: Bump version
-        run: npm version patch
+        run: npm version patch --no-git-tag-version
+
+      - name: Commit version bump
+        run: |
+          git add package.json
+          git commit -m "chore: bump version to $(node -p "require('./package.json').version")"
+
+      - name: Create Git Tag
+        run: git tag v$(node -p "require('./package.json').version")
 
       - name: Build lib
         run: npm run build
-      
-      - name: Push Changes
-        run: git push --follow-tags
 
-      - uses: JS-DevTools/npm-publish@v3
+      - name: Publish to npm
+        uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
-
