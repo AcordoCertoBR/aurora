@@ -76,6 +76,7 @@ export const Alert = ({
       setIsCountdownFinished(false)
     }
   }, [timeLeft])
+	
 
   const handleActionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
