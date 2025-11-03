@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/AcordoCertoBR/aurora/compare/v0.1.0...v0.1.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* :bug: fixed deploy ([fc0fa2c](https://github.com/AcordoCertoBR/aurora/commit/fc0fa2c2b66e2bccdbe8e777d99feaf00659e15a))
+* :bug: fixed deploy ([77810c9](https://github.com/AcordoCertoBR/aurora/commit/77810c9fa1a3c8404555913dd136c8bcfc2d8847))
+
 ## [0.1.0](https://github.com/AcordoCertoBR/aurora/compare/v0.0.209...v0.1.0) (2025-11-03)
 
 
