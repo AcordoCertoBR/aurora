@@ -1,0 +1,89 @@
+name: Release & Publish
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    # Execute apenas quando o PR foi mesclado (não quando foi fechado sem merge)
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          package-name: '@consumidor-positivo/aurora'
+          changelog-types: |
+            [
+              {"type": "feat", "section": "Features", "hidden": false},
+              {"type": "fix", "section": "Bug Fixes", "hidden": false},
+              {"type": "docs", "section": "Documentation", "hidden": false},
+              {"type": "chore", "section": "Maintenance", "hidden": false},
+              {"type": "refactor", "section": "Code Refactoring", "hidden": false, "bump": "patch"},
+              {"type": "test", "section": "Tests", "hidden": false},
+              {"type": "ci", "section": "CI/CD", "hidden": true}
+            ]
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.20.0'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to NPM
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build storybook
+        run: npm run build-storybook
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::890620372383:role/github-actions-sls
+          aws-region: us-east-1
+
+      - name: Deploy static site to S3 bucket
+        run: |
+          aws s3 sync storybook-static/ s3://cp-aurora-ui-production-sa-east-1 \
+          --exclude '*.gitkeep' \
+          --exclude '*.html' \
+          --cache-control 'max-age=3888000' \
+          --delete
+
+          aws s3 sync storybook-static/ s3://cp-aurora-ui-production-sa-east-1 \
+          --exclude '*' \
+          --include '*.html' \
+          --cache-control 'no-cache, no-store' \
+          --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id E1X8RBYTJLAH84 --paths "/*"
