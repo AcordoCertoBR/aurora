@@ -10,9 +10,9 @@ import {
   LogoBadgetAC,
   LogoBadgeWhiteStrokeAC,
   LogoBadgeWhiteStrokeDefaultAC,
+  LogoBadgeFullWhiteAC,
+  LogoBadgeWhiteAC
 } from '../index'
-import { LogoBadgeFullWhiteAC } from './BadgeFullWhite'
-import { LogoBadgeWhiteAC } from './BadgeWhite'
 
 const meta: Meta = {
   title: 'Components/Logos/AC',
