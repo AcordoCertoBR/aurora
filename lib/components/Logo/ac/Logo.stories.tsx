@@ -11,7 +11,7 @@ import {
   LogoBadgeWhiteStrokeAC,
   LogoBadgeWhiteStrokeDefaultAC,
   LogoBadgeFullWhiteAC,
-  LogoBadgeWhiteAC
+  LogoBadgeWhiteAC,
 } from '../index'
 
 const meta: Meta = {
@@ -82,14 +82,14 @@ export const BadgeWhiteStrokeACDefault: StoryObj = {
   },
 }
 
-export const BadgeFullWhiteAC: StoryObj = {
-  render: (args) => {
-    return <LogoBadgeFullWhiteAC {...args} />
-  },
-}
-
 export const BadgeWhiteAC: StoryObj = {
   render: (args) => {
     return <LogoBadgeWhiteAC {...args} />
+  },
+}
+
+export const BadgeFullWhiteAC: StoryObj = {
+  render: (args) => {
+    return <LogoBadgeFullWhiteAC {...args} />
   },
 }
