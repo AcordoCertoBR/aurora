@@ -155,6 +155,7 @@ export const Alert = ({
             renderIf={
               <button
                 className="au-alert__action-btn"
+								type="button"
                 onClick={(e) => handleActionClick(e)}>
                 {actionButton?.content}
               </button>
