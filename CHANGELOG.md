@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2](https://github.com/AcordoCertoBR/aurora/compare/v0.1.1...v0.1.2) (2025-11-04)
+
+
+### Bug Fixes
+
+* 🐛 add button type to action button ([5f651c3](https://github.com/AcordoCertoBR/aurora/commit/5f651c357cc33a9689a5eda0a2e503187ae23005))
+* 🐛 add button type to action button ([103c043](https://github.com/AcordoCertoBR/aurora/commit/103c043bc5b45c260e0c44a1762d28b4f5713c7b))
+
 ## [0.1.1](https://github.com/AcordoCertoBR/aurora/compare/v0.1.0...v0.1.1) (2025-11-03)
 
 
