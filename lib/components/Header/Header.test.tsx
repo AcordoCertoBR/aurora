@@ -217,7 +217,9 @@ describe('Header.Navigation', () => {
 
 describe('Header.Profile', () => {
   it('renders initials and notification/menu icons', () => {
-    render(<Header.Profile fullName="Jane Doe" showNotifications={true} />)
+    render(
+      <Header.Profile fullName="Jane Doe" notifications={{ visible: true }} />,
+    )
     expect(screen.getByText('JD')).toBeInTheDocument()
     expect(
       document.querySelector('.au-header__profile-notifications'),
@@ -231,7 +233,7 @@ describe('Header.Profile', () => {
     render(
       <Header.Profile
         fullName="Jane Doe"
-        onClickNotifications={onClickNotifications}
+        notifications={{ onClick: onClickNotifications }}
         onClickMenu={onClickMenu}
       />,
     )
@@ -247,5 +249,33 @@ describe('Header.Profile', () => {
       ?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     expect(onClickNotifications).toHaveBeenCalled()
     expect(onClickMenu).toHaveBeenCalled()
+  })
+
+  it('renders notification badge when visible is true', () => {
+    render(
+      <Header.Profile
+        fullName="Jane Doe"
+        notifications={{ visible: true, count: 5 }}
+      />,
+    )
+    const badge = document.querySelector(
+      '.au-header__profile-notifications-badge',
+    )
+    expect(badge).toBeTruthy()
+    expect(badge).toHaveTextContent('5')
+  })
+
+  it('renders empty notification badge when count is undefined but hasUnread is true', () => {
+    render(
+      <Header.Profile
+        fullName="Jane Doe"
+        notifications={{ visible: true, hasUnread: true }}
+      />,
+    )
+    const badge = document.querySelector(
+      '.au-header__profile-notifications-badge',
+    )
+    expect(badge).toBeTruthy()
+    expect(badge).toBeEmptyDOMElement()
   })
 })
