@@ -36,7 +36,7 @@ export const HeaderProfile = ({
               condition={!!shouldShowBadge}
               renderIf={
                 <div className="au-header__profile-notifications-badge">
-                  {count}
+                  {count && count > 0 ? count : null}
                 </div>
               }
             />
