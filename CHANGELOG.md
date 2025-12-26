@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.0](https://github.com/AcordoCertoBR/aurora/compare/v0.1.2...v0.2.0) (2025-12-26)
+
+
+### Features
+
+* add notifications support to HeaderProfile component with badge styling ([eb1fdd0](https://github.com/AcordoCertoBR/aurora/commit/eb1fdd04d162f121f620c19800f891e729412ba6))
+* enhance Header.Profile tests for notifications handling and badge rendering ([3afccd8](https://github.com/AcordoCertoBR/aurora/commit/3afccd81d9d928e8cd8f2f4c4ae36d2bd30d9ac8))
+* update Header.Profile to include notifications handling ([cb55922](https://github.com/AcordoCertoBR/aurora/commit/cb559224ce9e5b3de3ab193d7055c8542ec7b07a))
+* update notification badge rendering and styling for improved visibility ([5ea5b87](https://github.com/AcordoCertoBR/aurora/commit/5ea5b87a6af9117f8a592459b03de571715da404))
+
 ## [0.1.2](https://github.com/AcordoCertoBR/aurora/compare/v0.1.1...v0.1.2) (2025-11-04)
 
 
