@@ -2,29 +2,44 @@ import { getInitialLetters } from '@core/utils/getInitialLetters'
 import { IconBell, IconChevronDown, IconMenu } from '@components/icons/default'
 import { Conditional } from '@components/misc'
 
+export type NotificationsConfig = {
+  visible?: boolean
+  count?: number
+  hasUnread?: boolean
+  onClick?: () => void
+}
+
 export type HeaderProfileProps = {
-  onClickNotifications?: () => void
-  onClickMenu?: () => void
   fullName: string
-  showNotifications?: boolean
+  onClickMenu?: () => void
+  notifications?: NotificationsConfig
 }
 
 export const HeaderProfile = ({
-  onClickNotifications,
-  onClickMenu,
   fullName,
-  showNotifications = true,
+  onClickMenu,
+  notifications = {},
 }: HeaderProfileProps) => {
   const initialLetters = getInitialLetters(fullName)
+
+  const { visible = true, hasUnread = false, count, onClick } = notifications
+  const shouldShowBadge = (count && count > 0) || hasUnread
+
   return (
     <div className="au-header__profile">
       <Conditional
-        condition={showNotifications}
+        condition={visible}
         renderIf={
-          <div
-            className="au-header__profile-notifications"
-            onClick={onClickNotifications}>
+          <div className="au-header__profile-notifications" onClick={onClick}>
             <IconBell />
+            <Conditional
+              condition={!!shouldShowBadge}
+              renderIf={
+                <div className="au-header__profile-notifications-badge">
+                  {count && count > 0 ? count : null}
+                </div>
+              }
+            />
           </div>
         }
       />

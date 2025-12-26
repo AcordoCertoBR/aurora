@@ -30,9 +30,14 @@ const meta: Meta<typeof Drawer> = {
             </Header.Logo>
             <Header.Actions>
               <Header.Profile
-                onClickNotifications={() => ''}
                 onClickMenu={() => ''}
                 fullName="Fulano Silva"
+                notifications={{
+                  visible: true,
+                  hasUnread: true,
+                  count: 3,
+                  onClick: () => '',
+                }}
               />
             </Header.Actions>
 
