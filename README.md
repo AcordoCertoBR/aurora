@@ -53,7 +53,7 @@ npm install react-snap-carousel
 import { Carousel } from '@consumidor-positivo/aurora'
 
 // Agora você pode usar o Carousel
-<Carousel items={items} />
+;<Carousel items={items} />
 ```
 
 > **Nota:** Se você tentar usar o Carousel sem instalar o `react-snap-carousel`, receberá um erro de dependência em tempo de execução.
@@ -68,7 +68,7 @@ execute os testes com:
 npm test
 ```
 
-Para rodar em modo watch:
+Para rodar no modo watch:
 
 ```bash
 npm run test:watch
