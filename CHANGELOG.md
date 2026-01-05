@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/AcordoCertoBR/aurora/compare/v0.2.0...v0.2.1) (2026-01-05)
+
+
+### Bug Fixes
+
+* correct Carousel usage example and update test command description ([cbf6779](https://github.com/AcordoCertoBR/aurora/commit/cbf67796dce77de8d0d6b95f6d3a55cde1809164))
+* publish ([e442f27](https://github.com/AcordoCertoBR/aurora/commit/e442f27fc9f981ba75098ca8956ee04ec02a7dcc))
+
 ## [0.2.0](https://github.com/AcordoCertoBR/aurora/compare/v0.1.2...v0.2.0) (2025-12-26)
 
 
