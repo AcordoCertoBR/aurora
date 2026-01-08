@@ -1,0 +1,30 @@
+.au-breadcrumb {
+  gap: $spacing-200;
+  display: flex;
+  padding: $spacing-050;
+  align-items: center;
+  background-color: $color-neutral-00;
+
+  &--with-help {
+    justify-content: space-between;
+  }
+
+  &__title {
+    justify-self: center;
+  }
+
+  &__button {
+    width: 64px;
+    height: 64px;
+
+    .au-icon {
+      width: 24px;
+      height: 24px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
