@@ -1,22 +1,22 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi } from 'vitest'
-import { Breadcrumb } from './index'
+import { SubHeader } from './index'
 
-describe('Breadcrumb', () => {
+describe('SubHeader', () => {
   it('should render the title correctly', () => {
-    render(<Breadcrumb title="Página Inicial" handleReturn={vi.fn()} />)
+    render(<SubHeader title="Página Inicial" handleReturn={vi.fn()} />)
 
     expect(screen.getByText('Página Inicial')).toBeInTheDocument()
   })
 
   it('should call handleReturn when return button is clicked', async () => {
     const onReturn = vi.fn()
-    render(<Breadcrumb title="Voltar" handleReturn={onReturn} />)
+    render(<SubHeader title="Voltar" handleReturn={onReturn} />)
 
     const user = userEvent.setup()
 
-    const returnBtn = document.querySelector('.au-breadcrumb__button')
+    const returnBtn = document.querySelector('.au-sub-header__button')
 
     if (returnBtn) {
       await user.click(returnBtn)
@@ -26,18 +26,18 @@ describe('Breadcrumb', () => {
   })
 
   it('should not render help button when handleHelpInfo is not provided', () => {
-    render(<Breadcrumb title="Sem Ajuda" handleReturn={vi.fn()} />)
+    render(<SubHeader title="Sem Ajuda" handleReturn={vi.fn()} />)
 
-    const root = document.querySelector('.au-breadcrumb')
+    const root = document.querySelector('.au-sub-header')
     const helpBtn = document.querySelector('.au-icon--iconhelpcircle')
-    expect(root).not.toHaveClass('au-breadcrumb--with-help')
+    expect(root).not.toHaveClass('au-sub-header--with-help')
     expect(helpBtn).not.toBeInTheDocument()
   })
 
   it('should render help button and call handleHelpInfo when provided', async () => {
     const onHelp = vi.fn()
     render(
-      <Breadcrumb
+      <SubHeader
         title="Com Ajuda"
         handleReturn={vi.fn()}
         handleHelpInfo={onHelp}
@@ -45,11 +45,11 @@ describe('Breadcrumb', () => {
     )
 
     const user = userEvent.setup()
-    const root = document.querySelector('.au-breadcrumb')
+    const root = document.querySelector('.au-sub-header')
 
-    expect(root).toHaveClass('au-breadcrumb--with-help')
+    expect(root).toHaveClass('au-sub-header--with-help')
 
-    const buttons = document.querySelectorAll('.au-breadcrumb__button')
+    const buttons = document.querySelectorAll('.au-sub-header__button')
     const helpBtn = buttons[1]
 
     if (helpBtn) {
@@ -60,10 +60,10 @@ describe('Breadcrumb', () => {
   })
 
   it('should have the correct structure and classes for styling', () => {
-    render(<Breadcrumb title="Teste de Classe" handleReturn={vi.fn()} />)
+    render(<SubHeader title="Teste de Classe" handleReturn={vi.fn()} />)
 
     const titleElement = screen.getByText('Teste de Classe')
 
-    expect(titleElement).toHaveClass('au-breadcrumb__title')
+    expect(titleElement).toHaveClass('au-sub-header__title')
   })
 })

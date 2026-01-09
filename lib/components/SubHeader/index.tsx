@@ -7,30 +7,30 @@ import classNames from 'classnames'
 
 import './styles.scss'
 
-type BreadcrumbProps = {
+type SubHeaderProps = {
   title: string
   handleReturn: () => void
   handleHelpInfo?: () => void
 }
 
-export const Breadcrumb = ({
+export const SubHeader = ({
   title,
   handleReturn,
   handleHelpInfo,
-}: BreadcrumbProps) => {
+}: SubHeaderProps) => {
   return (
     <div
-      className={classNames('au-breadcrumb', {
-        'au-breadcrumb--with-help': handleHelpInfo,
+      className={classNames('au-sub-header', {
+        'au-sub-header--with-help': handleHelpInfo,
       })}>
       <Button
-        className="au-breadcrumb__button"
+        className="au-sub-header__button"
         onClick={handleReturn}
         type="ghost">
         <IconChevronLeft />
       </Button>
       <Text
-        className="au-breadcrumb__title"
+        className="au-sub-header__title"
         variant="heading-micro"
         weight="bold"
         as="div">
@@ -38,7 +38,7 @@ export const Breadcrumb = ({
       </Text>
       {handleHelpInfo && (
         <Button
-          className="au-breadcrumb__button"
+          className="au-sub-header__button"
           onClick={handleHelpInfo}
           type="ghost">
           <IconHelpCircle />
