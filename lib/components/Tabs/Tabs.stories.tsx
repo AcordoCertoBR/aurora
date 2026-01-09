@@ -22,6 +22,34 @@ export default meta
 
 type Story = StoryObj<TabsProps>
 
+export const TwoType: Story = {
+  args: {
+    tabs: [
+      {
+        title: 'Logo do AC',
+        tab: 'tab 1',
+        icon: <IconCheckCircle />,
+        children: <LogoBadgetAC />,
+      },
+      {
+        title: 'Logo do CP',
+        tab: 'tab 2',
+        children: <LogoBadgetCP />,
+      },
+      {
+        title: 'Logo do AC Negativo',
+        tab: 'tab 3',
+        children: <LogoPrimaryNegativeAC />,
+      },
+    ],
+    type: 2,
+    initialTab: 'tab 1',
+    onClick: () => {
+      console.log('tab clicked')
+    },
+  },
+}
+
 export const CustomContent: Story = {
   args: {
     tabs: [
