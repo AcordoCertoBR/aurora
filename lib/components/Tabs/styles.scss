@@ -1,4 +1,8 @@
 .au-tabs {
+  &--type-2 {
+    border-bottom: 1px solid $color-neutral-20;
+  }
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -26,6 +30,7 @@
 
   &__btns {
     display: flex;
+    position: relative;
     white-space: nowrap;
     white-space: nowrap;
     overflow-x: scroll;
@@ -34,9 +39,35 @@
     &::-webkit-scrollbar {
       display: none;
     }
+
     @include aboveMedium() {
       overflow: unset;
       margin-bottom: 0;
+    }
+
+    &-option {
+      cursor: pointer;
+      line-height: 20px;
+      color: $color-neutral-50;
+      font-size: $font-size-p3;
+      font-family: $font-title;
+      padding: $spacing-100 $spacing-200;
+      position: relative;
+      transition: all 0.3s ease;
+
+      &--active {
+        color: $color-brand-blue-40;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    &-indicator {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      height: 2px;
+      background-color: $color-brand-blue-40;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
