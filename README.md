@@ -68,7 +68,7 @@ execute os testes com:
 npm test
 ```
 
-Para rodar em modo watch:
+Para rodar no modo watch:
 
 ```bash
 npm run test:watch
