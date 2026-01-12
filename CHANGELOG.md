@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/AcordoCertoBR/aurora/compare/v0.2.1...v0.2.2) (2026-01-12)
+
+
+### Bug Fixes
+
+* **docs:** update note on Carousel dependency error message ([ce9e5d7](https://github.com/AcordoCertoBR/aurora/commit/ce9e5d73ccfcf28d26fd919a88a5b9b58639028a))
+
 ## [0.2.1](https://github.com/AcordoCertoBR/aurora/compare/v0.2.0...v0.2.1) (2026-01-05)
 
 
