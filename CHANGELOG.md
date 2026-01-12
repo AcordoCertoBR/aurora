@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/AcordoCertoBR/aurora/compare/v0.2.3...v0.2.4) (2026-01-12)
+
+
+### Bug Fixes
+
+* **Header:** adjust badge positioning and styling for better visibility ([07b0516](https://github.com/AcordoCertoBR/aurora/commit/07b05163457d2692a8391b30e39a22801fcf4f9e))
+
 ## [0.2.3](https://github.com/AcordoCertoBR/aurora/compare/v0.2.2...v0.2.3) (2026-01-12)
 
 
