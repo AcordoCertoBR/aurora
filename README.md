@@ -56,7 +56,7 @@ import { Carousel } from '@consumidor-positivo/aurora'
 <Carousel items={items} />
 ```
 
-> **Nota:** Se você tentar usar o Carousel sem instalar o `react-snap-carousel`, receberá erro de dependência em tempo de execução.
+> **Nota:** Se você tentar usar o Carousel sem instalar o `react-snap-carousel`, receberá um erro de dependência em tempo de execução.
 
 ## Testes
 
