@@ -1,21 +1,45 @@
 .au-sub-header {
-  gap: $spacing-200;
-  display: flex;
-  padding: $spacing-050;
-  align-items: center;
+  padding-block: 12px;
   background-color: $color-neutral-00;
 
+  @include aboveMedium() {
+    padding-block: 22px;
+  }
+
   &--with-help {
-    justify-content: space-between;
+    .au-sub-header__container {
+      grid-template-columns: 1fr auto 1fr;
+    }
+  }
+
+  &__container {
+    display: grid;
+    gap: $spacing-100;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+
+    @include belowMedium() {
+      padding-inline: $spacing-100;
+    }
+
+    @include aboveMedium() {
+      gap: $spacing-200;
+      grid-template-columns: 1fr auto 1fr;
+    }
   }
 
   &__title {
-    justify-self: center;
+    grid-column: 2;
+    text-align: center;
   }
 
   &__button {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
+
+    &:last-child {
+      justify-self: end;
+    }
 
     .au-icon {
       width: 24px;
