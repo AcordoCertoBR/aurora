@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/AcordoCertoBR/aurora/compare/v0.2.2...v0.2.3) (2026-01-12)
+
+
+### Bug Fixes
+
+* npm publish ([8a4645b](https://github.com/AcordoCertoBR/aurora/commit/8a4645b3e5255eb83e93afd3276bb60e8b78675d))
+
 ## [0.2.2](https://github.com/AcordoCertoBR/aurora/compare/v0.2.1...v0.2.2) (2026-01-12)
 
 
