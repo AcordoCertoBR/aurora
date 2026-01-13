@@ -1,0 +1,54 @@
+.au-sub-header {
+  padding-block: 12px;
+  background-color: $color-neutral-00;
+
+  @include aboveMedium() {
+    padding-block: 22px;
+  }
+
+  &--with-help {
+    .au-sub-header__container {
+      grid-template-columns: 1fr auto 1fr;
+    }
+  }
+
+  &__container {
+    display: grid;
+    gap: $spacing-100;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+
+    @include belowMedium() {
+      padding-inline: $spacing-100;
+    }
+
+    @include aboveMedium() {
+      gap: $spacing-200;
+      grid-template-columns: 1fr auto 1fr;
+    }
+  }
+
+  &__title {
+    grid-column: 2;
+    text-align: center;
+  }
+
+  &__button {
+    width: 48px;
+    height: 48px;
+
+    &:last-child {
+      justify-self: end;
+    }
+
+    .au-icon {
+      width: 24px;
+      height: 24px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}

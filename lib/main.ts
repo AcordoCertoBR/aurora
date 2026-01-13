@@ -36,6 +36,7 @@ export { Tag } from './components/Tag'
 export { Modal } from './components/Modal'
 export { Tooltip } from './components/Tooltip'
 export { Container } from './components/Container'
+export { SubHeader } from './components/SubHeader'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
