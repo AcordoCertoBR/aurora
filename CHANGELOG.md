@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/AcordoCertoBR/aurora/compare/v0.2.4...v0.3.0) (2026-01-13)
+
+
+### Features
+
+* SubHeader component ([fa1b0d1](https://github.com/AcordoCertoBR/aurora/commit/fa1b0d13a5baabbcbe9944fe37b7553f539c6051))
+
 ## [0.2.4](https://github.com/AcordoCertoBR/aurora/compare/v0.2.3...v0.2.4) (2026-01-12)
 
 
