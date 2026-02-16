@@ -1,6 +1,10 @@
 .au-tabs {
   &--type-2 {
     border-bottom: 1px solid $color-neutral-20;
+
+    .au-tabs__btns {
+      margin-bottom: 0;
+    }
   }
 
   &__container {
