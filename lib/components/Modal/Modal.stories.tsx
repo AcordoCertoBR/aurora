@@ -21,11 +21,17 @@ type Story = StoryObj<typeof Modal>
 
 export const Default: Story = {
   render: (args) => {
-    return <div style={{ minHeight: '400px' }}><Modal {...args} /></div>
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <Modal {...args} />
+      </div>
+    )
   },
   args: {
     isOpen: true,
     onClose: () => console.log('Modal closed'),
+    layoutMobile: 'default',
+    layoutDesktop: 'default',
     headerContent: (
       <>
         <Text variant="heading-small" weight="bold">
@@ -54,7 +60,11 @@ export const Default: Story = {
 
 export const Centralized: Story = {
   render: (args) => {
-    return <div style={{ minHeight: '400px' }}><Modal {...args} /></div>
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <Modal {...args} />
+      </div>
+    )
   },
   args: {
     isOpen: true,
@@ -78,6 +88,54 @@ export const Centralized: Story = {
         since the 1500s, when an unknown printer took a galley of type and
         scrambled it to make a type specimen book. It has survived not only five
         centuries, but also the leap into electronic typesetting, remaining
+        essentially unchanged. It was popularised in the 1960s with the release
+        of Letraset sheets containing Lorem Ipsum passages, and more recently
+        with desktop publishing software like Aldus PageMaker including versions
+        of Lorem Ipsum.
+      </div>
+    ),
+  },
+}
+
+export const FullScreen: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <Modal {...args} />
+      </div>
+    )
+  },
+  args: {
+    isOpen: true,
+    onClose: () => console.log('Modal closed'),
+    layoutMobile: 'full-screen',
+    mobileModalTitle: 'Full Screen Modal',
+    handleHelpInfo: () => console.log('Button clicked'),
+    headerContent: (
+      <>
+        <Text variant="heading-small" weight="bold">
+          Full Screen Modal
+        </Text>
+        <Text variant="body-small" weight="regular">
+          Only mobile
+        </Text>
+      </>
+    ),
+    content: (
+      <div style={{ marginBottom: '16px' }}>
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to make a type specimen book. It has survived not only five
+        centuries, but also the leap into electronic typesetting, remaining
+        essentially unchanged. It was popularised in the 1960s with the release
+        of Letraset sheets containing Lorem Ipsum passages, and more recently
+        with desktop publishing software like Aldus PageMaker including versions
+        of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and
+        typesetting industry. Lorem Ipsum has been the industry's standard dummy
+        text ever since the 1500s, when an unknown printer took a galley of type
+        and scrambled it to make a type specimen book. It has survived not only
+        five centuries, but also the leap into electronic typesetting, remaining
         essentially unchanged. It was popularised in the 1960s with the release
         of Letraset sheets containing Lorem Ipsum passages, and more recently
         with desktop publishing software like Aldus PageMaker including versions
