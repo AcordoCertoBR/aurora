@@ -1,7 +1,21 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi } from 'vitest'
-import { Modal } from './index'
+import { Modal, ModalProps } from './index'
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+})
 
 describe('Modal', () => {
   it('renders when isOpen is true', () => {
@@ -29,6 +43,7 @@ describe('Modal', () => {
     render(
       <Modal
         isOpen={true}
+        onClose={() => {}}
         headerContent="Header"
         content="Body Content"
       />,
@@ -38,17 +53,34 @@ describe('Modal', () => {
     expect(screen.getByText('Body Content')).toBeInTheDocument()
   })
 
-  it('applies correct classes for layoutMobile and layoutDesktop', () => {
-    const { container } = render(
-      <Modal
-        isOpen={true}
-        layoutMobile="centralized"
-        layoutDesktop="centralized"
-      />,
-    )
+  const renderModal = (props: Partial<ModalProps>) => {
+    const finalProps = {
+      isOpen: true,
+      onClose: vi.fn(),
+      ...props,
+    } as ModalProps
 
+    return render(<Modal {...finalProps} />)
+  }
+
+  it('renders with desktop centralized class', () => {
+    const { container } = renderModal({ layoutDesktop: 'centralized' })
     const modal = container.querySelector('.au-modal')
-    expect(modal).toHaveClass('au-modal--mobile-centralized')
+
     expect(modal).toHaveClass('au-modal--desktop-centralized')
+  })
+
+  it('renders with mobile centralized class', () => {
+    const { container } = renderModal({ layoutMobile: 'centralized' })
+    const modal = container.querySelector('.au-modal')
+
+    expect(modal).toHaveClass('au-modal--mobile-centralized')
+  })
+
+  it('renders with mobile full-screen class', () => {
+    const { container } = renderModal({ layoutMobile: 'full-screen' })
+    const modal = container.querySelector('.au-modal')
+
+    expect(modal).toHaveClass('au-modal--mobile-full-screen')
   })
 })

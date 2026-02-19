@@ -53,6 +53,10 @@
       animation: slideCentralized 0.3s ease forwards;
     }
 
+    &.au-modal--mobile-full-screen .au-modal__container {
+      animation: none;
+    }
+
     @include aboveMedium() {
       &.au-modal--desktop-centralized .au-modal__container {
         animation: slideCentralized 0.3s ease forwards;
@@ -71,7 +75,6 @@
     position: fixed;
     z-index: 6;
     bottom: 0;
-    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -125,6 +128,22 @@
         height: min-content;
         flex-direction: column;
         border-radius: $border-radius-big;
+      }
+    }
+  }
+
+  &--mobile-full-screen {
+    @include belowMedium() {
+      .au-modal__container {
+        gap: 0;
+        padding: 0;
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+      }
+
+      .au-modal__content {
+        padding: 16px;
       }
     }
   }
