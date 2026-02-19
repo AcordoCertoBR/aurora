@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.0](https://github.com/AcordoCertoBR/aurora/compare/v0.3.0...v0.4.0) (2026-02-19)
+
+
+### Features
+
+* Full Screen Modal ([657aba4](https://github.com/AcordoCertoBR/aurora/commit/657aba48384339e91f61e191daa8a08a8b28b9f7))
+* Full Screen Modal ([375b9a7](https://github.com/AcordoCertoBR/aurora/commit/375b9a761bec3f920ebd70846643ee56f4281360))
+
+
+### Bug Fixes
+
+* Tab component type 2 ([f39d685](https://github.com/AcordoCertoBR/aurora/commit/f39d6853a30185eb7e855eedfa667815931d2e4d))
+* Tab component type 2 ([c4f141e](https://github.com/AcordoCertoBR/aurora/commit/c4f141ec017610909b930d0e6de300421a3065fb))
+
 ## [0.3.0](https://github.com/AcordoCertoBR/aurora/compare/v0.2.4...v0.3.0) (2026-01-13)
 
 
