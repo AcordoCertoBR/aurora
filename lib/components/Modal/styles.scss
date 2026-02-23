@@ -158,6 +158,17 @@
       display: flex;
       justify-content: end;
       width: 100%;
+
+      &-icon {
+        width: 20px;
+        height: 20px;
+
+        > svg {
+          width: 20px;
+          height: 20px;
+          color: $color-neutral-60;
+        }
+      }
     }
   }
 
