@@ -48,7 +48,7 @@ export const Modal = ({
             <Then>
               <If condition={!!onClose}>
                 <button className="au-modal__header-close" onClick={onClose}>
-                  <IconX />
+                  <IconX className="au-modal__header-close-icon" />
                 </button>
               </If>
               {headerContent}
