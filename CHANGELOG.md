@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1](https://github.com/AcordoCertoBR/aurora/compare/v0.4.0...v0.4.1) (2026-02-24)
+
+
+### Bug Fixes
+
+* fix modal ([06e8216](https://github.com/AcordoCertoBR/aurora/commit/06e82167e724ace53dc7ac6e80aa8d7a2b485bfb))
+* fix modal ([dbf4a0f](https://github.com/AcordoCertoBR/aurora/commit/dbf4a0f930da9f13d41210e78119a52baf3a9de7))
+
 ## [0.4.0](https://github.com/AcordoCertoBR/aurora/compare/v0.3.0...v0.4.0) (2026-02-19)
 
 
