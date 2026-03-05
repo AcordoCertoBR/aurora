@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.2](https://github.com/AcordoCertoBR/aurora/compare/v0.4.1...v0.4.2) (2026-03-05)
+
+
+### Bug Fixes
+
+* fix hydration mismatch in header and footer ([69e794c](https://github.com/AcordoCertoBR/aurora/commit/69e794c2164cc5b07343e488282df8dfc2b45f18))
+* fix hydration mismatch in header and footer ([5df7a3b](https://github.com/AcordoCertoBR/aurora/commit/5df7a3b3f346cfde3bfb1a2fb2b49307e0bcfa4e))
+
 ## [0.4.1](https://github.com/AcordoCertoBR/aurora/compare/v0.4.0...v0.4.1) (2026-02-24)
 
 
