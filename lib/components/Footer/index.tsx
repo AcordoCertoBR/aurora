@@ -190,7 +190,7 @@ export const Footer = ({
                 }
               />
               <Text
-                as="h2"
+                as="div"
                 variant="body-medium"
                 weight="regular"
                 color="secondary"
