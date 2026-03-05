@@ -63,7 +63,7 @@ const NavbarVerticalLink = ({
 
   return (
     <Text
-      as={dropdown ? 'p' : 'a'}
+      as={dropdown ? 'div' : 'a'}
       href={href}
       variant="heading-micro"
       weight="light"
