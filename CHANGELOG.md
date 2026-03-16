@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/AcordoCertoBR/aurora/compare/v0.4.2...v0.5.0) (2026-03-16)
+
+
+### Features
+
+* light bulb icon ([f8ecca0](https://github.com/AcordoCertoBR/aurora/commit/f8ecca0459001837942f93cdd8bf37f326ed4c4b))
+* light bulb icon ([f77302c](https://github.com/AcordoCertoBR/aurora/commit/f77302c9b9d3c23f0dd0ef7ca6868e896b1f21f7))
+
 ## [0.4.2](https://github.com/AcordoCertoBR/aurora/compare/v0.4.1...v0.4.2) (2026-03-05)
 
 
