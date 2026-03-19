@@ -1,10 +1,6 @@
 import classNames from 'classnames'
 import {
-  IconAlertOctagon,
-  IconAlertTriangle,
-  IconCheck,
   IconInfo,
-  IconSlash,
 } from '@components/icons'
 import {
   COLOR_ERROR_50,
@@ -39,15 +35,15 @@ export const BadgeInfo = ({
   const statusMap = {
     success: {
       option: 'success',
-      icon: <IconCheck rawColor={COLOR_SUCCESS_50} />,
+      icon: <IconInfo rawColor={COLOR_SUCCESS_50} />,
     },
     error: {
       option: 'error',
-      icon: <IconAlertOctagon rawColor={COLOR_ERROR_50} />,
+      icon: <IconInfo rawColor={COLOR_ERROR_50} />,
     },
     warning: {
       option: 'warning',
-      icon: <IconAlertTriangle rawColor={COLOR_WARNING_50} />,
+      icon: <IconInfo rawColor={COLOR_WARNING_50} />,
     },
     info: { 
       option: 'info', 
@@ -59,7 +55,7 @@ export const BadgeInfo = ({
     },
     neutral: {
       option: 'neutral',
-      icon: <IconSlash rawColor={COLOR_NEUTRAL_70} />,
+      icon: <IconInfo rawColor={COLOR_NEUTRAL_70} />,
     },
     custom: {
       option: 'custom',
