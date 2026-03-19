@@ -25,7 +25,7 @@ export const InfoReadOnly: Story = {
   render: (args) => container(args),
   args: {
     status: 'info',
-    text: 'support text',
+    text: 'Support text',
   },
 }
 
@@ -33,7 +33,7 @@ export const SuccessReadOnly: Story = {
   render: (args) => container(args),
   args: {
     status: 'success',
-    text: 'support text',
+    text: 'Support text',
   },
 }
 
@@ -42,7 +42,7 @@ export const WarningReadOnlySmall: Story = {
   args: {
     size: 'small',
     status: 'warning',
-    text: 'support text',
+    text: 'Support text',
   },
 }
 
@@ -59,7 +59,7 @@ export const ErrorReadOnlyLarge: Story = {
   args: {
     size: 'large',
     status: 'error',
-    text: 'support text',
+    text: 'Support text',
   },
 }
 
@@ -67,7 +67,7 @@ export const CustomIconReadOnly: Story = {
   render: (args) => container(args),
   args: {
     status: 'success',
-    text: 'support text',
+    text: 'Support text',
     customIcon: '🔥',
   },
 }
