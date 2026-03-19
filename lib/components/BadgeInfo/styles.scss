@@ -5,6 +5,8 @@
   border-radius: 8px;
   padding: 8px;
   width: fit-content;
+  height: 26px;
+  padding: 4px 8px;
 
   &__content {
     display: flex;
@@ -25,23 +27,6 @@
       font-size: 12px;
       font-weight: 600;
       line-height: 18px;
-    }
-  }
-
-  &--size-small {
-    height: 26px;
-    padding: 4px 8px;
-  }
-
-  &--size-medium {
-    height: 36px;
-  }
-
-  &--size-large {
-    height: 38px;
-    &-support-text {
-      font-size: 14px;
-      line-height: 22px;
     }
   }
 

@@ -21,7 +21,7 @@ const container = (args: BadgeInfoProps) => {
   return <BadgeInfo {...args} />
 }
 
-export const InfoReadOnly: Story = {
+export const InfoBadgeInfo: Story = {
   render: (args) => container(args),
   args: {
     status: 'info',
@@ -29,7 +29,7 @@ export const InfoReadOnly: Story = {
   },
 }
 
-export const SuccessReadOnly: Story = {
+export const SuccessBadgeInfo: Story = {
   render: (args) => container(args),
   args: {
     status: 'success',
@@ -37,33 +37,23 @@ export const SuccessReadOnly: Story = {
   },
 }
 
-export const WarningReadOnlySmall: Story = {
-  render: (args) => container(args),
-  args: {
-    size: 'small',
-    status: 'warning',
-    text: 'Support text',
-  },
-}
-
-export const ProgressReadOnlyMedium: Story = {
+export const ProgressBadgeInfo: Story = {
   render: (args) => container(args),
   args: {
     status: 'progress',
-    text: 'progress text',
-  },
-}
-
-export const ErrorReadOnlyLarge: Story = {
-  render: (args) => container(args),
-  args: {
-    size: 'large',
-    status: 'error',
     text: 'Support text',
   },
 }
 
-export const CustomIconReadOnly: Story = {
+export const NeutralBadgeInfo: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'progress',
+    text: 'Support text',
+  },
+}
+
+export const CustomIconBadgeInfo: Story = {
   render: (args) => container(args),
   args: {
     status: 'success',
@@ -72,52 +62,11 @@ export const CustomIconReadOnly: Story = {
   },
 }
 
-export const InfoBadge: Story = {
-  render: (args) => container(args),
-  args: {
-    status: 'info',
-    text: 'info',
-  },
-}
-
-export const ErrorBadge: Story = {
-  render: (args) => container(args),
-  args: {
-    status: 'error',
-    text: 'error',
-  },
-}
-
 export const WarningBadge: Story = {
   render: (args) => container(args),
   args: {
     status: 'warning',
-    text: 'warning',
+    text: 'Support text',
   },
 }
 
-export const ProggressBadge: Story = {
-  render: (args) => container(args),
-  args: {
-    status: 'progress',
-    text: 'progress',
-  },
-}
-
-export const NeutralBadgeSmall: Story = {
-  render: (args) => container(args),
-  args: {
-    status: 'neutral',
-    size: 'small',
-    text: 'neutral',
-  },
-}
-
-export const NeutralBadgeMedium: Story = {
-  render: (args) => container(args),
-  args: {
-    status: 'neutral',
-    size: 'medium',
-    text: 'neutral',
-  },
-}

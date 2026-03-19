@@ -16,7 +16,6 @@ import { Conditional } from '@components/misc'
 export type BadgeInfoProps = {
   status: 'info' | 'success' | 'error' | 'warning' | 'progress' | 'neutral'
   color?: 'primary' | 'secondary'
-  size?: 'small' | 'medium' | 'large'
   text: string
   children?: React.ReactNode
   customIcon?: string | JSX.Element
@@ -25,7 +24,6 @@ export type BadgeInfoProps = {
 
 export const BadgeInfo = ({
   status,
-  size = 'medium',
   color = 'primary',
   customIcon,
   text,
@@ -65,7 +63,6 @@ export const BadgeInfo = ({
 
   const badgeInfoClasses = classNames('au-badgeInfo', {
     [`au-badgeInfo--${statusMap[status].option}`]: statusMap[status].option,
-    [`au-badgeInfo--size-${size}`]: !!size,
     [`au-badgeInfo--color-${color}`]: !!color,
   })
 
