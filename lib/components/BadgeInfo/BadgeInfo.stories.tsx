@@ -48,7 +48,7 @@ export const ProgressBadgeInfo: Story = {
 export const NeutralBadgeInfo: Story = {
   render: (args) => container(args),
   args: {
-    status: 'progress',
+    status: 'neutral',
     text: 'Support text',
   },
 }

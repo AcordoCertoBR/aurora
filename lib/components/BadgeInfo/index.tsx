@@ -1,7 +1,5 @@
 import classNames from 'classnames'
-import {
-  IconInfo,
-} from '@components/icons'
+import { IconInfo } from '@components/icons'
 import {
   COLOR_ERROR_50,
   COLOR_INFO_50,
@@ -11,7 +9,7 @@ import {
   COLOR_NEUTRAL_70,
 } from '@core/tokens'
 import './styles.scss'
-import { Conditional } from '@components/misc'
+import { Else, IfElse, Then } from '@components/misc'
 
 export type BadgeInfoProps = {
   status: 'info' | 'success' | 'error' | 'warning' | 'progress' | 'neutral'
@@ -28,7 +26,6 @@ export const BadgeInfo = ({
   customIcon,
   text,
   children,
-  actionButton,
 }: BadgeInfoProps) => {
   const statusMap = {
     success: {
@@ -43,9 +40,9 @@ export const BadgeInfo = ({
       option: 'warning',
       icon: <IconInfo rawColor={COLOR_WARNING_50} />,
     },
-    info: { 
-      option: 'info', 
-      icon: <IconInfo rawColor={COLOR_INFO_50} />
+    info: {
+      option: 'info',
+      icon: <IconInfo rawColor={COLOR_INFO_50} />,
     },
     progress: {
       option: 'progress',
@@ -70,24 +67,12 @@ export const BadgeInfo = ({
     <div className={badgeInfoClasses}>
       <div className="au-badgeInfo__content">
         <div className="au-badgeInfo__content-icon">
-          <Conditional
-            condition={!!customIcon}
-            renderIf={customIcon}
-            renderElse={statusMap[status].icon}
-          />
+          <IfElse condition={!!customIcon}>
+            <Then>{customIcon}</Then>
+            <Else>{statusMap[status].icon}</Else>
+          </IfElse>
         </div>
         <p className={`au-badgeInfo__content-support-text`}>{text}</p>
-
-        <Conditional
-          condition={!!actionButton}
-          renderIf={
-            <button
-              className="au-badgeInfo__action-btn"
-              onClick={actionButton?.onClick}>
-              {actionButton?.content}
-            </button>
-          }
-        />
       </div>
       {children}
     </div>
