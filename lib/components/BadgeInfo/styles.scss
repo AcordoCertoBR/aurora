@@ -1,0 +1,74 @@
+.au-badgeInfo {
+  font-family: $font-body;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 8px;
+  width: fit-content;
+  height: 26px;
+  padding: 4px 8px;
+
+  &__content {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+
+    &-icon {
+      .au-icon,
+      .au-icon > svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &-support-text {
+      color: $color-neutral-60;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+    }
+  }
+
+  &--color-primary {
+    &.au-badgeInfo--info {
+      background-color: $color-info-10;
+    }
+    &.au-badgeInfo--success {
+      background-color: $color-success-10;
+    }
+    &.au-badgeInfo--error {
+      background-color: $color-error-10;
+    }
+    &.au-badgeInfo--warning {
+      background-color: $color-warning-10;
+    }
+    &.au-badgeInfo--progress {
+      background-color: $color-brand-cyan-10;
+    }
+    &.au-badgeInfo--neutral {
+      background-color: $color-neutral-20;
+    }
+  }
+
+  &--color-secondary {
+    &.au-badgeInfo--info {
+      background-color: $color-info-20;
+    }
+    &.au-badgeInfo--success {
+      background-color: $color-success-20;
+    }
+    &.au-badgeInfo--error {
+      background-color: $color-error-20;
+    }
+    &.au-badgeInfo--warning {
+      background-color: $color-warning-20;
+    }
+    &.au-badgeInfo--progress {
+      background-color: $color-brand-cyan-20;
+    }
+    &.au-badgeInfo--neutral {
+      background-color: $color-neutral-30;
+    }
+  }
+}
