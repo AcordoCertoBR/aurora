@@ -1,34 +1,31 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi } from 'vitest'
-import { Tag } from '.'
+import { BadgeInfo } from '.'
 import { IconAirplay } from '@components/icons'
 
-describe('Tag', () => {
+describe('BadgeInfo', () => {
   it('renders text and basic classes based on props', () => {
     render(
-      <Tag status="success" size="large" type="read-only" border="rounded" color="secondary" text="hello" />,
+      <BadgeInfo status="success" color="secondary" text="hello" />,
     )
 
     const el = screen.getByText('hello')
     expect(el).toBeInTheDocument()
-    const container = el.closest('.au-tag')
-    expect(container).toHaveClass('au-tag--success')
-    expect(container).toHaveClass('au-tag--size-large')
-    expect(container).toHaveClass('au-tag--type-read-only')
-    expect(container).toHaveClass('au-tag--border-rounded')
-    expect(container).toHaveClass('au-tag--color-secondary')
+    const container = el.closest('.au-badgeInfo')
+    expect(container).toHaveClass('au-badgeInfo--success')
+    expect(container).toHaveClass('au-badgeInfo--color-secondary')
   })
 
   it('uppercases text when type is badge', () => {
-    render(<Tag status="info" type="badge" text="badge me" />)
+    render(<BadgeInfo status="info" text="badge me" />)
     expect(screen.getByText('BADGE ME')).toBeInTheDocument()
   })
 
   it('renders customIcon when provided', () => {
     render(
-      <div data-testid="tag">
-        <Tag
+      <div data-testid="badgeInfo">
+        <BadgeInfo
           status="neutral"
           text="with icon"
           customIcon={<IconAirplay data-testid="custom" />}
@@ -36,7 +33,7 @@ describe('Tag', () => {
       </div>,
     )
 
-    const wrapper = screen.getByTestId('tag')
+    const wrapper = screen.getByTestId('badgeInfo')
     const iconEl = wrapper.querySelector('.au-icon')
     expect(iconEl).not.toBeNull()
   })
@@ -44,7 +41,7 @@ describe('Tag', () => {
   it('renders action button and triggers click', async () => {
     const onClick = vi.fn()
     render(
-      <Tag
+      <BadgeInfo
         status="neutral"
         text="act"
         actionButton={{ content: 'Do', onClick }}
