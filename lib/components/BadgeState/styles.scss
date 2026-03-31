@@ -1,0 +1,92 @@
+.au-badgeState {
+  font-family: $font-body;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 4px 6px;
+  width: fit-content;
+
+  &__content {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+      .au-icon > svg {
+        width: 14px;
+        height: 14px;
+      }
+
+    &-support-text {
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+
+  // VARIANTES
+
+  &--icon-only{
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+  }
+
+   &--variant-strong {
+      .au-icon{
+      color: $color-neutral-00 !important;
+      }
+    }
+
+  &--border-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    align-content: center;
+  }
+
+  &--variant-regular {
+    &.au-badgeState--info {
+      background-color: $color-info-10;
+      color: $color-info-60;
+    }
+    &.au-badgeState--success {
+      background-color: $color-success-10;
+      color: $color-success-50;
+    }
+    &.au-badgeState--error {
+      background-color: $color-error-10;
+      color: $color-error-50;
+    }
+    &.au-badgeState--warning {
+      background-color: $color-warning-10;
+      color: $color-warning-60;
+    }
+    &.au-badgeState--support {
+      background-color: $color-brand-cyan-10;
+      color: $color-brand-cyan-60;
+    }
+  }
+
+  &--variant-strong {
+    color: $color-neutral-00;
+    &.au-badgeState--info {
+      background-color: $color-info-50;
+    }
+    &.au-badgeState--success {
+      background-color: $color-success-50;
+    }
+    &.au-badgeState--error {
+      background-color: $color-error-50;
+    }
+    &.au-badgeState--warning {
+      background-color: $color-warning-50;
+    }
+    &.au-badgeState--support {
+      background-color: $color-brand-cyan-50;
+    }
+  }
+}
