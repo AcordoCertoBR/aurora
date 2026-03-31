@@ -12,14 +12,13 @@
     justify-content: center;
     align-items: center;
       .au-icon > svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
       }
 
     &-support-text {
       font-size: 12px;
       font-weight: 600;
-      line-height: 150%;
     }
   }
 
@@ -28,7 +27,7 @@
   &--icon-only{
     width: 20px;
     height: 20px;
-    padding: 20px;
+    padding: 4px;
   }
 
    &--variant-strong {
@@ -44,7 +43,9 @@
     aspect-ratio: 1;
     display: flex;
     justify-content: center;
-    padding: 4px 6px;
+    align-items: center;
+    padding: 4px;
+    align-content: center;
   }
 
   &--variant-regular {

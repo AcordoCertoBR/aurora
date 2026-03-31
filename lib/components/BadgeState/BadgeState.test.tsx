@@ -71,8 +71,11 @@ describe('BadgeState', () => {
       const { container } = render(<BadgeState status="info" iconOnly />)
       
       expect(container.querySelector('.au-icon')).toBeInTheDocument()
-      expect(container).toHaveClass('au-badgeState--icon-only')
-      expect(screen.queryByText('text')).not.toBeInTheDocument()
+      
+      const badgeElement = container.querySelector('.au-badgeState')
+      expect(badgeElement).toHaveClass('au-badgeState--icon-only')
+      
+      expect(container.querySelector('.au-badgeState__content-support-text')).not.toBeInTheDocument()
     })
 
     it('shows text when iconOnly is false', () => {
