@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Desenvolvendo com IA" />
+
+# Desenvolvendo com IA
+
+O projeto Aurora tem suporte nativo ao [Claude Code](https://claude.ai/code), o assistente de IA da Anthropic para desenvolvimento de software. A configuração se encontra em `.claude/` na raiz do repositório e carrega automaticamente o contexto do projeto — arquitetura, convenções de código, estrutura de componentes e padrões de estilo — para que a IA trabalhe alinhada com Aurora desde o primeiro comando, sem precisar de instruções repetidas a cada sessão.
+
+
+## Como funciona
+
+Ao abrir o projeto com Claude Code, ele lê automaticamente o `CLAUDE.md` na raiz, que descreve:
+
+- A estrutura de componentes em `lib/components/`
+- Os aliases de path (`@components`, `@core`, `@assets`)
+- As convenções de CSS com prefixo `au-` e BEM
+- O processo de build, tokens e ícones gerados
+- Como rodar testes, Storybook e lint
+
+Com esse contexto, você pode pedir ao Claude Code para criar, modificar ou explicar componentes sem precisar reexplicar as convenções a cada vez.
+
+## Skills disponíveis
+
+Skills são comandos prontos que encapsulam tarefas recorrentes do projeto. Elas ficam em `.claude/skills/` e podem ser invocadas pelo nome com `/`.
+
+### `/create-component`
+
+Cria a estrutura completa de um novo componente Aurora a partir do nome e das props fornecidos.
+
+**Como usar:**
+
+```
+/create-component
+```
+
+Claude Code vai perguntar o nome do componente e suas props, depois gerar os 3 arquivos seguindo todos os padrões descritos em Padrões de Código.
+
+**Exemplo de interação:**
+
+```
+> /create-component
+  Nome: StatusBadge
+  Props: status (success | error | warning | neutral), label (string)
+```
+
+Resultado: `lib/components/StatusBadge/index.tsx`, `styles.scss`, `StatusBadge.stories.tsx` e export em `lib/main.ts` — tudo pronto para uso.
+
+## Adicionando novas skills
+
+Para criar uma nova skill, adicione uma pasta em `.claude/skills/<nome-da-skill>/` com um arquivo `SKILL.md` seguindo o formato:
+
+```markdown
+---
+name: nome-da-skill
+description: Descrição curta do que a skill faz
+---
+
+# Título
+
+Instruções detalhadas para o Claude Code executar a tarefa...
+```
+
+A skill ficará disponível como `/<nome-da-skill>` para qualquer pessoa que usar Claude Code no projeto.
+
+## Outras formas de usar Claude Code no projeto
+
+Além das skills, você pode usar o Claude Code livremente para tarefas como:
+
+- **Criar testes** — "crie testes para o componente X cobrindo os casos de acessibilidade"
+- **Explicar código** — "como o sistema de tokens é gerado e consumido pelos componentes?"
+- **Refatorar** — "extraia a lógica de classes condicionais deste componente para um hook"
+- **Revisar PRs** — `/review` analisa as mudanças do branch atual
+- **Debug** — cole o erro e peça ajuda; o Claude já conhece o stack (Vite, Vitest, Storybook)
+
+---
