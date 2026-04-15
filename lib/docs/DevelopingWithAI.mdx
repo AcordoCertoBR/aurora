@@ -61,6 +61,32 @@ Cada issue inclui a descrição do problema, a referência de arquivo e linha, o
 
 **O que é auditado:** semântica HTML, uso de ARIA, navegação por teclado, gerenciamento de foco, imagens e ícones, formulários, contraste de cores, animações e tamanho de alvos de toque.
 
+### `/token-audit`
+
+Detecta valores hardcoded no SCSS de um componente e sugere o token Aurora correto para cada um.
+
+**Como usar:**
+
+```
+/token-audit
+```
+
+Claude Code vai pedir o nome do componente, rodar greps no `styles.scss` para encontrar candidatos (cores hex, font-size, font-weight, border-radius, spacing, shadow, opacity) e cruzar com os tokens disponíveis em `lib/core/tokens/`.
+
+**Exemplo de output:**
+
+```
+font-size: 12px — styles.scss:20
+  Token: $font-size-p4 → 12px
+  Replace with: font-size: $font-size-p4
+
+padding: 4px 6px — styles.scss:6
+  Token (4px): $spacing-050 → 4px
+  Token (6px): none — valor intermediário não coberto pela escala de espaçamento
+```
+
+Valores sem equivalente no token set são sinalizados com uma nota explicativa. O relatório fecha com um resumo do total de ocorrências encontradas.
+
 ---
 
 ## Adicionando novas skills

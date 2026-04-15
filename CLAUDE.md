@@ -89,6 +89,12 @@ Vite builds in library mode, ES format only, with per-component code splitting. 
 
 Token source files live in `lib/core/tokens/*.json`. Each file has a `name`, `desc`, and `items` map. The `items` keys become SCSS variables and TypeScript named exports (in `CONSTANT_CASE`). Token exports are re-exported from [lib/core/tokens/index.ts](lib/core/tokens/index.ts) which points to the generated cache.
 
+## Skills
+
+Project skills live in `.claude/skills/`. Each skill is a directory with a `SKILL.md` file and is invoked via `/<skill-name>`.
+
+**Whenever you create a new skill** (i.e. write a new `.claude/skills/<name>/SKILL.md`), you must update `lib/docs/DevelopingWithAI.mdx` to include a section describing it — what it does, how to invoke it, and a usage example. This keeps the Storybook documentation in sync with the available skills.
+
 ## Testing
 
 Tests use Vitest with jsdom and `@testing-library/react`. Setup is in `vitest.setup.ts`. Generated files (`lib/components/icons/default/**`, `lib/components/Logo/ac/**`, `lib/components/Logo/cp/**`) are excluded from test runs and coverage.

@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"\nimport json, sys, re\ndata = json.load(sys.stdin)\npath = data.get('tool_input', {}).get('file_path', '')\nif re.search(r'\\.claude/skills/[^/]+/SKILL\\.md$', path):\n    print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PostToolUse', 'additionalContext': 'A new skill SKILL.md was just written. Remember to update lib/docs/DevelopingWithAI.mdx with a section describing this new skill - what it does, how to invoke it, and a usage example.'}}))\n\" 2>/dev/null || true",
+            "statusMessage": "Checking for new skill..."
+          }
+        ]
+      }
+    ]
+  }
+}
