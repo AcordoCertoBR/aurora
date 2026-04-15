@@ -45,6 +45,24 @@ Claude Code vai perguntar o nome do componente e suas props, depois gerar os 3 a
 
 Resultado: `lib/components/StatusBadge/index.tsx`, `styles.scss`, `StatusBadge.stories.tsx` e export em `lib/main.ts` — tudo pronto para uso.
 
+### `/accessibility-audit`
+
+Lê um componente e lista problemas de acessibilidade com base nos critérios WCAG 2.1 AA.
+
+**Como usar:**
+
+```
+/accessibility-audit
+```
+
+Claude Code vai pedir o nome do componente, ler o `index.tsx` e `styles.scss`, e retornar um relatório com issues agrupadas por severidade.
+
+Cada issue inclui a descrição do problema, a referência de arquivo e linha, o critério WCAG violado e uma sugestão concreta de correção.
+
+**O que é auditado:** semântica HTML, uso de ARIA, navegação por teclado, gerenciamento de foco, imagens e ícones, formulários, contraste de cores, animações e tamanho de alvos de toque.
+
+---
+
 ## Adicionando novas skills
 
 Para criar uma nova skill, adicione uma pasta em `.claude/skills/<nome-da-skill>/` com um arquivo `SKILL.md` seguindo o formato:
