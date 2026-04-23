@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.6.0](https://github.com/AcordoCertoBR/aurora/compare/v0.5.0...v0.6.0) (2026-04-16)
+
+
+### Features
+
+* add index and style file for component ([60ccd87](https://github.com/AcordoCertoBR/aurora/commit/60ccd8746efca36823feb7b6cd8256e76f95f3b5))
+* add stories ([8625e35](https://github.com/AcordoCertoBR/aurora/commit/8625e35d25ef1ce7aa58f792bd6ae9805b4a1ebc))
+* add tests ([bd0e42f](https://github.com/AcordoCertoBR/aurora/commit/bd0e42f1fce36ddfcd50f1e5c6b9c63fc990994a))
+* alter padding and add default icon ([2164343](https://github.com/AcordoCertoBR/aurora/commit/216434341a1e53268aab7008ec12021dac2ae3fa))
+* create new BadgeInfo component ([9735eb7](https://github.com/AcordoCertoBR/aurora/commit/9735eb7a8da080912a46b25141004e9f2182f983))
+* update height and paddings ([5353739](https://github.com/AcordoCertoBR/aurora/commit/5353739205df6515bb302137af7998148bab97cf))
+
+
+### Bug Fixes
+
+* apply If instead of Conditional ([4ce7918](https://github.com/AcordoCertoBR/aurora/commit/4ce79185fb0aa9e9f3184eecfe58e2e1be063582))
+* remove unnecessary test ([0663608](https://github.com/AcordoCertoBR/aurora/commit/0663608497648448891601ab206360450728e626))
+* story text ([e313660](https://github.com/AcordoCertoBR/aurora/commit/e3136606c17f4f1abdc3ce9a6d5e5ae957840bce))
+* test ([0f77ead](https://github.com/AcordoCertoBR/aurora/commit/0f77ead0adee600a298b39a75c1572138667b1bc))
+* wrong test case ([4b2103e](https://github.com/AcordoCertoBR/aurora/commit/4b2103e5403b35c1c19b141f93385ab785f3acf0))
+
 ## [0.5.0](https://github.com/AcordoCertoBR/aurora/compare/v0.4.2...v0.5.0) (2026-03-16)
 
 
