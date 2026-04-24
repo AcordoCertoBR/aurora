@@ -79,12 +79,12 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: [
-          `
-          @import "lib/core/tokens/.cache/variables.scss";
-          @import "lib/core/styles/mixins.scss";
-          `,
-        ],
+        api: 'modern-compiler',
+        loadPaths: ['.'],
+        additionalData: `
+          @use "lib/core/tokens/.cache/variables.scss" as *;
+          @use "lib/core/styles/mixins.scss" as *;
+        `,
       },
     },
   },
