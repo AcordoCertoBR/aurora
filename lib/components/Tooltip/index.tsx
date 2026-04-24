@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import classNames from 'classnames'
 import './styles.scss'
 
@@ -14,6 +15,8 @@ export const Tooltip = ({
   open,
   children,
 }: TooltipProps) => {
+  const tooltipId = useId()
+
   const tooltipClasses = classNames(
     'tooltip-container',
     `tooltip-${position}`,
@@ -23,9 +26,9 @@ export const Tooltip = ({
   )
 
   return (
-    <div className={tooltipClasses}>
+    <div className={tooltipClasses} aria-describedby={tooltipId}>
       {children}
-      <div className="tooltip">{text}</div>
+      <div id={tooltipId} className="tooltip" role="tooltip">{text}</div>
     </div>
   )
 }
