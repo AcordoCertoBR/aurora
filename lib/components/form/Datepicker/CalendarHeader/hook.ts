@@ -17,7 +17,7 @@ export function useCalendarHeader({
     focusedDate,
     minValue,
     maxValue,
-  } = useContext(CalendarStateContext)
+  } = useContext(CalendarStateContext)!
 
   const yearsOptions = useMemo(() => {
     const minYear = minValue?.year || 1900
