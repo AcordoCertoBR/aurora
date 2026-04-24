@@ -2,7 +2,7 @@ import { Logo } from '../Logo'
 
 export const LogoPrimaryCP = () => {
   return (
-    <Logo>
+    <Logo label="Consumidor Positivo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="169"
