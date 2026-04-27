@@ -60,7 +60,6 @@ export default function useCarousel({ items }: UseCarouselArgs) {
     hasPrevPage,
     hasNextPage,
     goPrevious,
-    next,
     goNext,
     snapPointIndexes,
     activePageIndex,
