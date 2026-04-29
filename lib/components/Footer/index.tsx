@@ -36,15 +36,11 @@ export const Footer = ({
     }
   })
 
-  const handleClick = (url: string) => {
-    window.open(url, '_blank')
-  }
-
   const showCertificatesBorder = usedCertificates.length > 3 && !!isMobile()
   
   if (categoryLinks) {
     return (
-      <footer role="contentinfo" className="au-footer-full">
+      <footer className="au-footer-full">
         <div className="au-footer-full__container">
           <div className="au-footer-full__logo">{logo}</div>
           <div className="au-footer-full__links">
@@ -55,21 +51,23 @@ export const Footer = ({
                     {categoryTitle}
                   </Text>
                   {links.map(({ title, url }, index) => {
-                    return (
-                      <div
-                        className={classNames('au-footer-full__links', {
-                          'au-footer-full__links--is-clickable': !!url,
-                        })}
+                    return url ? (
+                      <a
                         key={index}
-                        onClick={() => url && handleClick(url)}>
-                        <Text
-                          as="a"
-                          variant="body-medium"
-                          weight="regular"
-                          color="secondary">
+                        className="au-footer-full__links au-footer-full__links--is-clickable"
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <Text as="span" variant="body-medium" weight="regular" color="secondary">
                           {title}
                         </Text>
-                      </div>
+                      </a>
+                    ) : (
+                      <span key={index} className="au-footer-full__links">
+                        <Text as="span" variant="body-medium" weight="regular" color="secondary">
+                          {title}
+                        </Text>
+                      </span>
                     )
                   })}
                 </div>
@@ -80,16 +78,19 @@ export const Footer = ({
                 Siga a gente
               </Text>
               <div className="au-footer-full__links-socials">
-                {usedSocials.map(({ icon, url }, index) => {
+                {usedSocials.map(({ icon, url, name }, index) => {
                   return (
-                    <div
+                    <a
+                      key={index}
                       className={classNames('au-footer-full__links', {
                         'au-footer-full__links--is-clickable': !!url,
                       })}
-                      key={index}
-                      onClick={() => url && handleClick(url)}>
-                      {icon}
-                    </div>
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Siga-nos no ${name}`}>
+                      <span aria-hidden="true">{icon}</span>
+                    </a>
                   )
                 })}
               </div>
@@ -111,10 +112,11 @@ export const Footer = ({
                 weight="regular"
                 color="secondary">
                 <Text
-                  as="h2"
+                  as="strong"
                   variant="body-medium"
                   weight="bold"
-                  color="secondary">
+                  color="secondary"
+                  className="au-footer-full__address-label">
                   Localização (sem atendimento ao público):
                 </Text>
                 {address}
@@ -133,15 +135,21 @@ export const Footer = ({
                   Baixe nosso app
                 </Text>
                 {usedStores.map(({ icon, url, name }, index) => {
-                  return (
+                  return url ? (
+                    <a
+                      key={index}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="au-footer-full__stores-logo au-footer-full__stores-logo--is-clickable">
+                      <LazyImage src={icon} alt={name} />
+                    </a>
+                  ) : (
                     <LazyImage
-                      className={classNames('au-footer-full__stores-logo', {
-                        'au-footer-full__stores-logo--is-clickable': !!url,
-                      })}
+                      className="au-footer-full__stores-logo"
                       key={index}
                       src={icon}
                       alt={name}
-                      onClick={() => url && handleClick(url)}
                     />
                   )
                 })}
@@ -174,15 +182,21 @@ export const Footer = ({
                       Baixe nosso app
                     </Text>
                     {usedStores.map(({ icon, url, name }, index) => {
-                      return (
+                      return url ? (
+                        <a
+                          key={index}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="au-footer-full__stores-logo au-footer-full__stores-logo--is-clickable">
+                          <LazyImage src={icon} alt={name} />
+                        </a>
+                      ) : (
                         <LazyImage
-                          className={classNames('au-footer-full__stores-logo', {
-                            'au-footer-full__stores-logo--is-clickable': !!url,
-                          })}
+                          className="au-footer-full__stores-logo"
                           key={index}
                           src={icon}
                           alt={name}
-                          onClick={() => url && handleClick(url)}
                         />
                       )
                     })}
@@ -205,7 +219,7 @@ export const Footer = ({
   }
 
   return (
-    <footer role="contentinfo" className="au-footer">
+    <footer className="au-footer">
       <div className="au-footer__container">
         <div className="au-footer__content">
           <div className="au-footer__content-logos">
@@ -219,7 +233,7 @@ export const Footer = ({
           </div>
           <div className="au-footer__content-copyrights">
             <Text
-              as="h2"
+              as="p"
               variant="body-medium"
               weight="regular"
               color="secondary">
