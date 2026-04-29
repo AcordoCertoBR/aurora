@@ -7,8 +7,8 @@ export type HeaderButtonProps = {
 
 export const HeaderButton = ({ children, onClick }: HeaderButtonProps) => {
   return (
-    <div className="au-header__button" onClick={onClick}>
+    <button type="button" className="au-header__button" onClick={onClick}>
       {children}
-    </div>
+    </button>
   )
 }
