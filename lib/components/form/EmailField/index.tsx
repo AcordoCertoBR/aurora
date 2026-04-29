@@ -66,6 +66,10 @@ export const EmailField = ({
           value={inputValue}
           disabled={disabled}
           style={inputStyle}
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded={isDropdownOpen}
+          aria-autocomplete="list"
           {...props}
 					onChange={handleChange}
         />
@@ -75,7 +79,6 @@ export const EmailField = ({
           })}
           tabIndex={-1}
           role="listbox"
-          aria-expanded={isDropdownOpen}
           style={{
             overflowY: 'auto',
           }}>
@@ -84,6 +87,7 @@ export const EmailField = ({
               className="au-field__input-option"
               onClick={() => handleSuggestionClick(suggestion)}
               role="option"
+              aria-selected={false}
               key={index}>
               {suggestion}
             </li>

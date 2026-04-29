@@ -1,11 +1,15 @@
 type ErrorMessageProps = {
   hasError?: boolean
   message?: string
+  id?: string
 }
 
-export const FieldErrorMessage = ({ hasError, message }: ErrorMessageProps) => {
+export const FieldErrorMessage = ({ hasError, message, id }: ErrorMessageProps) => {
   if (!hasError || !message) return null
 
-	
-  return <p className="au-field__message au-field__message--error">{message}</p>
+  return (
+    <p id={id} className="au-field__message au-field__message--error" role="alert">
+      {message}
+    </p>
+  )
 }
