@@ -21,11 +21,12 @@ export const CalendarHeader = ({ defaultFocusDate }: CalendarHeaderProps) => {
   } = useCalendarHeader({ defaultFocusDate })
 
   return (
-    <div className="au-datepicker__header" aria-label="Anterior">
+    <div className="au-datepicker__header">
       <button
         className="au-datepicker__header-navigation-btn"
+        aria-label="Mês anterior"
         onClick={focusPreviousPage}>
-        <IconChevronLeft />
+        <IconChevronLeft aria-hidden="true" />
       </button>
       <div className="au-datepicker__header-segments">
         <Segment
@@ -45,7 +46,7 @@ export const CalendarHeader = ({ defaultFocusDate }: CalendarHeaderProps) => {
         className="au-datepicker__header-navigation-btn"
         aria-label="Próximo"
         onClick={focusNextPage}>
-        <IconChevronRight />
+        <IconChevronRight aria-hidden="true" />
       </button>
     </div>
   )

@@ -20,6 +20,10 @@
   }
 
   &-input {
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
     padding: 8px;
     gap: 8px;
     display: flex;
@@ -63,6 +67,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    button {
+      border: none;
+      background: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-align: inherit;
+      cursor: pointer;
+    }
 
     @include aboveMedium() {
       display: none;

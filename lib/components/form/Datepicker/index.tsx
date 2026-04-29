@@ -92,13 +92,16 @@ export const DatepickerField = ({
         onFocus={handleInputFocus}
         rightSlot={
           calendar && (
-            <div
+            <button
+              type="button"
               className="au-datepicker__calendar-holder"
+              aria-label="Abrir calendário"
               onClick={handleCalendarClick}>
               <IconCalendar
+                aria-hidden="true"
                 rawColor={disabled ? COLOR_NEUTRAL_40 : undefined}
               />
-            </div>
+            </button>
           )
         }
       />

@@ -38,24 +38,27 @@ export const Segment = ({
     <div
       ref={rootEl}
       tabIndex={0}
+      role="combobox"
+      aria-haspopup="listbox"
+      aria-expanded={isListOpen}
       className={classNames('au-datepicker__segment', {
         'au-datepicker__segment--open': isListOpen,
       })}>
-      <div className="au-datepicker__segment-input" onClick={openList}>
+      <button type="button" className="au-datepicker__segment-input" onClick={openList}>
         {currentItem?.label}
-        <IconChevronDown />
-      </div>
+        <IconChevronDown aria-hidden="true" />
+      </button>
       <div className="au-datepicker__segment-list-holder">
         <div className="au-datepicker__segment-list-header">
-          <div onClick={closeList}>
-            <IconChevronLeft />
-          </div>
+          <button type="button" onClick={closeList} aria-label="Voltar">
+            <IconChevronLeft aria-hidden="true" />
+          </button>
           <h4 className="au-datepicker__segment-title">{mobileTitle}</h4>
-          <div onClick={closeList}>
-            <IconX />
-          </div>
+          <button type="button" onClick={closeList} aria-label="Fechar">
+            <IconX aria-hidden="true" />
+          </button>
         </div>
-        <ul className="au-datepicker__segment-list">
+        <ul className="au-datepicker__segment-list" role="listbox">
           {options.map((option, idx) => {
             const isSelectedItem = option.value === currentValue
             return (
@@ -63,6 +66,8 @@ export const Segment = ({
                 key={`au-datepicker-segment-li-${option.value}-${idx}`}
                 onClick={() => handleSelectItem(option)}
                 ref={isSelectedItem ? selectedItem : null}
+                role="option"
+                aria-selected={isSelectedItem}
                 className={classNames('au-datepicker__segment-list-item', {
                   'au-datepicker__segment-list-item--active': isSelectedItem,
                 })}>
