@@ -135,7 +135,7 @@ export const Alert = ({
   return (
     <div className={alertClasses}>
       <div className="au-alert__content">
-        <Conditional condition={showIcon} renderIf={ customIcon ? customIcon : statusMap[status].icon} />
+        <Conditional condition={showIcon} renderIf={<span aria-hidden="true">{ customIcon ?? statusMap[status].icon}</span>} />
         <div className={`au-alert__container--${orientation}`}>
           <Conditional
             condition={!!title || !!text}

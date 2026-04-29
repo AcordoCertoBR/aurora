@@ -88,15 +88,17 @@ export const Carousel = ({
                 round
                 type="outlined"
                 disabled={!hasPrevPage}
-                onClick={goPrevious}>
-                <IconChevronLeft />
+                onClick={goPrevious}
+                aria-label="Anterior">
+                <IconChevronLeft aria-hidden="true" />
               </Button>
               <Button
                 round
                 type="outlined"
                 disabled={!hasNextPage}
-                onClick={goNext}>
-                <IconChevronRight />
+                onClick={goNext}
+                aria-label="Próximo">
+                <IconChevronRight aria-hidden="true" />
               </Button>
             </div>
           </div>

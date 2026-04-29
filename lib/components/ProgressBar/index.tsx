@@ -25,7 +25,13 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     : `${safeCurrentStep} de ${totalSteps}`
 
   return (
-    <div className="au-progress-bar">
+    <div
+      className="au-progress-bar"
+      role="progressbar"
+      aria-valuenow={safeCurrentStep}
+      aria-valuemin={1}
+      aria-valuemax={totalSteps}
+      aria-label={stepName}>
       <Conditional
         condition={!!percentageMode}
         renderIf={

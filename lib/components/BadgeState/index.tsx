@@ -64,10 +64,10 @@ export const BadgeState = ({
   })
 
   return (
-    <div className={badgeStateClasses}>
+    <div className={badgeStateClasses} {...(iconOnly ? { 'aria-label': status } : {})}>
       <div className="au-badgeState__content">
         <IfElse condition={!!iconOnly}>
-          <Then>{statusMap[status].icon}</Then>
+          <Then><span aria-hidden="true">{statusMap[status].icon}</span></Then>
           <Else>
             {<p className={`au-badgeState__content-support-text`}>{text}</p>}
           </Else>

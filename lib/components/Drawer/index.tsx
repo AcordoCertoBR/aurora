@@ -21,12 +21,14 @@ export const Drawer = ({
     <div
       className={classNames('au-drawer', {
         'au-drawer--is-open': isOpen,
-      })}>
+      })}
+      role="dialog"
+      aria-modal="true">
       <div className="au-drawer__container">
         <div className="au-drawer__header">
           {renderHeader}
-          <button className="au-drawer__header-close" onClick={handleOpen}>
-            <IconX />
+          <button className="au-drawer__header-close" onClick={handleOpen} aria-label="Fechar">
+            <IconX aria-hidden="true" />
           </button>
         </div>
         <div className="au-drawer__content">{renderContent}</div>
