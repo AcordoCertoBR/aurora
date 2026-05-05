@@ -18,8 +18,8 @@
     border-radius: 50%;
     cursor: pointer;
     position: relative;
-    height: 24px;
-    width: 24px;
+    height: 20px;
+    width: 20px;
 
     &::after,
     &::before {
@@ -31,10 +31,10 @@
     &::after {
       background-color: $color-neutral-50;
       content: '';
-      height: 10px;
-      width: 10px;
-      left: 7px;
-      top: 7px;
+      height: 8px;
+      width: 8px;
+      left: 6px;
+      top: 6px;
       transform: scale(0);
       transform-origin: center;
       transition: transform 0.2s;
@@ -43,8 +43,8 @@
     &::before {
       content: '';
       border: 2px solid $color-neutral-50;
-      height: 24px;
-      width: 24px;
+      height: 20px;
+      width: 20px;
     }
 
     &:checked::before {
@@ -72,8 +72,8 @@
 
   &__label {
     color: $color-neutral-50;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 22px;
   }
 
   &--disabled {

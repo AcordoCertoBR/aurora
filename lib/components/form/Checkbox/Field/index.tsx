@@ -39,7 +39,7 @@ export const CheckboxField = ({
           {...props}
         />
         <span className="au-checkbox__check">
-          <IconCheck rawColor={COLOR_NEUTRAL_00} />
+          <IconCheck rawColor={COLOR_NEUTRAL_00} size="small" />
         </span>
         <Conditional
           condition={typeof label === 'string'}
