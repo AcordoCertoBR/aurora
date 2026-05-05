@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.0](https://github.com/AcordoCertoBR/aurora/compare/v0.7.0...v0.8.0) (2026-05-05)
+
+
+### Features
+
+* add new icons ([11f6b8e](https://github.com/AcordoCertoBR/aurora/commit/11f6b8e8e4949ac76ce1dae262b8c3c771c26a58))
+* button icon size ([507e260](https://github.com/AcordoCertoBR/aurora/commit/507e2605753413f7b3c98d964f70b66e003e0120))
+* default icon size ([adb8db1](https://github.com/AcordoCertoBR/aurora/commit/adb8db15163c143f26380ce369e9cc62654c8fb6))
+* radio & checkbox sizes ([2c939c3](https://github.com/AcordoCertoBR/aurora/commit/2c939c3e599a4cf579a8097b30a98d3d6607f6e6))
+
 ## [0.7.0](https://github.com/AcordoCertoBR/aurora/compare/v0.6.0...v0.7.0) (2026-05-05)
 
 
