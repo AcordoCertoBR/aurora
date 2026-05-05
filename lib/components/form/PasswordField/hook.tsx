@@ -12,6 +12,7 @@ export const usePasswordField = () => {
   return {
     fieldType,
     textButton,
+    showPassword,
     changeVisibility,
   }
 }

@@ -88,7 +88,7 @@ export const Tag = ({
         <Conditional
           condition={!isBadgeTag}
           renderIf={
-            <div className="au-tag__content-icon">
+            <div className="au-tag__content-icon" aria-hidden="true">
               <Conditional
                 condition={!!customIcon}
                 renderIf={customIcon}

@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import Field from '../Field'
 import { usePasswordField } from './hook'
 import './styles.scss'
@@ -29,7 +30,9 @@ export const PasswordField = ({
   numericKeypad,
   ...props
 }: PasswordFieldProps) => {
-  const { fieldType, textButton, changeVisibility } = usePasswordField()
+  const { fieldType, showPassword, changeVisibility } = usePasswordField()
+  const generatedErrorId = useId()
+  const errorId = error && errorMessage ? generatedErrorId : undefined
 
   return (
     <Field.Root
@@ -55,17 +58,21 @@ export const PasswordField = ({
           inputRef={inputRef}
           inputMode={numericKeypad ? "numeric" : undefined}
           disabled={disabled}
+          aria-invalid={!!error}
+          aria-describedby={errorId}
           {...props}
         />
         <button
           className="au-password-field__btn"
+          type="button"
           onClick={changeVisibility}
           disabled={disabled}
-					type="button">
-          {textButton}
+          aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+          aria-pressed={showPassword}>
+          {showPassword ? 'ocultar' : 'mostrar'}
         </button>
       </div>
-      <Field.ErrorMessage hasError={!!error} message={errorMessage} />
+      <Field.ErrorMessage hasError={!!error} message={errorMessage} id={errorId} />
     </Field.Root>
   )
 }

@@ -31,5 +31,5 @@ export const Skeleton = ({
     width: width ? `${width}px` : block ? '100%' : '80px',
   }
 
-  return <div className={skeletonClasses} style={skeletonSize}></div>
+  return <div className={skeletonClasses} style={skeletonSize} aria-hidden="true"></div>
 }

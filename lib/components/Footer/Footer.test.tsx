@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { Footer } from './index'
 import * as isMobileModule from '@core/utils/isMobile'
@@ -59,7 +59,7 @@ describe('Footer', () => {
     expect(screen.getByText('Link 2')).toBeInTheDocument()
   })
 
-  it('handles category link clicks correctly', () => {
+  it('renders category links as anchors with correct href and target', () => {
     const mockLogo = <div>Mock Logo</div>
     const mockCategoryLinks = [
       {
@@ -81,11 +81,12 @@ describe('Footer', () => {
       />,
     )
 
-    fireEvent.click(screen.getByText('Link 1'))
-    expect(openSpy).toHaveBeenCalledWith('https://example.com/1', '_blank')
+    const link = screen.getByText('Link 1').closest('a')
+    expect(link).toHaveAttribute('href', 'https://example.com/1')
+    expect(link).toHaveAttribute('target', '_blank')
   })
 
-  it('maps socialLinks and only opens when url present', () => {
+  it('maps socialLinks and only marks as clickable when url present', () => {
     vi.spyOn(isMobileModule, 'isMobile').mockReturnValue(false)
 
     const mockLogo = <div>Mock Logo</div>
@@ -114,16 +115,17 @@ describe('Footer', () => {
       />,
     )
 
-    const socialDivs = document.querySelectorAll(
+    const socialAnchors = document.querySelectorAll(
       '.au-footer-full__links-socials .au-footer-full__links',
     )
-    expect(socialDivs.length).toBeGreaterThan(0)
+    expect(socialAnchors.length).toBe(2)
 
-    socialDivs.forEach((el) =>
-      el.dispatchEvent(new MouseEvent('click', { bubbles: true })),
+    const clickable = document.querySelectorAll(
+      '.au-footer-full__links-socials .au-footer-full__links--is-clickable',
     )
-
-    expect(openSpy).toHaveBeenCalled()
+    expect(clickable.length).toBe(1)
+    expect(clickable[0]).toHaveAttribute('href', 'https://instagram.com/brand')
+    expect(clickable[0]).toHaveAttribute('target', '_blank')
   })
 
   it('maps stores and renders clickable LazyImage on mobile', () => {
@@ -156,14 +158,10 @@ describe('Footer', () => {
       />,
     )
 
-    const storeImgs = screen.getAllByTestId('Google Play')
-    expect(storeImgs.length).toBeGreaterThan(0)
-
-    fireEvent.click(storeImgs[0])
-    expect(openSpy).toHaveBeenCalledWith(
-      'https://play.google.com/app',
-      '_blank',
-    )
+    const storeImg = screen.getByTestId('Google Play')
+    const anchor = storeImg.closest('a')
+    expect(anchor).toHaveAttribute('href', 'https://play.google.com/app')
+    expect(anchor).toHaveAttribute('target', '_blank')
   })
 
   it('maps stores and renders bottom stores on desktop', () => {

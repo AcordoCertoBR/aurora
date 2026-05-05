@@ -30,28 +30,48 @@ export const HeaderProfile = ({
       <Conditional
         condition={visible}
         renderIf={
-          <div className="au-header__profile-notifications" onClick={onClick}>
-            <IconBell />
+          <button
+            type="button"
+            className="au-header__profile-notifications"
+            onClick={onClick}
+            aria-label={
+              shouldShowBadge
+                ? `Notificações, ${count && count > 0 ? count : 'novas'}`
+                : 'Notificações'
+            }>
+            <IconBell aria-hidden="true" />
             <Conditional
               condition={!!shouldShowBadge}
               renderIf={
-                <div className="au-header__profile-notifications-badge">
+                <span
+                  className="au-header__profile-notifications-badge"
+                  aria-hidden="true">
                   {count && count > 0 ? count : null}
-                </div>
+                </span>
               }
             />
-          </div>
+          </button>
         }
       />
 
-      <div className="au-header__profile-menu-mobile" onClick={onClickMenu}>
-        <IconMenu />
-      </div>
+      <button
+        type="button"
+        className="au-header__profile-menu-mobile"
+        onClick={onClickMenu}
+        aria-label="Abrir menu de perfil">
+        <IconMenu aria-hidden="true" />
+      </button>
 
-      <div className="au-header__profile-menu" onClick={onClickMenu}>
-        <div className="au-header__profile-letters">{initialLetters}</div>
-        <IconChevronDown />
-      </div>
+      <button
+        type="button"
+        className="au-header__profile-menu"
+        onClick={onClickMenu}
+        aria-label={`Menu de ${fullName}`}>
+        <span className="au-header__profile-letters" aria-hidden="true">
+          {initialLetters}
+        </span>
+        <IconChevronDown aria-hidden="true" />
+      </button>
     </div>
   )
 }

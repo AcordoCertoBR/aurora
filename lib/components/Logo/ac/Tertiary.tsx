@@ -2,7 +2,7 @@ import { Logo } from '../Logo'
 
 export const LogoTertiaryAC = () => {
   return (
-    <Logo>
+    <Logo label="Acordo Certo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="133"

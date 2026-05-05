@@ -79,7 +79,7 @@ const NavbarVerticalLink = ({
         condition={!!dropdown?.length}
         renderIf={
           <>
-            <div className="au-navbar-vertical__toggle">
+            <div className="au-navbar-vertical__toggle" aria-hidden="true">
               <Conditional condition={!!open} renderIf={<IconChevronUp />} />
               <Conditional condition={!open} renderIf={<IconChevronDown />} />
             </div>

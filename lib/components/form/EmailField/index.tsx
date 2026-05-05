@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import Field from '../Field'
 import { useEmailAutocomplete } from './hook'
 import classNames from 'classnames'
@@ -38,9 +39,14 @@ export const EmailField = ({
     inputValue,
     suggestions,
     isDropdownOpen,
+    activeIndex,
     handleChange,
     handleSuggestionClick,
+    handleKeyDown,
   } = useEmailAutocomplete(props.onChange);
+
+  const listboxId = useId()
+  const optionId = (index: number) => `${listboxId}-option-${index}`
 
   return (
     <Field.Root
@@ -66,24 +72,35 @@ export const EmailField = ({
           value={inputValue}
           disabled={disabled}
           style={inputStyle}
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded={isDropdownOpen}
+          aria-autocomplete="list"
+          aria-controls={listboxId}
+          aria-activedescendant={
+            isDropdownOpen && activeIndex >= 0 ? optionId(activeIndex) : undefined
+          }
           {...props}
 					onChange={handleChange}
+          onKeyDown={handleKeyDown}
         />
         <ul
+          id={listboxId}
           className={classNames('au-field__input-autocomplete', {
             'au-field__input-autocomplete--open': isDropdownOpen,
           })}
           tabIndex={-1}
           role="listbox"
-          aria-expanded={isDropdownOpen}
           style={{
             overflowY: 'auto',
           }}>
           {suggestions.map((suggestion, index) => (
             <li
+              id={optionId(index)}
               className="au-field__input-option"
               onClick={() => handleSuggestionClick(suggestion)}
               role="option"
+              aria-selected={index === activeIndex}
               key={index}>
               {suggestion}
             </li>

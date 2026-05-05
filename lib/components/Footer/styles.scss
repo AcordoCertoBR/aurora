@@ -115,6 +115,8 @@
   }
 
   &__links {
+    color: inherit;
+    text-decoration: none;
     display: flex;
     flex-direction: column;
     gap: $spacing-400;
@@ -155,6 +157,10 @@
     @include aboveLarge() {
       gap: $spacing-200;
     }
+  }
+
+  &__address-label {
+    display: block;
   }
 
   &__company-overview {
@@ -236,6 +242,8 @@
   }
 
   &__stores-logo {
+    color: inherit;
+    text-decoration: none;
     cursor: pointer;
     max-width: 129px;
 

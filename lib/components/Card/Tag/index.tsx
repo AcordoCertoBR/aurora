@@ -17,7 +17,7 @@ export const CardTag = ({
   })
   return (
     <div className={tagClasses}>
-      <span>{icon}</span>
+      <span aria-hidden="true">{icon}</span>
       <span>{children}</span>
     </div>
   )

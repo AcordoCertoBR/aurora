@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import Field from '../Field'
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -32,6 +33,11 @@ export const InputField = ({
   numericKeypad,
   ...props
 }: InputProps) => {
+  const generatedErrorId = useId()
+  const generatedHelpId = useId()
+  const errorId = error && errorMessage ? generatedErrorId : undefined
+  const helpId = helpMessage ? generatedHelpId : undefined
+  const describedBy = [errorId, helpId].filter(Boolean).join(' ') || undefined
 
   return (
     <Field.Root
@@ -56,10 +62,12 @@ export const InputField = ({
           inputMode={numericKeypad ? "numeric" : undefined}
           disabled={disabled}
           style={inputStyle}
+          aria-invalid={!!error}
+          aria-describedby={describedBy}
           {...props}
         />
       </Field.InputHolder>
-      <Field.Message hasError={!!error} errorMessage={errorMessage} helpMessage={helpMessage} />
+      <Field.Message hasError={!!error} errorMessage={errorMessage} helpMessage={helpMessage} errorId={errorId} helpId={helpId} />
     </Field.Root>
   )
 }
