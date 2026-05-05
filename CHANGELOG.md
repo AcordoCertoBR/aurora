@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.7.0](https://github.com/AcordoCertoBR/aurora/compare/v0.6.0...v0.7.0) (2026-05-05)
+
+
+### Features
+
+* add acessibility in footer ([1f578f2](https://github.com/AcordoCertoBR/aurora/commit/1f578f2756e9c33752a2fe405c1e4c857dce9ba7))
+* add acessibility in notifications bar ([1a407d0](https://github.com/AcordoCertoBR/aurora/commit/1a407d00bae15b87c35adba35d9e7c53cbbb3451))
+* add acessibility in tabs ([1536d01](https://github.com/AcordoCertoBR/aurora/commit/1536d01eb518447b12525dcb393ab0a5c84b4b73))
+* add acessibility to datepicker ([333e273](https://github.com/AcordoCertoBR/aurora/commit/333e27324f17331e4ea922a5b16c49fd504dd5d5))
+* add acessibility to form components ([c83e611](https://github.com/AcordoCertoBR/aurora/commit/c83e6112a5c68a453bca24dcb1407ad52400dd7e))
+* add acessibility to header ([d08a6a3](https://github.com/AcordoCertoBR/aurora/commit/d08a6a35fd0eada56aa5aa19e6983cb2d91f536d))
+* add aria atributtes in components ([9a5fff0](https://github.com/AcordoCertoBR/aurora/commit/9a5fff0c39df1e60a76094a4c4bd2458ca5236c0))
+* add aria tags to alert ([6a237e9](https://github.com/AcordoCertoBR/aurora/commit/6a237e9d8706b37829b06e310e234f9b36da8671))
+* add aria tags to spinner ([44fdca6](https://github.com/AcordoCertoBR/aurora/commit/44fdca6497f81f3583c8872328d979fd155fa9b7))
+* add aria tags to tooltip ([9c94617](https://github.com/AcordoCertoBR/aurora/commit/9c946178a79bf519fc0fa355727a4b41abd97ae4))
+* add aria-label in logos ([da17978](https://github.com/AcordoCertoBR/aurora/commit/da179782e67757a06ee6c87d995cae9b76b52529))
+* add code review suggestions ([e7a58ce](https://github.com/AcordoCertoBR/aurora/commit/e7a58ce2eb5553e23e185d2913c8fe37b017783b))
+
+
+### Bug Fixes
+
+* no remove focus for acessibility ([84e116f](https://github.com/AcordoCertoBR/aurora/commit/84e116f45b559b84381b40a82e80274325cd528b))
+
 ## [0.6.0](https://github.com/AcordoCertoBR/aurora/compare/v0.5.0...v0.6.0) (2026-04-16)
 
 

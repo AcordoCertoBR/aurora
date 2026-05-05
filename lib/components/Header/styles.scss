@@ -62,6 +62,12 @@
 
   &__button {
     cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
   }
 
   &__badges {
@@ -132,18 +138,17 @@
       .au-icon {
         transition: transform 0.25s ease;
       }
+    }
 
-      &:hover,
-      &:focus {
-        .au-icon {
-          transform: rotate(-180deg);
-        }
+    &--is-open {
+      .au-icon {
+        transform: rotate(-180deg);
+      }
 
-        .au-header__dropdown {
-          opacity: 1;
-          visibility: visible;
-          transform: translateY(0);
-        }
+      .au-header__dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
       }
     }
   }
@@ -152,6 +157,17 @@
     height: 100%;
     cursor: pointer;
     text-decoration: none;
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+
+    .au-text {
+      color: inherit;
+      font-weight: inherit;
+    }
 
     &--is-dropdown {
       position: relative;
@@ -251,6 +267,12 @@
     &-notifications {
       cursor: pointer;
       position: relative;
+      border: none;
+      background: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-align: inherit;
 
       &-badge {
         position: absolute;
@@ -285,6 +307,12 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-align: inherit;
 
       @include aboveLarge() {
         display: flex;
@@ -294,6 +322,12 @@
     &-menu-mobile {
       display: block;
       cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      text-align: inherit;
 
       @include aboveLarge() {
         display: none;
@@ -318,6 +352,12 @@
 
   &__hamburger {
     cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
 
     @include aboveLarge() {
       display: none;

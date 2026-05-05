@@ -1,3 +1,5 @@
+@use "../tokens/.cache/variables.scss" as *;
+
 // MIXIN BREAKPOINTS
 @mixin aboveXSmall {
   @media (min-width: $breakpoint-xsm) {
@@ -48,7 +50,7 @@
 }
 
 @mixin belowXLarge {
-  @media (max-width: #{$breakpointxlg - 1}) {
+  @media (max-width: #{$breakpoint-xlg - 1}) {
     @content;
   }
 }

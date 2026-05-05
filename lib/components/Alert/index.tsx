@@ -108,12 +108,15 @@ export const Alert = ({
       option: 'timer',
       icon: (
         <div className="au-alert__timer">
-          <IconClock rawColor={COLOR_WARNING_50} />
+          <IconClock rawColor={COLOR_WARNING_50} aria-hidden="true" />
           {!isCountdownFinished && (
             <Text
               className="au-alert__countdown"
               variant="body-small"
-              weight="bold">
+              weight="bold"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true">
               {timeLeft}s
             </Text>
           )}
@@ -132,16 +135,18 @@ export const Alert = ({
   return (
     <div className={alertClasses}>
       <div className="au-alert__content">
-        <Conditional condition={showIcon} renderIf={ customIcon ? customIcon : statusMap[status].icon} />
+        <Conditional condition={showIcon} renderIf={<span aria-hidden="true">{ customIcon ?? statusMap[status].icon}</span>} />
         <div className={`au-alert__container--${orientation}`}>
           <Conditional
             condition={!!title || !!text}
             renderIf={
               <div>
-                <h4
-                  className={`au-alert__title au-alert__title--${title?.weight}`}>
-                  {title?.content}
-                </h4>
+                {!!title?.content && (
+                  <h4
+                    className={`au-alert__title au-alert__title--${title?.weight}`}>
+                    {title.content}
+                  </h4>
+                )}
                 <p className="au-alert__support-text">{text}</p>
               </div>
             }
@@ -167,11 +172,12 @@ export const Alert = ({
       <Conditional
         condition={closeButton}
         renderIf={
-          <button className="au-alert__close-btn">
-            <IconX
-              rawColor={COLOR_NEUTRAL_70}
-              onClick={handleCloseButtonClick}
-            />
+          <button
+            className="au-alert__close-btn"
+            type="button"
+            aria-label="Fechar"
+            onClick={handleCloseButtonClick}>
+            <IconX rawColor={COLOR_NEUTRAL_70} aria-hidden="true" />
           </button>
         }
       />

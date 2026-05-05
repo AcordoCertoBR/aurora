@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { createPortal } from 'react-dom'
 import classNames from 'classnames'
 import {
@@ -39,6 +40,10 @@ export const SelectField = ({
   fullScreenOptions = false,
   htmlType = 'text'
 }: SelectFieldProps) => {
+  const labelId = useId()
+  const generatedErrorId = useId()
+  const errorId = error && errorMessage ? generatedErrorId : undefined
+
   const {
     isDropdownOpen,
     selectRef,
@@ -106,6 +111,7 @@ export const SelectField = ({
         disabled={disabled}>
         <Field.Label
           text={label}
+          labelId={labelId}
           showOptionalLabel={showOptionalLabel}
           required={required}
           error={error}
@@ -121,7 +127,8 @@ export const SelectField = ({
             role="combobox"
             aria-haspopup="listbox"
             aria-expanded={isDropdownOpen}
-            aria-labelledby="select-label"
+            aria-labelledby={labelId}
+            aria-describedby={errorId}
             aria-activedescendant={
               activeOptionIndex !== null && filteredOptions[activeOptionIndex]
                 ? filteredOptions[activeOptionIndex].value
@@ -136,8 +143,9 @@ export const SelectField = ({
               readOnly={!autocomplete || fullScreenOptionsEnabled}
               disabled={disabled}
               type={htmlType}
+              aria-labelledby={labelId}
             />
-            <div className="au-field__select-icon">
+            <div className="au-field__select-icon" aria-hidden="true">
               <IconChevronDown />
             </div>
           </div>
@@ -172,9 +180,9 @@ export const SelectField = ({
                       onMouseEnter={() => setActiveOptionIndex(index)}>
                       {option.label}
                       {option.disabled ? (
-                        <IconSlash />
+                        <IconSlash aria-hidden="true" />
                       ) : option.value === selectedOption.value ? (
-                        <IconCheck />
+                        <IconCheck aria-hidden="true" />
                       ) : null}
                     </li>
                   ))
@@ -201,6 +209,7 @@ export const SelectField = ({
           hasError={!!error}
           errorMessage={errorMessage}
           helpMessage={helpMessage}
+          errorId={errorId}
         />
       </Field.Root>
 
@@ -225,7 +234,7 @@ export const SelectField = ({
                       role="combobox"
                       aria-haspopup="listbox"
                       aria-expanded={isDropdownOpen}
-                      aria-labelledby="select-label"
+                      aria-labelledby={labelId}
                       aria-activedescendant={
                         activeOptionIndex !== null &&
                         filteredOptions[activeOptionIndex]
@@ -240,15 +249,16 @@ export const SelectField = ({
                         onChange={handleInputChange}
                         disabled={disabled}
                         type={htmlType}
+                        aria-label="Buscar"
                       />
-                      <div className="au-field__select-icon">
+                      <div className="au-field__select-icon" aria-hidden="true">
                         <IconSearch rawColor={COLOR_NEUTRAL_40} />
                       </div>
                     </div>
                   </div>
                 }
                 content={
-                  <div className="au-field__fullscreen-options-select-options">
+                  <div className="au-field__fullscreen-options-select-options" role="listbox">
                     {filteredOptions.map((option, index) => (
                       <li
                         key={index}
@@ -265,9 +275,9 @@ export const SelectField = ({
                         onMouseEnter={() => setActiveOptionIndex(index)}>
                         {option.label}
                         {option.disabled ? (
-                          <IconSlash />
+                          <IconSlash aria-hidden="true" />
                         ) : option.value === selectedOption.value ? (
-                          <IconCheck />
+                          <IconCheck aria-hidden="true" />
                         ) : null}
                       </li>
                     ))}

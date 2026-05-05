@@ -19,13 +19,20 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 }) => {
   const safeCurrentStep = Math.max(1, Math.min(currentStep, totalSteps))
   const percentageWidth = (safeCurrentStep / totalSteps) * 100
+  const roundedPercentage = Math.round(percentageWidth)
 
   const progressText = percentageMode
-    ? `${Math.round(percentageWidth)}%`
+    ? `${roundedPercentage}%`
     : `${safeCurrentStep} de ${totalSteps}`
 
   return (
-    <div className="au-progress-bar">
+    <div
+      className="au-progress-bar"
+      role="progressbar"
+      aria-valuenow={percentageMode ? roundedPercentage : safeCurrentStep}
+      aria-valuemin={percentageMode ? 0 : 1}
+      aria-valuemax={percentageMode ? 100 : totalSteps}
+      aria-label={stepName}>
       <Conditional
         condition={!!percentageMode}
         renderIf={

@@ -28,8 +28,9 @@ export const SubHeader = ({
         <Button
           className="au-sub-header__button"
           onClick={handleReturn}
-          type="ghost">
-          <IconChevronLeft />
+          type="ghost"
+          aria-label="Voltar">
+          <IconChevronLeft aria-hidden="true" />
         </Button>
         <Text
           className="au-sub-header__title"
@@ -43,8 +44,9 @@ export const SubHeader = ({
           <Button
             className="au-sub-header__button"
             onClick={handleHelpInfo}
-            type="ghost">
-            <IconHelpCircle />
+            type="ghost"
+            aria-label="Ajuda">
+            <IconHelpCircle aria-hidden="true" />
           </Button>
         )}
       </Container>

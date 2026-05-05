@@ -9,13 +9,12 @@ describe('EmailField', () => {
   });
 
   it('shows suggestions when typing after @ and filters domains', () => {
-    const { getByRole, getByRole: getBy, getAllByRole } = render(<EmailField />);
-    const input = getByRole('textbox') as HTMLInputElement;
+    const { getByRole, getAllByRole } = render(<EmailField />);
+    const input = getByRole('combobox') as HTMLInputElement;
 
     // type user@ to open dropdown with all domains
     fireEvent.change(input, { target: { value: 'user@' } });
-    const listbox = getBy('listbox');
-    expect(listbox).toHaveAttribute('aria-expanded', 'true');
+    expect(input).toHaveAttribute('aria-expanded', 'true');
     // many suggestions should be present
     expect(getAllByRole('option').length).toBeGreaterThan(5);
 
@@ -29,7 +28,7 @@ describe('EmailField', () => {
   it('calls onChange prop on typing and when suggestion clicked, and completes the email', () => {
     const onChange = vi.fn();
     const { getByRole, getAllByRole } = render(<EmailField onChange={onChange} />);
-    const input = getByRole('textbox') as HTMLInputElement;
+    const input = getByRole('combobox') as HTMLInputElement;
 
     fireEvent.change(input, { target: { value: 'me@' } });
     expect(onChange).toHaveBeenCalledWith('me@');
@@ -39,7 +38,7 @@ describe('EmailField', () => {
     fireEvent.click(option);
 
     // after clicking suggestion, input value should be completed
-    expect((getByRole('textbox') as HTMLInputElement).value).toMatch(/^me@gmail\.com$/);
+    expect((getByRole('combobox') as HTMLInputElement).value).toMatch(/^me@gmail\.com$/);
     // onChange should have been called with the completed value
     expect(onChange).toHaveBeenCalledWith(expect.stringMatching(/me@gmail\.com/));
   });

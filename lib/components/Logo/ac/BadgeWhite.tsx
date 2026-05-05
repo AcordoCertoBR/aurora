@@ -2,7 +2,7 @@ import { Logo } from '../Logo'
 
 export const LogoBadgeWhiteAC = () => {
   return (
-    <Logo>
+    <Logo label="Acordo Certo">
      
 
 

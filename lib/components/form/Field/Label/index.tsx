@@ -7,6 +7,7 @@ import {
 
 type FieldLabelProps = {
   id?: string
+  labelId?: string
   text?: string | React.ReactNode
   required?: boolean
   success?: boolean
@@ -17,6 +18,7 @@ type FieldLabelProps = {
 
 export const FieldLabel = ({
   id,
+  labelId,
   text,
   required,
   success,
@@ -48,16 +50,19 @@ export const FieldLabel = ({
 
   return (
     <div className="au-field__header">
-      <label htmlFor={id} className="au-field__header-label">
+      <label id={labelId} htmlFor={id} className="au-field__header-label">
         {text}{' '}
         {showOptionalLabel && !required && (
           <span className="au-field__header-label--optional">(Opcional)</span>
         )}
         {!showOptionalLabel && required && (
-          <strong className="au-field__header-label--required">*</strong>
+          <>
+            <strong className="au-field__header-label--required" aria-hidden="true">*</strong>
+            <span className="au-sr-only">obrigatório</span>
+          </>
         )}
       </label>
-      <div className="au-field__header-icon">{currentState?.icon}</div>
+      <div className="au-field__header-icon" aria-hidden="true">{currentState?.icon}</div>
     </div>
   )
 }

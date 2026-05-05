@@ -102,14 +102,15 @@ export const Tabs = ({
                         />
                       </Case>
                       <Case condition={type === 2}>
-                        <div
+                        <button
+                          type="button"
                           className={classNames('au-tabs__btns-option', {
                             'au-tabs__btns-option--active':
                               activeTab === item.tab,
                           })}
                           onClick={() => handleClick(item)}>
                           {item.title}
-                        </div>
+                        </button>
                       </Case>
                     </Switch>
                   )
@@ -117,6 +118,7 @@ export const Tabs = ({
                 <If condition={type === 2}>
                   <div
                     className="au-tabs__btns-indicator"
+                    aria-hidden="true"
                     style={{
                       left: `${indicatorStyle.left}px`,
                       width: `${indicatorStyle.width}px`,

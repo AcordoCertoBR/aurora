@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useId } from 'react'
 import { Text } from '../Text'
 import { Conditional } from '../misc'
 import './styles.scss'
@@ -31,6 +31,7 @@ type NotificationsBarLinkProps = {
   onDelete?: () => void
   Icon?: ReactNode | string | JSX.Element | JSX.Element[]
   createdAt?: string
+  isUnread?: boolean
 }
 
 export const NotificationsBarWrap = ({
@@ -38,7 +39,7 @@ export const NotificationsBarWrap = ({
   renderOlds,
 }: NotificationsBarWrapProps) => {
   return (
-    <div className="au-notifications-bar">
+    <div className="au-notifications-bar" role="region" aria-label="Notificações">
       {renderRecents && renderRecents()}
       {renderOlds && renderOlds()}
     </div>
@@ -68,32 +69,39 @@ export const NotificationsBarLink = ({
   title,
   createdAt,
   onDelete,
+  isUnread,
 }: NotificationsBarLinkProps) => {
+  const timestampId = useId()
+
   return (
     <div className="au-notifications-bar__item">
-      <Text
-        as="a"
-        variant="body-medium"
-        weight="regular"
+      <button
+        type="button"
         className="au-notifications-bar__link"
-        onClick={onClick}>
-        <Conditional condition={!!Icon} renderIf={Icon} />
-        {title}
-      </Text>
+        onClick={onClick}
+        aria-describedby={createdAt ? timestampId : undefined}>
+        {Icon && <span aria-hidden="true">{Icon}</span>}
+        <Text as="span" variant="body-medium" weight="regular">
+          {isUnread && <span className="au-sr-only">não lida — </span>}
+          {title}
+        </Text>
+      </button>
       <div className="au-notifications-bar__actions">
-        <Text as="span" variant="body-small">
+        <Text as="span" id={timestampId} variant="body-small">
           {createdAt}
         </Text>
         <Conditional
           condition={!!onDelete}
           renderIf={
-            <Text
-              as="a"
-              variant="body-small"
-              weight="semibold"
+            <button
+              type="button"
+              className="au-notifications-bar__delete-btn"
+              aria-label={`Excluir: ${title}`}
               onClick={onDelete}>
-              Excluir
-            </Text>
+              <Text as="span" variant="body-small" weight="semibold">
+                Excluir
+              </Text>
+            </button>
           }
         />
       </div>

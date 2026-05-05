@@ -7,8 +7,14 @@ type SpinnerProps = {
 
 export const Spinner: React.FC<SpinnerProps> = ({ size, color }) => {
   return (
-    <div className="au-spinner" style={{ width: size, height: size }}>
+    <div
+      className="au-spinner"
+      style={{ width: size, height: size }}
+      role="status"
+      aria-live="polite"
+      aria-label="Carregando">
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 64 64"
         width={size}

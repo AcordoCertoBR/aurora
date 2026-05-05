@@ -66,7 +66,7 @@ export const BadgeInfo = ({
   return (
     <div className={badgeInfoClasses}>
       <div className="au-badgeInfo__content">
-        <div className="au-badgeInfo__content-icon">
+        <div className="au-badgeInfo__content-icon" aria-hidden="true">
           <IfElse condition={!!customIcon}>
             <Then>{customIcon}</Then>
             <Else>{statusMap[status].icon}</Else>

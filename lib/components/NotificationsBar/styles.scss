@@ -16,7 +16,7 @@
         border-bottom: 1px solid $color-neutral-20;
         position: relative;
 
-        > .au-text {
+        .au-notifications-bar__link .au-text {
           font-weight: bold;
         }
 
@@ -49,11 +49,30 @@
   }
 
   &__link {
+    border: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 24px 8px 24px 24px;
     cursor: pointer;
+  }
+
+  &__delete-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    color: $color-brand-blue-40;
+
+    .au-text {
+      color: inherit;
+    }
   }
 
   &__actions {
@@ -67,13 +86,8 @@
       color: $color-neutral-50;
     }
 
-    > span.au-text + a.au-text {
+    > span.au-text + .au-notifications-bar__delete-btn {
       margin-top: 8px;
-    }
-
-    > a.au-text {
-      cursor: pointer;
-      color: $color-brand-blue-40;
     }
   }
 }
