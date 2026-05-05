@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import './styles.scss'
 
-export type IconSize = 'large' | 'small' | 'default'
+export type IconSize = 'large' | 'medium' | 'small' | 'default'
 export type IconColor = 'dark' | 'info' | 'default' | 'success'
 
 export type IconProps = {
@@ -36,6 +36,7 @@ const Icon: React.FC<BaseIconProps> = ({
     'au-icon--color-info': color === 'info',
     'au-icon--color-success': color === 'success',
     'au-icon--size-large': size === 'large',
+    'au-icon--size-medium': size === 'medium',
     'au-icon--size-small': size === 'small',
     [`${className}`]: !!className,
   })
