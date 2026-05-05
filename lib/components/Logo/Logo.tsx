@@ -8,7 +8,9 @@ type LogoProps = {
 
 export const Logo = ({ children, label }: LogoProps) => {
   return (
-    <div className="au-logo" role="img" aria-label={label}>
+    <div
+      className="au-logo"
+      {...(label ? { role: 'img', 'aria-label': label } : {})}>
       {children}
     </div>
   )

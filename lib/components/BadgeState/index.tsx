@@ -39,19 +39,27 @@ export const BadgeState = ({
   const statusMap = {
     success: {
       option: 'success',
+      label: 'Sucesso',
       icon: <IconCheck rawColor={COLOR_SUCCESS_50} />,
     },
     error: {
       option: 'error',
+      label: 'Erro',
       icon: <IconAlertOctagon rawColor={COLOR_ERROR_50} />,
     },
     warning: {
       option: 'warning',
+      label: 'Atenção',
       icon: <IconAlertTriangle rawColor={COLOR_WARNING_50} />,
     },
-    info: { option: 'info', icon: <IconInfo rawColor={COLOR_INFO_50} /> },
+    info: {
+      option: 'info',
+      label: 'Informação',
+      icon: <IconInfo rawColor={COLOR_INFO_50} />,
+    },
     support: {
       option: 'support',
+      label: 'Mais informações',
       icon: <IconMoreHorizontal rawColor={COLOR_BRAND_CYAN_50} />,
     },
   }
@@ -64,7 +72,7 @@ export const BadgeState = ({
   })
 
   return (
-    <div className={badgeStateClasses} {...(iconOnly ? { 'aria-label': status } : {})}>
+    <div className={badgeStateClasses} {...(iconOnly ? { 'aria-label': statusMap[status].label } : {})}>
       <div className="au-badgeState__content">
         <IfElse condition={!!iconOnly}>
           <Then><span aria-hidden="true">{statusMap[status].icon}</span></Then>

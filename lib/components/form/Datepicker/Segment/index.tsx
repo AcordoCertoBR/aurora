@@ -37,14 +37,16 @@ export const Segment = ({
   return (
     <div
       ref={rootEl}
-      tabIndex={0}
-      role="combobox"
-      aria-haspopup="listbox"
-      aria-expanded={isListOpen}
       className={classNames('au-datepicker__segment', {
         'au-datepicker__segment--open': isListOpen,
       })}>
-      <button type="button" className="au-datepicker__segment-input" onClick={openList}>
+      <button
+        type="button"
+        className="au-datepicker__segment-input"
+        onClick={openList}
+        role="combobox"
+        aria-haspopup="listbox"
+        aria-expanded={isListOpen}>
         {currentItem?.label}
         <IconChevronDown aria-hidden="true" />
       </button>

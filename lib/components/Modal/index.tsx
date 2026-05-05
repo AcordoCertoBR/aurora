@@ -19,6 +19,7 @@ export type ModalProps = {
   layoutDesktop?: ModalLayout
   mobileModalTitle?: string
   handleHelpInfo?: () => void
+  ariaLabel?: string
 }
 
 export const Modal = ({
@@ -30,6 +31,7 @@ export const Modal = ({
   layoutDesktop = 'default',
   mobileModalTitle = 'Título',
   handleHelpInfo,
+  ariaLabel,
 }: ModalProps) => {
   if (!isOpen) return null
 
@@ -41,7 +43,11 @@ export const Modal = ({
   })
 
   return (
-    <div className={modalClasses} role="dialog" aria-modal="true">
+    <div
+      className={modalClasses}
+      role="dialog"
+      aria-modal="true"
+      aria-label={ariaLabel ?? mobileModalTitle}>
       <div className="au-modal__container">
         <div className="au-modal__header">
           <IfElse condition={layoutMobile !== 'full-screen' || !isMobile()}>

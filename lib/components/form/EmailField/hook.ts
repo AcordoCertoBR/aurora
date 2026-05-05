@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const emailDomains = [
   'gmail.com',
@@ -18,10 +18,15 @@ export const useEmailAutocomplete = (propsOnChange?: (value: string) => void) =>
   const [inputValue, setInputValue] = useState('')
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(-1)
+
+  useEffect(() => {
+    setActiveIndex(-1)
+  }, [suggestions])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    
+
     setInputValue(value)
 		if(propsOnChange) propsOnChange(value);
 
@@ -56,12 +61,33 @@ export const useEmailAutocomplete = (propsOnChange?: (value: string) => void) =>
     setIsDropdownOpen(false)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!isDropdownOpen || suggestions.length === 0) return
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActiveIndex((prev) => (prev + 1) % suggestions.length)
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActiveIndex((prev) =>
+        prev <= 0 ? suggestions.length - 1 : prev - 1,
+      )
+    } else if (e.key === 'Enter' && activeIndex >= 0) {
+      e.preventDefault()
+      handleSuggestionClick(suggestions[activeIndex])
+    } else if (e.key === 'Escape') {
+      setIsDropdownOpen(false)
+    }
+  }
+
   return {
     inputValue,
     setInputValue,
     suggestions,
     isDropdownOpen,
+    activeIndex,
     handleChange,
     handleSuggestionClick,
+    handleKeyDown,
   }
 }
