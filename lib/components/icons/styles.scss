@@ -1,12 +1,18 @@
 .au-icon {
   &,
   & > svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     color: $color-brand-blue-40;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &--size-medium,
+  &--size-medium svg {
+    width: 24px;
+    height: 24px;
   }
 
   &--size-large,
