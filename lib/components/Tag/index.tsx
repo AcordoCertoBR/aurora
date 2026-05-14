@@ -30,6 +30,11 @@ export type TagProps = {
   actionButton?: { content?: string; onClick?: () => void }
 }
 
+/**
+ * @deprecated Use `BadgeInfo` or `BadgeState` instead. `Tag` will be removed in a future major release.
+ * - `BadgeInfo`: informational badge with icon + text, supports `actionButton`, `customIcon`, `color`.
+ * - `BadgeState`: compact status indicator, supports `iconOnly`, `isNumberBadge`, `variant`.
+ */
 export const Tag = ({
   status,
   border = 'square',
