@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.9.0](https://github.com/AcordoCertoBR/aurora/compare/v0.8.0...v0.9.0) (2026-05-15)
+
+
+### Features
+
+* export badgeState ([c94fd58](https://github.com/AcordoCertoBR/aurora/commit/c94fd587281529d807a0e53dba84420767f64ab9))
+
+
+### Bug Fixes
+
+* scss import ([97f4114](https://github.com/AcordoCertoBR/aurora/commit/97f4114c032f5df2ae0962d165eae39b4a67c7a4))
+
 ## [0.8.0](https://github.com/AcordoCertoBR/aurora/compare/v0.7.0...v0.8.0) (2026-05-05)
 
 
