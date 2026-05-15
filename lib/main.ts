@@ -38,6 +38,7 @@ export { Tooltip } from './components/Tooltip'
 export { Container } from './components/Container'
 export { SubHeader } from './components/SubHeader'
 export { BadgeInfo } from './components/BadgeInfo'
+export { BadgeState } from './components/BadgeState'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
