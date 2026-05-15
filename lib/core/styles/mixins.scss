@@ -1,56 +1,56 @@
-@use "../tokens/.cache/variables.scss" as *;
+@use "../tokens/.cache/variables.scss" as v;
 
 // MIXIN BREAKPOINTS
 @mixin aboveXSmall {
-  @media (min-width: $breakpoint-xsm) {
+  @media (min-width: v.$breakpoint-xsm) {
     @content;
   }
 }
 
 @mixin aboveSmall {
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: v.$breakpoint-sm) {
     @content;
   }
 }
 
 @mixin aboveMedium {
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: v.$breakpoint-md) {
     @content;
   }
 }
 
 @mixin aboveLarge {
-  @media (min-width: $breakpoint-lg) {
+  @media (min-width: v.$breakpoint-lg) {
     @content;
   }
 }
 
 @mixin aboveXLarge {
-  @media (min-width: $breakpoint-xlg) {
+  @media (min-width: v.$breakpoint-xlg) {
     @content;
   }
 }
 
 @mixin belowSmall {
-  @media (max-width: #{$breakpoint-sm - 1}) {
+  @media (max-width: #{v.$breakpoint-sm - 1}) {
     @content;
   }
 }
 
 @mixin belowMedium {
-  @media (max-width: #{$breakpoint-md - 1}) {
+  @media (max-width: #{v.$breakpoint-md - 1}) {
     @content;
   }
 }
 
 @mixin belowLarge {
-  @media (max-width: #{$breakpoint-lg - 1}) {
+  @media (max-width: #{v.$breakpoint-lg - 1}) {
     @content;
   }
 }
 
 @mixin belowXLarge {
-  @media (max-width: #{$breakpoint-xlg - 1}) {
+  @media (max-width: #{v.$breakpoint-xlg - 1}) {
     @content;
   }
 }
@@ -58,7 +58,7 @@
 @mixin container {
   & {
     width: 100%;
-    max-width: $container-size;
+    max-width: v.$container-size;
     margin: 0 auto;
     padding: 0 24px;
   }

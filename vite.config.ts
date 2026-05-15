@@ -67,10 +67,15 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: [
-            'lib/core/styles/mixins.scss',
-            'lib/core/tokens/.cache/variables.scss',
-          ],
+          src: 'lib/core/styles/mixins.scss',
+          dest: '.',
+          transform: (content) =>
+            content
+              .toString()
+              .replace('../tokens/.cache/variables.scss', './variables.scss'),
+        },
+        {
+          src: 'lib/core/tokens/.cache/variables.scss',
           dest: '.',
         },
       ],
