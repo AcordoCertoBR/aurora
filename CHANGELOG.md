@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.1](https://github.com/AcordoCertoBR/aurora/compare/v0.9.0...v0.9.1) (2026-05-18)
+
+
+### Bug Fixes
+
+* badge gap ([7f0cd0d](https://github.com/AcordoCertoBR/aurora/commit/7f0cd0ddaa82f1af4b1fb65893dff7e5242216b4))
+* badge gap ([30f997a](https://github.com/AcordoCertoBR/aurora/commit/30f997a508d28f2a1faaaa4a853a5f55d90a596c))
+
 ## [0.9.0](https://github.com/AcordoCertoBR/aurora/compare/v0.8.0...v0.9.0) (2026-05-15)
 
 
