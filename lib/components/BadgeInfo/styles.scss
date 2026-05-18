@@ -10,7 +10,7 @@
 
   &__content {
     display: flex;
-    gap: 20px;
+    gap: 4px;
     justify-content: center;
     align-items: center;
 
@@ -26,7 +26,6 @@
       color: $color-neutral-60;
       font-size: 12px;
       font-weight: 600;
-      line-height: 18px;
     }
   }
 
