@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.2](https://github.com/AcordoCertoBR/aurora/compare/v0.9.1...v0.9.2) (2026-05-21)
+
+
+### Bug Fixes
+
+* header font ([2c7b609](https://github.com/AcordoCertoBR/aurora/commit/2c7b609bcf742ed7310d58124135e1ddc9db3f71))
+* header font ([a6ab1ea](https://github.com/AcordoCertoBR/aurora/commit/a6ab1eab8be1c7ee08f28d9d269fbeb1e8b9c5e7))
+
 ## [0.9.1](https://github.com/AcordoCertoBR/aurora/compare/v0.9.0...v0.9.1) (2026-05-18)
 
 
