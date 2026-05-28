@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/AcordoCertoBR/aurora/compare/v0.9.2...v0.10.0) (2026-05-28)
+
+
+### Features
+
+* :sparkles: added ci ghost feat ([9b86cc7](https://github.com/AcordoCertoBR/aurora/commit/9b86cc7c1633c2dd274aa5a3e9128b5b6dd0e519))
+
 ## [0.9.2](https://github.com/AcordoCertoBR/aurora/compare/v0.9.1...v0.9.2) (2026-05-21)
 
 
