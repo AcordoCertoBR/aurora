@@ -42,13 +42,13 @@ jobs:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: '18.20.0'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false # never use caching in release builds
 
       - name: Install dependencies
         run: npm ci
@@ -56,10 +56,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish to npm
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to NPM
+        run: npm publish --access public
 
       - name: Build storybook
         run: npm run build-storybook
@@ -67,23 +65,25 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::890620372383:role/github-actions-sls
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: us-east-1
 
       - name: Deploy static site to S3 bucket
         run: |
-          aws s3 sync storybook-static/ s3://cp-aurora-ui-production-sa-east-1 \
+          aws s3 sync storybook-static/ s3://${{ vars.AWS_S3_BUCKET }} \
           --exclude '*.gitkeep' \
           --exclude '*.html' \
           --cache-control 'max-age=3888000' \
           --delete
 
-          aws s3 sync storybook-static/ s3://cp-aurora-ui-production-sa-east-1 \
+          aws s3 sync storybook-static/ s3://${{ vars.AWS_S3_BUCKET }} \
           --exclude '*' \
           --include '*.html' \
           --cache-control 'no-cache, no-store' \
           --delete
 
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation --distribution-id E1X8RBYTJLAH84 --paths "/*"
+          # Wait for all S3 operations to complete
+          wait
+
+          # Invalidate CloudFront cache
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
