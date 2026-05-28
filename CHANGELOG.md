@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/AcordoCertoBR/aurora/compare/v0.10.0...v0.11.0) (2026-05-28)
+
+
+### Features
+
+* :green_heart: trigger ci ([2c6f1cb](https://github.com/AcordoCertoBR/aurora/commit/2c6f1cbcd314ec812245eb3ec290228cabcf4b0e))
+
 ## [0.10.0](https://github.com/AcordoCertoBR/aurora/compare/v0.9.2...v0.10.0) (2026-05-28)
 
 
