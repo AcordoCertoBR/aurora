@@ -89,14 +89,3 @@ jobs:
 
           # Invalidate CloudFront cache
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
-
-  notify-consumers:
-    needs: [release-please, publish]
-    uses: AcordoCertoBR/actions/.github/workflows/node-lib-update-dispatcher.yml@main
-    with:
-      package-name: '@consumidor-positivo/aurora'
-      reviewers: 'gi-flor'
-      version: ${{ needs.release-please.outputs.version }}
-    secrets:
-      app-id: ${{ vars.CREATE_PR_CP_APP_ID }}
-      app-private-key: ${{ secrets.CREATE_PR_CP_APP_PRIVATE_KEY }}
