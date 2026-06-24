@@ -89,7 +89,7 @@ export const Tabs = ({
               <div className="au-tabs__btns" ref={tabsRef}>
                 {tabs.map((item: TabItemProps) => {
                   return (
-                    <Switch>
+                    <Switch key={item.tab}>
                       <Case condition={type === 1}>
                         <Chip
                           label={item.title}
