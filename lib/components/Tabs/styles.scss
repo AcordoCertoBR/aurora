@@ -40,8 +40,7 @@
   &__btns {
     display: flex;
     position: relative;
-    white-space: nowrap;
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     margin-bottom: 20px;
 
