@@ -41,8 +41,8 @@
     display: flex;
     position: relative;
     white-space: nowrap;
-    white-space: nowrap;
-    overflow-x: scroll;
+    overflow-x: auto;
+    overflow-y: hidden;
     margin-bottom: 20px;
 
     &::-webkit-scrollbar {
