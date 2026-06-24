@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.11.1](https://github.com/AcordoCertoBR/aurora/compare/v0.11.0...v0.11.1) (2026-06-24)
+
+
+### Bug Fixes
+
+* 🐛 add missing key in Tabs map and remove phantom vertical scroll ([cd324c3](https://github.com/AcordoCertoBR/aurora/commit/cd324c31d98e95a6aa793baccbcbe23c0f1b594a))
+* 🐛 corrige scroll vertical fantasma e key faltando no Tabs ([23aa38d](https://github.com/AcordoCertoBR/aurora/commit/23aa38d108d727f68c39bd02e8d0181c7ff74751))
+* 🐛 keep overflow-x scroll, hide y-axis overflow on Tabs btns ([20ae5ce](https://github.com/AcordoCertoBR/aurora/commit/20ae5cee206a8ec8071b6649a27eacfba18a2116))
+
 ## [0.11.0](https://github.com/AcordoCertoBR/aurora/compare/v0.10.0...v0.11.0) (2026-05-28)
 
 
