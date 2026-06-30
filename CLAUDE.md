@@ -98,3 +98,32 @@ Project skills live in `.claude/skills/`. Each skill is a directory with a `SKIL
 ## Testing
 
 Tests use Vitest with jsdom and `@testing-library/react`. Setup is in `vitest.setup.ts`. Generated files (`lib/components/icons/default/**`, `lib/components/Logo/ac/**`, `lib/components/Logo/cp/**`) are excluded from test runs and coverage.
+
+## Releases & commits
+
+Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/workflows/release.yml`) from the conventional commits merged into `main`. The commit/PR title type drives the bump: `feat:` → minor + npm publish, `fix:`/`refactor:` → patch + publish, `docs:`/`chore:`/`test:` → changelog only (no publish), breaking change (`feat!:` or `BREAKING CHANGE:`) → major. Since Aurora is consumed by external apps, changing public props, `au-` classes, or exported tokens is a **breaking change** — type the commit accordingly. The `/create-pr` skill encodes this.
+
+## Onde achar o resto (ponteiros)
+
+- **Referência longa & operação:** `docs/` — `docs/self-improvement.md` (protocolo que mantém os docs vivos) e `docs/observability.md` (onde investigar quando um componente quebra — Aurora é lib, não tem runtime próprio).
+- **Docs de negócio:** `.ai-docs/services/aurora.md` (o que é o design system, em linguagem de negócio — lido por design/produto via MCP `github-readonly`) e `.ai-docs/missions/` (mudanças não-triviais em voo). Aprofundar com `/cp-ai-doc`.
+- **Documentação no Storybook:** `lib/docs/*.mdx` (Configure, Patterns, Dependencies, Icons, DevelopingWithAI).
+- **Subagents read-only:** `.claude/agents/` (`code-reviewer`, `explorer`).
+
+## Contexto da organização (Consumidor Positivo)
+
+Brain central: repo `AcordoCertoBR/claude-org-context` (consulte via GitHub MCP / org-skills `cp-*` quando precisar).
+- Quem é dono de quê / qual squad / onde perguntar: `cp-org`. Convenções do brain: `cp-conventions`. Pilares de como o agente trabalha: `cp-pillars`.
+- Definições de métrica governadas: `cp-metrics` (raramente aplicável a uma lib de UI; relevante só se tocar telemetria/eventos).
+- As org-skills (`cp-*`) já estão no harness — não recrie contexto base aqui.
+- Aurora é consumida por apps externos das duas marcas (cp/ac); trate o contrato público (props, classes `au-`, tokens) como compromisso versionado.
+
+## Protocolo de auto-melhoria (OBRIGATÓRIO — ver `docs/self-improvement.md`)
+
+Este setup é vivo. Ao trabalhar neste repo, mantenha-o verdadeiro:
+- Mudou API/comportamento visível de um componente → atualize este `CLAUDE.md` e, se visível ao negócio/design, `.ai-docs/services/aurora.md` + changelog.
+- Criou/alterou uma skill em `.claude/skills/` → atualize `lib/docs/DevelopingWithAI.mdx` (regra do repo; há hook que lembra).
+- Descobriu gotcha/tech-debt → registre com `file:line` aqui.
+- Doc contradiz o código → corrija o doc (docs envelhecem; verifique contra o source).
+- Mudança não-trivial / missão → registro em `.ai-docs/missions/`.
+- Faltou cobertura nesta estrutura (padrão novo) → registre em `docs/setup-gaps.md` e sinalize ao brain (skill `cp-repo-setup`).
