@@ -87,6 +87,30 @@ padding: 4px 6px — styles.scss:6
 
 Valores sem equivalente no token set são sinalizados com uma nota explicativa. O relatório fecha com um resumo do total de ocorrências encontradas.
 
+### `/create-pr`
+
+Cria um branch a partir da `main` e abre um pull request já com título em conventional commit, descrição estruturada e as labels do padrão da Consumidor Positivo (custo CapEx/OpEx, risco, prioridade, impacto e escopo). Também aplica as regras específicas de Aurora — atenção ao tipo do commit, que decide a versão publicada via release-please.
+
+**Como usar:**
+
+```
+/create-pr
+```
+
+Claude Code vai criar o branch, commitar o diff, abrir o PR e aplicar/criar as labels apropriadas. Antes de abrir, ele espelha o CI: roda `prebuild` (se mexeu em tokens/ícones), `lint` e os testes.
+
+**O que ele cuida por você:**
+
+- **Tipo do commit = versão.** `feat:` publica uma minor, `fix:`/`refactor:` uma patch, `docs:`/`chore:`/`test:` não publicam, e uma mudança incompatível (props, classes `au-`, tokens) é `feat!:`/`BREAKING CHANGE:` → major.
+- **Labels constitucionais** da org (consulta a skill `cp-capex` para o slug de custo).
+- **Nunca inclui arquivos gerados** (`lib/core/tokens/.cache/`, `lib/components/icons/`) no diff.
+
+---
+
+## Subagents e contexto de organização
+
+Além das skills, o repo traz subagents read-only em `.claude/agents/` (`code-reviewer` e `explorer`) e a documentação de negócio em `.ai-docs/` — lida por design/produto via o MCP `github-readonly` no Claude.ai. O `CLAUDE.md` raiz conecta o repo ao brain da Consumidor Positivo (org-skills `cp-*`) e descreve o protocolo de auto-melhoria que mantém esses docs vivos (ver `docs/self-improvement.md`).
+
 ---
 
 ## Adicionando novas skills
