@@ -114,6 +114,37 @@ export const DisabledWithIconInactive: Story = {
   },
 }
 
+// Variante Order - Inativo (chevron fixo à direita)
+export const Order: Story = {
+  args: {
+    label: 'Ordenar',
+    variant: 'order',
+    isActive: false,
+    onClick: () => console.log('Chip order clicado'),
+  },
+}
+
+// Variante Order - Selecionado (label exibe a ordenação escolhida)
+export const OrderSelected: Story = {
+  args: {
+    label: 'Mais recentes',
+    variant: 'order',
+    isActive: true,
+    onClick: () => console.log('Chip order clicado'),
+  },
+}
+
+// Variante Order - Desabilitado
+export const OrderDisabled: Story = {
+  args: {
+    label: 'Ordenar',
+    variant: 'order',
+    isActive: false,
+    isDisabled: true,
+    onClick: () => console.log('Chip order clicado'),
+  },
+}
+
 // Story interativa - Toggle
 export const Interactive: Story = {
   render: () => {
