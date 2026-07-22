@@ -31,7 +31,7 @@ describe('BadgeState', () => {
   })
 
   describe('Status variants', () => {
-    const statuses = ['info', 'success', 'error', 'warning', 'support'] as const
+    const statuses = ['info', 'success', 'error', 'warning', 'support', 'neutral'] as const
 
     statuses.forEach(status => {
       it(`renders ${status} status with correct class`, () => {

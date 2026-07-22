@@ -69,6 +69,10 @@
       background-color: $color-brand-cyan-10;
       color: $color-brand-cyan-60;
     }
+    &.au-badgeState--neutral {
+      background-color: $color-neutral-10;
+      color: $color-neutral-60;
+    }
   }
 
   &--variant-strong {
@@ -87,6 +91,9 @@
     }
     &.au-badgeState--support {
       background-color: $color-brand-cyan-50;
+    }
+    &.au-badgeState--neutral {
+      background-color: $color-neutral-60;
     }
   }
 }

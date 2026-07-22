@@ -53,6 +53,40 @@ export const SupportTextBadge: Story = {
   },
 }
 
+export const NeutralTextBadge: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    text: 'Badge',
+  },
+}
+
+export const NeutralTextBadgeStrong: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    text: 'Badge',
+    variant: 'strong',
+  },
+}
+
+export const NeutralIconBadge: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    iconOnly: true,
+  },
+}
+
+export const NeutralIconBadgeStrong: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    iconOnly: true,
+    variant: 'strong',
+  },
+}
+
 export const ErrorTextBadgeStrong: Story = {
   render: (args) => container(args),
   args: {
