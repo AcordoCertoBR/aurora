@@ -76,11 +76,29 @@ export const HeadingSmall: Story = {
   render: (args) => <Text {...args} />,
 }
 
+export const HeadingMinimum: Story = {
+  args: {
+    as: 'h3',
+    children: 'Heading Minimum',
+    variant: 'heading-minimum',
+  },
+  render: (args) => <Text {...args} />,
+}
+
 export const HeadingMicro: Story = {
   args: {
     as: 'h3',
     children: 'Heading Micro',
     variant: 'heading-micro',
+  },
+  render: (args) => <Text {...args} />,
+}
+
+export const HeadingNano: Story = {
+  args: {
+    as: 'h3',
+    children: 'Heading Nano',
+    variant: 'heading-nano',
   },
   render: (args) => <Text {...args} />,
 }
