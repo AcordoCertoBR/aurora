@@ -26,6 +26,14 @@ describe('Text', () => {
     expect(el).toHaveClass('au-text--desk-heading-medium')
   })
 
+  it('applies the new heading-minimum and heading-nano variant classes', () => {
+    render(<Text variant="heading-minimum">minimum</Text>)
+    expect(screen.getByText('minimum')).toHaveClass('au-text--heading-minimum')
+
+    render(<Text variant="heading-nano">nano</Text>)
+    expect(screen.getByText('nano')).toHaveClass('au-text--heading-nano')
+  })
+
   it('applies color and weight classes', () => {
     render(
       <Text color="secondary" weight="bold">

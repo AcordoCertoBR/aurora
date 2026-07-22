@@ -12,6 +12,7 @@ import {
   COLOR_SUCCESS_50,
   COLOR_WARNING_50,
   COLOR_BRAND_CYAN_50,
+  COLOR_NEUTRAL_60,
 } from '@core/tokens'
 
 import { IfElse, Else, Then } from '@components/misc'
@@ -19,7 +20,7 @@ import { IfElse, Else, Then } from '@components/misc'
 import './styles.scss'
 
 export type BadgeStateProps = {
-  status: 'info' | 'success' | 'error' | 'warning' | 'support'
+  status: 'info' | 'success' | 'error' | 'warning' | 'support' | 'neutral'
   isNumberBadge?: boolean
   variant?: 'regular' | 'strong'
   text?: string
@@ -61,6 +62,11 @@ export const BadgeState = ({
       option: 'support',
       label: 'Mais informações',
       icon: <IconMoreHorizontal rawColor={COLOR_BRAND_CYAN_50} />,
+    },
+    neutral: {
+      option: 'neutral',
+      label: 'Neutro',
+      icon: <IconMoreHorizontal rawColor={COLOR_NEUTRAL_60} />,
     },
   }
 

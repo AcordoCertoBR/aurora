@@ -28,6 +28,18 @@ describe('Alert', () => {
     expect(root).toHaveClass('au-alert--error--type-1')
   })
 
+  it('marks the title with --with-text only when support text is present', () => {
+    const { rerender } = render(<Alert title={{ content: 'Only title' }} />)
+    expect(document.querySelector('.au-alert__title')).not.toHaveClass(
+      'au-alert__title--with-text',
+    )
+
+    rerender(<Alert title={{ content: 'Only title' }} text="description" />)
+    expect(document.querySelector('.au-alert__title')).toHaveClass(
+      'au-alert__title--with-text',
+    )
+  })
+
   it('renders customIcon when provided', () => {
     render(<Alert customIcon={<span data-testid="custom"><IconAlertCircle /></span>} />)
     expect(screen.getByTestId('custom')).toBeInTheDocument()

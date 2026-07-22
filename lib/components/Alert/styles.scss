@@ -29,13 +29,18 @@
   }
 
   &__title {
-    color: $color-neutral-70;
-    font-size: 16px;
+    color: $color-neutral-50;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 24px;
+    line-height: 21px;
 
     &--bold {
       font-weight: 600;
+    }
+
+    // Two-line alert (title + support text) keeps the stronger title color.
+    &--with-text {
+      color: $color-neutral-70;
     }
   }
 
@@ -51,9 +56,9 @@
     border: none;
     color: $color-brand-blue-40;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 24px;
+    line-height: 21px;
   }
 
   &__close-btn {

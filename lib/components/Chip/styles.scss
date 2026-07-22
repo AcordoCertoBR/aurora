@@ -14,6 +14,7 @@
   }
 
   &:hover {
+    background-color: transparent;
     border-color: $color-neutral-40;
   }
 
@@ -32,18 +33,33 @@
   }
 
   &:focus-visible {
-    border: 1px solid $color-neutral-10;
-    outline: 1px solid $color-brand-blue-40;
+    background-color: transparent;
+    border: 1px solid $color-neutral-30;
+    outline: none;
+    box-shadow:
+      0 0 0 2px $color-neutral-00,
+      0 0 0 4px $color-brand-blue-40;
+  }
+
+  &--variant-order {
+    gap: 4px;
+    padding: 8px 12px 8px 16px;
   }
 
   &--active {
     background-color: $color-brand-blue-10;
-    border-color: $color-brand-blue-30;
+    border-color: $color-brand-blue-40;
     color: $color-brand-blue-40;
 
     &:hover {
+      background-color: $color-brand-blue-10;
       color: $color-brand-blue-50;
       border-color: $color-brand-blue-50;
+    }
+
+    &:focus-visible {
+      background-color: $color-brand-blue-10;
+      border-color: $color-brand-blue-30;
     }
 
     .au-icon svg,

@@ -44,6 +44,20 @@ export const Circle: Story = {
   },
 }
 
+export const Icon: Story = {
+  args: {
+    width: 20,
+    height: 20,
+  },
+}
+
+export const Text: Story = {
+  args: {
+    width: 80,
+    height: 22,
+  },
+}
+
 export const Block: Story = {
   args: {
     block: true,

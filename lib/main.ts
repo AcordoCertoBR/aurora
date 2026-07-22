@@ -5,7 +5,7 @@ import './core/styles/GlobalStyles.scss'
 export { Button } from './components/Button'
 export { PureSwitch } from './components/Switch/Pure'
 export { CardSwitch } from './components/Switch/Card'
-export { Chip } from './components/Chip'
+export { Chip, type ChipProps } from './components/Chip'
 export { Conditional } from './components/misc/Conditional' // DEPRECATE
 export { Drawer } from './components/Drawer'
 export { Header } from './components/Header'
@@ -39,6 +39,7 @@ export { Container } from './components/Container'
 export { SubHeader } from './components/SubHeader'
 export { BadgeInfo } from './components/BadgeInfo'
 export { BadgeState } from './components/BadgeState'
+export { Divider } from './components/Divider'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
