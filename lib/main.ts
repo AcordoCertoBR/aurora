@@ -41,6 +41,7 @@ export { BadgeInfo } from './components/BadgeInfo'
 export { BadgeState } from './components/BadgeState'
 export { Divider } from './components/Divider'
 export { AdBox } from './components/AdBox'
+export { PartnerBanner, type PartnerBannerProps } from './components/PartnerBanner'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
