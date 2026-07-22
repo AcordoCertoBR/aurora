@@ -39,6 +39,7 @@ export { Container } from './components/Container'
 export { SubHeader } from './components/SubHeader'
 export { BadgeInfo } from './components/BadgeInfo'
 export { BadgeState } from './components/BadgeState'
+export { Divider } from './components/Divider'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
