@@ -143,7 +143,11 @@ export const Alert = ({
               <div>
                 {!!title?.content && (
                   <h4
-                    className={`au-alert__title au-alert__title--${title?.weight}`}>
+                    className={classNames(
+                      'au-alert__title',
+                      `au-alert__title--${title?.weight}`,
+                      { 'au-alert__title--with-text': !!text },
+                    )}>
                     {title.content}
                   </h4>
                 )}
