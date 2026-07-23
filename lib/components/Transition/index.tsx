@@ -6,19 +6,10 @@ import './styles.scss'
 export type TransitionAlign = 'left' | 'center'
 
 export type TransitionProps = {
-  /** Ordered loading messages — one per instance (design shows 3). */
   messages: string[]
-  /** Time each message is shown, in milliseconds. */
   messageDuration?: number
-  /** Horizontal alignment of the messages and progress bar. */
   align?: TransitionAlign
-  /**
-   * Optional async gate. While `true`, holds on the penultimate message;
-   * when it flips to `false`, advances to the final message and finishes.
-   * Omit it to run straight through all messages.
-   */
   isLoading?: boolean
-  /** Called once the last message has been shown. */
   onFinish?: () => void
   className?: string
 }

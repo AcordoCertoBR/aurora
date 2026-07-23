@@ -14,8 +14,6 @@ export const useTransition = ({
   onFinish,
 }: UseTransitionProps) => {
   const [currentStep, setCurrentStep] = useState(0)
-  // Paints the bar at 0 on the first frame so the fill animates from the
-  // start — CSS transitions don't run on the initial mount width.
   const [mounted, setMounted] = useState(false)
   const hasFinished = useRef(false)
   const onFinishRef = useRef(onFinish)
@@ -28,15 +26,12 @@ export const useTransition = ({
     setMounted(true)
   }, [])
 
-  // Restart the sequence when the flow is reconfigured.
   useEffect(() => {
     setCurrentStep(0)
     hasFinished.current = false
   }, [totalMessages, messageDuration])
 
   const isLast = currentStep >= totalMessages - 1
-  // When gated by `isLoading`, hold on the penultimate message until the real
-  // work resolves — the final message reads as a terminal success state.
   const holdIndex = Math.max(0, totalMessages - 2)
   const shouldHold = isLoading === true && currentStep >= holdIndex
 
