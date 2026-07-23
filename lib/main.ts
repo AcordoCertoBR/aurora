@@ -43,6 +43,7 @@ export { Divider } from './components/Divider'
 export { AdBox } from './components/AdBox'
 export { ChipBanner } from './components/ChipBanner'
 export { PartnerBanner, type PartnerBannerProps } from './components/PartnerBanner'
+export { Transition, type TransitionProps } from './components/Transition'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'
