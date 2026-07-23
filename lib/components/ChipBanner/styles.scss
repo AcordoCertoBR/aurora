@@ -1,0 +1,165 @@
+// Circumference of the ring: 2 * PI * r, with r = 10 (see the <circle> in index.tsx).
+$au-chip-banner-ring-circumference: 62.832;
+
+@keyframes au-chip-banner-fill {
+  from {
+    stroke-dashoffset: $au-chip-banner-ring-circumference;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.au-chip-banner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 500px;
+  background-color: transparent;
+  color: $color-neutral-70;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  .au-chip-banner__label {
+    margin: 0;
+    color: $color-neutral-70;
+    white-space: nowrap;
+  }
+
+  .au-chip-banner__icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+
+    .au-chip-banner__pause {
+      display: inline-flex;
+    }
+
+    .au-icon svg,
+    .au-chip-banner__pause svg,
+    > svg:not(.au-chip-banner__ring) {
+      color: $color-neutral-70;
+    }
+
+    .au-icon svg,
+    > svg:not(.au-chip-banner__ring) {
+      width: 24px;
+      height: 24px;
+    }
+
+    .au-chip-banner__pause svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .au-chip-banner__ring {
+    position: absolute;
+    inset: 0;
+    width: 24px;
+    height: 24px;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    pointer-events: none;
+  }
+
+  .au-chip-banner__ring-progress {
+    stroke: $color-brand-blue-40;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: $au-chip-banner-ring-circumference;
+    stroke-dashoffset: $au-chip-banner-ring-circumference;
+    animation-name: au-chip-banner-fill;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+
+  // Mobile: guarantee a 44x44 touch target without growing the visual.
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 44px;
+    min-height: 44px;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+  }
+
+  &:hover {
+    background-color: $color-brand-blue-00;
+    border-color: $color-brand-blue-40;
+
+    .au-chip-banner__icon {
+      .au-icon svg,
+      .au-chip-banner__pause svg,
+      > svg:not(.au-chip-banner__ring) {
+        color: $color-brand-blue-40;
+      }
+    }
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px $color-neutral-00,
+      0 0 0 4px $color-brand-blue-40;
+  }
+
+  &--negative {
+    color: $color-neutral-00;
+
+    .au-chip-banner__label {
+      color: $color-neutral-00;
+    }
+
+    .au-chip-banner__icon {
+      .au-icon svg,
+      .au-chip-banner__pause svg,
+      > svg:not(.au-chip-banner__ring) {
+        color: $color-neutral-00;
+      }
+    }
+
+    .au-chip-banner__ring-progress {
+      stroke: $color-neutral-00;
+    }
+
+    &:hover {
+      background-color: $color-brand-blue-00;
+      border-color: $color-brand-blue-40;
+      color: $color-neutral-70;
+
+      .au-chip-banner__label {
+        color: $color-neutral-70;
+      }
+
+      .au-chip-banner__icon {
+        .au-icon svg,
+        .au-chip-banner__pause svg,
+        > svg:not(.au-chip-banner__ring) {
+          color: $color-brand-blue-40;
+        }
+      }
+
+      .au-chip-banner__ring-progress {
+        stroke: $color-brand-blue-40;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .au-chip-banner__ring-progress {
+    // Respect reduced-motion: no sweep. Auto-advance relies on the animation,
+    // so with motion disabled the ring stays empty and the state is toggled manually.
+    animation: none;
+  }
+}
