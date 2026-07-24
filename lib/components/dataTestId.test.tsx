@@ -12,6 +12,7 @@ import {
   Card,
   Header,
   PureSwitch,
+  Transition,
 } from '../main'
 import { IconCheck } from './icons'
 import { LogoPrimaryCP } from './Logo'
@@ -26,6 +27,7 @@ describe('data-testid contract', () => {
         <BadgeInfo status="info" text="t" data-testid="bi" />
         <Card.Root data-testid="cr">x</Card.Root>
         <Header.Root data-testid="hr">x</Header.Root>
+        <Transition data-testid="tr" messages={['a']} />
         <PureSwitch
           data-testid="ps"
           isActive={false}
@@ -36,7 +38,7 @@ describe('data-testid contract', () => {
         />
       </>,
     )
-    ;['c', 'sk', 'md', 'bi', 'cr', 'hr', 'ps'].forEach((id) =>
+    ;['c', 'sk', 'md', 'bi', 'cr', 'hr', 'ps', 'tr'].forEach((id) =>
       expect(screen.getByTestId(id)).toBeInTheDocument(),
     )
   })

@@ -12,6 +12,7 @@ export type TransitionProps = {
   isLoading?: boolean
   onFinish?: () => void
   className?: string
+  'data-testid'?: string
 }
 
 export const Transition = ({
@@ -21,6 +22,7 @@ export const Transition = ({
   isLoading,
   onFinish,
   className,
+  'data-testid': dataTestId,
 }: TransitionProps) => {
   const { currentStep, progress } = useTransition({
     totalMessages: messages.length,
@@ -38,7 +40,8 @@ export const Transition = ({
         'au-transition',
         `au-transition--align-${align}`,
         className,
-      )}>
+      )}
+      data-testid={dataTestId}>
       <div className="au-transition__messages">
         <Text
           as="p"
