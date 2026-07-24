@@ -7,6 +7,7 @@ export type TooltipProps = {
   position?: 'top' | 'bottom' | 'left' | 'right'
   open?: boolean
   children: React.ReactNode
+  'data-testid'?: string
 }
 
 export const Tooltip = ({
@@ -14,6 +15,7 @@ export const Tooltip = ({
   position = 'top',
   open,
   children,
+  'data-testid': dataTestId,
 }: TooltipProps) => {
   const tooltipId = useId()
 
@@ -26,7 +28,7 @@ export const Tooltip = ({
   )
 
   return (
-    <div className={tooltipClasses} aria-describedby={tooltipId}>
+    <div className={tooltipClasses} aria-describedby={tooltipId} data-testid={dataTestId}>
       {children}
       <div id={tooltipId} className="tooltip" role="tooltip">{text}</div>
     </div>

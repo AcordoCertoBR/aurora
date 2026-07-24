@@ -28,6 +28,7 @@ export type TagProps = {
   customIcon?: string | JSX.Element
   fullWidth?: boolean
   actionButton?: { content?: string; onClick?: () => void }
+  'data-testid'?: string
 }
 
 /**
@@ -46,6 +47,7 @@ export const Tag = ({
   children,
   fullWidth,
   actionButton,
+  'data-testid': dataTestId,
 }: TagProps) => {
   const statusMap = {
     success: {
@@ -88,7 +90,7 @@ export const Tag = ({
   const supportText = isBadgeTag ? text.toUpperCase() : text
 
   return (
-    <div className={tagClasses}>
+    <div className={tagClasses} data-testid={dataTestId}>
       <div className="au-tag__content">
         <Conditional
           condition={!isBadgeTag}

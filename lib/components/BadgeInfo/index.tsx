@@ -18,6 +18,7 @@ export type BadgeInfoProps = {
   children?: React.ReactNode
   customIcon?: string | JSX.Element
   actionButton?: { content?: string; onClick?: () => void }
+  'data-testid'?: string
 }
 
 export const BadgeInfo = ({
@@ -26,6 +27,7 @@ export const BadgeInfo = ({
   customIcon,
   text,
   children,
+  'data-testid': dataTestId,
 }: BadgeInfoProps) => {
   const statusMap = {
     success: {
@@ -64,7 +66,7 @@ export const BadgeInfo = ({
   })
 
   return (
-    <div className={badgeInfoClasses}>
+    <div className={badgeInfoClasses} data-testid={dataTestId}>
       <div className="au-badgeInfo__content">
         <div className="au-badgeInfo__content-icon" aria-hidden="true">
           <IfElse condition={!!customIcon}>

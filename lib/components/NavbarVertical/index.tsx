@@ -13,6 +13,7 @@ type NavbarVerticalDataProps = {
   dropdown?: NavbarVerticalDataProps[]
   active?: boolean
   href?: string
+  'data-testid'?: string
 }
 
 type NavbarVerticalProps = {
@@ -23,6 +24,7 @@ type NavbarVerticalProps = {
   ) => ReactNode | string | JSX.Element | JSX.Element[]
   renderAlert?: () => ReactNode | string | JSX.Element | JSX.Element[]
   renderActions: () => ReactNode | string | JSX.Element | JSX.Element[]
+  'data-testid'?: string
 }
 
 export const NavbarVertical = ({
@@ -30,9 +32,10 @@ export const NavbarVertical = ({
   renderItem,
   renderAlert,
   renderActions,
+  'data-testid': dataTestId,
 }: NavbarVerticalProps) => {
   return (
-    <div className="au-navbar-vertical">
+    <div className="au-navbar-vertical" data-testid={dataTestId}>
       {data?.map((link, idx) => {
         return renderItem(link, idx)
       })}
@@ -49,6 +52,7 @@ const NavbarVerticalLink = ({
   dropdown,
   href,
   active = false,
+  'data-testid': dataTestId,
 }: NavbarVerticalDataProps) => {
   const [open, setOpen] = useState<boolean>(!!dropdown && active)
 
@@ -71,7 +75,8 @@ const NavbarVerticalLink = ({
         [`au-navbar-vertical__link--is-active`]: active,
         [`au-navbar-vertical__link--is-open`]: open,
       })}
-      onClick={handleClick}>
+      onClick={handleClick}
+      data-testid={dataTestId}>
       <Conditional condition={!!Icon} renderIf={Icon} />
       {name}
 

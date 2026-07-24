@@ -3,4 +3,5 @@ export interface CarouselProps {
   type: 'pages' | 'scrollbar';
   mobileText?: string;
   draggable?: boolean;
+  'data-testid'?: string;
 }

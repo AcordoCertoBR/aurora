@@ -4,4 +4,5 @@ export type NavbarDataProps = {
   active?: boolean
   href?: string
   dropdown?: NavbarDataProps[]
+  'data-testid'?: string
 }

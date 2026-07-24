@@ -7,4 +7,5 @@ export type CardSwitchProps = {
 	deactivateCallBack?: () => void;
 	shouldFadeOutAfterActivate?: boolean;
 	fadeOutDelayInSeconds?: number;
+	'data-testid'?: string;
 }

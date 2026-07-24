@@ -4,9 +4,15 @@ export type HeaderHamburgerProps = {
   onClick?: () => void
   isOpen?: boolean
   controls?: string
+  'data-testid'?: string
 }
 
-export const HeaderHamburger = ({ onClick, isOpen, controls }: HeaderHamburgerProps) => {
+export const HeaderHamburger = ({
+  onClick,
+  isOpen,
+  controls,
+  'data-testid': dataTestId,
+}: HeaderHamburgerProps) => {
   return (
     <button
       type="button"
@@ -14,7 +20,8 @@ export const HeaderHamburger = ({ onClick, isOpen, controls }: HeaderHamburgerPr
       onClick={onClick}
       aria-label="Abrir menu de navegação"
       aria-expanded={isOpen}
-      aria-controls={controls}>
+      aria-controls={controls}
+      data-testid={dataTestId}>
       <IconMenu aria-hidden="true" />
     </button>
   )

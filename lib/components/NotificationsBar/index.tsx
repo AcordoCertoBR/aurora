@@ -6,6 +6,7 @@ import './styles.scss'
 type NotificationsBarWrapProps = {
   renderRecents?: () => ReactNode | string | JSX.Element | JSX.Element[]
   renderOlds?: () => ReactNode | string | JSX.Element | JSX.Element[]
+  'data-testid'?: string
 }
 
 type NotificationsBarListProps = {
@@ -15,6 +16,7 @@ type NotificationsBarListProps = {
     item: NotificationBarListDataProps,
     idx?: number
   ) => ReactNode | string | JSX.Element | JSX.Element[]
+  'data-testid'?: string
 }
 
 type NotificationBarListDataProps = {
@@ -32,14 +34,20 @@ type NotificationsBarLinkProps = {
   Icon?: ReactNode | string | JSX.Element | JSX.Element[]
   createdAt?: string
   isUnread?: boolean
+  'data-testid'?: string
 }
 
 export const NotificationsBarWrap = ({
   renderRecents,
   renderOlds,
+  'data-testid': dataTestId,
 }: NotificationsBarWrapProps) => {
   return (
-    <div className="au-notifications-bar" role="region" aria-label="Notificações">
+    <div
+      className="au-notifications-bar"
+      role="region"
+      aria-label="Notificações"
+      data-testid={dataTestId}>
       {renderRecents && renderRecents()}
       {renderOlds && renderOlds()}
     </div>
@@ -50,9 +58,10 @@ export const NotificationsBarList = ({
   title,
   dataSource,
   renderItem,
+  'data-testid': dataTestId,
 }: NotificationsBarListProps) => {
   return (
-    <div className="au-notifications-bar__section">
+    <div className="au-notifications-bar__section" data-testid={dataTestId}>
       <Text as="h3" variant="body-medium" weight="bold">
         {title}
       </Text>
@@ -70,11 +79,12 @@ export const NotificationsBarLink = ({
   createdAt,
   onDelete,
   isUnread,
+  'data-testid': dataTestId,
 }: NotificationsBarLinkProps) => {
   const timestampId = useId()
 
   return (
-    <div className="au-notifications-bar__item">
+    <div className="au-notifications-bar__item" data-testid={dataTestId}>
       <button
         type="button"
         className="au-notifications-bar__link"

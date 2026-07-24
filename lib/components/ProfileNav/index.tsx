@@ -5,13 +5,18 @@ import './styles.scss'
 type ProfileNavProps = {
   name: string
   fullName: string
+  'data-testid'?: string
 }
 
-export const ProfileNav = ({ name, fullName }: ProfileNavProps) => {
+export const ProfileNav = ({
+  name,
+  fullName,
+  'data-testid': dataTestId,
+}: ProfileNavProps) => {
   const initialLetters = getInitialLetters(fullName)
 
   return (
-    <div className="au-profile-nav">
+    <div className="au-profile-nav" data-testid={dataTestId}>
       <div className="au-profile-nav__badget">
         <Text variant="heading-small" weight="medium">
           {initialLetters}

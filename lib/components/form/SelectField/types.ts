@@ -22,4 +22,5 @@ export type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   EmptyText?: string
   fullScreenOptions?: boolean
   htmlType?: 'text' | 'number'
+  'data-testid'?: string
 }

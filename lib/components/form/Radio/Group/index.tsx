@@ -18,6 +18,7 @@ export const RadioGroup = ({
   children,
   onChange,
   onFocus,
+  'data-testid': dataTestId,
 }: RadioGroupProps) => {
   const groupClass = classNames('au-radio-group', {
     'au-radio-group--horizontal': orientation === 'horizontal',
@@ -47,7 +48,7 @@ export const RadioGroup = ({
   })
 
   return (
-    <div className={groupClass}>
+    <div className={groupClass} data-testid={dataTestId}>
       <Conditional
         condition={!!label}
         renderIf={

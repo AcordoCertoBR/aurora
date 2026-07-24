@@ -5,4 +5,5 @@ export type SwitchProps = {
 	disabled: boolean;
 	activateCallBack: () => void;
 	deactivateCallBack?: () => void;
+	'data-testid'?: string;
 }

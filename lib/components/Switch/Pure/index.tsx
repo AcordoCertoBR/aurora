@@ -3,13 +3,14 @@ import './styles.scss';
 import { SwitchProps } from './types';
 
 
-export const PureSwitch: React.FC<SwitchProps> = ({ 
-	isActive, 
-	label, 
-	id, 
+export const PureSwitch: React.FC<SwitchProps> = ({
+	isActive,
+	label,
+	id,
 	disabled,
-	activateCallBack, 
-	deactivateCallBack 
+	activateCallBack,
+	deactivateCallBack,
+	'data-testid': dataTestId,
 }) => {
 	const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const isActivated = event.target.checked;
@@ -20,7 +21,7 @@ export const PureSwitch: React.FC<SwitchProps> = ({
   };
 	
 	return (
-    <div className="au-switch">
+    <div className="au-switch" data-testid={dataTestId}>
       <label htmlFor={id} className="au-switch-label">
 				<span>{label}</span>
 				<div className="au-switch-container">

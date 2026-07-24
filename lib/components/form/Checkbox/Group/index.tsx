@@ -19,6 +19,7 @@ export const CheckboxGroup = ({
   children,
   onChange,
   onFocus,
+  'data-testid': dataTestId,
 }: CheckboxGroupProps) => {
   const groupClass = classNames('au-checkbox-group', {
     'au-checkbox-group--horizontal': orientation === 'horizontal',
@@ -47,7 +48,7 @@ export const CheckboxGroup = ({
   })
 
   return (
-    <div className={groupClass}>
+    <div className={groupClass} data-testid={dataTestId}>
       <Conditional
         condition={!!label}
         renderIf={

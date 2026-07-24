@@ -12,18 +12,21 @@ type SubHeaderProps = {
   title: string
   handleReturn: () => void
   handleHelpInfo?: () => void
+  'data-testid'?: string
 }
 
 export const SubHeader = ({
   title,
   handleReturn,
   handleHelpInfo,
+  'data-testid': dataTestId,
 }: SubHeaderProps) => {
   return (
     <div
       className={classNames('au-sub-header', {
         'au-sub-header--with-help': handleHelpInfo,
-      })}>
+      })}
+      data-testid={dataTestId}>
       <Container customClass="au-sub-header__container">
         <Button
           className="au-sub-header__button"

@@ -1,8 +1,8 @@
-import { Logo } from '../Logo'
+import { Logo, LogoVariantProps } from '../Logo'
 
-export const LogoPrimaryWhiteAC = () => {
+export const LogoPrimaryWhiteAC = ({ 'data-testid': dataTestId }: LogoVariantProps) => {
   return (
-    <Logo label="Acordo Certo">
+    <Logo label="Acordo Certo" data-testid={dataTestId}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="150"

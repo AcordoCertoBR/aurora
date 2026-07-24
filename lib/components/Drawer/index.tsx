@@ -8,6 +8,7 @@ type DrawerProps = {
   renderContent: ReactNode | string | JSX.Element | JSX.Element[]
   isOpen: boolean
   handleOpen: () => void
+  'data-testid'?: string
 }
 
 export const Drawer = ({
@@ -15,6 +16,7 @@ export const Drawer = ({
   renderContent,
   isOpen = false,
   handleOpen,
+  'data-testid': dataTestId,
 }: DrawerProps) => {
   
   return (
@@ -23,7 +25,8 @@ export const Drawer = ({
         'au-drawer--is-open': isOpen,
       })}
       role="dialog"
-      aria-modal="true">
+      aria-modal="true"
+      data-testid={dataTestId}>
       <div className="au-drawer__container">
         <div className="au-drawer__header">
           {renderHeader}

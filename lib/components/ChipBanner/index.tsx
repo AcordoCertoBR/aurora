@@ -14,6 +14,7 @@ export type ChipBannerProps = {
   ariaLabel?: string
   onClick?: () => void
   className?: string
+  'data-testid'?: string
 }
 
 export const ChipBanner = ({
@@ -25,6 +26,7 @@ export const ChipBanner = ({
   ariaLabel,
   onClick,
   className = '',
+  'data-testid': dataTestId,
 }: ChipBannerProps) => {
   const [isPlaying, setIsPlaying] = useState(() => type === 'pause')
   // Bumping the key remounts the ring, resetting the sweep to 0. We only do
@@ -62,7 +64,8 @@ export const ChipBanner = ({
       className={classes}
       aria-pressed={isPlaying}
       aria-label={ariaLabel ?? defaultAriaLabel}
-      onClick={handleClick}>
+      onClick={handleClick}
+      data-testid={dataTestId}>
       <span className="au-chip-banner__icon" aria-hidden="true">
         {isPlaying ? (
           <span

@@ -1,8 +1,8 @@
-import { Logo } from '../Logo'
+import { Logo, LogoVariantProps } from '../Logo'
 
-export const LogoBadgeWhiteAC = () => {
+export const LogoBadgeWhiteAC = ({ 'data-testid': dataTestId }: LogoVariantProps) => {
   return (
-    <Logo label="Acordo Certo">
+    <Logo label="Acordo Certo" data-testid={dataTestId}>
      
 
 
