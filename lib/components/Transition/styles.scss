@@ -1,0 +1,80 @@
+.au-transition {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+
+  &--align-left {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  &--align-center {
+    align-items: center;
+    text-align: center;
+  }
+
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  &__message {
+    transition: opacity 0.3s ease;
+  }
+
+  &__message--previous.au-text {
+    color: $color-neutral-10;
+  }
+
+  &__message--hidden {
+    opacity: 0;
+  }
+
+  &__message--current {
+    animation: au-transition-fade-in 0.5s ease;
+  }
+
+  &__bar {
+    background-color: $color-neutral-20;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    height: 8px;
+
+    @include aboveLarge() {
+      width: 416px;
+    }
+  }
+
+  &__bar-filled {
+    background-color: $color-brand-blue-40;
+    border-radius: 500px;
+    height: 100%;
+    transition-property: width;
+    transition-timing-function: linear;
+  }
+
+  @keyframes au-transition-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .au-transition__message--current {
+      animation: none;
+    }
+
+    .au-transition__bar-filled {
+      transition: none;
+    }
+  }
+}
