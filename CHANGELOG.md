@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.12.0](https://github.com/AcordoCertoBR/aurora/compare/v0.11.1...v0.12.0) (2026-07-24)
+
+
+### Features
+
+* ✨: add AdBox component ([3d32134](https://github.com/AcordoCertoBR/aurora/commit/3d321345c3a3a05d2e0e7b0396c042357def67b2))
+* ✨: add AdBox component ([bc45c88](https://github.com/AcordoCertoBR/aurora/commit/bc45c88aa19e2f000dbdf47055d14935da0461a5))
+* ✨: add Chip order variant and align states to Figma ([6e7c576](https://github.com/AcordoCertoBR/aurora/commit/6e7c576bd6770c781a6681e91f65273d3dc47cfc))
+* ✨: add ChipBanner component ([30f1590](https://github.com/AcordoCertoBR/aurora/commit/30f15903b6e9088f1bfab0ff25fd5e3785b9b260))
+* ✨: add ChipBanner component ([9c4ad91](https://github.com/AcordoCertoBR/aurora/commit/9c4ad91d4af27fd684f46d2796ef3eca7ae05913))
+* ✨: add Divider component ([a99b2ba](https://github.com/AcordoCertoBR/aurora/commit/a99b2baab71175f2bcc4e177f0c62400055622ed))
+* ✨: add heading-minimum and heading-nano Text variants ([9a86039](https://github.com/AcordoCertoBR/aurora/commit/9a86039834025da30cf01ea07d66281d1ce6e8ba))
+* ✨: add neutral status to BadgeState component ([b61c9e7](https://github.com/AcordoCertoBR/aurora/commit/b61c9e7a342e4e8d84dbbcad647f98e26dff9803))
+* ✨: add PartnerBanner component ([9abaa74](https://github.com/AcordoCertoBR/aurora/commit/9abaa746fb13762ca076f7badf2531d7f87fdd2f))
+* ✨: add PartnerBanner component ([45dd4a5](https://github.com/AcordoCertoBR/aurora/commit/45dd4a5ad869f1a179cb8308d6cf504999a362c7))
+* ✨: add Transition component ([d584bb3](https://github.com/AcordoCertoBR/aurora/commit/d584bb330fbd7ea85f6094fbb70018b5701f63be))
+* ✨: add Transition component ([b739748](https://github.com/AcordoCertoBR/aurora/commit/b739748c330b76e8ac3a4e82fc15d82494c71606))
+* 🍱: add collapse-open and collapse-close icons ([80ef91c](https://github.com/AcordoCertoBR/aurora/commit/80ef91c6948320edbeab226ce19a1c3001961cf0))
+* add Divider, Chip order variant and design-system refinements ([f8cf0f2](https://github.com/AcordoCertoBR/aurora/commit/f8cf0f2dd7f92025684daa76ca8aa74754782c9b))
+
+
+### Bug Fixes
+
+* 💄: align Select disabled border to neutral-40 ([416524b](https://github.com/AcordoCertoBR/aurora/commit/416524b1633e4c2014779f121d46449f866285b3))
+* 💄: correct Text heading-minimum line-height ([93a440b](https://github.com/AcordoCertoBR/aurora/commit/93a440b51ca0ece56727ef36b51df600084ee4fb))
+* 💄: update Alert typography sizing and title colors ([391ab98](https://github.com/AcordoCertoBR/aurora/commit/391ab98fd5e1f1cd91935667e38dcc7e571dd2b9))
+
 ## [0.11.1](https://github.com/AcordoCertoBR/aurora/compare/v0.11.0...v0.11.1) (2026-06-24)
 
 
