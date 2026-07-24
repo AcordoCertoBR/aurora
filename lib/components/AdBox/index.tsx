@@ -7,12 +7,14 @@ export type AdBoxProps = {
   children?: React.ReactNode
   type?: 'content' | 'heading'
   className?: string
+  'data-testid'?: string
 }
 
 export const AdBox = ({
   children,
   type = 'content',
   className = '',
+  'data-testid': dataTestId,
 }: AdBoxProps) => {
   const classes = classNames('au-ad-box', {
     [`au-ad-box--type-${type}`]: !!type,
@@ -20,7 +22,7 @@ export const AdBox = ({
   })
 
   return (
-    <aside className={classes} aria-label={AD_LABEL}>
+    <aside className={classes} aria-label={AD_LABEL} data-testid={dataTestId}>
       <div className="au-ad-box__heading">
         <span className="au-ad-box__label">{AD_LABEL}</span>
       </div>

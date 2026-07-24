@@ -9,6 +9,7 @@ type SkeletonProps = {
   block?: boolean
   width?: number
   height?: number
+  'data-testid'?: string
 }
 
 export const Skeleton = ({
@@ -18,6 +19,7 @@ export const Skeleton = ({
   block = false,
   height,
   width,
+  'data-testid': dataTestId,
 }: SkeletonProps) => {
   const skeletonClasses = classNames('au-skeleton', {
     'au-skeleton--active': active,
@@ -31,5 +33,5 @@ export const Skeleton = ({
     width: width ? `${width}px` : block ? '100%' : '80px',
   }
 
-  return <div className={skeletonClasses} style={skeletonSize} aria-hidden="true"></div>
+  return <div className={skeletonClasses} style={skeletonSize} aria-hidden="true" data-testid={dataTestId}></div>
 }

@@ -11,6 +11,7 @@ export type ChipProps = {
   icon?: React.ReactNode
   variant?: 'filter' | 'order'
   onClick: () => void
+  'data-testid'?: string
 }
 
 export const Chip = ({
@@ -20,6 +21,7 @@ export const Chip = ({
   isActive,
   isDisabled,
   variant = 'filter',
+  'data-testid': dataTestId,
 }: ChipProps) => {
   const isOrder = variant === 'order'
 
@@ -31,7 +33,8 @@ export const Chip = ({
       })}
       type="outlined"
       disabled={isDisabled}
-      onClick={onClick}>
+      onClick={onClick}
+      data-testid={dataTestId}>
       {!isOrder && icon}
       {label}
       {isOrder && <IconChevronDown />}

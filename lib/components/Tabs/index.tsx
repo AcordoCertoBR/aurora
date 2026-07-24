@@ -15,6 +15,7 @@ export type TabsProps = {
   withLabel?: boolean
   rightSlotChildren?: React.ReactNode
   onClick?: (value: string) => void
+  'data-testid'?: string
 }
 
 export type TabItemProps = {
@@ -32,6 +33,7 @@ export const Tabs = ({
   areTabsHidden,
   rightSlotChildren,
   withLabel = false,
+  'data-testid': dataTestId,
 }: TabsProps) => {
   const [isClicked, setIsClicked] = useState(false)
   const [currButton, setCurrButton] = useState(initialTab ?? '')
@@ -75,7 +77,8 @@ export const Tabs = ({
         <div
           className={classNames('au-tabs', {
             [`au-tabs--type-${type}`]: !!type,
-          })}>
+          })}
+          data-testid={dataTestId}>
           <div className="au-tabs__container">
             <div className="au-tabs__left-panel">
               <If condition={!!withLabel}>

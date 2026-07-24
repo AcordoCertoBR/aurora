@@ -33,6 +33,7 @@ export type AlertProps = {
   countdown?: number
   onCountdownEnd?: () => void
   onCloseButton?: () => void
+  'data-testid'?: string
 }
 
 export const Alert = ({
@@ -48,7 +49,8 @@ export const Alert = ({
   countdown = 59,
   onCountdownEnd,
   onCloseButton,
-  customIcon
+  customIcon,
+  'data-testid': dataTestId,
 }: AlertProps) => {
   const [isClosed, setIsClosed] = useState(false)
   const [timeLeft, setTimeLeft] = useState(countdown)
@@ -133,7 +135,7 @@ export const Alert = ({
   if (isClosed) return null
 
   return (
-    <div className={alertClasses}>
+    <div className={alertClasses} data-testid={dataTestId}>
       <div className="au-alert__content">
         <Conditional condition={showIcon} renderIf={<span aria-hidden="true">{ customIcon ?? statusMap[status].icon}</span>} />
         <div className={`au-alert__container--${orientation}`}>

@@ -8,6 +8,7 @@ export type LazyImageProps = {
   draggable?: boolean
   style?: { [key: string]: string | number }
   onClick?: (event: React.MouseEvent<HTMLImageElement>) => void
+  'data-testid'?: string
 }
 
 export type UseLazyImageProps = {

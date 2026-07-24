@@ -18,4 +18,5 @@ export type RadioGroupProps = {
   required?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onFocus?: React.FocusEventHandler<HTMLInputElement>
+  'data-testid'?: string
 }

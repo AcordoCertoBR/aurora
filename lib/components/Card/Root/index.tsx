@@ -13,6 +13,7 @@ export type CardRootProps = {
   className?: string;
   children: ReactNode
   ref?: Ref<HTMLDivElement>
+  'data-testid'?: string
 }
 export const CardRoot = ({
   border = true,
@@ -25,7 +26,8 @@ export const CardRoot = ({
   paddingLess,
   children,
   className,
-  ref
+  ref,
+  'data-testid': dataTestId,
 }: CardRootProps) => {
   const rootClasses = classNames('au-card__root', {
     'au-card__root--border-none': !border,
@@ -45,7 +47,8 @@ export const CardRoot = ({
     <div
       ref={ref}
       style={rootSize}
-      className={rootClasses}>
+      className={rootClasses}
+      data-testid={dataTestId}>
       {children}
     </div>
   )

@@ -13,6 +13,7 @@ export const LazyImage = ({
   draggable = false,
   style,
   onClick,
+  'data-testid': dataTestId,
 }: LazyImageProps) => {
   const { imgRef, imageSrc } = useLazyImage({ lazy, src })
 
@@ -28,5 +29,6 @@ export const LazyImage = ({
     draggable,
     style,
     onClick,
+    'data-testid': dataTestId,
   })
 }

@@ -38,7 +38,8 @@ export const SelectField = ({
   autocomplete = false,
   EmptyText = 'Nada encontrado',
   fullScreenOptions = false,
-  htmlType = 'text'
+  htmlType = 'text',
+  'data-testid': dataTestId,
 }: SelectFieldProps) => {
   const labelId = useId()
   const generatedErrorId = useId()
@@ -120,6 +121,7 @@ export const SelectField = ({
         <div className={selectClasses}>
           <div
             className="au-field__select-wrapper"
+            data-testid={dataTestId}
             onClick={toggleDropdown}
             onKeyDown={onKeyDownDropdown}
             tabIndex={disabled ? -1 : 0}

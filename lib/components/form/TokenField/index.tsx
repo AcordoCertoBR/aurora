@@ -17,6 +17,7 @@ type TokenFieldProps = {
   onChangeTimer?: () => void
   onComplete?: (value: string) => void
   onChange?: (value: string) => void
+  'data-testid'?: string
 }
 
 export const TokenField = ({
@@ -34,6 +35,7 @@ export const TokenField = ({
   onChangeTimer,
   onComplete,
   onChange,
+  'data-testid': dataTestId,
 }: TokenFieldProps) => {
   const {
     tokenMap,
@@ -57,7 +59,7 @@ export const TokenField = ({
         error={error}
         disabled={disabled}
       />
-      <div ref={rootElementRef} className="au-token-field__container">
+      <div ref={rootElementRef} className="au-token-field__container" data-testid={dataTestId}>
         {[...Object.values(tokenMap)].map((_, i) => (
           <div key={`token-digit-${i}`}>
             <Field.Input

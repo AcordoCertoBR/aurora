@@ -17,6 +17,7 @@ export const Footer = ({
   certificates,
   copyrights,
   stores = {},
+  'data-testid': dataTestId,
 }: FooterProps) => {
   const usedCertificates = certificates.map(
     (certificate) => certificatesMap[certificate],
@@ -40,7 +41,7 @@ export const Footer = ({
   
   if (categoryLinks) {
     return (
-      <footer className="au-footer-full">
+      <footer className="au-footer-full" data-testid={dataTestId}>
         <div className="au-footer-full__container">
           <div className="au-footer-full__logo">{logo}</div>
           <div className="au-footer-full__links">
@@ -219,7 +220,7 @@ export const Footer = ({
   }
 
   return (
-    <footer className="au-footer">
+    <footer className="au-footer" data-testid={dataTestId}>
       <div className="au-footer__container">
         <div className="au-footer__content">
           <div className="au-footer__content-logos">

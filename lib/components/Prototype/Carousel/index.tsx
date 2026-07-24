@@ -23,6 +23,7 @@ export const Carousel = ({
   type,
   mobileText = '',
   draggable = true,
+  'data-testid': dataTestId,
 }: CarouselProps) => {
   const {
     rootRef,
@@ -43,7 +44,7 @@ export const Carousel = ({
 
   const cl = classNames('au-carousel', { 'au-carousel--draggable': draggable })
   return (
-    <div className={cl} ref={rootRef}>
+    <div className={cl} ref={rootRef} data-testid={dataTestId}>
       <ul
         className="au-carousel__rail"
         ref={setRef}

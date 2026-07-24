@@ -13,12 +13,14 @@ export type HeaderProfileProps = {
   fullName: string
   onClickMenu?: () => void
   notifications?: NotificationsConfig
+  'data-testid'?: string
 }
 
 export const HeaderProfile = ({
   fullName,
   onClickMenu,
   notifications = {},
+  'data-testid': dataTestId,
 }: HeaderProfileProps) => {
   const initialLetters = getInitialLetters(fullName)
 
@@ -26,7 +28,7 @@ export const HeaderProfile = ({
   const shouldShowBadge = (count && count > 0) || hasUnread
 
   return (
-    <div className="au-header__profile">
+    <div className="au-header__profile" data-testid={dataTestId}>
       <Conditional
         condition={visible}
         renderIf={

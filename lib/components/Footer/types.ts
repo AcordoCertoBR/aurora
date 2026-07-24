@@ -36,4 +36,5 @@ export type FooterProps = {
   companyOverview?: string | ReactNode | JSX.Element | JSX.Element[]
   certificates: Array<Certificate>
   copyrights: string | ReactNode | JSX.Element | JSX.Element[]
+  'data-testid'?: string
 }

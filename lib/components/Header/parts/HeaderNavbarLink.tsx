@@ -6,7 +6,7 @@ import { Conditional } from '@components/misc'
 import { NavbarDataProps } from '../types'
 
 export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
-  const { name, dropdown, active, href } = navItem
+  const { name, dropdown, active, href, 'data-testid': dataTestId } = navItem
   const isDropdown = !!dropdown && dropdown.length
   const [isOpen, setIsOpen] = useState(false)
   const dropdownId = useId()
@@ -36,7 +36,8 @@ export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
       onMouseEnter={handleDropdownOpen}
       onMouseLeave={handleDropdownClose}
       onFocus={handleDropdownOpen}
-      onBlur={handleDropdownBlur}>
+      onBlur={handleDropdownBlur}
+      data-testid={dataTestId}>
       {isDropdown ? (
         <button
           type="button"

@@ -5,11 +5,13 @@ export type CardEmphasisProps = {
   content: { title: string; description?: string }[]
   height?: number
   maxHeight?: number
+  'data-testid'?: string
 }
 export const CardEmphasis = ({
   content,
   height,
   maxHeight,
+  'data-testid': dataTestId,
 }: CardEmphasisProps) => {
   const emphasisSize: CSSProperties = {
     height: `${height}px`,
@@ -17,7 +19,7 @@ export const CardEmphasis = ({
   }
 
   return (
-    <div style={emphasisSize} className="au-card__emphasis">
+    <div style={emphasisSize} className="au-card__emphasis" data-testid={dataTestId}>
       {content?.map((item, index) => {
         return (
           <div key={`au-card-emphasis-${item.title}-${index}`} className="au-card__emphasis-container">

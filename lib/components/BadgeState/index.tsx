@@ -27,6 +27,7 @@ export type BadgeStateProps = {
   children?: React.ReactNode
   icon?: string | JSX.Element
   iconOnly?: boolean
+  'data-testid'?: string
 }
 
 export const BadgeState = ({
@@ -36,6 +37,7 @@ export const BadgeState = ({
   iconOnly = false,
   text,
   children,
+  'data-testid': dataTestId,
 }: BadgeStateProps) => {
   const statusMap = {
     success: {
@@ -78,7 +80,7 @@ export const BadgeState = ({
   })
 
   return (
-    <div className={badgeStateClasses} {...(iconOnly ? { 'aria-label': statusMap[status].label } : {})}>
+    <div className={badgeStateClasses} data-testid={dataTestId} {...(iconOnly ? { 'aria-label': statusMap[status].label } : {})}>
       <div className="au-badgeState__content">
         <IfElse condition={!!iconOnly}>
           <Then><span aria-hidden="true">{statusMap[status].icon}</span></Then>

@@ -4,7 +4,7 @@ import { PureSwitch } from '../Pure';
 import './styles.scss';
 import { CardSwitchProps } from './types';
 
-export const CardSwitch: React.FC<CardSwitchProps> = ({ isActive, label, id, disabled, activateCallBack, deactivateCallBack , shouldFadeOutAfterActivate }) => {
+export const CardSwitch: React.FC<CardSwitchProps> = ({ isActive, label, id, disabled, activateCallBack, deactivateCallBack , shouldFadeOutAfterActivate, 'data-testid': dataTestId }) => {
 	
 	const cardSwitchClassNames = classNames("au-card-switch",  {
 		
@@ -16,7 +16,7 @@ export const CardSwitch: React.FC<CardSwitchProps> = ({ isActive, label, id, dis
 	});
 
 	return (
-    <div className={cardSwitchClassNames}>
+    <div className={cardSwitchClassNames} data-testid={dataTestId}>
     <div className={cardSwitchWrapperClassNames}>
 			<PureSwitch 
 				isActive={isActive}

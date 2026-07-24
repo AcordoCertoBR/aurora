@@ -10,6 +10,7 @@ export type IconProps = {
   rawColor?: string
   className?: string
   onClick?: () => void
+  'data-testid'?: string
 }
 type BaseIconProps = IconProps & {
   markup?: string
@@ -24,6 +25,7 @@ const Icon: React.FC<BaseIconProps> = ({
   rawColor,
   className,
   onClick,
+  'data-testid': dataTestId,
 }: BaseIconProps) => {
   const iconStyle: React.CSSProperties = {
     ...(rawColor && { color: rawColor }),
@@ -46,6 +48,7 @@ const Icon: React.FC<BaseIconProps> = ({
       style={iconStyle}
       onClick={onClick}
       className={componentClass}
+      data-testid={dataTestId}
       dangerouslySetInnerHTML={{
         __html: markup || '',
       }}

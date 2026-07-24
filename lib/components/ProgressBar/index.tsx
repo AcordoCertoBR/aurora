@@ -9,6 +9,7 @@ interface ProgressBarProps {
   stepName: string
   currentStep: number
   totalSteps: number
+  'data-testid'?: string
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -16,6 +17,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   stepName,
   currentStep,
   totalSteps,
+  'data-testid': dataTestId,
 }) => {
   const safeCurrentStep = Math.max(1, Math.min(currentStep, totalSteps))
   const percentageWidth = (safeCurrentStep / totalSteps) * 100
@@ -32,7 +34,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
       aria-valuenow={percentageMode ? roundedPercentage : safeCurrentStep}
       aria-valuemin={percentageMode ? 0 : 1}
       aria-valuemax={percentageMode ? 100 : totalSteps}
-      aria-label={stepName}>
+      aria-label={stepName}
+      data-testid={dataTestId}>
       <Conditional
         condition={!!percentageMode}
         renderIf={

@@ -10,6 +10,7 @@ export type PartnerBannerProps = {
   onButtonClick?: () => void
   ariaLabel?: string
   className?: string
+  'data-testid'?: string
 }
 
 export const PartnerBanner = ({
@@ -19,6 +20,7 @@ export const PartnerBanner = ({
   onButtonClick,
   ariaLabel,
   className = '',
+  'data-testid': dataTestId,
 }: PartnerBannerProps) => {
   const classes = classNames('au-partner-banner', {
     [`au-partner-banner--with-icon`]: !!icon,
@@ -26,7 +28,7 @@ export const PartnerBanner = ({
   })
 
   return (
-    <aside className={classes} aria-label={ariaLabel}>
+    <aside className={classes} aria-label={ariaLabel} data-testid={dataTestId}>
       {icon && (
         <div className="au-partner-banner__icon" aria-hidden="true">
           {icon}

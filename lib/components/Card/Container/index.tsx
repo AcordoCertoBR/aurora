@@ -8,6 +8,7 @@ export type CardContainerProps = {
   gap?: number
   width?: number
   children: ReactNode
+  'data-testid'?: string
 }
 export const CardContainer = ({
   direction,
@@ -16,6 +17,7 @@ export const CardContainer = ({
   gap,
   width,
   children,
+  'data-testid': dataTestId,
 }: CardContainerProps) => {
   const containerClasses = classNames('au-card__container', {
     [`au-card__container--direction-${direction}`]: direction,
@@ -28,7 +30,7 @@ export const CardContainer = ({
     width: `${width}px`
   }
   return (
-    <div style={containerStyle} className={containerClasses}>
+    <div style={containerStyle} className={containerClasses} data-testid={dataTestId}>
       {children}
     </div>
   )
