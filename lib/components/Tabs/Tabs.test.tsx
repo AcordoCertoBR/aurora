@@ -12,8 +12,8 @@ describe('Tabs', () => {
   it('renders tab buttons and children', () => {
     render(<Tabs tabs={tabs} />)
 
-    expect(screen.getByText('One')).toBeInTheDocument()
-    expect(screen.getByText('Two')).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'One' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Two' })).toBeInTheDocument()
 
     // by default no initial is selected, children are present but wrapped
     expect(document.querySelector('.children-one')).toBeTruthy()
@@ -24,8 +24,11 @@ describe('Tabs', () => {
     render(<Tabs tabs={tabs} initialTab="one" />)
     expect(screen.getByText('one content')).toBeInTheDocument()
 
-    const activeChip = document.querySelector('.au-chip--active')
-    expect(activeChip).toBeTruthy()
+    const activeTab = screen.getByRole('tab', { name: 'One' })
+    expect(activeTab.classList.contains('au-tabs__btns-option--active')).toBe(
+      true,
+    )
+    expect(activeTab).toHaveAttribute('aria-selected', 'true')
   })
 
   it('hides tabs panel when areTabsHidden is true', () => {
@@ -34,27 +37,56 @@ describe('Tabs', () => {
     expect(document.querySelector('.children-one')).toBeTruthy()
   })
 
-  it('calls onClick and activates tab on chip click', async () => {
+  it('calls onClick and activates tab on click', async () => {
     const onClick = vi.fn()
     render(<Tabs tabs={tabs} onClick={onClick} />)
 
     const user = userEvent.setup()
-    const twoBtn = screen.getByText('Two')
+    const twoBtn = screen.getByRole('tab', { name: 'Two' })
     await user.click(twoBtn)
 
     expect(onClick).toHaveBeenCalledWith('two')
-    const activeChip = document.querySelector('.au-chip--active')
-    expect(activeChip).toBeTruthy()
+    expect(twoBtn.classList.contains('au-tabs__btns-option--active')).toBe(true)
+    expect(twoBtn).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByText('two content')).toBeInTheDocument()
   })
 
-  it('shows label when withLabel is true', () => {
-    render(<Tabs tabs={tabs} withLabel />)
-    expect(screen.getByText(/Filtrar por/i)).toBeInTheDocument()
+  it('links tabs and panels with ARIA roles and attributes', () => {
+    render(<Tabs tabs={tabs} initialTab="one" />)
+
+    expect(screen.getByRole('tablist')).toBeInTheDocument()
+
+    const tabOne = screen.getByRole('tab', { name: 'One' })
+    expect(tabOne).toHaveAttribute('aria-controls', 'au-tabpanel-one')
+
+    const panelOne = document.getElementById('au-tabpanel-one')
+    expect(panelOne).toHaveAttribute('role', 'tabpanel')
+    expect(panelOne).toHaveAttribute('aria-labelledby', 'au-tab-one')
   })
 
-  it('renders type 2 layout and applies active class correctly', async () => {
-    render(<Tabs tabs={tabs} type={2} initialTab="one" />)
+  it('moves focus between tabs with arrow, Home and End keys', async () => {
+    render(<Tabs tabs={tabs} initialTab="one" />)
+
+    const user = userEvent.setup()
+    const tabOne = screen.getByRole('tab', { name: 'One' })
+    const tabTwo = screen.getByRole('tab', { name: 'Two' })
+
+    tabOne.focus()
+    await user.keyboard('{ArrowRight}')
+    expect(tabTwo).toHaveFocus()
+
+    await user.keyboard('{ArrowRight}')
+    expect(tabOne).toHaveFocus()
+
+    await user.keyboard('{End}')
+    expect(tabTwo).toHaveFocus()
+
+    await user.keyboard('{Home}')
+    expect(tabOne).toHaveFocus()
+  })
+
+  it('renders the animated indicator and applies active class correctly', async () => {
+    render(<Tabs tabs={tabs} initialTab="one" />)
 
     const activeTab = document.querySelector('.au-tabs__btns-option--active')
     expect(activeTab).toBeTruthy()
@@ -72,7 +104,7 @@ describe('Tabs', () => {
     )
   })
 
-  it('calculates indicator position on type 2', () => {
+  it('calculates the indicator position from the active tab', () => {
     Object.defineProperty(HTMLElement.prototype, 'offsetLeft', {
       configurable: true,
       value: 100,
@@ -82,7 +114,7 @@ describe('Tabs', () => {
       value: 50,
     })
 
-    render(<Tabs tabs={tabs} type={2} initialTab="one" />)
+    render(<Tabs tabs={tabs} initialTab="one" />)
 
     const indicator = document.querySelector(
       '.au-tabs__btns-indicator',
