@@ -13,6 +13,8 @@ type ModalLayoutMobile = 'default' | 'centralized' | 'full-screen'
 export type ModalProps = {
   isOpen: boolean
   onClose?: () => void
+  /** Calls onClose when the backdrop (area outside the container) is clicked */
+  closeOnBackdropClick?: boolean
   headerContent?: React.ReactNode | string | JSX.Element | JSX.Element[]
   content?: React.ReactNode | string | JSX.Element | JSX.Element[]
   layoutMobile?: ModalLayoutMobile
@@ -26,6 +28,7 @@ export type ModalProps = {
 export const Modal = ({
   isOpen,
   onClose,
+  closeOnBackdropClick = false,
   headerContent,
   content,
   layoutMobile = 'default',
@@ -44,12 +47,19 @@ export const Modal = ({
     'au-modal--desktop-centralized': layoutDesktop === 'centralized',
   })
 
+  function handleBackdropClick(e: React.MouseEvent<HTMLDivElement>) {
+    if (closeOnBackdropClick && e.target === e.currentTarget && onClose) {
+      onClose()
+    }
+  }
+
   return (
     <div
       className={modalClasses}
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel ?? mobileModalTitle}
+      onClick={handleBackdropClick}
       data-testid={dataTestId}>
       <div className="au-modal__container">
         <div className="au-modal__header">

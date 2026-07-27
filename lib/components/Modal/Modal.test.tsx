@@ -83,4 +83,38 @@ describe('Modal', () => {
 
     expect(modal).toHaveClass('au-modal--mobile-full-screen')
   })
+
+  it('calls onClose when backdrop is clicked and closeOnBackdropClick is true', async () => {
+    const onClose = vi.fn()
+    const { container } = renderModal({ onClose, closeOnBackdropClick: true })
+
+    const user = userEvent.setup()
+    await user.click(container.querySelector('.au-modal') as HTMLElement)
+
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not call onClose when backdrop is clicked and closeOnBackdropClick is not set', async () => {
+    const onClose = vi.fn()
+    const { container } = renderModal({ onClose })
+
+    const user = userEvent.setup()
+    await user.click(container.querySelector('.au-modal') as HTMLElement)
+
+    expect(onClose).not.toHaveBeenCalled()
+  })
+
+  it('does not call onClose when clicking inside the container with closeOnBackdropClick', async () => {
+    const onClose = vi.fn()
+    renderModal({
+      onClose,
+      closeOnBackdropClick: true,
+      content: 'Inner Content',
+    })
+
+    const user = userEvent.setup()
+    await user.click(screen.getByText('Inner Content'))
+
+    expect(onClose).not.toHaveBeenCalled()
+  })
 })

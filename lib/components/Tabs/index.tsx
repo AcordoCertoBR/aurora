@@ -7,8 +7,10 @@ import './styles.scss'
 
 export type TabsProps = {
   tabs: TabItemProps[]
+  /** Hides the tab bar and renders only the active panel. Not mapped in Figma. */
   areTabsHidden?: boolean
   initialTab?: string
+  /** Content rendered at the right side of the tab bar. Not mapped in Figma. */
   rightSlotChildren?: React.ReactNode
   onClick?: (value: string) => void
   'data-testid'?: string

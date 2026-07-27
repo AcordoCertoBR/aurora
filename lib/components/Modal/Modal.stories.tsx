@@ -58,6 +58,33 @@ export const Default: Story = {
   },
 }
 
+export const CloseOnBackdropClick: Story = {
+  render: (args) => {
+    return (
+      <div style={{ minHeight: '400px' }}>
+        <Modal {...args} />
+      </div>
+    )
+  },
+  args: {
+    isOpen: true,
+    onClose: () => console.log('Modal closed'),
+    closeOnBackdropClick: true,
+    headerContent: (
+      <Text variant="heading-small" weight="bold">
+        Close on backdrop click
+      </Text>
+    ),
+    content: (
+      <div style={{ margin: '16px 0' }}>
+        Clicking outside the container calls <code>onClose</code>. Opt-in via
+        the <code>closeOnBackdropClick</code> prop — default behavior is
+        unchanged.
+      </div>
+    ),
+  },
+}
+
 export const Centralized: Story = {
   render: (args) => {
     return (

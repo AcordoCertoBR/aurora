@@ -19,16 +19,22 @@ type ButtonProps = (
   children?: ReactNode | string | JSX.Element | JSX.Element[]
   color?: 'default'
   disabled?: boolean
+  /** Stretches the button to fill the container width. Not mapped in Figma. */
   expand?: 'x'
   htmlType?: 'button' | 'submit' | 'reset'
   loading?: boolean
   size?: 'large' | 'medium'
+  /** Visual type. 'link' maps to the "Link Button" component in Figma (which also has a Small size not available here). */
   type?: 'primary' | 'outlined' | 'ghost' | 'link'
   target?: string
+  /** Inverted colors for colored backgrounds (Figma: Negative). No-op today: `au-btn--negative` has no styles yet. */
   negative?: boolean
+  /** Renders as a plain text button (class `btn-text`). Not mapped in Figma. */
   btnText?: boolean
+  /** Icon-only round button (Figma: Style=Icon). */
   round?: boolean
   className?: string
+  /** Border width modifier (`au-btn--border-*`). Not mapped in Figma. */
   borderWidth?: string
   elementRef?: React.RefObject<HTMLButtonElement | HTMLAnchorElement>
 }

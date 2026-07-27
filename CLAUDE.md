@@ -103,6 +103,12 @@ Tests use Vitest with jsdom and `@testing-library/react`. Setup is in `vitest.se
 
 Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/workflows/release.yml`) from the conventional commits merged into `main`. The commit/PR title type drives the bump: `feat:` → minor + npm publish, `fix:`/`refactor:` → patch + publish, `docs:`/`chore:`/`test:` → changelog only (no publish), breaking change (`feat!:` or `BREAKING CHANGE:`) → major. Since Aurora is consumed by external apps, changing public props, `au-` classes, or exported tokens is a **breaking change** — type the commit accordingly. The `/create-pr` skill encodes this.
 
+## Gotchas & tech debt
+
+- `Button` prop `negative` é no-op: aplica a classe `au-btn--negative` ([lib/components/Button/index.tsx:86](lib/components/Button/index.tsx)) mas **não existe SCSS para ela** — o visual "Negative" do Figma (botões brancos para fundos coloridos) nunca foi implementado. Não exponha story até implementar.
+- `BadgeInfo` prop `actionButton` é declarada no type ([lib/components/BadgeInfo/index.tsx:21](lib/components/BadgeInfo/index.tsx)) mas nunca é renderizada pelo componente. Marcada `@deprecated`; remover no próximo major.
+- `Checkbox.Field` não tem prop de posição do controle (`Radio.Field` tem `direction: 'left' | 'right'`); o Figma prevê `Position: Left | Right` para ambos.
+
 ## Onde achar o resto (ponteiros)
 
 - **Referência longa & operação:** `docs/` — `docs/self-improvement.md` (protocolo que mantém os docs vivos) e `docs/observability.md` (onde investigar quando um componente quebra — Aurora é lib, não tem runtime próprio).
