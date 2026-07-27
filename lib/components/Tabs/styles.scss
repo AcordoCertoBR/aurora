@@ -1,16 +1,5 @@
 .au-tabs {
-  &--type-2 {
-    border-bottom: 1px solid $color-neutral-20;
-
-    button {
-      border: 0;
-      background-color: transparent;
-    }
-
-    .au-tabs__btns {
-      margin-bottom: 0;
-    }
-  }
+  border-bottom: 1px solid $color-neutral-20;
 
   &__container {
     display: flex;
@@ -23,27 +12,12 @@
     }
   }
 
-  &__left-panel {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__label {
-    display: none;
-
-    @include aboveMedium() {
-      display: unset;
-    }
-  }
-
   &__btns {
     display: flex;
     position: relative;
     white-space: nowrap;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
-    margin-bottom: 20px;
 
     &::-webkit-scrollbar {
       display: none;
@@ -51,27 +25,33 @@
 
     @include aboveMedium() {
       overflow: unset;
-      margin-bottom: 0;
     }
 
     &-option {
+      display: flex;
+      flex: 1 0 0;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
       border: none;
       background: none;
-      font: inherit;
-      color: inherit;
-      text-align: inherit;
       cursor: pointer;
-      line-height: 20px;
-      color: $color-neutral-50;
-      font-size: $font-size-p3;
+      padding: $spacing-100 $spacing-300;
       font-family: $font-title;
-      padding: $spacing-100 $spacing-200;
+      font-size: $font-size-p3;
+      font-weight: $font-weight-regular;
+      line-height: 1.4;
+      color: $color-neutral-50;
       position: relative;
       transition: all 0.3s ease;
 
+      @include aboveMedium() {
+        flex: 0 0 auto;
+      }
+
       &--active {
         color: $color-brand-blue-40;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
       }
     }
 

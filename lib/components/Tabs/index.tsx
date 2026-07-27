@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { If, Switch, Case } from '@components/misc'
-import { Text } from '@components/Text'
-import { Chip } from '@components/Chip'
+import { If } from '@components/misc'
 
 import classNames from 'classnames'
 
@@ -9,10 +7,8 @@ import './styles.scss'
 
 export type TabsProps = {
   tabs: TabItemProps[]
-  type?: 1 | 2
   areTabsHidden?: boolean
   initialTab?: string
-  withLabel?: boolean
   rightSlotChildren?: React.ReactNode
   onClick?: (value: string) => void
   'data-testid'?: string
@@ -22,21 +18,16 @@ export type TabItemProps = {
   tab: string
   title: string
   children?: React.ReactElement
-  icon?: React.ReactNode
 }
 
 export const Tabs = ({
   tabs,
-  type = 1,
   initialTab,
   onClick,
   areTabsHidden,
   rightSlotChildren,
-  withLabel = false,
   'data-testid': dataTestId,
 }: TabsProps) => {
-  const [isClicked, setIsClicked] = useState(false)
-  const [currButton, setCurrButton] = useState(initialTab ?? '')
   const [activeTab, setActiveTab] = useState(initialTab)
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 })
 
@@ -47,88 +38,89 @@ export const Tabs = ({
   }, [initialTab])
 
   useEffect(() => {
-    if (activeTab && type === 2) {
-      const container = tabsRef.current
-      if (container) {
-        const activeElement = container.querySelector(
-          '.au-tabs__btns-option--active',
-        ) as HTMLElement
+    const container = tabsRef.current
+    if (activeTab && container) {
+      const activeElement = container.querySelector(
+        '.au-tabs__btns-option--active',
+      ) as HTMLElement
 
-        if (activeElement) {
-          setIndicatorStyle({
-            left: activeElement.offsetLeft,
-            width: activeElement.offsetWidth,
-          })
-        }
+      if (activeElement) {
+        setIndicatorStyle({
+          left: activeElement.offsetLeft,
+          width: activeElement.offsetWidth,
+        })
       }
     }
-  }, [activeTab, tabs, type])
+  }, [activeTab, tabs])
 
   const handleClick = (item: TabItemProps) => {
     onClick && onClick(item.tab)
-    setCurrButton(item.tab)
     setActiveTab(item.tab)
-    setIsClicked(true)
   }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
+
+    const container = tabsRef.current
+    if (!container) return
+
+    const tabButtons = Array.from(
+      container.querySelectorAll<HTMLButtonElement>('[role="tab"]'),
+    )
+    const currentIndex = tabButtons.indexOf(
+      document.activeElement as HTMLButtonElement,
+    )
+    if (currentIndex === -1) return
+
+    event.preventDefault()
+
+    const lastIndex = tabButtons.length - 1
+    const nextIndex = {
+      ArrowLeft: currentIndex === 0 ? lastIndex : currentIndex - 1,
+      ArrowRight: currentIndex === lastIndex ? 0 : currentIndex + 1,
+      Home: 0,
+      End: lastIndex,
+    }[event.key as 'ArrowLeft' | 'ArrowRight' | 'Home' | 'End']
+
+    tabButtons[nextIndex]?.focus()
+  }
+
+  const focusableTab = activeTab ?? tabs[0]?.tab
 
   return (
     <>
       <If condition={!areTabsHidden}>
-        <div
-          className={classNames('au-tabs', {
-            [`au-tabs--type-${type}`]: !!type,
-          })}
-          data-testid={dataTestId}>
+        <div className="au-tabs" data-testid={dataTestId}>
           <div className="au-tabs__container">
-            <div className="au-tabs__left-panel">
-              <If condition={!!withLabel}>
-                <Text
-                  color="secondary"
-                  variant="body-small"
-                  className="au-tabs__label">
-                  Filtrar por:{' '}
-                </Text>
-              </If>
-              <div className="au-tabs__btns" ref={tabsRef}>
-                {tabs.map((item: TabItemProps) => {
-                  return (
-                    <Switch key={item.tab}>
-                      <Case condition={type === 1}>
-                        <Chip
-                          label={item.title}
-                          icon={item.icon}
-                          isActive={
-                            (isClicked && item.tab === currButton) ||
-                            activeTab === item.tab
-                          }
-                          onClick={() => handleClick(item)}
-                        />
-                      </Case>
-                      <Case condition={type === 2}>
-                        <button
-                          type="button"
-                          className={classNames('au-tabs__btns-option', {
-                            'au-tabs__btns-option--active':
-                              activeTab === item.tab,
-                          })}
-                          onClick={() => handleClick(item)}>
-                          {item.title}
-                        </button>
-                      </Case>
-                    </Switch>
-                  )
-                })}
-                <If condition={type === 2}>
-                  <div
-                    className="au-tabs__btns-indicator"
-                    aria-hidden="true"
-                    style={{
-                      left: `${indicatorStyle.left}px`,
-                      width: `${indicatorStyle.width}px`,
-                    }}
-                  />
-                </If>
-              </div>
+            <div
+              className="au-tabs__btns"
+              role="tablist"
+              ref={tabsRef}
+              onKeyDown={handleKeyDown}>
+              {tabs.map((item: TabItemProps) => (
+                <button
+                  key={item.tab}
+                  type="button"
+                  role="tab"
+                  id={`au-tab-${item.tab}`}
+                  aria-selected={activeTab === item.tab}
+                  aria-controls={`au-tabpanel-${item.tab}`}
+                  tabIndex={item.tab === focusableTab ? 0 : -1}
+                  className={classNames('au-tabs__btns-option', {
+                    'au-tabs__btns-option--active': activeTab === item.tab,
+                  })}
+                  onClick={() => handleClick(item)}>
+                  {item.title}
+                </button>
+              ))}
+              <div
+                className="au-tabs__btns-indicator"
+                aria-hidden="true"
+                style={{
+                  left: `${indicatorStyle.left}px`,
+                  width: `${indicatorStyle.width}px`,
+                }}
+              />
             </div>
             <If condition={!!rightSlotChildren}>{rightSlotChildren}</If>
           </div>
@@ -138,11 +130,12 @@ export const Tabs = ({
       {tabs.map(({ children, tab }: TabItemProps) => {
         return (
           <div
+            role="tabpanel"
+            id={`au-tabpanel-${tab}`}
+            aria-labelledby={`au-tab-${tab}`}
             className={`au-tabs__children children-${tab}`}
             key={`au-tabs-${tab}`}>
-            <If condition={currButton === tab || activeTab === tab}>
-              {children}
-            </If>
+            <If condition={activeTab === tab}>{children}</If>
           </div>
         )
       })}
