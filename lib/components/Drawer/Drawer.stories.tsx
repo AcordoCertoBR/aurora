@@ -47,3 +47,23 @@ export const WithProfile: Story = {
     renderContent: <div></div>,
   },
 }
+
+export const BottomSheet: Story = {
+  args: {
+    isOpen: true,
+    position: 'bottom',
+    renderHeader: (
+      <Text as="h3" variant="heading-small" weight="bold">
+        Título do bottom sheet
+      </Text>
+    ),
+    renderContent: (
+      <div style={{ padding: '16px 24px' }}>
+        <Text as="p" variant="body-medium">
+          Conteúdo ancorado na parte inferior da tela (Figma: Modal v2,
+          Surface=BottomSheet).
+        </Text>
+      </div>
+    ),
+  },
+}

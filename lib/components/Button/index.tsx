@@ -27,7 +27,7 @@ type ButtonProps = (
   /** Visual type. 'link' maps to the "Link Button" component in Figma (which also has a Small size not available here). */
   type?: 'primary' | 'outlined' | 'ghost' | 'link'
   target?: string
-  /** Inverted colors for colored backgrounds (Figma: Negative). No-op today: `au-btn--negative` has no styles yet. */
+  /** Inverted colors for colored backgrounds (Figma: Negative). */
   negative?: boolean
   /** Renders as a plain text button (class `btn-text`). Not mapped in Figma. */
   btnText?: boolean

@@ -8,6 +8,12 @@ type DrawerProps = {
   renderContent: ReactNode | string | JSX.Element | JSX.Element[]
   isOpen: boolean
   handleOpen: () => void
+  /**
+   * Edge the drawer slides in from. 'right' is the classic side sheet;
+   * 'bottom' renders the Bottom Sheet surface (Figma: Modal v2, Surface=BottomSheet).
+   * @default 'right'
+   */
+  position?: 'right' | 'bottom'
   'data-testid'?: string
 }
 
@@ -16,13 +22,15 @@ export const Drawer = ({
   renderContent,
   isOpen = false,
   handleOpen,
+  position = 'right',
   'data-testid': dataTestId,
 }: DrawerProps) => {
-  
+
   return (
     <div
       className={classNames('au-drawer', {
         'au-drawer--is-open': isOpen,
+        'au-drawer--position-bottom': position === 'bottom',
       })}
       role="dialog"
       aria-modal="true"

@@ -39,6 +39,35 @@ describe('Drawer', () => {
       expect(handleOpenMock).toHaveBeenCalledTimes(1)
     }
   })
+
+  it('does not apply the bottom position modifier by default', () => {
+    const { container } = render(
+      <Drawer
+        isOpen={true}
+        handleOpen={vi.fn()}
+        renderHeader={<h1>Header</h1>}
+        renderContent={<p>Drawer Content</p>}
+      />,
+    )
+
+    expect(container.querySelector('.au-drawer--position-bottom')).toBeNull()
+  })
+
+  it('applies the bottom position modifier when position="bottom"', () => {
+    const { container } = render(
+      <Drawer
+        isOpen={true}
+        handleOpen={vi.fn()}
+        position="bottom"
+        renderHeader={<h1>Header</h1>}
+        renderContent={<p>Drawer Content</p>}
+      />,
+    )
+
+    expect(
+      container.querySelector('.au-drawer--position-bottom'),
+    ).not.toBeNull()
+  })
 })
 
 describe('useDrawer', () => {

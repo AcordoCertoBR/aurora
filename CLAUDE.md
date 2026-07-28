@@ -105,7 +105,6 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 
 ## Gotchas & tech debt
 
-- `Button` prop `negative` é no-op: aplica a classe `au-btn--negative` ([lib/components/Button/index.tsx:86](lib/components/Button/index.tsx)) mas **não existe SCSS para ela** — o visual "Negative" do Figma (botões brancos para fundos coloridos) nunca foi implementado. Não exponha story até implementar.
 - `BadgeInfo` prop `actionButton` é declarada no type ([lib/components/BadgeInfo/index.tsx:21](lib/components/BadgeInfo/index.tsx)) mas nunca é renderizada pelo componente. Marcada `@deprecated`; remover no próximo major.
 - `Checkbox.Field` não tem prop de posição do controle (`Radio.Field` tem `direction: 'left' | 'right'`); o Figma prevê `Position: Left | Right` para ambos.
 
