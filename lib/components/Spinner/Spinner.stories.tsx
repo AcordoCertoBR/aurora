@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { COLOR_BRAND_BLUE_40 } from '@core/tokens'
 import { Spinner } from './index'
 
 const meta: Meta<typeof Spinner> = {
@@ -17,9 +16,33 @@ export default meta
 
 type Story = StoryObj<typeof Spinner>
 
-export const Default: Story = {
+export const Small: Story = {
   args: {
-    color: COLOR_BRAND_BLUE_40,
-    size: 32,
+    size: 'small',
+  },
+}
+
+export const Medium: Story = {
+  args: {
+    size: 'medium',
+  },
+}
+
+export const Large: Story = {
+  args: {
+    size: 'large',
+  },
+}
+
+export const Negative: Story = {
+  args: {
+    size: 'large',
+    negative: true,
+  },
+  parameters: {
+    backgrounds: {
+      default: 'brand',
+      values: [{ name: 'brand', value: '#0048db' }],
+    },
   },
 }
