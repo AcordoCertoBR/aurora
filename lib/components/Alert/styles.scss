@@ -134,4 +134,26 @@
       border: none;
     }
   }
+
+  &--progress {
+    &--type-1 {
+      background-color: $color-brand-cyan-10;
+      border: 1px solid $color-brand-cyan-60;
+    }
+    &--type-2 {
+      background-color: $color-brand-cyan-10;
+      border: none;
+    }
+  }
+
+  &--neutral {
+    &--type-1 {
+      background-color: $color-neutral-10;
+      border: 1px solid $color-neutral-50;
+    }
+    &--type-2 {
+      background-color: $color-neutral-10;
+      border: none;
+    }
+  }
 }

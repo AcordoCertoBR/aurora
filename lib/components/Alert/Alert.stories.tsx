@@ -74,6 +74,32 @@ export const Timer: Story = {
   },
 }
 
+export const Progress: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'progress',
+    title: { content: 'Title' },
+    actionButton: { content: 'Action', onClick: () => console.log('action!') },
+  },
+}
+
+export const Neutral: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    title: { content: 'Title' },
+  },
+}
+
+export const NeutralTwoType: Story = {
+  render: (args) => container(args),
+  args: {
+    status: 'neutral',
+    type: 2,
+    title: { content: 'Title' },
+  },
+}
+
 export const InfoTwoType: Story = {
   render: (args) => container(args),
   args: {
