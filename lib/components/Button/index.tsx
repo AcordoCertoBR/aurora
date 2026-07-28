@@ -24,7 +24,10 @@ type ButtonProps = (
   htmlType?: 'button' | 'submit' | 'reset'
   loading?: boolean
   size?: 'large' | 'medium'
-  /** Visual type. 'link' maps to the "Link Button" component in Figma (which also has a Small size not available here). */
+  /**
+   * Visual type.
+   * @deprecated the 'link' value — use the `LinkButton` component instead (matches the Figma "Link Button" set, with sizes and icon slots).
+   */
   type?: 'primary' | 'outlined' | 'ghost' | 'link'
   target?: string
   /** Inverted colors for colored backgrounds (Figma: Negative). */

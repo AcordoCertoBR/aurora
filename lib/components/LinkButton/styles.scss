@@ -1,0 +1,75 @@
+.au-link-button {
+  & {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: $color-brand-blue-40;
+    font-family: $font-body;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $color-brand-blue-50;
+  }
+
+  .au-icon,
+  .au-icon > svg {
+    color: currentColor;
+  }
+
+  &__icon {
+    display: inline-flex;
+  }
+
+  &--size-small {
+    font-size: 14px;
+    line-height: 22px;
+
+    .au-icon,
+    .au-icon > svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &--size-medium {
+    font-size: 16px;
+    line-height: 24px;
+
+    .au-icon,
+    .au-icon > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &--size-large {
+    font-size: 20px;
+    line-height: 28px;
+
+    .au-icon,
+    .au-icon > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &--disabled {
+    color: $color-neutral-30;
+    cursor: not-allowed;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: $color-neutral-30;
+    }
+  }
+}

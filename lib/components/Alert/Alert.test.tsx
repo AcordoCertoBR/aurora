@@ -28,6 +28,20 @@ describe('Alert', () => {
     expect(root).toHaveClass('au-alert--error--type-1')
   })
 
+  it('renders the new progress and neutral statuses', () => {
+    const { rerender } = render(
+      <Alert title={{ content: 'Progress' }} status="progress" />,
+    )
+    expect(document.querySelector('.au-alert')).toHaveClass(
+      'au-alert--progress--type-1',
+    )
+
+    rerender(<Alert title={{ content: 'Neutral' }} status="neutral" type={2} />)
+    expect(document.querySelector('.au-alert')).toHaveClass(
+      'au-alert--neutral--type-2',
+    )
+  })
+
   it('marks the title with --with-text only when support text is present', () => {
     const { rerender } = render(<Alert title={{ content: 'Only title' }} />)
     expect(document.querySelector('.au-alert__title')).not.toHaveClass(

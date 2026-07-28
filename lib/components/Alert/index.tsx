@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import {
+  IconAlertCircle,
   IconAlertOctagon,
   IconAlertTriangle,
   IconCheck,
@@ -9,8 +10,10 @@ import {
   IconClock,
 } from '@components/icons'
 import {
+  COLOR_BRAND_CYAN_50,
   COLOR_ERROR_50,
   COLOR_INFO_50,
+  COLOR_NEUTRAL_60,
   COLOR_NEUTRAL_70,
   COLOR_SUCCESS_50,
   COLOR_WARNING_50,
@@ -21,7 +24,19 @@ import './styles.scss'
 
 export type AlertProps = {
   showIcon?: boolean
-  status?: 'success' | 'error' | 'warning' | 'info' | 'timer'
+  /**
+   * Visual state (Figma: Alerts, States). 'timer' covers the Figma
+   * Running/Resend pair: Running while the countdown runs, Resend when it
+   * ends and the action button appears.
+   */
+  status?:
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'info'
+    | 'timer'
+    | 'progress'
+    | 'neutral'
   type?: 1 | 2
   orientation?: 'horizontal' | 'vertical'
   title?: { content?: React.ReactNode; weight?: 'bold' | 'normal' }
@@ -106,6 +121,14 @@ export const Alert = ({
       icon: <IconAlertTriangle rawColor={COLOR_WARNING_50} />,
     },
     info: { option: 'info', icon: <IconInfo rawColor={COLOR_INFO_50} /> },
+    progress: {
+      option: 'progress',
+      icon: <IconInfo rawColor={COLOR_BRAND_CYAN_50} />,
+    },
+    neutral: {
+      option: 'neutral',
+      icon: <IconAlertCircle rawColor={COLOR_NEUTRAL_60} />,
+    },
     timer: {
       option: 'timer',
       icon: (
