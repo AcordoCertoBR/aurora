@@ -17,8 +17,6 @@ export type BadgeInfoProps = {
   text: string
   children?: React.ReactNode
   customIcon?: string | JSX.Element
-  /** @deprecated Declared but never rendered by the component — passing it has no effect. */
-  actionButton?: { content?: string; onClick?: () => void }
   'data-testid'?: string
 }
 
