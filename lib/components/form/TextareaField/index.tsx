@@ -10,6 +10,7 @@ export type TextAreaProps =
     label?: string
     textAreaStyle?: React.CSSProperties
     textareaRef?: React.RefObject<HTMLTextAreaElement>
+    /** Allows the user to resize the textarea horizontally. Not mapped in Figma. */
     horizontalResize?: boolean
   }
 

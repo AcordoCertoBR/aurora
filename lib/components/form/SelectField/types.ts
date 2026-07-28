@@ -20,6 +20,7 @@ export type SelectFieldProps = React.HTMLAttributes<HTMLDivElement> & {
   register?: (instance: HTMLSelectElement | null) => void
   autocomplete?: boolean
   EmptyText?: string
+  /** On mobile, opens the options list in a full-screen modal. Not mapped in Figma. */
   fullScreenOptions?: boolean
   htmlType?: 'text' | 'number'
   'data-testid'?: string
