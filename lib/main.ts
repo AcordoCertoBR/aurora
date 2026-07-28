@@ -44,6 +44,7 @@ export { ChipBanner } from './components/ChipBanner'
 export { PartnerBanner, type PartnerBannerProps } from './components/PartnerBanner'
 export { Transition, type TransitionProps } from './components/Transition'
 export { SpecialButton, type SpecialButtonProps } from './components/SpecialButton'
+export { LinkButton, type LinkButtonProps } from './components/LinkButton'
 export type { SpinnerProps } from './components/Spinner'
 
 // Hooks
