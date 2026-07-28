@@ -51,8 +51,7 @@
   "dependencies": {
     "dotenv": "16.6.1",
     "react-aria-components": "1.17.0",
-    "react-if": "4.1.6",
-    "vite-plugin-dts": "4.5.4"
+    "react-if": "4.1.6"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.9.0",
@@ -102,6 +101,7 @@
     "typescript": "5.2.2",
     "terser": "5.46.2",
     "vite": "6.4.2",
+    "vite-plugin-dts": "5.0.3",
     "vite-plugin-lib-inject-css": "2.2.2",
     "vite-plugin-static-copy": "2.3.2",
     "vitest": "3.2.4"
