@@ -228,12 +228,60 @@ export const LinkButton: Story = {
   },
 }
 
-// export const Negative: Story = {
-//   args: {
-//     children: 'Negative',
-//     negative: true,
-//   },
-// }
+const negativeBackground = {
+  backgrounds: {
+    default: 'brand',
+    values: [{ name: 'brand', value: '#0048db' }],
+  },
+}
+
+export const NegativePrimary: Story = {
+  args: {
+    children: 'Negative Primary',
+    negative: true,
+  },
+  parameters: negativeBackground,
+}
+
+export const NegativeOutlined: Story = {
+  args: {
+    children: 'Negative Outlined',
+    negative: true,
+    type: 'outlined',
+  },
+  parameters: negativeBackground,
+}
+
+export const NegativeGhost: Story = {
+  args: {
+    children: 'Negative Ghost',
+    negative: true,
+    type: 'ghost',
+  },
+  parameters: negativeBackground,
+}
+
+export const NegativeDisabled: Story = {
+  args: {
+    children: (
+      <>
+        <IconSlash /> Negative Disabled
+      </>
+    ),
+    negative: true,
+    disabled: true,
+  },
+  parameters: negativeBackground,
+}
+
+export const NegativeLoading: Story = {
+  args: {
+    children: 'Negative Loading',
+    negative: true,
+    loading: true,
+  },
+  parameters: negativeBackground,
+}
 
 // export const TextButton: Story = {
 //   args: {

@@ -87,6 +87,12 @@ describe('Button', () => {
     expect(root).toHaveClass('au-btn--type-ghost')
   })
 
+  it('applies negative class when negative prop is provided', () => {
+    render(<Button negative>Negative</Button>)
+    const root = document.querySelector('.au-btn')
+    expect(root).toHaveClass('au-btn--negative')
+  })
+
   it('renders as an <a> tag when as="a" is provided', () => {
     render(
       <Button as="a" href="https://example.com">

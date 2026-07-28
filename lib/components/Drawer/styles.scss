@@ -74,4 +74,34 @@
     height: calc(100% - 80px);
 		overflow-y: scroll;
   }
+
+  &--position-bottom &__container {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+    max-height: 90dvh;
+    margin: 0 auto;
+    transform: translateY(100%);
+    border-radius: $border-radius-big $border-radius-big 0 0;
+
+    @include aboveMedium() {
+      max-width: 480px;
+      border-radius: $border-radius-big $border-radius-big 0 0;
+    }
+  }
+
+  &--position-bottom.au-drawer--is-open &__container {
+    transform: translateY(0);
+  }
+
+  &--position-bottom &__content {
+    height: auto;
+    max-height: calc(90vh - 80px);
+    max-height: calc(90dvh - 80px);
+    overflow-y: auto;
+  }
 }

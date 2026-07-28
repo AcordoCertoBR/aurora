@@ -1,0 +1,221 @@
+.au-special-button {
+  & {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    border-radius: 48px;
+    overflow: hidden;
+    background-color: $color-brand-blue-40;
+    color: $color-neutral-00;
+    font-family: $font-body;
+    font-size: 16px;
+    font-weight: 600;
+    user-select: none;
+  }
+
+  // ---- Press (hold-to-confirm) ----
+
+  &--type-press {
+    display: inline-flex;
+    gap: 8px;
+    padding: 8px 16px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+
+    .au-icon,
+    .au-icon > svg {
+      width: 20px;
+      height: 20px;
+      color: $color-neutral-00;
+    }
+  }
+
+  &__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background-color: $color-brand-blue-60;
+    transition: width 0.2s ease;
+  }
+
+  &__label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &--holding &__fill {
+    width: 100%;
+    transition: width var(--au-special-button-duration, 1500ms) linear;
+  }
+
+  &--type-press.au-special-button--success &__fill,
+  &--type-press.au-special-button--loading &__fill {
+    width: 100%;
+    transition: width 0.3s ease;
+  }
+
+  &--type-press.au-special-button--disabled {
+    background-color: $color-neutral-20;
+    color: $color-neutral-30;
+    cursor: not-allowed;
+
+    .au-icon,
+    .au-icon > svg {
+      width: 16px;
+      height: 16px;
+      color: $color-neutral-30;
+    }
+  }
+
+  &--type-press.au-special-button--loading {
+    cursor: progress;
+
+    .au-icon {
+      position: relative;
+      animation: au-special-button-spin 1s infinite linear;
+    }
+  }
+
+  &--expand-x {
+    width: 100%;
+  }
+
+  // ---- Slider (swipe-to-confirm) ----
+
+  &__knob {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: $color-neutral-00;
+    box-shadow: $shadow-04;
+    cursor: grab;
+    touch-action: none;
+    transition: transform 0.2s ease;
+
+    .au-icon,
+    .au-icon > svg {
+      width: 24px;
+      height: 24px;
+      color: $color-brand-blue-40;
+    }
+  }
+
+  &--dragging &__knob {
+    cursor: grabbing;
+    transition: none;
+  }
+
+  &--type-slider &__label {
+    padding: 8px 48px;
+  }
+
+  &--variant-secondary {
+    background-color: $color-neutral-00;
+    border: 1px solid $color-brand-blue-40;
+    color: $color-brand-blue-40;
+  }
+
+  &--type-slider.au-special-button--disabled {
+    background-color: $color-neutral-10;
+    border: none;
+    color: $color-neutral-30;
+  }
+
+  &--type-slider.au-special-button--disabled &__knob {
+    background-color: $color-neutral-20;
+    box-shadow: none;
+    cursor: not-allowed;
+
+    .au-icon,
+    .au-icon > svg {
+      color: $color-neutral-30;
+    }
+  }
+
+  &--type-slider.au-special-button--success {
+    background-color: $color-success-40;
+    border: none;
+    color: $color-neutral-00;
+  }
+
+  &--type-slider.au-special-button--success &__knob {
+    left: auto;
+    right: 4px;
+    cursor: default;
+
+    .au-icon,
+    .au-icon > svg {
+      color: $color-success-40;
+    }
+  }
+
+  &--variant-secondary.au-special-button--success {
+    background-color: $color-neutral-00;
+    border: 1px solid $color-success-50;
+    color: $color-success-50;
+  }
+
+  &--variant-secondary.au-special-button--success &__knob {
+    .au-icon,
+    .au-icon > svg {
+      color: $color-success-50;
+    }
+  }
+
+  &--type-slider.au-special-button--loading {
+    background-color: $color-success-50;
+    border: none;
+    cursor: progress;
+
+    .au-icon {
+      animation: au-special-button-spin 1s infinite linear;
+    }
+
+    .au-icon,
+    .au-icon > svg {
+      width: 20px;
+      height: 20px;
+      color: $color-neutral-00;
+    }
+  }
+
+  &--skeleton {
+    background-color: $color-neutral-10;
+    border: none;
+    animation: au-special-button-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes au-special-button-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes au-special-button-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}

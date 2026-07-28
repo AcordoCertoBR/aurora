@@ -44,6 +44,7 @@ export { AdBox } from './components/AdBox'
 export { ChipBanner } from './components/ChipBanner'
 export { PartnerBanner, type PartnerBannerProps } from './components/PartnerBanner'
 export { Transition, type TransitionProps } from './components/Transition'
+export { SpecialButton, type SpecialButtonProps } from './components/SpecialButton'
 
 // Hooks
 export { useDrawer } from './components/Drawer/hooks'

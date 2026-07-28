@@ -23,4 +23,26 @@ describe('Icon', () => {
     el.click()
     expect(onClick).toHaveBeenCalled()
   })
+
+  it('namespaces svg ids per instance so two icons never share defs', () => {
+    const markup =
+      "<svg><defs><linearGradient id='grad'><stop stop-color='currentColor'/></linearGradient></defs><path fill='url(#grad)'/></svg>"
+    render(
+      <>
+        <Icon markup={markup} name="A" />
+        <Icon markup={markup} name="B" />
+      </>,
+    )
+
+    const gradients = document.querySelectorAll('linearGradient')
+    const paths = document.querySelectorAll('path')
+    expect(gradients).toHaveLength(2)
+
+    const idA = gradients[0].getAttribute('id')
+    const idB = gradients[1].getAttribute('id')
+    expect(idA).not.toBe('grad')
+    expect(idA).not.toBe(idB)
+    expect(paths[0].getAttribute('fill')).toBe(`url(#${idA})`)
+    expect(paths[1].getAttribute('fill')).toBe(`url(#${idB})`)
+  })
 })
