@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.0.0](https://github.com/AcordoCertoBR/aurora/compare/v0.12.0...v1.0.0) (2026-07-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **badge-info:** `BadgeInfo.actionButton` was removed from the props type. It was declared but never rendered by the component, so passing it already had no effect — this is a type-level break only, with zero visual/behavior change. Gotcha removed from CLAUDE.md.
+* **tag:** the Tag component was removed. The Figma library had already deprecated it (page "Badge - DEPRECATED") and the code marked it @deprecated pointing to its replacements.
+* **spinner:** Spinner no longer accepts `size: number` and `color: string`. Use `size: 'small' | 'medium' | 'large'` (16/20/32px, matching the Figma Spinner set) and `negative` for white spinners on colored backgrounds. Colors now come from design tokens; the gradient id is unique per instance (same svg defs collision fixed in Icon).
+* **tabs:** TabsProps no longer accepts `type` and `withLabel`; TabItemProps no longer accepts `icon`. The `au-tabs--type-2` and `au-tabs__left-panel`/`au-tabs__label` classes were removed.
+
+### Features
+
+* add SpecialButton, bottom Drawer and negative Button styles ([3b89755](https://github.com/AcordoCertoBR/aurora/commit/3b89755d46111a5b386f3a7df8c6ab283ced0f84))
+* add SpecialButton, bottom Drawer and negative Button styles ([1d347ae](https://github.com/AcordoCertoBR/aurora/commit/1d347aeacc877058921871c03380d57cc663ee18))
+* **alert:** add progress and neutral statuses ([70bbc9c](https://github.com/AcordoCertoBR/aurora/commit/70bbc9c13cec1a81a08ea3eee095ab5540939ece))
+* **badge-info:** remove dead actionButton prop ([e05d10a](https://github.com/AcordoCertoBR/aurora/commit/e05d10a70435ca28cb03c7d94ddf9b9769c4e771))
+* **link-button:** add LinkButton component ([ca93b8e](https://github.com/AcordoCertoBR/aurora/commit/ca93b8e98153747e10cb9f427ed636e4eee5914f))
+* **modal:** add opt-in closeOnBackdropClick and document off-Figma props ([8b79147](https://github.com/AcordoCertoBR/aurora/commit/8b7914701fafcc14f369b703b8a4f50e23dbaed5))
+* **modal:** add opt-in closeOnBackdropClick and document off-Figma props ([e40d605](https://github.com/AcordoCertoBR/aurora/commit/e40d60571da136ce5530532e4fa34139b12d4d99))
+* **spinner:** replace free size/color with design tokens ([96cf049](https://github.com/AcordoCertoBR/aurora/commit/96cf0499228843e9cd29ea389abbcc26a92c0d65))
+* **tabs:** unify variants and add keyboard/ARIA accessibility ([29ce555](https://github.com/AcordoCertoBR/aurora/commit/29ce5556aa40c6df535fc31f207132b93bd53f34))
+* **tag:** remove deprecated Tag component ([14e6658](https://github.com/AcordoCertoBR/aurora/commit/14e66584eb318e1b43a16ee89eed664e1a4f9429))
+
+
+### Bug Fixes
+
+* **deps:** move vite-plugin-dts to devDependencies and bump to v5 ([34e7c88](https://github.com/AcordoCertoBR/aurora/commit/34e7c88d5e83eb9da81e9d73214b2b470d626545))
+* **deps:** move vite-plugin-dts to devDependencies and bump to v5 ([df231ce](https://github.com/AcordoCertoBR/aurora/commit/df231ce231b5945d932c5e1c8f5b779c386f5947))
+
 ## [0.12.0](https://github.com/AcordoCertoBR/aurora/compare/v0.11.1...v0.12.0) (2026-07-24)
 
 
