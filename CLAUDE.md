@@ -60,6 +60,7 @@ Each component lives in `lib/components/<ComponentName>/` and typically contains
 - `hooks.ts` — custom hooks (when needed)
 - `*.stories.tsx` — Storybook stories
 - `*.test.tsx` — Vitest + Testing Library tests
+- `*.figma.ts` — Code Connect template (parserless) mapeando o component set do Figma "Aurora DS" ao componente; fora do build/lint (não é importado). O vínculo simples (componente ↔ repo) já está publicado via MCP do Figma; o template completo publica-se com a CLI `figma connect publish`.
 
 Components with brand variants (e.g., Footer, Logo) have `ac/` and `cp/` subdirectories.
 
