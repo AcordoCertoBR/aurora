@@ -11,7 +11,10 @@ import './styles.scss'
 
 const KNOB_SIZE = 40
 const TRACK_PADDING = 4
-const CONFIRM_THRESHOLD = 0.85
+// Figma (Behavior): a partir de ~70% do trajeto a ação já conta como
+// confirmada e o botão se completa sozinho.
+const CONFIRM_THRESHOLD = 0.7
+const COMPLETE_ANIMATION_MS = 400
 
 export type SpecialButtonProps = {
   /**
@@ -47,6 +50,12 @@ export type SpecialButtonProps = {
    * swipe gesture).
    */
   knobAriaLabel?: string
+  /**
+   * Slider only — helper text shown below the button after an incomplete
+   * drag, guiding the user to slide all the way to the end.
+   * @default 'Arraste até o final para confirmar ação'
+   */
+  incompleteHint?: ReactNode
   'data-testid'?: string
 }
 
@@ -146,16 +155,23 @@ const _SliderButton = ({
   success = false,
   skeleton = false,
   knobAriaLabel = 'Arraste para confirmar',
+  incompleteHint = 'Arraste até o final para confirmar ação',
   'data-testid': dataTestId,
 }: SpecialButtonProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const startXRef = useRef(0)
+  const completeTimerRef = useRef<number>()
   const [dragging, setDragging] = useState(false)
   const [dragX, setDragX] = useState(0)
+  const [completing, setCompleting] = useState(false)
+  const [showHint, setShowHint] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
 
   const isSuccess = success || confirmed
-  const isInteractive = !disabled && !loading && !isSuccess && !skeleton
+  const isInteractive =
+    !disabled && !loading && !isSuccess && !skeleton && !completing
+
+  useEffect(() => () => window.clearTimeout(completeTimerRef.current), [])
 
   function _maxDrag() {
     const container = containerRef.current
@@ -168,6 +184,18 @@ const _SliderButton = ({
     if (onConfirm) onConfirm()
   }
 
+  function _complete() {
+    setDragging(false)
+    setCompleting(true)
+    setShowHint(false)
+    setDragX(_maxDrag())
+    completeTimerRef.current = window.setTimeout(() => {
+      setCompleting(false)
+      setDragX(0)
+      _confirm()
+    }, COMPLETE_ANIMATION_MS)
+  }
+
   function handlePointerDown(event: React.PointerEvent<HTMLButtonElement>) {
     if (!isInteractive) return
     setDragging(true)
@@ -177,15 +205,17 @@ const _SliderButton = ({
 
   function handlePointerMove(event: React.PointerEvent<HTMLButtonElement>) {
     if (!dragging) return
+    const max = _maxDrag()
     const delta = event.clientX - startXRef.current
-    setDragX(Math.min(Math.max(delta, 0), _maxDrag()))
+    const next = Math.min(Math.max(delta, 0), max)
+    setDragX(next)
+    if (max > 0 && next >= max * CONFIRM_THRESHOLD) _complete()
   }
 
   function handlePointerEnd() {
     if (!dragging) return
     setDragging(false)
-    const max = _maxDrag()
-    if (max > 0 && dragX >= max * CONFIRM_THRESHOLD) _confirm()
+    if (dragX > 0) setShowHint(true)
     setDragX(0)
   }
 
@@ -203,6 +233,7 @@ const _SliderButton = ({
     {
       [`au-special-button--variant-${variant}`]: !!variant,
       'au-special-button--dragging': dragging,
+      'au-special-button--completing': completing,
       'au-special-button--disabled': disabled,
       'au-special-button--loading': loading,
       'au-special-button--success': isSuccess,
@@ -216,28 +247,46 @@ const _SliderButton = ({
     return <IconArrowRight aria-hidden="true" />
   }
 
+  const maxDrag = _maxDrag()
+  const dragProgress = maxDrag > 0 ? dragX / maxDrag : 0
+
   return (
-    <div ref={containerRef} className={classes} data-testid={dataTestId}>
-      {loading && <IconLoader />}
-      {!loading && !skeleton && (
-        <>
-          <span className="au-special-button__label">{children}</span>
-          <button
-            type="button"
-            className="au-special-button__knob"
-            aria-label={knobAriaLabel}
-            disabled={disabled}
-            style={
-              dragX > 0 ? { transform: `translateX(${dragX}px)` } : undefined
-            }
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerEnd}
-            onPointerCancel={handlePointerEnd}
-            onKeyDown={handleKeyDown}>
-            {_renderKnobIcon()}
-          </button>
-        </>
+    <div className="au-special-button-wrapper">
+      <div
+        ref={containerRef}
+        className={classes}
+        style={
+          {
+            '--au-special-button-progress': dragProgress,
+          } as React.CSSProperties
+        }
+        data-testid={dataTestId}>
+        {loading && <IconLoader />}
+        {!loading && !skeleton && (
+          <>
+            <span className="au-special-button__label">{children}</span>
+            <button
+              type="button"
+              className="au-special-button__knob"
+              aria-label={knobAriaLabel}
+              disabled={disabled}
+              style={
+                dragX > 0 ? { transform: `translateX(${dragX}px)` } : undefined
+              }
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerEnd}
+              onPointerCancel={handlePointerEnd}
+              onKeyDown={handleKeyDown}>
+              {_renderKnobIcon()}
+            </button>
+          </>
+        )}
+      </div>
+      {showHint && !isSuccess && (
+        <span className="au-special-button__hint" role="status">
+          {incompleteHint}
+        </span>
       )}
     </div>
   )

@@ -122,8 +122,16 @@
     transition: none;
   }
 
+  // ação confirmada (≥70% do trajeto): o knob completa o percurso sozinho
+  &--completing &__knob {
+    cursor: default;
+    transition: transform 0.4s ease-out;
+  }
+
   &--type-slider &__label {
     padding: 8px 48px;
+    opacity: calc(1 - var(--au-special-button-progress, 0) * 1.4);
+    transition: opacity 0.1s linear;
   }
 
   &--variant-secondary {
@@ -153,6 +161,11 @@
     background-color: $color-success-40;
     border: none;
     color: $color-neutral-00;
+  }
+
+  // Figma: o success do slider mostra só o check, sem label
+  &--type-slider.au-special-button--success &__label {
+    opacity: 0;
   }
 
   &--type-slider.au-special-button--success &__knob {
@@ -201,6 +214,20 @@
     border: none;
     animation: au-special-button-pulse 1.5s ease-in-out infinite;
   }
+
+  &__hint {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+    font-family: $font-body;
+    font-size: 12px;
+    font-weight: 400;
+    color: $color-neutral-60;
+  }
+}
+
+.au-special-button-wrapper {
+  width: 100%;
 }
 
 @keyframes au-special-button-spin {

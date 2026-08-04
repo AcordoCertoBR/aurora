@@ -138,6 +138,14 @@ function _mockContainerWidth(container: HTMLElement, width: number) {
 }
 
 describe('SpecialButton type="slider"', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('renders the label and the knob', () => {
     const { getByText, getByRole } = render(
       <SpecialButton type="slider">Slide to action</SpecialButton>,
@@ -162,13 +170,41 @@ describe('SpecialButton type="slider"', () => {
     fireEvent.pointerMove(knob, { clientX: 250 })
     fireEvent.pointerUp(knob)
 
+    act(() => {
+      vi.advanceTimersByTime(400)
+    })
+
     expect(onConfirm).toHaveBeenCalledTimes(1)
     expect(root.className).toContain('au-special-button--success')
   })
 
-  it('snaps back without confirming when released early', () => {
+  it('completes by itself once the knob passes 70% of the track', () => {
     const onConfirm = vi.fn()
     const { container, getByRole } = render(
+      <SpecialButton type="slider" onConfirm={onConfirm}>
+        Slide to action
+      </SpecialButton>,
+    )
+    // track width 272 → max drag 224 → 70% threshold at 156.8
+    const root = _mockContainerWidth(container, 272)
+    const knob = getByRole('button')
+
+    fireEvent.pointerDown(knob, { clientX: 0 })
+    fireEvent.pointerMove(knob, { clientX: 160 })
+
+    expect(root.className).toContain('au-special-button--completing')
+
+    act(() => {
+      vi.advanceTimersByTime(400)
+    })
+
+    expect(onConfirm).toHaveBeenCalledTimes(1)
+    expect(root.className).toContain('au-special-button--success')
+  })
+
+  it('snaps back and shows the hint when released early', () => {
+    const onConfirm = vi.fn()
+    const { container, getByRole, getByText } = render(
       <SpecialButton type="slider" onConfirm={onConfirm}>
         Slide to action
       </SpecialButton>,
@@ -180,8 +216,31 @@ describe('SpecialButton type="slider"', () => {
     fireEvent.pointerMove(knob, { clientX: 50 })
     fireEvent.pointerUp(knob)
 
+    act(() => {
+      vi.advanceTimersByTime(400)
+    })
+
     expect(onConfirm).not.toHaveBeenCalled()
     expect(root.className).not.toContain('au-special-button--success')
+    expect(
+      getByText('Arraste até o final para confirmar ação'),
+    ).toBeInTheDocument()
+  })
+
+  it('supports a custom incomplete hint', () => {
+    const { container, getByRole, getByText } = render(
+      <SpecialButton type="slider" incompleteHint="Continue arrastando">
+        Slide to action
+      </SpecialButton>,
+    )
+    _mockContainerWidth(container, 272)
+    const knob = getByRole('button')
+
+    fireEvent.pointerDown(knob, { clientX: 0 })
+    fireEvent.pointerMove(knob, { clientX: 50 })
+    fireEvent.pointerUp(knob)
+
+    expect(getByText('Continue arrastando')).toBeInTheDocument()
   })
 
   it('confirms via keyboard on the focused knob', () => {
