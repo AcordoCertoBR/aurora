@@ -1,0 +1,30 @@
+{
+  "pkg": "@consumidor-positivo/aurora",
+  "projectId": "dc5a98ab-6e5d-4c2e-b6de-0f9432edfc10",
+  "shape": "storybook",
+  "storybookConfigDir": ".storybook",
+  "storybookStatic": ".design-sync/sb-reference",
+  "buildCmd": "npm run build",
+  "guidelinesGlob": [],
+  "readmeHeader": ".design-sync/conventions.md",
+  "libOverrides": {
+    "preview-gen-storybook.mjs": "Aurora's stories use parameters.backgrounds for contrast; the wrapper now paints it so white-on-brand stories (Button.Negative*, Spinner.Negative, ChipBanner dark) aren't white-on-white."
+  },
+  "titleMap": {
+    "Datepicker": "DatepickerField",
+    "ConditionalComponents": null,
+    "AC": null,
+    "CP": null
+  },
+  "overrides": {
+    "AdBox": { "cardMode": "column" },
+    "Divider": { "skip": ["components-divider--invisible"] },
+    "Drawer": { "cardMode": "single", "primaryStory": "WithText", "viewport": "900x700" },
+    "Modal": { "cardMode": "single", "primaryStory": "Default" },
+    "Header": { "skip": ["components-header-withposition--fixed"], "cardMode": "column" },
+    "Footer": { "cardMode": "column", "viewport": "900x2000" },
+    "NavbarVertical": { "viewport": "900x1000" },
+    "Tabs": { "cardMode": "column" },
+    "Transition": { "cardMode": "column" }
+  }
+}

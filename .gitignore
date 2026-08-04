@@ -32,3 +32,10 @@ storybook-static
 
 # Coverage reports
 coverage
+
+# design-sync (claude.ai/design)
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.ds-sync/
+ds-bundle/
