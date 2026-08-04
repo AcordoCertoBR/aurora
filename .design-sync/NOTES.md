@@ -59,6 +59,36 @@ The exceptions:
   entirely. Fixed to `'./components/Image'`. **Every export in `lib/main.ts`
   must use a relative path** — aliases break the shipped `.d.ts`.
 
+## TODO — manter o projeto em sync
+
+Não há caminho automatizado: o `DesignSync` escreve com o login do claude.ai de quem
+roda (ou `/design-login`), e não existe credencial de serviço — **CI não consegue subir**.
+O re-sync é manual: `/design-sync`, que relê este arquivo + `config.json`, busca a âncora
+`_ds_sync.json` do projeto e roda o driver. Componente intocado não recaptura nem regrada;
+se nada mudou, `upload.any` vem `false` e nada sobe.
+
+- [ ] Definir quem é o dono do projeto **Aurora Scan** no claude.ai/design (sem dono,
+      o artefato apodrece — ver a org-skill `cp-pillars`).
+- [ ] Decidir como o re-sync é disparado. Opções levantadas e ainda não implementadas:
+      step no `release.yml` que abre uma issue quando o release-please publica; entrada no
+      protocolo de auto-melhoria do `CLAUDE.md`; ou testar se um cloud agent agendado
+      consegue autenticar o `DesignSync` (incerto — e Routine roda com o token de quem
+      criou, então não serve como processo de produção).
+
+**Quando o re-sync importa** — só quando o contrato público ou o render mudam, ou seja
+em todo release `feat:` / `fix:` / `refactor:`. Release de `docs:` / `chore:` não publica
+e não muda nada aqui.
+
+| Mudou | Re-sync? |
+|---|---|
+| Props de um componente, export novo/removido em `lib/main.ts` | sim |
+| Story nova ou alterada | sim — as stories são a fonte dos cards |
+| `lib/core/tokens/*.json` | sim (os tokens estão enumerados em `conventions.md`) |
+| SCSS de componente | sim, mas barato: o styling re-sobe e as notas de grade carregam |
+| `docs/`, `.mdx`, teste, chore | não |
+
+Passo local que sempre custa tempo: rebuildar `.design-sync/sb-reference` (~20s, gitignored).
+
 ## Storybook addons the previews must account for
 
 Aurora's stories lean on two storybook addons. Neither ships in the DS bundle,
