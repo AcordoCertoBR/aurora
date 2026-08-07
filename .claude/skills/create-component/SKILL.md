@@ -1,6 +1,6 @@
 ---
 name: create-component
-description: Creates the full structure of a new Aurora component — index.tsx, styles.scss and stories — following the project's conventions
+description: Creates the full structure of a new Aurora component — index.tsx, styles.scss, stories and Code Connect template (.figma.ts) — following the project's conventions
 ---
 
 # Create Aurora Component
@@ -15,7 +15,13 @@ If the component name or its props have not been provided, ask for that informat
 
 ## Files to create
 
-Create the 3 files below in `lib/components/<ComponentName>/`.
+Create the 4 files below in `lib/components/<ComponentName>/`.
+
+> **Regra de nascimento duplo:** todo componente novo nasce com um template
+> Code Connect (`<Name>.figma.ts`) apontando para o component set correspondente
+> no Figma "Aurora DS" (fileKey `mJ6TJpnbZZYLiGXYnpg84b`). Se a página ainda não
+> existe no Figma, crie o arquivo mesmo assim com um `TODO` no comentário `url=`
+> e registre o gap — o design cria a página e o node id é preenchido depois.
 
 ---
 
@@ -138,10 +144,49 @@ export const <StoryName>: Story = {
 
 ---
 
+### 4. `<Name>.figma.ts` — Code Connect template
+
+Template **parserless** que mapeia o component set do Figma ao componente
+(fica fora do build/lint — nada o importa). Estrutura:
+
+```ts
+// url=https://www.figma.com/design/mJ6TJpnbZZYLiGXYnpg84b/Aurora-DS?node-id=<node-id>
+// source=lib/components/<Name>/index.tsx
+// component=<Name>
+import figma from 'figma'
+const instance = figma.selectedInstance
+
+// Um get* por propriedade do Figma (nomes exatos, case-sensitive):
+// TEXT → instance.getString('Label')
+// VARIANT → instance.getEnum('Type', { Primary: 'primary', ... }) — mapear TODOS os valores
+// BOOLEAN → instance.getBoolean('Show Icon')
+// INSTANCE_SWAP → instance.getInstanceSwap('Switch Icon') + executeTemplate()
+// Estados só de CSS (Hover/Focus/Pressed) mapeiam para o render default.
+
+export default {
+  example: figma.code`<<Name> ... />`,
+  imports: ["import { <Name> } from '@consumidor-positivo/aurora'"],
+  id: '<name-kebab>',
+  metadata: { nestable: true },
+}
+```
+
+- Descubra o node id e as propriedades do set via MCP do Figma
+  (`get_context_for_code_connect`) ou peça a URL ao usuário.
+- Só emita props que existem no type `<Name>Props` — se uma propriedade do
+  Figma não tem correspondente no código, omita (e registre o gap).
+- Se a página no Figma ainda não existe, crie o arquivo com `TODO` no
+  comentário `url=` (regra de nascimento duplo).
+
+---
+
 ## After creating the files
 
-1. List the 3 created files with their full paths
+1. List the 4 created files with their full paths
 2. Add the component export in `lib/main.ts`, under the `// Components` section, at the end of the other component exports:
    ```ts
    export { <Name> } from './components/<Name>'
    ```
+3. Publique o vínculo no Figma via MCP (`send_code_connect_mappings`) quando o
+   node id existir — o template completo é publicado depois via CLI
+   (`figma connect publish`).

@@ -27,6 +27,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["lib", "scripts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/*.figma.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
