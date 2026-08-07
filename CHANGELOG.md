@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/AcordoCertoBR/aurora/compare/v1.0.0...v1.1.0) (2026-08-07)
+
+
+### Features
+
+* **special-button:** add slide-to-action animation (Figma spec) ([7ce9f95](https://github.com/AcordoCertoBR/aurora/commit/7ce9f952ce2ac793272dcac6561d21c4aa84fc61))
+* **special-button:** add slide-to-action animation per Figma behavior spec ([cc96328](https://github.com/AcordoCertoBR/aurora/commit/cc96328efb582c3f4351ce52d6cbc2ca7850f648))
+
+
+### Bug Fixes
+
+* 🐛 use relative path for Image export in main.ts ([39743ab](https://github.com/AcordoCertoBR/aurora/commit/39743ab923c107bf6befc829766a4363bd2f03cf))
+
 ## [1.0.0](https://github.com/AcordoCertoBR/aurora/compare/v0.12.0...v1.0.0) (2026-07-28)
 
 
