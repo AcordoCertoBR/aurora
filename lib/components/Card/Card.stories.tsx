@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Card } from './index'
 import { COLOR_INFO_50 } from '@core/tokens'
-import { IconGift } from '@components/icons'
+import { IconGift, IconPercent } from '@components/icons'
 import { Text } from '@components/Text'
 import { Button } from '@components/Button'
 import { Skeleton } from '@components/Skeleton'
@@ -42,6 +42,23 @@ const data = {
   ],
   button: {
     primary: 'Pedir cartão',
+    secondary: 'Ver detalhes',
+  },
+}
+
+const debt = {
+  logo: 'https://assets.consumidorpositivo.com.br/f/114280/106x88/54c054bb14/cards-latampass-black.png',
+  tag: 'Até 90% de desconto',
+  creditor: 'Banco Exemplo',
+  description: 'Negocie sua dívida com condições exclusivas.',
+  originalValue: 'De R$ 3.500,00',
+  discountedValue: 'R$ 350,00',
+  details: [
+    { title: 'Parcela', description: 'A partir de R$ 29,16/mês' },
+    { title: 'Oferta válida até', description: '10/09/2026' },
+  ],
+  button: {
+    primary: 'Negociar dívida',
     secondary: 'Ver detalhes',
   },
 }
@@ -217,6 +234,72 @@ export const SmallPreApprovedOfferCard: Story = {
           <Card.Container direction="row" alignItems="center" gap={8}>
             <Button type="outlined">{data.button.secondary}</Button>
             <Button>{data.button.primary}</Button>
+          </Card.Container>
+        </Card.Container>
+      </Card.Root>
+    )
+  },
+}
+
+export const DebtCard: Story = {
+  render: () => {
+    return (
+      <Card.Root maxWidth={308}>
+        <Card.Container gap={16} alignItems="center">
+          <Card.Tag
+            color="secondary"
+            icon={<IconPercent rawColor={COLOR_INFO_50} size="small" />}>
+            {debt.tag}
+          </Card.Tag>
+          <Card.Image width={140} src={debt.logo} alt={debt.creditor} />
+          <Card.Container alignItems="center" gap={8}>
+            <Text variant="heading-micro" weight="bold">
+              {debt.creditor}
+            </Text>
+            <Text variant="body-small" color="secondary">
+              {debt.originalValue}
+            </Text>
+            <Text variant="heading-small" weight="bold">
+              {debt.discountedValue}
+            </Text>
+          </Card.Container>
+          <Card.Emphasis height={81} content={debt.details} />
+          <Card.Container gap={8}>
+            <Button expand="x">{debt.button.primary}</Button>
+            <Button expand="x" type="outlined">
+              {debt.button.secondary}
+            </Button>
+          </Card.Container>
+        </Card.Container>
+      </Card.Root>
+    )
+  },
+}
+
+export const SmallDebtCard: Story = {
+  render: () => {
+    return (
+      <Card.Root maxWidth={288} border={false} color="secondary">
+        <Card.Container gap={16}>
+          <Card.Tag
+            color="secondary"
+            icon={<IconPercent rawColor={COLOR_INFO_50} size="small" />}>
+            {debt.tag}
+          </Card.Tag>
+          <Card.Container direction="row" alignItems="center" gap={16}>
+            <Card.Image height={64} src={debt.logo} alt={debt.creditor} />
+            <Card.Container>
+              <Text variant="body-small" color="secondary" weight="semibold">
+                {debt.creditor}
+              </Text>
+              <Text variant="heading-small" weight="bold">
+                {debt.discountedValue}
+              </Text>
+            </Card.Container>
+          </Card.Container>
+          <Card.Container direction="row" alignItems="center" gap={8}>
+            <Button type="outlined">{debt.button.secondary}</Button>
+            <Button>{debt.button.primary}</Button>
           </Card.Container>
         </Card.Container>
       </Card.Root>
