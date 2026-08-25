@@ -1,4 +1,7 @@
 {
+  "enabledPlugins": {
+    "cp-eng@consumidor-positivo": true
+  },
   "hooks": {
     "PostToolUse": [
       {
