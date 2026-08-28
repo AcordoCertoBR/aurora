@@ -62,7 +62,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    dts({ include: ['lib'], exclude: ['**/*.stories.tsx'] }),
+    dts({ include: ['lib'], exclude: ['**/*.stories.tsx', '**/*.figma.ts'] }),
     libInjectCss(),
     viteStaticCopy({
       targets: [

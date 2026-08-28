@@ -33,7 +33,7 @@ Cria a estrutura completa de um novo componente Aurora a partir do nome e das pr
 /create-component
 ```
 
-Claude Code vai perguntar o nome do componente e suas props, depois gerar os 3 arquivos seguindo todos os padrões descritos em Padrões de Código.
+Claude Code vai perguntar o nome do componente e suas props, depois gerar os 4 arquivos seguindo todos os padrões descritos em Padrões de Código — incluindo o template Code Connect (`<Nome>.figma.ts`), que mapeia o component set do Figma "Aurora DS" ao componente (regra de nascimento duplo: componente novo nasce ligado ao Figma; se a página ainda não existe, o arquivo nasce com `TODO` e o gap é registrado).
 
 **Exemplo de interação:**
 
@@ -43,7 +43,7 @@ Claude Code vai perguntar o nome do componente e suas props, depois gerar os 3 a
   Props: status (success | error | warning | neutral), label (string)
 ```
 
-Resultado: `lib/components/StatusBadge/index.tsx`, `styles.scss`, `StatusBadge.stories.tsx` e export em `lib/main.ts` — tudo pronto para uso.
+Resultado: `lib/components/StatusBadge/index.tsx`, `styles.scss`, `StatusBadge.stories.tsx`, `StatusBadge.figma.ts` e export em `lib/main.ts` — tudo pronto para uso.
 
 ### `/accessibility-audit`
 
