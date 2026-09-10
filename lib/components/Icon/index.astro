@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../icons/styles.scss'
+
+export type IconSize = 'large' | 'medium' | 'small' | 'default'
+export type IconColor = 'dark' | 'info' | 'default' | 'success'
+
+export type Props = Omit<HTMLAttributes<'div'>, 'color'> & {
+  /**
+   * Raw `<svg>` markup. Unlike the React `Icon`, ids inside it are not
+   * namespaced per instance, so avoid markup that defines `id`/`url(#…)`.
+   */
+  markup: string
+  /** React icon name, e.g. `IconChevronDown` → `au-icon--iconchevrondown`. */
+  name?: string
+  size?: IconSize
+  color?: IconColor
+  rawColor?: string
+}
+
+const {
+  markup,
+  name,
+  size,
+  color,
+  rawColor,
+  class: className,
+  ...rest
+} = Astro.props
+---
+
+<div
+  class:list={[
+    'au-icon',
+    name && `au-icon--${name.toLowerCase()}`,
+    rawColor && 'au-icon--color-raw',
+    color && color !== 'default' && `au-icon--color-${color}`,
+    size && size !== 'default' && `au-icon--size-${size}`,
+    className,
+  ]}
+  style={rawColor ? `color: ${rawColor}` : undefined}
+  {...rest}
+  set:html={markup}
+/>

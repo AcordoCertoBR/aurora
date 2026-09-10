@@ -62,17 +62,55 @@ import './styles.scss'
 ---
 ```
 
-O `transform` do `viteStaticCopy` (`pointAstroStylesToBuiltCss`, em `vite.config.ts`) reescreve esse import na cópia que vai para o `dist`, apontando para o CSS que o Vite já compilou para o componente React:
+O `transform` do `viteStaticCopy` (`pointAstroStylesToBuiltCss`, em `vite.config.ts`) reescreve esse import na cópia publicada, apontando para o CSS que o Vite já compilou para o componente React:
 
 ```astro
 ---
-import '../../components/Button/styles.css'
+import '../../dist/components/Button/styles.css'
 ---
 ```
 
 Isso é o que evita exigir do consumidor injetar `variables.scss` e `mixins.scss` no `additionalData` do Sass. O CSS chega com os tokens já resolvidos, e um app que use as duas versões do mesmo componente carrega a mesma folha uma vez só.
 
-Se um `.astro` não tiver `styles.scss` ao lado (caso do `TabPanel`, que herda o estilo do pai), o import é removido na cópia.
+A reescrita vale para **qualquer** import relativo de `.scss`, não só o `./styles.scss` do próprio componente: o `getStylesheetMap()` monta o de-para lendo os entries do Vite (fonte `<pasta do entry>/styles.scss` → `dist/components/<entry>/styles.css`). É assim que o `Icon` Astro, que mora em `lib/components/Icon/`, alcança o CSS de `lib/components/icons/styles.scss`, emitido como `dist/components/Icon/styles.css`. Import sem contrapartida emitida (caso do `TabPanel`, que herda o estilo do pai) é removido na cópia.
+
+### O reset global
+
+O reset (`box-sizing: border-box`, margens zeradas, fonte do body) mora no `GlobalStyles.scss` e viaja dentro do `dist/main.es.js`, o entry React. Uma página feita só com componentes Astro nunca importa esse entry e, sem o reset, o `padding` dos containers estoura a largura da viewport. Por isso o `globalStyles` é um entry próprio e o CSS dele é exportado sozinho:
+
+```astro
+---
+import '@consumidor-positivo/aurora/global.css'
+---
+```
+
+São 480 bytes, uma vez por página. Quem já usa componentes React da Aurora na mesma página não precisa: o reset já veio junto.
+
+## Sem props de callback
+
+O React expõe `onClick`, `onClickMenu`, `renderItem`. Astro renderiza em build time e não tem props de função, então a versão Astro entrega marcação e estado inicial, e o comportamento que é do **app** fica com o app:
+
+```astro
+<HeaderHamburger id="abrir-menu" controls="menu-mobile" />
+
+<script>
+  document.getElementById('abrir-menu')?.addEventListener('click', abrirDrawer)
+</script>
+```
+
+Todas as props HTML passam adiante (`id`, `data-*`, `aria-*`, `class`), então o gancho é sempre um atributo. O `Header.Profile` já vem com `data-au-header-profile="notifications"` e `="menu"` para dispensar o `id`. O que é comportamento **do componente** continua embutido: o dropdown do `Header.NavbarLink` tem controller próprio.
+
+O `Header.Navbar` também troca o `renderItem` do React por `data`: ele renderiza o `NavbarLink` sozinho, e o slot default fica para item customizado.
+
+## O componente `Icon`
+
+Os ícones da Aurora são componentes React gerados a partir dos SVGs de `lib/assets/icons/`. Em Astro não dá para usá-los, e gerar centenas de `.astro` equivalentes não se paga hoje. Em vez disso existe um `Icon` Astro (`@consumidor-positivo/aurora/astro/Icon/index.astro`) que recebe o markup cru e reproduz o mesmo wrapper (`div.au-icon`, com as classes de `size`, `color` e nome):
+
+```astro
+<Icon markup={SVG} name="IconChevronDown" aria-hidden="true" />
+```
+
+Header e Footer carregam inline o markup dos ícones que usam (chevron, menu, sino e as cinco redes sociais), já com `fill="currentColor"`.
 
 ## Tipagem
 
@@ -156,6 +194,10 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 - **`Tabs` renderiza todos os painéis**, escondendo os inativos com o atributo `hidden`, enquanto a versão React monta só o ativo. Conteúdo pesado em aba secundária pesa no HTML.
 - **`Button` em Astro não tem `loading`.** O spinner é um componente React de ícone; enquanto os ícones não tiverem versão Astro, o estado de carregamento fica de fora.
 - **`@deprecated` numa prop marca a prop inteira.** O `Button` React usa `@deprecated` no `type` para desencorajar só o valor `'link'`, e o efeito é um aviso em toda chamada de `<Button type="primary">`. A versão Astro descreve a restrição em texto em vez de usar a tag. O React continua com o aviso falso.
+- **O `Icon` Astro não isola ids de SVG.** O React sufixa `id`/`url(#…)` por instância; o Astro insere o markup como veio. Só importa para ícone que define id (o do YouTube define): duas instâncias do mesmo ícone na mesma página compartilhariam o id.
+- **Os dados do Footer estão duplicados.** `lib/components/Footer/data.tsx` é JSX e não vai no pacote publicado, então o `Footer/index.astro` repete os mapas de certificado, loja e rede social. Mudou URL de certificado, mude nos dois.
+- **O Footer troca `isMobile()` por breakpoint de CSS.** O React decide em runtime (`max-width: 767px`) onde renderizar o bloco de lojas e se a faixa de certificados leva borda. Saída estática não decide nada em runtime: o bloco de lojas vai nas duas posições e o `au-footer-full__stores-slot--mobile|--desktop` esconde uma com `display`, no breakpoint de 1024px, que é onde o resto do layout do footer já vira desktop.
+- **`Header` e `Footer` recebem a logo por slot.** A logo é componente React por marca (`Logo/ac`, `Logo/cp`); no Astro, o consumidor passa a própria marcação (`<slot name="logo">` no Footer, slot default no `Header.Logo`).
 - **`.au-tabs-root` só existe no Astro.** É o `display: contents` que junta a barra e os painéis sob um único root de controller sem criar caixa no layout (`lib/components/Tabs/styles.scss:79`).
 
 ## Cobertura atual
@@ -164,6 +206,9 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 |---|---|
 | `Button` | estático |
 | `Text` | estático |
+| `Icon` | estático (recebe o markup do SVG) |
 | `Tabs` + `Tabs/TabPanel` | controller inline |
+| `Header` (`Logo`, `Navigation`, `Navbar`, `NavbarLink`, `Actions`, `Badges`, `Button`, `Hamburger`, `Profile`) | estático, menos o dropdown do `NavbarLink` |
+| `Footer` | estático |
 
 O resto da biblioteca ainda é só React. Converter é incremental: cada componente novo é um `.astro` a mais na pasta que já existe.

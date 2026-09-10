@@ -29,6 +29,7 @@
       "import": "./dist/astro/runtime/index.es.js"
     },
     "./astro/*": "./astro/*",
+    "./global.css": "./dist/components/globalStyles/styles.css",
     "./package.json": "./package.json",
     "./dist/*.scss": {
       "import": "./dist/*.scss",

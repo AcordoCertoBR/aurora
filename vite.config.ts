@@ -19,6 +19,7 @@ export default defineConfig({
     lib: {
       entry: {
         main: resolve(__dirname, 'lib/main.ts'),
+        globalStyles: resolve(__dirname, 'lib/core/styles/globalStyles.ts'),
         'astro/runtime': resolve(__dirname, 'lib/astro/runtime/index.ts'),
         ...getComponentsEntries(),
       },
@@ -124,35 +125,51 @@ function relativeToComponents(fullPath: string) {
 }
 
 /**
- * `.astro` files ship as source, so their stylesheet import has to resolve
- * inside the published package. In the repo they import the same `styles.scss`
- * the React component uses; here that becomes the CSS Vite already emitted for
- * it, which is what spares the consumer any Sass configuration.
+ * Maps each component's source `styles.scss` to the CSS Vite emits for it, so a
+ * `.astro` file can import any component stylesheet by its source path and get
+ * the built one in the published package.
  */
-function pointAstroStylesToBuiltCss(content: string, filePath: string) {
-  const componentPath = dirname(relativeToComponents(filePath))
-  const stylesheet = resolve(
-    __dirname,
-    'dist/components',
-    basename(componentPath),
-    'styles.css',
-  )
+function getStylesheetMap() {
+  const map = new Map<string, string>()
 
-  if (!existsSync(stylesheet)) {
-    return content.replace(/^import ['"]\.\/styles\.scss['"]\n/m, '')
-  }
+  Object.entries(getComponentsEntries()).forEach(([name, entryPath]) => {
+    const source = resolve(__dirname, dirname(entryPath), 'styles.scss')
+    if (!existsSync(source)) return
+    map.set(source, resolve(__dirname, 'dist/components', name, 'styles.css'))
+  })
 
-  const importPath = relative(
-    resolve(__dirname, 'astro', componentPath),
-    stylesheet,
-  )
-    .split(sep)
-    .join('/')
-
-  return content.replace(/(['"])\.\/styles\.scss\1/, `'${importPath}'`)
+  return map
 }
 
-function getComponentsEntries() {
+/**
+ * `.astro` files ship as source, so their stylesheet imports have to resolve
+ * inside the published package. In the repo they import the same `styles.scss`
+ * the React components use; here those become the CSS Vite already emitted,
+ * which is what spares the consumer any Sass configuration. An import with no
+ * emitted counterpart is dropped (a part that inherits the parent's styles).
+ */
+function pointAstroStylesToBuiltCss(content: string, filePath: string) {
+  const stylesheets = getStylesheetMap()
+  const copiedDir = resolve(
+    __dirname,
+    'astro',
+    dirname(relativeToComponents(filePath)),
+  )
+
+  return content.replace(
+    /^import (['"])(\.[^'"]*\.scss)\1\n/gm,
+    (_line, _quote, specifier) => {
+      const source = resolve(dirname(filePath), specifier)
+      const stylesheet = stylesheets.get(source)
+      if (!stylesheet) return ''
+
+      const importPath = relative(copiedDir, stylesheet).split(sep).join('/')
+      return `import '${importPath}'\n`
+    },
+  )
+}
+
+function getComponentsEntries(): Record<string, string> {
   const dir = 'lib/components'
   // `Icon*.tsx` also matches `Icon.test.tsx`, which would otherwise become a
   // real library entry and publish the whole test bundle (~1.3 MB) to npm.

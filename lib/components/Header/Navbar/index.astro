@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import NavbarLink from '../NavbarLink/index.astro'
+import type { NavbarItem } from '../NavbarLink/index.astro'
+
+/**
+ * The React version takes a `renderItem` render prop. Astro has no render
+ * props: pass `data` and the navbar renders `Header.NavbarLink` itself, or
+ * leave `data` out and put your own items in the default slot.
+ */
+export type Props = HTMLAttributes<'nav'> & {
+  data?: NavbarItem[]
+}
+
+const { data, class: className, ...rest } = Astro.props
+---
+
+<nav
+  role="navigation"
+  class:list={['au-header__navbar', className]}
+  {...rest}>
+  {data?.map((item) => <NavbarLink {...item} />)}
+  <slot />
+</nav>

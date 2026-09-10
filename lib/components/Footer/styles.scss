@@ -196,9 +196,14 @@
     flex-wrap: wrap;
     gap: $spacing-400 0px;
 
+    // The React version only sets this class on mobile (it checks the viewport
+    // at render time); the Astro one always emits it, so the rule itself is
+    // scoped to the breakpoint.
     &--with-border {
-      border-top: 1px solid $color-neutral-20;
-      padding-top: $spacing-400;
+      @include belowLarge() {
+        border-top: 1px solid $color-neutral-20;
+        padding-top: $spacing-400;
+      }
     }
 
     @include aboveLarge() {
@@ -219,6 +224,27 @@
       border-top: 0;
       text-align: right;
       align-items: flex-end;
+    }
+  }
+
+  // Astro only: the stores block ships in both positions and the breakpoint
+  // picks one, because static output cannot branch on the viewport the way the
+  // React version does with `isMobile()`.
+  &__stores-slot {
+    &--mobile {
+      display: contents;
+
+      @include aboveLarge() {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      display: none;
+
+      @include aboveLarge() {
+        display: contents;
+      }
     }
   }
 

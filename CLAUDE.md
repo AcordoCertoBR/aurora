@@ -96,7 +96,16 @@ including the contents of their `<script>` tags. Props are typed with
 The runtime self-import resolves through a `tsconfig.json` path alias pointing at
 `lib/astro/runtime`, so the check does not depend on a freshly built `dist`.
 
-Today only `Button`, `Text` and `Tabs` (+ `Tabs/TabPanel`) have an `.astro` version.
+Astro has no callback props, so the `.astro` versions ship markup and initial
+state and leave app-level behavior to the consumer (every HTML attribute is
+forwarded, so an `id` or `data-*` is the hook); behavior that belongs to the
+component itself, like the `Header.NavbarLink` dropdown, keeps its controller.
+A page built only with Astro components must import the reset once, with
+`import '@consumidor-positivo/aurora/global.css'` — it never loads the React
+entry that carries `GlobalStyles`.
+
+Today `Button`, `Text`, `Icon`, `Tabs` (+ `Tabs/TabPanel`), `Header` (+ its nine
+parts) and `Footer` have an `.astro` version.
 Full reference, conventions and gotchas: [docs/astro.md](docs/astro.md).
 
 ### CSS conventions

@@ -31,6 +31,10 @@ export type Props = Omit<HTMLAttributes<'p'>, 'color'> & {
   weight?: TextWeight
   /** Raw HTML string — the Astro counterpart of `dangerouslySetInnerHTML`. */
   html?: string
+  /** Anchor attributes, for `as="a"`. */
+  href?: string
+  target?: string
+  rel?: string
 }
 
 const {

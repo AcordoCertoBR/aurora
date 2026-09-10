@@ -18,6 +18,14 @@ npm install @consumidor-positivo/aurora
 
 Não é preciso configurar Sass: o CSS já vai compilado, com os tokens resolvidos.
 
+Se a página não usa nenhum componente React da Aurora, importe o reset uma vez (é ele que traz `box-sizing: border-box`; sem isso o `padding` dos containers estoura a largura da tela):
+
+```astro
+---
+import '@consumidor-positivo/aurora/global.css'
+---
+```
+
 ## Importando
 
 O caminho é completo, com extensão:
@@ -28,8 +36,25 @@ import Button from '@consumidor-positivo/aurora/astro/Button/index.astro'
 import Text from '@consumidor-positivo/aurora/astro/Text/index.astro'
 import Tabs from '@consumidor-positivo/aurora/astro/Tabs/index.astro'
 import TabPanel from '@consumidor-positivo/aurora/astro/Tabs/TabPanel/index.astro'
+import Header from '@consumidor-positivo/aurora/astro/Header/index.astro'
+import HeaderLogo from '@consumidor-positivo/aurora/astro/Header/Logo/index.astro'
+import Footer from '@consumidor-positivo/aurora/astro/Footer/index.astro'
 ---
 ```
+
+## Comportamento: o que é do componente e o que é do app
+
+Astro não tem prop de função. Onde o React recebe `onClick`, o Astro entrega o elemento com todos os atributos HTML repassados, e o app liga o listener:
+
+```astro
+<HeaderHamburger id="abrir-menu" controls="menu-mobile" />
+
+<script>
+  document.getElementById('abrir-menu')?.addEventListener('click', abrirDrawer)
+</script>
+```
+
+O que é comportamento do próprio componente continua embutido: as abas do `Tabs` e o dropdown do `Header.NavbarLink` funcionam sozinhos.
 
 ## Componentes disponíveis
 
@@ -95,6 +120,46 @@ Ao trocar de aba, o componente dispara `au:tabchange` com `{ tab }` no `detail`,
 
 Todos os painéis vão para o HTML; os inativos ficam com o atributo `hidden`.
 
+### Header
+
+Composto, como o React, mas cada parte é um arquivo:
+
+```astro
+<Header position="fixed">
+  <HeaderLogo>
+    <img src="/logo.svg" alt="Acordo Certo" />
+  </HeaderLogo>
+  <HeaderNavigation>
+    <HeaderNavbar data={[
+      { name: 'Dívidas', href: '/dividas', active: true },
+      { name: 'Guias', dropdown: [{ name: 'CNH Social', href: '/guias/cnh-social' }] },
+    ]} />
+    <HeaderActions divider>
+      <HeaderHamburger controls="menu-mobile" />
+      <HeaderProfile fullName="Maria Silva" notifications={{ count: 3 }} />
+    </HeaderActions>
+  </HeaderNavigation>
+</Header>
+```
+
+`HeaderNavbar` troca o `renderItem` do React por `data` e renderiza o `NavbarLink` sozinho; o slot default aceita item customizado. O dropdown abre no hover e no foco, sem configuração.
+
+### Footer
+
+```astro
+<Footer
+  categoryLinks={categorias}
+  socialLinks={{ instagram: 'https://…', linkedin: 'https://…' }}
+  stores={{ googleplay: 'https://…', appstore: 'https://…' }}
+  certificates={['ra1000', 'sslblindado']}
+  cnpj="00.000.000/0001-00"
+  copyrights="&copy; 2026 Acordo Certo">
+  <img slot="logo" src="/logo.svg" alt="Acordo Certo" />
+</Footer>
+```
+
+Sem `categoryLinks` o componente renderiza a variante enxuta (`au-footer`), igual ao React. O bloco de lojas vai ao HTML nas duas posições e o breakpoint escolhe qual aparece, porque saída estática não consegue checar a viewport como o React faz.
+
 ## Runtime: elementController
 
 O JavaScript client-side dos componentes Astro da Aurora usa `elementController`, o mesmo padrão do runtime dos sites públicos. Ele fica exposto e pode ser usado nos componentes do próprio app:
@@ -123,5 +188,7 @@ elementController('meu-bloco', builder, { lazy: true, rootMargin: '200px' })
 
 ## Limites
 
-- Só `Button`, `Text` e `Tabs` têm versão Astro hoje. Para o resto, continue usando o React (com island) ou um componente local.
+- Têm versão Astro hoje: `Button`, `Text`, `Icon`, `Tabs`, `Header` (com `Logo`, `Navigation`, `Navbar`, `NavbarLink`, `Actions`, `Badges`, `Button`, `Hamburger`, `Profile`) e `Footer`. Para o resto, continue usando o React (com island) ou um componente local.
+- A logo do `Header` e do `Footer` entra por slot: a logo por marca ainda é componente React, então passe a sua marcação.
+- Os ícones não têm um `.astro` por ícone. Existe um `Icon` que recebe o markup do SVG; Header e Footer já trazem inline os que usam.
 - Uma lacuna na cobertura Astro é insumo para o chapter de design system: registre no PR o que faltou.

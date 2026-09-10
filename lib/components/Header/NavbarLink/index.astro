@@ -1,0 +1,138 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../../Text/index.astro'
+import Icon from '../../Icon/index.astro'
+
+export type NavbarItem = {
+  name: string
+  href?: string
+  active?: boolean
+  dropdown?: NavbarItem[]
+}
+
+/**
+ * The React version takes an `onClick` per item. Astro has no callback props:
+ * items are plain links, so give them an `href` (or wire the click from the
+ * page's own `<script>`).
+ */
+export type Props = HTMLAttributes<'div'> & NavbarItem & {
+  /** Overrides the generated id that ties the trigger to its dropdown. */
+  dropdownId?: string
+}
+
+const {
+  name,
+  href,
+  active = false,
+  dropdown,
+  dropdownId,
+  class: className,
+  ...rest
+} = Astro.props
+
+const isDropdown = !!dropdown?.length
+const slug = name
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(/[̀-ͯ]/g, '')
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-|-$/g, '')
+const panelId = dropdownId ?? `au-header-dropdown-${slug}`
+
+const CHEVRON_ICON = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z" fill="currentColor"/></svg>`
+---
+
+<div
+  class:list={[
+    'au-header__navbar-item',
+    isDropdown && 'au-header__navbar-item--is-dropdown',
+    active && 'au-header__navbar-item--is-active',
+    className,
+  ]}
+  data-element={isDropdown ? 'au-header-navbar-item' : undefined}
+  {...rest}>
+  {
+    isDropdown ? (
+      <button
+        type="button"
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-controls={panelId}
+        title={name}
+        class:list={[
+          'au-header__navbar-link',
+          'au-header__navbar-link--is-dropdown',
+          active && 'au-header__navbar-link--is-active',
+        ]}>
+        <Text as="span" variant="heading-micro" weight="light">
+          {name}
+        </Text>
+        <Icon markup={CHEVRON_ICON} name="IconChevronDown" aria-hidden="true" />
+      </button>
+    ) : (
+      <Text
+        as="a"
+        variant="heading-micro"
+        weight="light"
+        href={href}
+        title={name}
+        class:list={[
+          'au-header__navbar-link',
+          active && 'au-header__navbar-link--is-active',
+        ]}>
+        {name}
+      </Text>
+    )
+  }
+
+  {
+    isDropdown && (
+      <div id={panelId} class="au-header__dropdown" aria-hidden="true">
+        {dropdown?.map((item) => (
+          <Text
+            as="a"
+            variant="heading-micro"
+            weight="light"
+            href={item.href}
+            title={item.name}
+            tabindex="-1"
+            class:list={[
+              'au-header__dropdown-link',
+              item.active && 'au-header__dropdown-link--is-active',
+            ]}>
+            {item.name}
+          </Text>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const OPEN_CLASS = 'au-header__navbar-item--is-open'
+
+  elementController('au-header-navbar-item', ({ root, query, queryAll, on }) => {
+    const trigger = query<HTMLButtonElement>('.au-header__navbar-link')
+    const dropdown = query<HTMLElement>('.au-header__dropdown')
+    const links = queryAll<HTMLAnchorElement>('.au-header__dropdown-link')
+
+    function toggle(isOpen: boolean) {
+      root.classList.toggle(OPEN_CLASS, isOpen)
+      trigger?.setAttribute('aria-expanded', String(isOpen))
+      dropdown?.setAttribute('aria-hidden', String(!isOpen))
+      links.forEach((link) => {
+        link.tabIndex = isOpen ? 0 : -1
+      })
+    }
+
+    on('mouseenter', () => toggle(true))
+    on('mouseleave', () => toggle(false))
+    on('focusin', () => toggle(true))
+    on('focusout', (event) => {
+      if (root.contains(event.relatedTarget as Node)) return
+      toggle(false)
+    })
+  })
+</script>
