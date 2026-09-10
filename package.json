@@ -11,17 +11,25 @@
   "modules": "./dist/main.es.js",
   "sideEffects": [
     "*.scss",
-    "*.css"
+    "*.css",
+    "*.astro"
   ],
   "types": "./dist/main.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "astro"
   ],
   "exports": {
     ".": {
-      "import": "./dist/main.es.js",
-      "types": "./dist/main.d.ts"
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.es.js"
     },
+    "./astro/runtime": {
+      "types": "./dist/astro/runtime/index.d.ts",
+      "import": "./dist/astro/runtime/index.es.js"
+    },
+    "./astro/*": "./astro/*",
+    "./global.css": "./dist/components/globalStyles/styles.css",
     "./package.json": "./package.json",
     "./dist/*.scss": {
       "import": "./dist/*.scss",
@@ -36,8 +44,9 @@
     "icons": "tsx scripts/generate-icons/index.ts",
     "prebuild": "npm run tokens && npm run icons",
     "dev": "npm run prebuild && vite",
-    "build": "tsc && vite build",
+    "build": "tsc && rimraf astro && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "check:astro": "astro check",
     "preview": "vite preview",
     "storybook": "npm run prebuild && storybook dev -p 6006 --disable-telemetry --no-version-updates",
     "build-storybook": "npm run prebuild && storybook build",
@@ -54,6 +63,7 @@
     "react-if": "4.1.6"
   },
   "devDependencies": {
+    "@astrojs/check": "0.9.4",
     "@chromatic-com/storybook": "1.9.0",
     "@rollup/plugin-terser": "1.0.0",
     "@storybook/addon-docs": "8.6.18",
@@ -69,6 +79,7 @@
     "@storybook/theming": "8.6.18",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "14.3.1",
+    "@types/glob": "7.2.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@types/testing-library__jest-dom": "5.14.9",
@@ -76,6 +87,7 @@
     "@typescript-eslint/parser": "7.15.0",
     "@vitejs/plugin-react": "5.2.0",
     "@vitest/coverage-v8": "3.2.4",
+    "astro": "4.16.19",
     "change-case": "5.4.4",
     "classnames": "2.5.1",
     "eslint": "8.57.0",
@@ -83,7 +95,6 @@
     "eslint-plugin-react-hooks": "4.6.2",
     "eslint-plugin-react-refresh": "0.4.7",
     "eslint-plugin-storybook": "0.12.0",
-    "@types/glob": "7.2.0",
     "fs": "0.0.1-security",
     "glob": "7.2.3",
     "husky": "9.1.7",
@@ -97,9 +108,9 @@
     "sass": "1.99.0",
     "storybook": "8.6.18",
     "storybook-addon-pseudo-states": "3.1.1",
+    "terser": "5.46.2",
     "tsx": "4.21.0",
     "typescript": "5.2.2",
-    "terser": "5.46.2",
     "vite": "6.4.2",
     "vite-plugin-dts": "5.0.3",
     "vite-plugin-lib-inject-css": "2.2.2",
@@ -107,7 +118,7 @@
     "vitest": "3.2.4"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.21.1",
-    "@ast-grep/napi-linux-x64-gnu": "0.22.6"
+    "@ast-grep/napi-linux-x64-gnu": "0.22.6",
+    "@rollup/rollup-linux-x64-gnu": "4.21.1"
   }
 }

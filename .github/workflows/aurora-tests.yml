@@ -28,6 +28,9 @@ jobs:
       - name: Prebuild generated assets
         run: npm run prebuild
 
+      - name: Type check .astro components
+        run: npm run check:astro
+
       - name: Run tests (coverage)
         run: npm run test:coverage -- --run
 

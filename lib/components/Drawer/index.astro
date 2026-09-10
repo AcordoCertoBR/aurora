@@ -1,0 +1,95 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconX from '../icons/default/IconX.astro'
+import './styles.scss'
+
+export type Props = HTMLAttributes<'div'> & {
+  /**
+   * Ties the drawer to whatever opens it: any element carrying
+   * `data-au-drawer-toggle="<id>"` toggles this drawer, from anywhere on the
+   * page. The React version takes `isOpen` and `handleOpen` instead.
+   */
+  id: string
+  /**
+   * Edge the drawer slides in from. 'right' is the classic side sheet;
+   * 'bottom' renders the Bottom Sheet surface (Figma: Modal v2, Surface=BottomSheet).
+   */
+  position?: 'right' | 'bottom'
+  /** Renders the drawer already open. */
+  isOpen?: boolean
+}
+
+const {
+  id,
+  position = 'right',
+  isOpen = false,
+  class: className,
+  ...rest
+} = Astro.props
+---
+
+<div
+  id={id}
+  class:list={[
+    'au-drawer',
+    isOpen && 'au-drawer--is-open',
+    position === 'bottom' && 'au-drawer--position-bottom',
+    className,
+  ]}
+  role="dialog"
+  aria-modal="true"
+  data-element="au-drawer"
+  {...rest}>
+  <div class="au-drawer__container">
+    <div class="au-drawer__header">
+      <slot name="header" />
+      <button class="au-drawer__header-close" aria-label="Fechar">
+        <IconX aria-hidden="true" />
+      </button>
+    </div>
+    <div class="au-drawer__content">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const OPEN_CLASS = 'au-drawer--is-open'
+
+  elementController('au-drawer', ({ root, query, on, emit }) => {
+    const toggleSelector = `[data-au-drawer-toggle="${root.id}"]`
+
+    function setOpen(isOpen: boolean) {
+      if (root.classList.contains(OPEN_CLASS) === isOpen) return
+
+      root.classList.toggle(OPEN_CLASS, isOpen)
+      document
+        .querySelectorAll(toggleSelector)
+        .forEach((trigger) => trigger.setAttribute('aria-expanded', String(isOpen)))
+      emit(isOpen ? 'au:draweropen' : 'au:drawerclose', { id: root.id })
+    }
+
+    on('click', (event) => {
+      const target = event.target as Element | null
+      // The backdrop is the root itself; the panel swallows its own clicks.
+      if (target === root || target?.closest('.au-drawer__header-close')) {
+        setOpen(false)
+      }
+    })
+
+    query('.au-drawer__header-close')?.setAttribute('aria-controls', root.id)
+
+    on('global:click', (event) => {
+      const trigger = (event.target as Element | null)?.closest(toggleSelector)
+      if (!trigger) return
+      setOpen(!root.classList.contains(OPEN_CLASS))
+    })
+
+    on('global:keydown', (event) => {
+      if (event.key !== 'Escape') return
+      setOpen(false)
+    })
+  })
+</script>

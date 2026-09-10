@@ -1,0 +1,215 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Componentes Astro" />
+
+# Componentes Astro
+
+Além dos componentes React, a Aurora publica uma versão **Astro** de parte da biblioteca, pensada para os sites públicos estáticos. A marcação e o CSS são os mesmos; a diferença é que o componente Astro renderiza em build time, sem island e sem React no bundle.
+
+Use a versão Astro quando a página for estática. Use a React quando o componente estiver dentro de uma aplicação (área logada, formulários com estado).
+
+## Instalação
+
+Nada além do pacote:
+
+```bash
+npm install @consumidor-positivo/aurora
+```
+
+Não é preciso configurar Sass: o CSS já vai compilado, com os tokens resolvidos.
+
+Se a página não usa nenhum componente React da Aurora, importe o reset uma vez (é ele que traz `box-sizing: border-box`; sem isso o `padding` dos containers estoura a largura da tela):
+
+```astro
+---
+import '@consumidor-positivo/aurora/global.css'
+---
+```
+
+## Importando
+
+O caminho é completo, com extensão:
+
+```astro
+---
+import Button from '@consumidor-positivo/aurora/astro/Button/index.astro'
+import Text from '@consumidor-positivo/aurora/astro/Text/index.astro'
+import Tabs from '@consumidor-positivo/aurora/astro/Tabs/index.astro'
+import TabPanel from '@consumidor-positivo/aurora/astro/Tabs/TabPanel/index.astro'
+import Header from '@consumidor-positivo/aurora/astro/Header/index.astro'
+import HeaderLogo from '@consumidor-positivo/aurora/astro/Header/Logo/index.astro'
+import Footer from '@consumidor-positivo/aurora/astro/Footer/index.astro'
+import IconChevronDown from '@consumidor-positivo/aurora/astro/icons/default/IconChevronDown.astro'
+---
+```
+
+## Comportamento: o que é do componente e o que é do app
+
+Astro não tem prop de função. Onde o React recebe `onClick`, o Astro entrega o elemento com todos os atributos HTML repassados, e o app liga o listener:
+
+```astro
+<HeaderHamburger id="abrir-menu" controls="menu-mobile" />
+
+<script>
+  document.getElementById('abrir-menu')?.addEventListener('click', abrirDrawer)
+</script>
+```
+
+O que é comportamento do próprio componente continua embutido: as abas do `Tabs` e o dropdown do `Header.NavbarLink` funcionam sozinhos.
+
+## Componentes disponíveis
+
+### Button
+
+Mesmas props visuais do Button React (`type`, `size`, `expand`, `negative`, `round`, `btnText`, `borderWidth`, `color`, `disabled`). Props extras (`id`, `data-*`, `aria-*`) caem no elemento renderizado.
+
+```astro
+<Button type="primary" size="large" expand="x">Simular agora</Button>
+
+<Button as="a" href="/divida" target="_blank" type="outlined">
+  Ver minha dívida
+</Button>
+```
+
+Não existe `loading` na versão Astro: o spinner depende de um ícone React.
+
+### Text
+
+```astro
+<Text as="h1" variant="heading-large" variantDesk="display-small">
+  Negocie sua dívida
+</Text>
+
+<Text variant="body-medium" color="secondary">Sem taxa, sem pegadinha.</Text>
+```
+
+Para injetar HTML cru (o equivalente ao `dangerouslySetInnerHTML`), use a prop `html`. Ela substitui o conteúdo do slot:
+
+```astro
+<Text html={conteudoDoStoryblok} />
+```
+
+### Tabs
+
+A barra vem da prop `tabs`; os painéis vêm de `TabPanel`. O painel correspondente ao `initialTab` precisa de `active`, porque a marcação é gerada em build time.
+
+```astro
+---
+const tabs = [
+  { tab: 'dividas', title: 'Dívidas' },
+  { tab: 'credito', title: 'Crédito' },
+]
+---
+
+<Tabs tabs={tabs} initialTab="dividas">
+  <a slot="right" href="/ajuda">Preciso de ajuda</a>
+
+  <TabPanel tab="dividas" active>Conteúdo de dívidas</TabPanel>
+  <TabPanel tab="credito">Conteúdo de crédito</TabPanel>
+</Tabs>
+```
+
+Ao trocar de aba, o componente dispara `au:tabchange` com `{ tab }` no `detail`, borbulhando a partir da raiz. Dá para ouvir de fora para instrumentar:
+
+```astro
+<script>
+  document.addEventListener('au:tabchange', (event) => {
+    console.log(event.detail.tab)
+  })
+</script>
+```
+
+Todos os painéis vão para o HTML; os inativos ficam com o atributo `hidden`.
+
+### Header
+
+Composto, como o React, mas cada parte é um arquivo:
+
+```astro
+<Header position="fixed">
+  <HeaderLogo>
+    <img src="/logo.svg" alt="Acordo Certo" />
+  </HeaderLogo>
+  <HeaderNavigation>
+    <HeaderNavbar data={[
+      { name: 'Dívidas', href: '/dividas', active: true },
+      { name: 'Guias', dropdown: [{ name: 'CNH Social', href: '/guias/cnh-social' }] },
+    ]} />
+    <HeaderActions divider>
+      <HeaderHamburger controls="menu-mobile" />
+      <HeaderProfile fullName="Maria Silva" notifications={{ count: 3 }} />
+    </HeaderActions>
+  </HeaderNavigation>
+</Header>
+```
+
+`HeaderNavbar` troca o `renderItem` do React por `data` e renderiza o `NavbarLink` sozinho; o slot default aceita item customizado. O dropdown abre no hover e no foco, sem configuração.
+
+### Footer
+
+```astro
+<Footer
+  categoryLinks={categorias}
+  socialLinks={{ instagram: 'https://…', linkedin: 'https://…' }}
+  stores={{ googleplay: 'https://…', appstore: 'https://…' }}
+  certificates={['ra1000', 'sslblindado']}
+  cnpj="00.000.000/0001-00"
+  copyrights="&copy; 2026 Acordo Certo">
+  <img slot="logo" src="/logo.svg" alt="Acordo Certo" />
+</Footer>
+```
+
+Sem `categoryLinks` o componente renderiza a variante enxuta (`au-footer`), igual ao React. O bloco de lojas vai ao HTML nas duas posições e o breakpoint escolhe qual aparece, porque saída estática não consegue checar a viewport como o React faz.
+
+### Drawer e NavbarVertical
+
+O menu lateral não precisa de callback: o gatilho é um atributo.
+
+```astro
+<HeaderHamburger data-au-drawer-toggle="menu" controls="menu" />
+
+<Drawer id="menu">
+  <LogoPrimaryCP slot="header" />
+  <NavbarVertical>
+    {links.map((link) => <NavbarVerticalLink {...link} />)}
+    <Fragment slot="actions">
+      <Button expand="x" as="a" href="/cadastro">Cadastrar</Button>
+    </Fragment>
+  </NavbarVertical>
+</Drawer>
+```
+
+Qualquer elemento com `data-au-drawer-toggle="<id>"` abre e fecha o drawer daquele id, de qualquer lugar da página. O drawer emite `au:draweropen` e `au:drawerclose` no próprio root, e também fecha no backdrop e no `Esc` (o React fecha só no X). No `NavbarVerticalLink`, item com `dropdown` vira acordeão, aberto no clique da linha; item com `active` já nasce aberto, igual ao React.
+
+## Runtime: elementController
+
+O JavaScript client-side dos componentes Astro da Aurora usa `elementController`, o mesmo padrão do runtime dos sites públicos. Ele fica exposto e pode ser usado nos componentes do próprio app:
+
+```astro
+<div data-element="meu-bloco">
+  <button class="meu-bloco__acao">Ok</button>
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  elementController('meu-bloco', ({ root, on, query, queryAll, emit }) => {
+    on('click', (event) => { /* escopado ao root */ })
+    const acao = query('.meu-bloco__acao')
+    on('global:resize', () => { /* escopado ao window */ })
+  })
+</script>
+```
+
+`on` devolve uma função para remover o listener, e o builder roda no máximo uma vez por elemento. Para adiar até o elemento aparecer na tela:
+
+```js
+elementController('meu-bloco', builder, { lazy: true, rootMargin: '200px' })
+```
+
+## Limites
+
+- Têm versão Astro hoje: `Button`, `Text`, `Icon`, `Tabs`, `Header` (com `Logo`, `Navigation`, `Navbar`, `NavbarLink`, `Actions`, `Badges`, `Button`, `Hamburger`, `Profile`), `Footer`, `Drawer`, `NavbarVertical` e as logos `ac/Tertiary` e `cp/Primary`. Para o resto, continue usando o React (com island) ou um componente local.
+- A logo do `Header` e do `Footer` entra por slot. Só duas variantes têm versão Astro (`Logo/ac/Tertiary.astro` e `Logo/cp/Primary.astro`); para as outras, passe a sua marcação.
+- Os ícones têm um `.astro` por ícone, gerado junto com o React (`astro/icons/default/IconChevronDown.astro`). Para um SVG de fora da biblioteca, use o `Icon` e passe o markup.
+- Uma lacuna na cobertura Astro é insumo para o chapter de design system: registre no PR o que faltou.

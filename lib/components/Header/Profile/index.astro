@@ -1,0 +1,81 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconBell from '../../icons/default/IconBell.astro'
+import IconChevronDown from '../../icons/default/IconChevronDown.astro'
+import IconMenu from '../../icons/default/IconMenu.astro'
+
+export type NotificationsConfig = {
+  visible?: boolean
+  count?: number
+  hasUnread?: boolean
+}
+
+/**
+ * The React version takes `onClickMenu` and `notifications.onClick`. Astro has
+ * no callback props: the buttons carry `data-au-header-profile` values so the
+ * page's own `<script>` can wire them.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  fullName: string
+  notifications?: NotificationsConfig
+}
+
+const {
+  fullName,
+  notifications = {},
+  class: className,
+  ...rest
+} = Astro.props
+
+const { visible = true, hasUnread = false, count } = notifications
+const shouldShowBadge = (count && count > 0) || hasUnread
+
+const initialLetters = fullName
+  ?.split(' ')
+  .map((part) => part[0])
+  .slice(0, 2)
+  .join('')
+
+---
+
+<div class:list={['au-header__profile', className]} {...rest}>
+  {
+    visible && (
+      <button
+        type="button"
+        class="au-header__profile-notifications"
+        data-au-header-profile="notifications"
+        aria-label={
+          shouldShowBadge
+            ? `Notificações, ${count && count > 0 ? count : 'novas'}`
+            : 'Notificações'
+        }>
+        <IconBell aria-hidden="true" />
+        {shouldShowBadge && (
+          <span class="au-header__profile-notifications-badge" aria-hidden="true">
+            {count && count > 0 ? count : null}
+          </span>
+        )}
+      </button>
+    )
+  }
+
+  <button
+    type="button"
+    class="au-header__profile-menu-mobile"
+    data-au-header-profile="menu"
+    aria-label="Abrir menu de perfil">
+    <IconMenu aria-hidden="true" />
+  </button>
+
+  <button
+    type="button"
+    class="au-header__profile-menu"
+    data-au-header-profile="menu"
+    aria-label={`Menu de ${fullName}`}>
+    <span class="au-header__profile-letters" aria-hidden="true">
+      {initialLetters}
+    </span>
+    <IconChevronDown aria-hidden="true" />
+  </button>
+</div>

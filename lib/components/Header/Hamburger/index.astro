@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconMenu from '../../icons/default/IconMenu.astro'
+
+/**
+ * The React version takes an `onClick`. Astro has no callback props: pass an
+ * `id` or a `data-*` attribute and wire the listener from the page's own
+ * `<script>`.
+ */
+export type Props = Omit<HTMLAttributes<'button'>, 'type'> & {
+  isOpen?: boolean
+  /** Id of the element the button controls, for `aria-controls`. */
+  controls?: string
+}
+
+const { isOpen = false, controls, class: className, ...rest } = Astro.props
+
+---
+
+<button
+  type="button"
+  class:list={['au-header__hamburger', className]}
+  aria-label="Abrir menu de navegação"
+  aria-expanded={isOpen ? 'true' : 'false'}
+  aria-controls={controls}
+  {...rest}>
+  <IconMenu aria-hidden="true" />
+</button>

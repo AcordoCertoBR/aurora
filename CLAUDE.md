@@ -26,6 +26,9 @@ npx vitest lib/components/Button/Button.test.tsx
 # Lint
 npm run lint
 
+# Type check the .astro components (also runs in CI)
+npm run check:astro
+
 # Build the library (output to dist/)
 npm run build
 
@@ -45,7 +48,7 @@ npm run icons
   - `lib/core/tokens/.cache/variables.scss` (SCSS variables)
   - `lib/core/tokens/.cache/tokens.ts` (exported TS constants)
 
-- `npm run icons` — reads SVG files from `lib/assets/icons/<collection>/` and generates React components into `lib/components/icons/<collection>/`. The `default` collection uses `currentColor` for stroke/fill; other collections keep original colors.
+- `npm run icons` — reads SVG files from `lib/assets/icons/<collection>/` and generates, into `lib/components/icons/<collection>/`, a React component (`IconName.tsx`) **and** an Astro one (`IconName.astro`) per icon, plus the React barrel. The `default` collection uses `currentColor` for stroke/fill; other collections keep original colors. The Astro icons wrap `lib/components/Icon/index.astro`, the hand-written primitive that renders the `au-icon` div.
 
 Never edit files inside `lib/core/tokens/.cache/` or `lib/components/icons/` directly — they are fully generated.
 
@@ -60,8 +63,53 @@ Each component lives in `lib/components/<ComponentName>/` and typically contains
 - `hooks.ts` — custom hooks (when needed)
 - `*.stories.tsx` — Storybook stories
 - `*.test.tsx` — Vitest + Testing Library tests
+- `index.astro` — the Astro version of the same component (optional; see below)
 
-Components with brand variants (e.g., Footer, Logo) have `ac/` and `cp/` subdirectories.
+Components with brand variants (e.g., Footer, Logo) have `ac/` and `cp/` subdirectories. A compound component keeps each part in its own folder next to the root (`Header/Logo/index.tsx`, `Header/Navbar/index.tsx`), so the React part, the `.astro` version and any shared file sit together.
+
+### Astro components
+
+Aurora ships a second format of the same component for the static public pages
+(the public pages monorepo): `@consumidor-positivo/aurora/astro/<Name>/index.astro`.
+The `.astro` file lives in the component's own folder and reuses the same
+`styles.scss` as the React one. Unlike the public pages monorepo, the controller is
+**not** a separate `controller.ts` — it goes inline in the component's `<script>`,
+using `elementController` from `@consumidor-positivo/aurora/astro/runtime`
+(`lib/astro/runtime/`).
+
+`.astro` files are published as **source** — Rollup cannot parse them, and
+compiling them here would pin the package to one Astro version's internal
+runtime — so they get no Vite entry. `viteStaticCopy` copies each one to
+`astro/<path>/index.astro` **at the package root, not inside `dist`**, and rewrites
+its `./styles.scss` import to the CSS Vite already emitted for the React component,
+so the consumer needs no Sass configuration. The root path is deliberate: consumers
+on `moduleResolution: "node"` ignore the `exports` field and resolve the specifier
+as a real path on disk, so the physical path has to match the exported one. Only the
+shared runtime is a real Vite entry (`dist/astro/runtime/`), reachable under the same
+specifier through the `astro/runtime/package.json` proxy folder the build copies.
+
+`astro.config.mjs` at the root exists only for this: Aurora is not an Astro site,
+and `srcDir` points into `.astro/` so the files Astro generates stay out of the
+repo root. `npm run check:astro` (`astro check`, gated in CI) type-checks the `.astro` files,
+including the contents of their `<script>` tags. Props are typed with
+`HTMLAttributes` from `astro/types`, never an open `[key: string]: unknown` index.
+The runtime self-import resolves through a `tsconfig.json` path alias pointing at
+`lib/astro/runtime`, so the check does not depend on a freshly built `dist`.
+
+Astro has no callback props, so the `.astro` versions ship markup and initial
+state and leave app-level behavior to the consumer (every HTML attribute is
+forwarded, so an `id` or `data-*` is the hook); behavior that belongs to the
+component itself, like the `Header.NavbarLink` dropdown, keeps its controller.
+A page built only with Astro components must import the reset once, with
+`import '@consumidor-positivo/aurora/global.css'` — it never loads the React
+entry that carries `GlobalStyles`.
+
+Today `Button`, `Text`, `Icon`, `Tabs` (+ `Tabs/TabPanel`), `Header` (+ its nine
+parts), `Footer`, `Logo` (with the `ac/Tertiary` and `cp/Primary` variants),
+`Drawer` and `NavbarVertical` (+ its `Link`) have an `.astro` version. The
+`Drawer` has no `isOpen`/`handleOpen`: any element carrying
+`data-au-drawer-toggle="<drawer id>"` opens it.
+Full reference, conventions and gotchas: [docs/astro.md](docs/astro.md).
 
 ### CSS conventions
 
@@ -79,7 +127,7 @@ These aliases work in both Vite (build/dev/Storybook) and Vitest.
 
 ### Build output
 
-Vite builds in library mode, ES format only, with per-component code splitting. Each component gets its own `dist/components/<Name>/index.es.js` and `dist/components/<Name>/styles.css`. Icons each get their own entry: `dist/components/icons/<IconName>/index.es.js`. The global stylesheet (`GlobalStyles.scss`) is included in `dist/main.es.js`.
+Vite builds in library mode, ES format only, with per-component code splitting. Each component gets its own entry, named after **its path** under `lib/components` — `dist/components/Header/Logo/index.es.js`, `dist/components/form/Field/Root/index.es.js` — so nested components with the same folder name (`Header/Logo` and `Logo`, the three `Field`s) stop overwriting each other in the entry map. Icons each get their own entry: `dist/components/icons/<IconName>/index.es.js`. The global stylesheet (`GlobalStyles.scss`) rides in `dist/main.es.js` and is also emitted on its own as `dist/components/globalStyles/styles.css`, exported as `@consumidor-positivo/aurora/global.css` for pages that only use the Astro components.
 
 ### Prototype components
 
@@ -105,11 +153,18 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 
 ## Gotchas & tech debt
 
+- No `exports` do `package.json`, a condição `types` tem que vir antes de `import`; com `import` na frente o subpath resolve como `any` no consumidor (`package.json:21`).
+- `Button` React marca `@deprecated` na prop `type` para desencorajar só o valor `'link'`, e isso gera aviso em toda chamada (`lib/components/Button/index.tsx:29`). A versão Astro evita a tag; o React continua com o falso positivo.
+- Componente Astro instalado via `npm install file:` quebra os `<script>` hoisted do Astro (`No cached compile metadata found`); teste sempre com `npm pack` + tarball (`docs/astro.md`).
+- `Button` em Astro não tem `loading`: o spinner depende de um ícone React e os ícones ainda não têm versão Astro (`lib/components/Button/index.astro`).
+- `Tabs` em Astro renderiza todos os painéis (esconde com `hidden`) e exige `active` explícito no `TabPanel` inicial (`lib/components/Tabs/TabPanel/index.astro:11`).
+- Passar `class:list` para um componente Astro da Aurora sobrescreve as classes internas dele (o Astro entrega a diretiva como prop crua). `Text`, `Button` e `Icon` mesclam; nos demais, use `class` (`lib/components/Text/index.astro:51`).
+- CSS de componente Astro não pode depender de ordem de folha: regra de estado que dispute com classe de token do `Text` precisa compor a especificidade (`lib/components/NavbarVertical/styles.scss:26`).
 - `Checkbox.Field` não tem prop de posição do controle (`Radio.Field` tem `direction: 'left' | 'right'`); o Figma prevê `Position: Left | Right` para ambos.
 
 ## Onde achar o resto (ponteiros)
 
-- **Referência longa & operação:** `docs/` — `docs/self-improvement.md` (protocolo que mantém os docs vivos) e `docs/observability.md` (onde investigar quando um componente quebra — Aurora é lib, não tem runtime próprio).
+- **Referência longa & operação:** `docs/` — `docs/astro.md` (o formato Astro: onde mora, como é publicado, gotchas), `docs/self-improvement.md` (protocolo que mantém os docs vivos) e `docs/observability.md` (onde investigar quando um componente quebra — Aurora é lib, não tem runtime próprio).
 - **Docs de negócio:** `.ai-docs/services/aurora.md` (o que é o design system, em linguagem de negócio — lido por design/produto via MCP `github-readonly`) e `.ai-docs/missions/` (mudanças não-triviais em voo). Aprofundar com `/cp-ai-doc`.
 - **Documentação no Storybook:** `lib/docs/*.mdx` (Configure, Patterns, Dependencies, Icons, DevelopingWithAI).
 - **Subagents read-only:** `.claude/agents/` (`code-reviewer`, `explorer`).

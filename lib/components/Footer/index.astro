@@ -1,0 +1,329 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../Text/index.astro'
+import IconFacebook from '../icons/default/IconFacebook.astro'
+import IconInstagram from '../icons/default/IconInstagram.astro'
+import IconLinkedin from '../icons/default/IconLinkedin.astro'
+import IconTiktok from '../icons/default/IconTiktok.astro'
+import IconYoutube from '../icons/default/IconYoutube.astro'
+import './styles.scss'
+
+export type Link = {
+  title: string
+  url?: string
+}
+
+export type CategoryLink = {
+  categoryTitle: string
+  links: Link[]
+}
+
+export type SocialLink = {
+  instagram?: string
+  facebook?: string
+  youtube?: string
+  linkedin?: string
+  tiktok?: string
+}
+
+export type AppStores = {
+  appstore?: string
+  googleplay?: string
+}
+
+export type Certificate = keyof typeof CERTIFICATES
+
+export type Props = HTMLAttributes<'footer'> & {
+  categoryLinks?: CategoryLink[]
+  socialLinks: SocialLink
+  stores?: AppStores
+  cnpj?: string
+  address?: string
+  companyOverview?: string
+  certificates: Certificate[]
+  /** Raw HTML, like the React `copyrights` when it carries markup. */
+  copyrights: string
+}
+
+// Mirrors `lib/components/Footer/data.tsx`, which cannot be imported here: it
+// is JSX and is not part of the published package. Keep both in sync.
+const CERTIFICATES = {
+  fintech2022: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/47x62/6ffd0990ed/fintech-2022.png',
+    name: 'Melhores Fintechs 2022',
+  },
+  fintech2023: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/84x73/b48cc08aa5/fintech-2023.png',
+    name: 'Melhores Fintechs 2023',
+  },
+  pcidss: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/85x36/8be091fa1c/pci-dss.png',
+    name: 'PCI DSS Compliant',
+  },
+  quintessa: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/122x40/16f41476c0/quintessa.png',
+    name: 'Quintessa',
+  },
+  ra1000: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/100x58/ad8bed26c8/ra1000.png',
+    name: 'RA 1000',
+  },
+  reclameaqui: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/60x60/b85fcf03dd/reclame-aqui.png',
+    name: 'Ótimo Reclame Aqui',
+  },
+  scaleup: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/104x50/07c8b89dbe/scale-up.png',
+    name: 'Scale Up',
+  },
+  sslblindado: {
+    logo: 'https://assets.acordocerto.com.br/f/114280/75x54/60734a2cc4/ssl-blindado.png',
+    name: 'SSL Blindado',
+  },
+}
+
+const STORES = {
+  googleplay: {
+    name: 'Google Play',
+    icon: 'https://assets.acordocerto.com.br/f/114280/117x36/e0e7eda65d/google-play.png',
+  },
+  appstore: {
+    name: 'App Store',
+    icon: 'https://assets.acordocerto.com.br/f/114280/117x36/38b0d1ecc9/app-store.png',
+  },
+}
+
+const SOCIALS = {
+  instagram: { name: 'Instagram', Component: IconInstagram },
+  facebook: { name: 'Facebook', Component: IconFacebook },
+  youtube: { name: 'Youtube', Component: IconYoutube },
+  linkedin: { name: 'Linkedin', Component: IconLinkedin },
+  tiktok: { name: 'TikTok', Component: IconTiktok },
+}
+
+const {
+  categoryLinks,
+  socialLinks,
+  stores = {},
+  cnpj,
+  address,
+  companyOverview,
+  certificates,
+  copyrights,
+  class: className,
+  ...rest
+} = Astro.props
+
+const usedCertificates = certificates.map(
+  (certificate) => CERTIFICATES[certificate],
+)
+
+const usedSocials = (Object.keys(socialLinks) as Array<keyof SocialLink>).map(
+  (social) => ({ ...SOCIALS[social], url: socialLinks[social] }),
+)
+
+const usedStores = (Object.keys(stores) as Array<keyof AppStores>).map(
+  (store) => ({ ...STORES[store], url: stores[store] }),
+)
+
+// The React version decides this with `isMobile()` at render time. Static
+// output cannot, so the class always ships and the rule is scoped to the
+// mobile breakpoint in the stylesheet.
+const showCertificatesBorder = usedCertificates.length > 3
+---
+
+{
+  categoryLinks ? (
+    <footer class:list={['au-footer-full', className]} {...rest}>
+      <div class="au-footer-full__container">
+        <div class="au-footer-full__logo">
+          <slot name="logo" />
+        </div>
+        <div class="au-footer-full__links">
+          {categoryLinks.map(({ categoryTitle, links }) => (
+            <div class="au-footer-full__links-category">
+              <Text as="h2" variant="heading-micro" weight="bold">
+                {categoryTitle}
+              </Text>
+              {links.map(({ title, url }) =>
+                url ? (
+                  <a
+                    class="au-footer-full__links au-footer-full__links--is-clickable"
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <Text as="span" variant="body-medium" weight="regular" color="secondary">
+                      {title}
+                    </Text>
+                  </a>
+                ) : (
+                  <span class="au-footer-full__links">
+                    <Text as="span" variant="body-medium" weight="regular" color="secondary">
+                      {title}
+                    </Text>
+                  </span>
+                ),
+              )}
+            </div>
+          ))}
+          <div class="au-footer-full__company-info">
+            <Text as="h2" variant="heading-micro" weight="bold">
+              Siga a gente
+            </Text>
+            <div class="au-footer-full__links-socials">
+              {usedSocials.map(({ Component: SocialIcon, url, name }) => (
+                <a
+                  class:list={[
+                    'au-footer-full__links',
+                    url && 'au-footer-full__links--is-clickable',
+                  ]}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Siga-nos no ${name}`}>
+                  <span aria-hidden="true">
+                    <SocialIcon />
+                  </span>
+                </a>
+              ))}
+            </div>
+            {cnpj && (
+              <Text as="div" variant="body-medium" weight="regular" color="secondary">
+                <Text as="strong" weight="bold" color="secondary">
+                  CNPJ:
+                </Text>
+                {` ${cnpj}`}
+              </Text>
+            )}
+            {address && (
+              <Text as="div" variant="body-medium" weight="regular" color="secondary">
+                <Text
+                  as="strong"
+                  variant="body-medium"
+                  weight="bold"
+                  color="secondary"
+                  class="au-footer-full__address-label">
+                  Localização (sem atendimento ao público):
+                </Text>
+                {address}
+              </Text>
+            )}
+          </div>
+        </div>
+
+        {usedStores.length > 0 && (
+          <div class="au-footer-full__stores-slot au-footer-full__stores-slot--mobile">
+            <div class="au-footer-full__stores">
+              <Text
+                class="au-footer-full__stores-title"
+                as="h2"
+                variant="heading-micro"
+                weight="bold">
+                Baixe nosso app
+              </Text>
+              {usedStores.map(({ icon, url, name }) =>
+                url ? (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="au-footer-full__stores-logo au-footer-full__stores-logo--is-clickable">
+                    <img src={icon} alt={name} loading="lazy" draggable="false" />
+                  </a>
+                ) : (
+                  <img
+                    class="au-footer-full__stores-logo"
+                    src={icon}
+                    alt={name}
+                    loading="lazy"
+                    draggable="false"
+                  />
+                ),
+              )}
+            </div>
+          </div>
+        )}
+
+        {companyOverview && (
+          <div class="au-footer-full__company-overview">
+            <Text color="secondary">{companyOverview}</Text>
+          </div>
+        )}
+
+        <div class="au-footer-full__bottom">
+          <div
+            class:list={[
+              'au-footer-full__bottom-certificates',
+              showCertificatesBorder &&
+                'au-footer-full__bottom-certificates--with-border',
+            ]}>
+            {usedCertificates.map(({ logo, name }) => (
+              <img src={logo} alt={name} loading="lazy" draggable="false" />
+            ))}
+          </div>
+          <div class="au-footer-full__bottom-side">
+            {usedStores.length > 0 && (
+              <div class="au-footer-full__stores-slot au-footer-full__stores-slot--desktop">
+                <div class="au-footer-full__stores">
+                  <Text
+                    class="au-footer-full__stores-title"
+                    as="h2"
+                    variant="heading-micro"
+                    weight="bold">
+                    Baixe nosso app
+                  </Text>
+                  {usedStores.map(({ icon, url, name }) =>
+                    url ? (
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="au-footer-full__stores-logo au-footer-full__stores-logo--is-clickable">
+                        <img src={icon} alt={name} loading="lazy" draggable="false" />
+                      </a>
+                    ) : (
+                      <img
+                        class="au-footer-full__stores-logo"
+                        src={icon}
+                        alt={name}
+                        loading="lazy"
+                        draggable="false"
+                      />
+                    ),
+                  )}
+                </div>
+              </div>
+            )}
+            <Text
+              as="div"
+              variant="body-medium"
+              weight="regular"
+              color="secondary"
+              class="au-footer-full__copyrights"
+              html={copyrights}
+            />
+          </div>
+        </div>
+      </div>
+    </footer>
+  ) : (
+    <footer class:list={['au-footer', className]} {...rest}>
+      <div class="au-footer__container">
+        <div class="au-footer__content">
+          <div class="au-footer__content-logos">
+            <slot name="logo" />
+            <div class="au-footer__content-divider" />
+            <div class="au-footer__content-certificates">
+              {usedCertificates.map(({ logo, name }) => (
+                <img src={logo} alt={name} loading="lazy" draggable="false" />
+              ))}
+            </div>
+          </div>
+          <div class="au-footer__content-copyrights">
+            <Text as="p" variant="body-medium" weight="regular" color="secondary" html={copyrights} />
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}

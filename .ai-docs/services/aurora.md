@@ -11,10 +11,11 @@ Aurora é a biblioteca de componentes de interface compartilhada entre **Consumi
 ## O que esse serviço faz
 Padroniza a aparência e o comportamento das telas das duas marcas. Em vez de cada app reimplementar um botão ou um campo de formulário, todos instalam o pacote `@consumidor-positivo/aurora` e usam os mesmos componentes. Isso garante consistência visual, acessibilidade e velocidade: uma melhoria feita aqui chega a todos os produtos que atualizam a versão.
 
-Aurora entrega três coisas:
+Aurora entrega quatro coisas:
 - **Componentes** reutilizáveis de UI (Button, Card, Tabs, formulários, Header/Footer, etc.).
 - **Tokens de design** (cores, tipografia, espaçamento) que codificam a identidade visual de cada marca.
 - **Ícones** padronizados.
+- **Uma versão dos componentes para os sites públicos** (formato Astro), para que as páginas de marketing usem o mesmo botão e o mesmo texto do resto do produto sem carregar o peso de uma aplicação React.
 
 ## Quando ele "roda" (gatilhos)
 | Gatilho | O que acontece |
@@ -36,6 +37,7 @@ Aurora não tem "produção" própria — ela executa **dentro** dos apps que a 
 - **Bundle enxuto:** componentes que exigem dependências pesadas (ex.: Carousel → `react-snap-carousel`) são opcionais e não entram por padrão.
 
 ## Cenários comuns
+- **"O botão do site público está diferente do botão do produto"** → os sites públicos (`www.consumidorpositivo.com.br`, `www.acordocerto.com.br`) usam a versão Astro dos componentes. Hoje existem nesse formato o botão, o texto, o ícone, as abas e — o que mais aparece para quem visita — o cabeçalho e o rodapé; o resto ainda é reimplementado localmente, e é aí que a diferença aparece.
 - **"Quero um componente novo no design system"** → é criado seguindo o padrão (skill `/create-component`), documentado no Storybook e publicado numa nova versão.
 - **"O botão mudou de cor sem avisar"** → provavelmente o app atualizou a versão de Aurora; o que mudou está no `CHANGELOG.md`.
 - **"Posso usar Aurora no meu app novo?"** → sim, `npm install @consumidor-positivo/aurora`; ver README e Storybook.

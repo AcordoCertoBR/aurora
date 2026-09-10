@@ -23,8 +23,13 @@
       }
     }
 
+    // Compounded with `.au-text` on purpose: the link always carries the Text
+    // classes, and `au-text--color-*` would otherwise win by source order
+    // alone, which differs between the React bundle and the composed `.astro`.
     &--is-active,
-    &--is-open {
+    &--is-open,
+    &--is-active.au-text,
+    &--is-open.au-text {
       background-color: $color-brand-blue-10;
       color: $color-brand-blue-40;
       font-weight: 700;
@@ -66,7 +71,9 @@
       }
 
       &--is-active,
-      &--is-open {
+      &--is-open,
+      &--is-active.au-text,
+      &--is-open.au-text {
         color: $color-brand-blue-40;
         font-weight: 700;
       }

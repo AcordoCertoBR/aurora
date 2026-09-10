@@ -27,9 +27,11 @@ export function getCollectionPrefix(collection: string) {
 
 export function getComponentsOfCollection(collection: string) {
   const collectionPath = `${outputFolder}/${collection}`
+  // `.tsx` only: the collection folder also holds the generated `.astro`
+  // icons, and the barrel here is the React one.
   const components = fs
     .readdirSync(collectionPath)
-    .filter((file) => file.startsWith('Icon'))
+    .filter((file) => file.startsWith('Icon') && file.endsWith('.tsx'))
 
   return components.map((filename) => filename.replace('.tsx', ''))
 }

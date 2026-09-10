@@ -73,3 +73,9 @@
     }
   }
 }
+
+// Astro-only wrapper: keeps the tab bar and the panels under a single
+// controller root without adding a box to the layout.
+.au-tabs-root {
+  display: contents;
+}

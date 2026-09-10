@@ -23,6 +23,7 @@ export default defineConfig({
     include: [
       'lib/components/**/*.test.{ts,tsx}',
       'lib/components/**/*.{test,spec}.{ts,tsx}',
+      'lib/astro/**/*.test.ts',
     ],
     exclude: [
       '**/*.stories.*',
@@ -35,7 +36,11 @@ export default defineConfig({
     ],
     coverage: {
       reporter: ['text', 'lcov', 'html'],
-      include: ['lib/components/**/*.ts', 'lib/components/**/*.tsx'],
+      include: [
+        'lib/components/**/*.ts',
+        'lib/components/**/*.tsx',
+        'lib/astro/**/*.ts',
+      ],
       exclude: [
         '**/*.stories.*',
         '**/*.stories.@(ts|tsx|js|jsx|mdx)',

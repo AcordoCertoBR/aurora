@@ -1,0 +1,101 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../../Text/index.astro'
+import IconChevronDown from '../../icons/default/IconChevronDown.astro'
+import IconChevronUp from '../../icons/default/IconChevronUp.astro'
+
+export type NavbarVerticalItem = {
+  name: string
+  href?: string
+  active?: boolean
+  dropdown?: NavbarVerticalItem[]
+}
+
+/**
+ * The React version takes an `onClick` per item. Astro has no callback props:
+ * items are plain links, so give them an `href`.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'color'> & NavbarVerticalItem
+
+const {
+  name,
+  href,
+  active = false,
+  dropdown,
+  class: className,
+  ...rest
+} = Astro.props
+
+const isDropdown = !!dropdown?.length
+// Same rule as React: a group starts open when it is the active one.
+const startsOpen = isDropdown && active
+const Tag = isDropdown ? 'div' : 'a'
+---
+
+<Text
+  as={Tag}
+  href={isDropdown ? undefined : href}
+  variant="heading-micro"
+  weight="light"
+  data-element={isDropdown ? 'au-navbar-vertical-link' : undefined}
+  class:list={[
+    'au-navbar-vertical__link',
+    active && 'au-navbar-vertical__link--is-active',
+    startsOpen && 'au-navbar-vertical__link--is-open',
+    className,
+  ]}
+  {...rest}>
+  <slot name="icon" />
+  {name}
+
+  {
+    isDropdown && (
+      <Fragment>
+        <div class="au-navbar-vertical__toggle" aria-hidden="true">
+          <span hidden={!startsOpen} data-au-chevron="up">
+            <IconChevronUp />
+          </span>
+          <span hidden={startsOpen} data-au-chevron="down">
+            <IconChevronDown />
+          </span>
+        </div>
+        <div class="au-navbar-vertical__dropdown">
+          {dropdown?.map((item) => (
+            <Text
+              as="a"
+              href={item.href}
+              variant="heading-micro"
+              weight="light"
+              title={item.name}
+              class:list={[
+                'au-navbar-vertical__dropdown-link',
+                item.active && 'au-navbar-vertical__dropdown-link--is-active',
+              ]}>
+              {item.name}
+            </Text>
+          ))}
+        </div>
+      </Fragment>
+    )
+  }
+</Text>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const OPEN_CLASS = 'au-navbar-vertical__link--is-open'
+
+  elementController('au-navbar-vertical-link', ({ root, query, on }) => {
+    const up = query<HTMLElement>('[data-au-chevron="up"]')
+    const down = query<HTMLElement>('[data-au-chevron="down"]')
+
+    on('click', (event) => {
+      // Clicking a link inside the group navigates; only the row toggles.
+      if ((event.target as Element | null)?.closest('.au-navbar-vertical__dropdown-link')) return
+
+      const isOpen = root.classList.toggle(OPEN_CLASS)
+      if (up) up.hidden = !isOpen
+      if (down) down.hidden = isOpen
+    })
+  })
+</script>

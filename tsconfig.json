@@ -8,7 +8,8 @@
     "paths": {
       "@components/*": ["./lib/components/*"],
       "@core/*": ["./lib/core/*"],
-      "@assets/*": ["./lib/assets/*"]
+      "@assets/*": ["./lib/assets/*"],
+      "@consumidor-positivo/aurora/astro/runtime": ["./lib/astro/runtime"]
     },
 
     /* Bundler mode */
@@ -18,7 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vitest"],
+    "types": ["vitest", "astro/client"],
 
     /* Linting */
     "strict": true,
@@ -26,7 +27,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["lib", "scripts"],
+  // `.astro` is spelled out: a bare folder in `include` only matches TypeScript
+  // extensions, so the editor's language server saw the `.astro` files as
+  // outside any project and fell back to a config without `moduleResolution`,
+  // where `astro/types` cannot resolve. `astro check` builds its own program
+  // and never hit it.
+  "include": ["lib", "scripts", "lib/**/*.astro", ".astro/types.d.ts"],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

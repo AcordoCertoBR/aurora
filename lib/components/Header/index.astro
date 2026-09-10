@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+export type Props = HTMLAttributes<'header'> & {
+  position?: 'static' | 'fixed'
+}
+
+const { position = 'static', class: className, ...rest } = Astro.props
+---
+
+<header
+  role="banner"
+  class:list={['au-header', `au-header--${position}`, className]}
+  {...rest}>
+  <div class="au-header__container">
+    <slot />
+  </div>
+</header>

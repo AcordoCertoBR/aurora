@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+export type Props = HTMLAttributes<'div'>
+
+const { class: className, ...rest } = Astro.props
+---
+
+<div class:list={['au-header__logo', className]} {...rest}>
+  {
+    Astro.slots.has('mobile') && (
+      <div class="au-header__logo--mobile">
+        <slot name="mobile" />
+      </div>
+    )
+  }
+  {
+    Astro.slots.has('desktop') && (
+      <div class="au-header__logo--desktop">
+        <slot name="desktop" />
+      </div>
+    )
+  }
+  <slot />
+</div>
