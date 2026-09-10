@@ -26,17 +26,21 @@ Subcomponentes seguem a mesma regra (`lib/components/Tabs/TabPanel/index.astro`)
 
 Um `.astro` não passa por bundler: o Rollup não sabe parseá-lo, e compilá-lo aqui amarraria o pacote ao runtime interno de uma versão específica do Astro. O formato é publicado como **source**, e quem compila é o Astro do consumidor.
 
-Por isso não existe um entry do Vite para eles. O `vite.config.ts` copia cada `lib/components/<caminho>/index.astro` para `dist/astro/<caminho>/index.astro` com o `viteStaticCopy`, que já estava no config, no hook `writeBundle` (ou seja, depois do CSS já estar escrito). O runtime compartilhado, esse sim, é um entry normal do Vite e sai em `dist/astro/runtime/`.
+Por isso não existe um entry do Vite para eles. O `vite.config.ts` copia cada `lib/components/<caminho>/index.astro` para `astro/<caminho>/index.astro` com o `viteStaticCopy`, que já estava no config, no hook `writeBundle` (ou seja, depois do CSS já estar escrito). O runtime compartilhado, esse sim, é um entry normal do Vite e sai em `dist/astro/runtime/`.
+
+Os `.astro` ficam em `astro/` na **raiz do pacote**, fora do `dist`, e é o `astro` no `files` que os publica. O motivo está no gotcha do `moduleResolution` abaixo: para os dois resolvedores concordarem, o caminho físico tem que ser igual ao caminho exportado. Como o `astro/` é gerado no build, ele está no `.gitignore` e o `npm run build` roda `rimraf astro` antes do Vite.
 
 No `package.json`:
 
 ```json
 "./astro/runtime": {
-  "import": "./dist/astro/runtime/index.es.js",
-  "types": "./dist/astro/runtime/index.d.ts"
+  "types": "./dist/astro/runtime/index.d.ts",
+  "import": "./dist/astro/runtime/index.es.js"
 },
-"./astro/*": "./dist/astro/*"
+"./astro/*": "./astro/*"
 ```
+
+O runtime continua saindo no `dist` porque é um bundle de verdade. Para que ele também tenha caminho físico, o build copia `lib/astro/runtime/package.proxy.json` para `astro/runtime/package.json` — uma pasta-proxy com `main`/`types` apontando de volta para o `dist`, que é o que o resolvedor antigo sabe ler.
 
 O consumidor importa com o caminho completo, extensão inclusa, igual ao que o monorepo das páginas públicas já faz internamente:
 
@@ -144,7 +148,8 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 ## Gotchas
 
 - **No `exports`, a condição `types` vem antes de `import`.** O TypeScript para na primeira condição que casa; com `import` na frente, o subpath resolve o `.js` e o consumidor recebe `any` com o erro "could not be resolved when respecting package.json exports". O campo `types` da raiz não cobre subpath.
-- **Instalar via `file:` não funciona.** Com `npm install file:../aurora` o Astro resolve o `.astro` fora da raiz do projeto e quebra os `<script>` hoisted com `No cached compile metadata found`. Sempre teste com `npm pack` + tarball.
+- **Consumidor em `moduleResolution: "node"` (node10) ignora o `exports`.** É o caso do monorepo das páginas públicas (`tsconfig.base.json`). O TypeScript resolve o specifier como caminho físico e o Vite resolve pelo `exports`, então os dois só concordam se o arquivo estiver fisicamente em `astro/<caminho>/index.astro`. Com os `.astro` dentro do `dist`, o `astro check` acusa `Cannot find module` e trocar o import para `.../dist/astro/...` inverte o erro: aí é o Vite que quebra com `Missing "./dist/astro/..." specifier in package`.
+- **`npm link` (ou `file:`) não serve para testar.** O Vite resolve o symlink para o caminho real, então o `.astro` passa a ser compilado de fora do projeto do consumidor: o `astro check` acusa `is not under 'rootDir'` e o build quebra em `Rollup failed to resolve import "@consumidor-positivo/aurora/astro/runtime"`, porque a resolução do `<script>` parte do repo da Aurora, onde o pacote não existe. Sempre teste com `npm pack` + tarball.
 - **Atributo booleano `false` some.** O Astro não renderiza `aria-selected={false}`. Onde o valor `"false"` importa para acessibilidade, passe a string: `aria-selected={ativo ? 'true' : 'false'}`.
 - **`set:html` não pode ser condicional.** A diretiva sempre substitui o conteúdo, então um `set:html={undefined}` apaga o `<slot />`. `Text` resolve isso ramificando a tag inteira (`lib/components/Text/index.astro:59`).
 - **`Tabs` exige `active` explícito no painel inicial.** O Astro não sabe qual painel corresponde ao `initialTab` na hora de renderizar o `TabPanel`, e resolver isso só no controller causaria flash de todos os painéis abertos. O consumidor marca `<TabPanel tab="x" active>`.

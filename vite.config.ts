@@ -72,10 +72,18 @@ export default defineConfig({
       targets: [
         {
           src: 'lib/components/**/index.astro',
-          dest: 'astro',
+          dest: '../astro',
           rename: (_name, _ext, fullPath) => relativeToComponents(fullPath),
           transform: (content, filePath) =>
             pointAstroStylesToBuiltCss(content, filePath),
+        },
+        {
+          // Proxy folder so `@consumidor-positivo/aurora/astro/runtime` also
+          // resolves for consumers on `moduleResolution: "node"`, which ignores
+          // the `exports` field and needs a real directory on disk.
+          src: 'lib/astro/runtime/package.proxy.json',
+          dest: '../astro/runtime',
+          rename: () => 'package.json',
         },
         {
           src: 'lib/core/styles/mixins.scss',
@@ -114,9 +122,9 @@ function relativeToComponents(fullPath: string) {
 
 /**
  * `.astro` files ship as source, so their stylesheet import has to resolve
- * inside `dist`. In the repo they import the same `styles.scss` the React
- * component uses; here that becomes the CSS Vite already emitted for it, which
- * is what spares the consumer any Sass configuration.
+ * inside the published package. In the repo they import the same `styles.scss`
+ * the React component uses; here that becomes the CSS Vite already emitted for
+ * it, which is what spares the consumer any Sass configuration.
  */
 function pointAstroStylesToBuiltCss(content: string, filePath: string) {
   const componentPath = dirname(relativeToComponents(filePath))
@@ -132,7 +140,7 @@ function pointAstroStylesToBuiltCss(content: string, filePath: string) {
   }
 
   const importPath = relative(
-    resolve(__dirname, 'dist/astro', componentPath),
+    resolve(__dirname, 'astro', componentPath),
     stylesheet,
   )
     .split(sep)

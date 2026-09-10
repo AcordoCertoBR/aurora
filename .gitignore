@@ -17,6 +17,9 @@ dist
 
 # astro check (npm run check:astro) generated types
 /.astro/
+
+# .astro components copied out of lib/ at build time (npm run build)
+/astro/
 dist-ssr
 *.local
 storybook-static

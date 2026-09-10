@@ -1,0 +1,6 @@
+{
+  "main": "../../dist/astro/runtime/index.es.js",
+  "module": "../../dist/astro/runtime/index.es.js",
+  "types": "../../dist/astro/runtime/index.d.ts",
+  "sideEffects": false
+}

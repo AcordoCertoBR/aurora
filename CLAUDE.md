@@ -80,9 +80,13 @@ using `elementController` from `@consumidor-positivo/aurora/astro/runtime`
 `.astro` files are published as **source** — Rollup cannot parse them, and
 compiling them here would pin the package to one Astro version's internal
 runtime — so they get no Vite entry. `viteStaticCopy` copies each one to
-`dist/astro/<path>/index.astro` and rewrites its `./styles.scss` import to the CSS
-Vite already emitted for the React component, so the consumer needs no Sass
-configuration. Only the shared runtime is a real Vite entry.
+`astro/<path>/index.astro` **at the package root, not inside `dist`**, and rewrites
+its `./styles.scss` import to the CSS Vite already emitted for the React component,
+so the consumer needs no Sass configuration. The root path is deliberate: consumers
+on `moduleResolution: "node"` ignore the `exports` field and resolve the specifier
+as a real path on disk, so the physical path has to match the exported one. Only the
+shared runtime is a real Vite entry (`dist/astro/runtime/`), reachable under the same
+specifier through the `astro/runtime/package.json` proxy folder the build copies.
 
 `astro.config.mjs` at the root exists only for this: Aurora is not an Astro site,
 and `srcDir` points into `.astro/` so the files Astro generates stay out of the
