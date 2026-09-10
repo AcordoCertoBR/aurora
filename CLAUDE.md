@@ -65,7 +65,7 @@ Each component lives in `lib/components/<ComponentName>/` and typically contains
 - `*.test.tsx` — Vitest + Testing Library tests
 - `index.astro` — the Astro version of the same component (optional; see below)
 
-Components with brand variants (e.g., Footer, Logo) have `ac/` and `cp/` subdirectories.
+Components with brand variants (e.g., Footer, Logo) have `ac/` and `cp/` subdirectories. A compound component keeps each part in its own folder next to the root (`Header/Logo/index.tsx`, `Header/Navbar/index.tsx`), so the React part, the `.astro` version and any shared file sit together.
 
 ### Astro components
 
@@ -124,7 +124,7 @@ These aliases work in both Vite (build/dev/Storybook) and Vitest.
 
 ### Build output
 
-Vite builds in library mode, ES format only, with per-component code splitting. Each component gets its own `dist/components/<Name>/index.es.js` and `dist/components/<Name>/styles.css`. Icons each get their own entry: `dist/components/icons/<IconName>/index.es.js`. The global stylesheet (`GlobalStyles.scss`) is included in `dist/main.es.js`.
+Vite builds in library mode, ES format only, with per-component code splitting. Each component gets its own entry, named after **its path** under `lib/components` — `dist/components/Header/Logo/index.es.js`, `dist/components/form/Field/Root/index.es.js` — so nested components with the same folder name (`Header/Logo` and `Logo`, the three `Field`s) stop overwriting each other in the entry map. Icons each get their own entry: `dist/components/icons/<IconName>/index.es.js`. The global stylesheet (`GlobalStyles.scss`) rides in `dist/main.es.js` and is also emitted on its own as `dist/components/globalStyles/styles.css`, exported as `@consumidor-positivo/aurora/global.css` for pages that only use the Astro components.
 
 ### Prototype components
 

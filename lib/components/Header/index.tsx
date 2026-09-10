@@ -1,16 +1,16 @@
-import { HeaderActions, HeaderActionsProps } from './parts/HeaderActions'
-import { HeaderBadges, HeaderBadgesProps } from './parts/HeaderBadges'
-import { HeaderButton, HeaderButtonProps } from './parts/HeaderButton'
-import { HeaderHamburger, HeaderHamburgerProps } from './parts/HeaderHamburger'
-import { HeaderLogo, HeaderLogoProps } from './parts/HeaderLogo'
-import { HeaderNavbar, HeaderNavbarProps } from './parts/HeaderNavbar'
-import { HeaderNavbarLink } from './parts/HeaderNavbarLink'
+import { HeaderActions, HeaderActionsProps } from './Actions'
+import { HeaderBadges, HeaderBadgesProps } from './Badges'
+import { HeaderButton, HeaderButtonProps } from './Button'
+import { HeaderHamburger, HeaderHamburgerProps } from './Hamburger'
+import { HeaderLogo, HeaderLogoProps } from './Logo'
+import { HeaderNavbar, HeaderNavbarProps } from './Navbar'
+import { HeaderNavbarLink } from './NavbarLink'
 import {
   HeaderNavigation,
   HeaderNavigationProps,
-} from './parts/HeaderNavigation'
-import { HeaderProfile, HeaderProfileProps } from './parts/HeaderProfile'
-import { HeaderWrap as Header, HeaderWrapProps } from './parts/HeaderWrap'
+} from './Navigation'
+import { HeaderProfile, HeaderProfileProps } from './Profile'
+import { HeaderWrap as Header, HeaderWrapProps } from './Wrap'
 import { NavbarDataProps } from './types'
 
 import './styles.scss'

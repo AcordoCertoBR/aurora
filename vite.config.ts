@@ -118,9 +118,10 @@ export default defineConfig({
   },
 })
 
-const componentsDir = resolve(__dirname, 'lib/components')
-
+// Resolved on call, not at module scope: `getComponentsEntries()` runs while
+// the config object is still being evaluated, before a `const` up here exists.
 function relativeToComponents(fullPath: string) {
+  const componentsDir = resolve(__dirname, 'lib/components')
   return relative(componentsDir, fullPath).split(sep).join('/')
 }
 
@@ -175,11 +176,13 @@ function getComponentsEntries(): Record<string, string> {
   // real library entry and publish the whole test bundle (~1.3 MB) to npm.
   const ignore = ['**/*.test.tsx', '**/*.stories.tsx']
 
+  // Keyed by path, not folder name: `Header/Logo` and `Logo` are different
+  // components, and a plain `basename` silently drops one of them (the same
+  // already happened between `Card/Image` and `Image`, `form/*/Field`, …).
   const baseComponents = glob
     .sync(`${dir}/**/*/index.tsx`, { ignore })
     .reduce((acc, filePath) => {
-      const folderPath = dirname(filePath)
-      const componentName = basename(folderPath)
+      const componentName = relativeToComponents(dirname(filePath))
       return { ...acc, [componentName]: filePath }
     }, {})
 

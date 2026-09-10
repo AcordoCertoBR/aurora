@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { Drawer } from '../../Drawer'
-import { LogoPrimaryCP } from '../../Logo'
-import { Text } from '../../Text'
-import { Header } from '../index'
+import { Drawer } from '../Drawer'
+import { LogoPrimaryCP } from '../Logo'
+import { Text } from '../Text'
+import { Header } from './index'
 
 const meta: Meta<typeof Drawer> = {
   title: 'Components/Header/WithDrawer',
