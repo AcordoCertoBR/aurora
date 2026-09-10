@@ -66,7 +66,10 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    dts({ include: ['lib'], exclude: ['**/*.stories.tsx'] }),
+    dts({
+      include: ['lib'],
+      exclude: ['**/*.stories.tsx', '**/*.test.ts', '**/*.test.tsx'],
+    }),
     libInjectCss(),
     viteStaticCopy({
       targets: [
@@ -151,9 +154,12 @@ function pointAstroStylesToBuiltCss(content: string, filePath: string) {
 
 function getComponentsEntries() {
   const dir = 'lib/components'
+  // `Icon*.tsx` also matches `Icon.test.tsx`, which would otherwise become a
+  // real library entry and publish the whole test bundle (~1.3 MB) to npm.
+  const ignore = ['**/*.test.tsx', '**/*.stories.tsx']
 
   const baseComponents = glob
-    .sync(`${dir}/**/*/index.tsx`)
+    .sync(`${dir}/**/*/index.tsx`, { ignore })
     .reduce((acc, filePath) => {
       const folderPath = dirname(filePath)
       const componentName = basename(folderPath)
@@ -161,7 +167,7 @@ function getComponentsEntries() {
     }, {})
 
   const iconComponents = glob
-    .sync(`${dir}/**/*/Icon*.tsx`)
+    .sync(`${dir}/**/*/Icon*.tsx`, { ignore })
     .reduce((acc, filePath) => {
       const { name: componentName } = parse(basename(filePath))
       return { ...acc, [componentName]: filePath }
