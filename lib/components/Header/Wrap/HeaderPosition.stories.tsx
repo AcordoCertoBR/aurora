@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { LogoBadgetCP } from '../Logo'
-import { IconChevronLeft } from '../icons/default'
-import { Header } from './index'
+import { LogoBadgetCP } from '../../Logo'
+import { IconChevronLeft } from '../../icons/default'
+import { Header } from '../index'
 
 const meta: Meta<typeof Header.Root> = {
   title: 'Components/Header/WithPosition',

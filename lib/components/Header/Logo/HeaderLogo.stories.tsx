@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { LogoBadgetCP, LogoPrimaryCP, LogoTertiaryAC } from '../Logo'
-import { Header } from './index'
+import { LogoBadgetCP, LogoPrimaryCP, LogoTertiaryAC } from '../../Logo'
+import { Header } from '../index'
 
 const meta: Meta<typeof Header.Logo> = {
   title: 'Components/Header/WithLogo',
