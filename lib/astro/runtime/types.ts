@@ -1,10 +1,27 @@
-export type ScopedListener = (event: Event) => void
+export type ScopedUnsubscribe = () => void
 
-export type ScopedOn = (
-  eventName: string,
-  handler: ScopedListener,
-  options?: boolean | AddEventListenerOptions,
-) => () => void
+/**
+ * Scoped `addEventListener`. Overloaded so the handler receives the concrete
+ * event type: `on('click', …)` gets a `MouseEvent`, `on('keydown', …)` a
+ * `KeyboardEvent`. The `global:` prefix binds to `window` instead of the root.
+ */
+export interface ScopedOn {
+  <K extends keyof HTMLElementEventMap>(
+    eventName: K,
+    handler: (event: HTMLElementEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ): ScopedUnsubscribe
+  <K extends keyof WindowEventMap>(
+    eventName: `global:${K}`,
+    handler: (event: WindowEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ): ScopedUnsubscribe
+  (
+    eventName: string,
+    handler: (event: Event) => void,
+    options?: boolean | AddEventListenerOptions,
+  ): ScopedUnsubscribe
+}
 
 export type ScopedQuery = <T extends Element = HTMLElement>(
   selector: string,

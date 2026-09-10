@@ -1,20 +1,26 @@
 ---
+import type { HTMLAttributes } from 'astro/types'
 import './styles.scss'
 
-export interface TabItem {
+export type TabItem = {
   tab: string
   title: string
 }
 
-export interface Props {
+export type Props = HTMLAttributes<'div'> & {
   tabs: TabItem[]
   /** Hides the tab bar and renders only the panels. */
   areTabsHidden?: boolean
   initialTab?: string
-  class?: string
 }
 
-const { tabs, areTabsHidden = false, initialTab, class: className } = Astro.props
+const {
+  tabs,
+  areTabsHidden = false,
+  initialTab,
+  class: className,
+  ...rest
+} = Astro.props
 
 const activeTab = initialTab ?? tabs[0]?.tab
 ---
@@ -22,7 +28,8 @@ const activeTab = initialTab ?? tabs[0]?.tab
 <div
   class:list={['au-tabs-root', className]}
   data-element="au-tabs"
-  data-active-tab={activeTab}>
+  data-active-tab={activeTab}
+  {...rest}>
   {
     !areTabsHidden && (
       <div class="au-tabs">
@@ -61,20 +68,27 @@ const activeTab = initialTab ?? tabs[0]?.tab
 <script>
   import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
 
+  const ACTIVE_CLASS = 'au-tabs__btns-option--active'
+  const NAV_KEYS = ['ArrowLeft', 'ArrowRight', 'Home', 'End'] as const
+
+  type NavKey = (typeof NAV_KEYS)[number]
+
+  const isNavKey = (key: string): key is NavKey =>
+    NAV_KEYS.includes(key as NavKey)
+
   elementController('au-tabs', ({ root, query, queryAll, on, emit }) => {
-    const ACTIVE_CLASS = 'au-tabs__btns-option--active'
-    const buttons = queryAll('[role="tab"]')
-    const panels = queryAll('[role="tabpanel"]')
-    const indicator = query('.au-tabs__btns-indicator')
+    const buttons = queryAll<HTMLButtonElement>('[role="tab"]')
+    const panels = queryAll<HTMLElement>('[role="tabpanel"]')
+    const indicator = query<HTMLElement>('.au-tabs__btns-indicator')
 
     function moveIndicator() {
-      const active = query(`.${ACTIVE_CLASS}`)
+      const active = query<HTMLElement>(`.${ACTIVE_CLASS}`)
       if (!indicator || !active) return
       indicator.style.left = `${active.offsetLeft}px`
       indicator.style.width = `${active.offsetWidth}px`
     }
 
-    function activate(tab) {
+    function activate(tab?: string) {
       if (!tab || root.dataset.activeTab === tab) return
       root.dataset.activeTab = tab
 
@@ -94,29 +108,31 @@ const activeTab = initialTab ?? tabs[0]?.tab
     }
 
     on('click', (event) => {
-      const button = event.target.closest('[role="tab"]')
+      const target = event.target as Element | null
+      const button = target?.closest<HTMLButtonElement>('[role="tab"]')
       if (!button) return
       activate(button.dataset.tab)
     })
 
     on('keydown', (event) => {
-      const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End']
-      if (!keys.includes(event.key)) return
+      if (!isNavKey(event.key)) return
 
-      const current = buttons.indexOf(document.activeElement)
+      const current = buttons.indexOf(
+        document.activeElement as HTMLButtonElement,
+      )
       if (current === -1) return
 
       event.preventDefault()
 
       const last = buttons.length - 1
-      const next = {
+      const next: Record<NavKey, number> = {
         ArrowLeft: current === 0 ? last : current - 1,
         ArrowRight: current === last ? 0 : current + 1,
         Home: 0,
         End: last,
-      }[event.key]
+      }
 
-      buttons[next]?.focus()
+      buttons[next[event.key]]?.focus()
     })
 
     on('global:resize', moveIndicator)

@@ -1,10 +1,9 @@
 ---
+import type { HTMLAttributes } from 'astro/types'
 import './styles.scss'
 
-export interface Props {
+type AuroraButtonProps = {
   as?: 'button' | 'a'
-  href?: string
-  target?: string
   color?: 'default'
   disabled?: boolean
   /** Stretches the button to fill the container width. */
@@ -12,8 +11,8 @@ export interface Props {
   htmlType?: 'button' | 'submit' | 'reset'
   size?: 'large' | 'medium'
   /**
-   * Visual type.
-   * @deprecated the 'link' value — use the `LinkButton` component instead.
+   * Visual type. Avoid `'link'`: use the `LinkButton` component instead
+   * (it matches the Figma "Link Button" set, with sizes and icon slots).
    */
   type?: 'primary' | 'outlined' | 'ghost' | 'link'
   /** Inverted colors for colored backgrounds (Figma: Negative). */
@@ -24,9 +23,16 @@ export interface Props {
   round?: boolean
   /** Border width modifier (`au-btn--border-*`). */
   borderWidth?: string
-  class?: string
-  [key: string]: unknown
 }
+
+type AnchorProps = Pick<
+  HTMLAttributes<'a'>,
+  'href' | 'target' | 'rel' | 'download'
+>
+
+export type Props = Omit<HTMLAttributes<'button'>, 'type' | 'disabled'> &
+  AnchorProps &
+  AuroraButtonProps
 
 const {
   as = 'button',

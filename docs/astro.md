@@ -68,6 +68,23 @@ Isso é o que evita exigir do consumidor injetar `variables.scss` e `mixins.scss
 
 Se um `.astro` não tiver `styles.scss` ao lado (caso do `TabPanel`, que herda o estilo do pai), o import é removido na cópia.
 
+## Tipagem
+
+`astro check` roda no repo (`npm run check:astro`) e no CI, e é o que impede um `.astro` quebrado de passar. Três coisas que ele obriga:
+
+**As props usam `HTMLAttributes` do `astro/types`, não um índice `[key: string]: unknown`.** Com o índice, `sizee="large"` passa batido; com `HTMLAttributes`, o consumidor ganha `id`, `data-*`, `aria-*` e `class` tipados de verdade e erra no que não existe. Onde a prop da Aurora colide com o atributo HTML, `Omit` resolve:
+
+```ts
+import type { HTMLAttributes } from 'astro/types'
+
+export type Props = Omit<HTMLAttributes<'button'>, 'type' | 'disabled'> &
+  AuroraButtonProps
+```
+
+**O `<script>` é TypeScript.** O Astro type-checa o conteúdo da tag, então `event.target.closest(...)` e `event.key` não compilam sem narrowing. O runtime ajuda: `on` é sobrecarregado por nome de evento, então `on('keydown', (event) => event.key)` já recebe um `KeyboardEvent`.
+
+**O import do runtime resolve pelo source, não pelo `dist`.** O `tsconfig.json` mapeia `@consumidor-positivo/aurora/astro/runtime` para `lib/astro/runtime`, senão o check dependeria de um `dist` recém-buildado para ver os tipos certos.
+
 ## Controller inline
 
 Componentes com comportamento usam `elementController`, o mesmo padrão do monorepo das páginas públicas, servido por `@consumidor-positivo/aurora/astro/runtime`. A diferença é que aqui ele fica no `<script>` do próprio `.astro`, não num `controller.ts` irmão:
@@ -104,28 +121,37 @@ O runtime da Aurora é um port do runtime dos sites públicos com duas adições
 1. Escreva `lib/components/<Nome>/index.astro` espelhando as classes que o `index.tsx` gera. As classes `au-*` são o contrato; se as duas versões divergirem, o CSS deixa de servir para as duas.
 2. Importe `./styles.scss` no frontmatter.
 3. Se precisar de comportamento, adicione o `<script>` com `elementController` e um `data-element` na raiz.
-4. Rode `npm run build` e valide num app Astro de verdade (ver **Como verificar** abaixo).
+4. Rode `npm run check:astro` e valide num app Astro de verdade (ver **Como verificar** abaixo).
 5. Commit como `feat:` — é contrato público novo.
 
 ## Como verificar
 
-`npm run build:astro` valida a sintaxe de cada `.astro` com `@astrojs/compiler` e falha o build se houver erro. Isso não cobre renderização. Para mudanças não triviais, monte um projeto Astro descartável e instale o **tarball**:
+Dois níveis automáticos:
+
+- `npm run check:astro` (`astro check`) faz o type check completo, incluindo o conteúdo dos `<script>`. Roda no CI.
+- `npm run build:astro` valida a sintaxe com `@astrojs/compiler` e falha o build se houver erro.
+
+Nenhum dos dois cobre renderização. Para mudanças não triviais, monte um projeto Astro descartável e instale o **tarball**:
 
 ```bash
 npm run build
 npm pack --pack-destination /tmp/smoke
 cd /tmp/smoke && npm install ./consumidor-positivo-aurora-<versao>.tgz
-npx astro build && npx astro preview
+npx astro check && npx astro build && npx astro preview
 ```
+
+Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipos publicados chegaram inteiros: o check dentro do repo usa o alias para o source e não passa pelo campo `exports`.
 
 ## Gotchas
 
+- **No `exports`, a condição `types` vem antes de `import`.** O TypeScript para na primeira condição que casa; com `import` na frente, o subpath resolve o `.js` e o consumidor recebe `any` com o erro "could not be resolved when respecting package.json exports". O campo `types` da raiz não cobre subpath.
 - **Instalar via `file:` não funciona.** Com `npm install file:../aurora` o Astro resolve o `.astro` fora da raiz do projeto e quebra os `<script>` hoisted com `No cached compile metadata found`. Sempre teste com `npm pack` + tarball.
 - **Atributo booleano `false` some.** O Astro não renderiza `aria-selected={false}`. Onde o valor `"false"` importa para acessibilidade, passe a string: `aria-selected={ativo ? 'true' : 'false'}`.
-- **`set:html` não pode ser condicional.** A diretiva sempre substitui o conteúdo, então um `set:html={undefined}` apaga o `<slot />`. `Text` resolve isso ramificando a tag inteira (`lib/components/Text/index.astro:60`).
+- **`set:html` não pode ser condicional.** A diretiva sempre substitui o conteúdo, então um `set:html={undefined}` apaga o `<slot />`. `Text` resolve isso ramificando a tag inteira (`lib/components/Text/index.astro:59`).
 - **`Tabs` exige `active` explícito no painel inicial.** O Astro não sabe qual painel corresponde ao `initialTab` na hora de renderizar o `TabPanel`, e resolver isso só no controller causaria flash de todos os painéis abertos. O consumidor marca `<TabPanel tab="x" active>`.
 - **`Tabs` renderiza todos os painéis**, escondendo os inativos com o atributo `hidden`, enquanto a versão React monta só o ativo. Conteúdo pesado em aba secundária pesa no HTML.
 - **`Button` em Astro não tem `loading`.** O spinner é um componente React de ícone; enquanto os ícones não tiverem versão Astro, o estado de carregamento fica de fora.
+- **`@deprecated` numa prop marca a prop inteira.** O `Button` React usa `@deprecated` no `type` para desencorajar só o valor `'link'`, e o efeito é um aviso em toda chamada de `<Button type="primary">`. A versão Astro descreve a restrição em texto em vez de usar a tag. O React continua com o aviso falso.
 - **`.au-tabs-root` só existe no Astro.** É o `display: contents` que junta a barra e os painéis sob um único root de controller sem criar caixa no layout (`lib/components/Tabs/styles.scss:79`).
 
 ## Cobertura atual

@@ -7,4 +7,5 @@ export type {
   ScopedOn,
   ScopedQuery,
   ScopedQueryAll,
+  ScopedUnsubscribe,
 } from './types'

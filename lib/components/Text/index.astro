@@ -1,4 +1,5 @@
 ---
+import type { HTMLAttributes, HTMLTag } from 'astro/types'
 import './styles.scss'
 
 type TextVariant =
@@ -22,16 +23,14 @@ type TextWeight = 'bold' | 'semibold' | 'medium' | 'regular' | 'light'
 
 type TextColor = 'common' | 'secondary' | 'white'
 
-export interface Props {
-  as?: string
+export type Props = Omit<HTMLAttributes<'p'>, 'color'> & {
+  as?: HTMLTag
   color?: TextColor
   variant?: TextVariant
   variantDesk?: TextVariant
   weight?: TextWeight
   /** Raw HTML string — the Astro counterpart of `dangerouslySetInnerHTML`. */
   html?: string
-  class?: string
-  [key: string]: unknown
 }
 
 const {
@@ -45,7 +44,7 @@ const {
   ...rest
 } = Astro.props
 
-const Tag = as as any
+const Tag = as
 const classes = [
   'au-text',
   `au-text--${variant}`,

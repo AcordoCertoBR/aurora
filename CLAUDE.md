@@ -26,6 +26,9 @@ npx vitest lib/components/Button/Button.test.tsx
 # Lint
 npm run lint
 
+# Type check the .astro components (also runs in CI)
+npm run check:astro
+
 # Build the library (output to dist/)
 npm run build
 
@@ -82,6 +85,14 @@ using `elementController` from `@consumidor-positivo/aurora/astro/runtime`
 `./styles.scss` import to the CSS Vite already emitted for the React component, so
 the consumer needs no Sass configuration.
 
+`astro.config.mjs` at the root exists only for this: Aurora is not an Astro site,
+and `srcDir` points into `.astro/` so the files Astro generates stay out of the
+repo root. `npm run check:astro` (`astro check`, gated in CI) type-checks the `.astro` files,
+including the contents of their `<script>` tags. Props are typed with
+`HTMLAttributes` from `astro/types`, never an open `[key: string]: unknown` index.
+The runtime self-import resolves through a `tsconfig.json` path alias pointing at
+`lib/astro/runtime`, so the check does not depend on a freshly built `dist`.
+
 Today only `Button`, `Text` and `Tabs` (+ `Tabs/TabPanel`) have an `.astro` version.
 Full reference, conventions and gotchas: [docs/astro.md](docs/astro.md).
 
@@ -127,6 +138,8 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 
 ## Gotchas & tech debt
 
+- No `exports` do `package.json`, a condição `types` tem que vir antes de `import`; com `import` na frente o subpath resolve como `any` no consumidor (`package.json:21`).
+- `Button` React marca `@deprecated` na prop `type` para desencorajar só o valor `'link'`, e isso gera aviso em toda chamada (`lib/components/Button/index.tsx:29`). A versão Astro evita a tag; o React continua com o falso positivo.
 - Componente Astro instalado via `npm install file:` quebra os `<script>` hoisted do Astro (`No cached compile metadata found`); teste sempre com `npm pack` + tarball (`docs/astro.md`).
 - `Button` em Astro não tem `loading`: o spinner depende de um ícone React e os ícones ainda não têm versão Astro (`lib/components/Button/index.astro`).
 - `Tabs` em Astro renderiza todos os painéis (esconde com `hidden`) e exige `active` explícito no `TabPanel` inicial (`lib/components/Tabs/TabPanel/index.astro:11`).

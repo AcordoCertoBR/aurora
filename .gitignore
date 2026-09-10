@@ -14,6 +14,9 @@ lib/components/icons/social
 
 node_modules
 dist
+
+# astro check (npm run check:astro) generated types
+/.astro/
 dist-ssr
 *.local
 storybook-static

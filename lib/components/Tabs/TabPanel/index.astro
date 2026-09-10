@@ -1,11 +1,11 @@
 ---
-export interface Props {
+import type { HTMLAttributes } from 'astro/types'
+
+export type Props = HTMLAttributes<'div'> & {
   /** Must match the `tab` of the entry in the parent `tabs` prop. */
   tab: string
   /** Set on the panel matching `initialTab` — the others render hidden. */
   active?: boolean
-  class?: string
-  [key: string]: unknown
 }
 
 const { tab, active = false, class: className, ...rest } = Astro.props
