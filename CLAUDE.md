@@ -105,7 +105,10 @@ A page built only with Astro components must import the reset once, with
 entry that carries `GlobalStyles`.
 
 Today `Button`, `Text`, `Icon`, `Tabs` (+ `Tabs/TabPanel`), `Header` (+ its nine
-parts) and `Footer` have an `.astro` version.
+parts), `Footer`, `Logo` (with the `ac/Tertiary` and `cp/Primary` variants),
+`Drawer` and `NavbarVertical` (+ its `Link`) have an `.astro` version. The
+`Drawer` has no `isOpen`/`handleOpen`: any element carrying
+`data-au-drawer-toggle="<drawer id>"` opens it.
 Full reference, conventions and gotchas: [docs/astro.md](docs/astro.md).
 
 ### CSS conventions
@@ -155,6 +158,8 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 - Componente Astro instalado via `npm install file:` quebra os `<script>` hoisted do Astro (`No cached compile metadata found`); teste sempre com `npm pack` + tarball (`docs/astro.md`).
 - `Button` em Astro não tem `loading`: o spinner depende de um ícone React e os ícones ainda não têm versão Astro (`lib/components/Button/index.astro`).
 - `Tabs` em Astro renderiza todos os painéis (esconde com `hidden`) e exige `active` explícito no `TabPanel` inicial (`lib/components/Tabs/TabPanel/index.astro:11`).
+- Passar `class:list` para um componente Astro da Aurora sobrescreve as classes internas dele (o Astro entrega a diretiva como prop crua). `Text`, `Button` e `Icon` mesclam; nos demais, use `class` (`lib/components/Text/index.astro:51`).
+- CSS de componente Astro não pode depender de ordem de folha: regra de estado que dispute com classe de token do `Text` precisa compor a especificidade (`lib/components/NavbarVertical/styles.scss:26`).
 - `Checkbox.Field` não tem prop de posição do controle (`Radio.Field` tem `direction: 'left' | 'right'`); o Figma prevê `Position: Left | Right` para ambos.
 
 ## Onde achar o resto (ponteiros)

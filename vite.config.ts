@@ -141,8 +141,12 @@ function getStylesheetMap() {
 
   Object.entries(getComponentsEntries()).forEach(([name, entryPath]) => {
     const source = resolve(__dirname, dirname(entryPath), 'styles.scss')
-    if (!existsSync(source)) return
-    map.set(source, resolve(__dirname, 'dist/components', name, 'styles.css'))
+    const emitted = resolve(__dirname, 'dist/components', name, 'styles.css')
+    // Both ends have to exist: a component whose CSS the bundler folded into a
+    // shared chunk has no stylesheet of its own to point at, and emitting the
+    // import anyway breaks the consumer's build.
+    if (!existsSync(source) || !existsSync(emitted)) return
+    map.set(source, emitted)
   })
 
   stylesheetMapCache = map

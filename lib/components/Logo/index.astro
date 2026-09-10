@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+export type Props = HTMLAttributes<'div'> & {
+  /** Announced by screen readers; without it the logo is decorative. */
+  label?: string
+}
+
+const { label, class: className, ...rest } = Astro.props
+---
+
+<div
+  class:list={['au-logo', className]}
+  {...label ? { role: 'img', 'aria-label': label } : {}}
+  {...rest}>
+  <slot />
+</div>
+
+<style is:global>
+  /*
+   * The one rule of `Logo/styles.scss`, inlined. The React entry for `Logo` is
+   * a barrel, so the bundler folds that stylesheet into a shared chunk whose
+   * name is not stable, and there is no `dist/components/Logo/styles.css` to
+   * point at. Keep this in sync if the source file grows.
+   */
+  .au-logo > svg {
+    display: block;
+  }
+</style>

@@ -102,6 +102,28 @@ Todas as props HTML passam adiante (`id`, `data-*`, `aria-*`, `class`), então o
 
 O `Header.Navbar` também troca o `renderItem` do React por `data`: ele renderiza o `NavbarLink` sozinho, e o slot default fica para item customizado.
 
+## Abrir um `Drawer` sem callback
+
+O `Drawer` React recebe `isOpen` e `handleOpen`. Em Astro ele se abre sozinho: qualquer elemento com `data-au-drawer-toggle="<id do drawer>"` vira gatilho, de qualquer lugar da página.
+
+```astro
+<HeaderHamburger data-au-drawer-toggle="menu" controls="menu" />
+
+<Drawer id="menu">
+  <LogoPrimaryCP slot="header" />
+  <NavbarVertical>
+    {links.map((link) => <NavbarVerticalLink {...link} />)}
+    <Fragment slot="actions">
+      <Button expand="x" as="a" href="/cadastro">Cadastrar</Button>
+    </Fragment>
+  </NavbarVertical>
+</Drawer>
+```
+
+O controller cuida do `aria-expanded` do gatilho e emite `au:draweropen` / `au:drawerclose` a partir do root, para o app reagir (fechar outro menu, travar o scroll).
+
+Duas coisas o Astro faz e o React não: fecha no clique do backdrop e no `Esc`. São adições deliberadas — a marcação e o CSS continuam os mesmos, só o fechar tem mais caminhos.
+
 ## Ícones
 
 O `npm run icons` gera, para cada SVG de `lib/assets/icons/<coleção>/`, duas coisas na mesma pasta de saída: o componente React (`IconChevronDown.tsx`) e o Astro (`IconChevronDown.astro`). Os dois saem do mesmo markup, então não há como um divergir do outro.
@@ -206,6 +228,8 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 - **`Tabs` renderiza todos os painéis**, escondendo os inativos com o atributo `hidden`, enquanto a versão React monta só o ativo. Conteúdo pesado em aba secundária pesa no HTML.
 - **`Button` em Astro não tem `loading`.** O spinner é um componente React de ícone; enquanto os ícones não tiverem versão Astro, o estado de carregamento fica de fora.
 - **`@deprecated` numa prop marca a prop inteira.** O `Button` React usa `@deprecated` no `type` para desencorajar só o valor `'link'`, e o efeito é um aviso em toda chamada de `<Button type="primary">`. A versão Astro descreve a restrição em texto em vez de usar a tag. O React continua com o aviso falso.
+- **`class:list` num componente sobrescreve as classes dele.** O Astro passa a diretiva como prop crua; se o componente espalha `...rest` no elemento, ela cai depois do `class:list` interno e apaga tudo. Foi assim que os links do `NavbarVertical` perderam as classes `au-text` e saíram com o azul default do browser. `Text`, `Button` e `Icon` agora capturam `'class:list'` das props e mesclam; nos outros, passe `class`.
+- **Componente Astro não pode depender de ordem de folha.** No React todo o CSS entra na ordem do `main.ts`; compondo `.astro`, cada componente traz a própria folha na ordem em que é importado. Onde uma classe de estado disputa com uma de token do `Text` (mesma especificidade, 0-1-0), o resultado inverte: `au-navbar-vertical__link--is-active` perdia para `au-text--color-common`. A regra de estado tem que compor (`&--is-active.au-text`), não contar com a ordem.
 - **Os ícones Astro não isolam ids de SVG.** O React sufixa `id`/`url(#…)` por instância (usa `useId`); o `Icon` Astro insere o markup como veio. Só importa para ícone que define id (o do YouTube define): duas instâncias do mesmo ícone na mesma página compartilhariam o id.
 - **Os dados do Footer estão duplicados.** `lib/components/Footer/data.tsx` é JSX e não vai no pacote publicado, então o `Footer/index.astro` repete os mapas de certificado, loja e rede social. Mudou URL de certificado, mude nos dois.
 - **O Footer troca `isMobile()` por breakpoint de CSS.** O React decide em runtime (`max-width: 767px`) onde renderizar o bloco de lojas e se a faixa de certificados leva borda. Saída estática não decide nada em runtime: o bloco de lojas vai nas duas posições e o `au-footer-full__stores-slot--mobile|--desktop` esconde uma com `display`, no breakpoint de 1024px, que é onde o resto do layout do footer já vira desktop.
@@ -222,5 +246,8 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 | `Tabs` + `Tabs/TabPanel` | controller inline |
 | `Header` (`Logo`, `Navigation`, `Navbar`, `NavbarLink`, `Actions`, `Badges`, `Button`, `Hamburger`, `Profile`) | estático, menos o dropdown do `NavbarLink` |
 | `Footer` | estático |
+| `Logo` + `Logo/ac/Tertiary`, `Logo/cp/Primary` | estático |
+| `Drawer` | controller inline |
+| `NavbarVertical` + `NavbarVertical/Link` | controller inline no `Link` |
 
 O resto da biblioteca ainda é só React. Converter é incremental: cada componente novo é um `.astro` a mais na pasta que já existe.

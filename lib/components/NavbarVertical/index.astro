@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/**
+ * The React version takes `renderItem`/`renderAlert`/`renderActions` render
+ * props; Astro has none, so the items go in the default slot and the other two
+ * in named slots.
+ */
+export type Props = HTMLAttributes<'div'>
+
+const { class: className, ...rest } = Astro.props
+---
+
+<div class:list={['au-navbar-vertical', className]} {...rest}>
+  <slot />
+  {
+    Astro.slots.has('alert') && (
+      <div class="au-navbar-vertical__alert">
+        <slot name="alert" />
+      </div>
+    )
+  }
+  <div class="au-navbar-vertical__actions">
+    <slot name="actions" />
+  </div>
+</div>

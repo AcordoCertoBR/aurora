@@ -161,6 +161,26 @@ Composto, como o React, mas cada parte é um arquivo:
 
 Sem `categoryLinks` o componente renderiza a variante enxuta (`au-footer`), igual ao React. O bloco de lojas vai ao HTML nas duas posições e o breakpoint escolhe qual aparece, porque saída estática não consegue checar a viewport como o React faz.
 
+### Drawer e NavbarVertical
+
+O menu lateral não precisa de callback: o gatilho é um atributo.
+
+```astro
+<HeaderHamburger data-au-drawer-toggle="menu" controls="menu" />
+
+<Drawer id="menu">
+  <LogoPrimaryCP slot="header" />
+  <NavbarVertical>
+    {links.map((link) => <NavbarVerticalLink {...link} />)}
+    <Fragment slot="actions">
+      <Button expand="x" as="a" href="/cadastro">Cadastrar</Button>
+    </Fragment>
+  </NavbarVertical>
+</Drawer>
+```
+
+Qualquer elemento com `data-au-drawer-toggle="<id>"` abre e fecha o drawer daquele id, de qualquer lugar da página. O drawer emite `au:draweropen` e `au:drawerclose` no próprio root, e também fecha no backdrop e no `Esc` (o React fecha só no X). No `NavbarVerticalLink`, item com `dropdown` vira acordeão, aberto no clique da linha; item com `active` já nasce aberto, igual ao React.
+
 ## Runtime: elementController
 
 O JavaScript client-side dos componentes Astro da Aurora usa `elementController`, o mesmo padrão do runtime dos sites públicos. Ele fica exposto e pode ser usado nos componentes do próprio app:
@@ -189,7 +209,7 @@ elementController('meu-bloco', builder, { lazy: true, rootMargin: '200px' })
 
 ## Limites
 
-- Têm versão Astro hoje: `Button`, `Text`, `Icon`, `Tabs`, `Header` (com `Logo`, `Navigation`, `Navbar`, `NavbarLink`, `Actions`, `Badges`, `Button`, `Hamburger`, `Profile`) e `Footer`. Para o resto, continue usando o React (com island) ou um componente local.
-- A logo do `Header` e do `Footer` entra por slot: a logo por marca ainda é componente React, então passe a sua marcação.
+- Têm versão Astro hoje: `Button`, `Text`, `Icon`, `Tabs`, `Header` (com `Logo`, `Navigation`, `Navbar`, `NavbarLink`, `Actions`, `Badges`, `Button`, `Hamburger`, `Profile`), `Footer`, `Drawer`, `NavbarVertical` e as logos `ac/Tertiary` e `cp/Primary`. Para o resto, continue usando o React (com island) ou um componente local.
+- A logo do `Header` e do `Footer` entra por slot. Só duas variantes têm versão Astro (`Logo/ac/Tertiary.astro` e `Logo/cp/Primary.astro`); para as outras, passe a sua marcação.
 - Os ícones têm um `.astro` por ícone, gerado junto com o React (`astro/icons/default/IconChevronDown.astro`). Para um SVG de fora da biblioteca, use o `Icon` e passe o markup.
 - Uma lacuna na cobertura Astro é insumo para o chapter de design system: registre no PR o que faltou.
