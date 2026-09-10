@@ -48,7 +48,7 @@ npm run icons
   - `lib/core/tokens/.cache/variables.scss` (SCSS variables)
   - `lib/core/tokens/.cache/tokens.ts` (exported TS constants)
 
-- `npm run icons` — reads SVG files from `lib/assets/icons/<collection>/` and generates React components into `lib/components/icons/<collection>/`. The `default` collection uses `currentColor` for stroke/fill; other collections keep original colors.
+- `npm run icons` — reads SVG files from `lib/assets/icons/<collection>/` and generates, into `lib/components/icons/<collection>/`, a React component (`IconName.tsx`) **and** an Astro one (`IconName.astro`) per icon, plus the React barrel. The `default` collection uses `currentColor` for stroke/fill; other collections keep original colors. The Astro icons wrap `lib/components/Icon/index.astro`, the hand-written primitive that renders the `au-icon` div.
 
 Never edit files inside `lib/core/tokens/.cache/` or `lib/components/icons/` directly — they are fully generated.
 

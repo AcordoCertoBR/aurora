@@ -11,6 +11,10 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 dotenv.config()
 
+// Built once and reused: the copy transform runs for every `.astro` file, and
+// there are hundreds of generated icons.
+let stylesheetMapCache: Map<string, string> | null = null
+
 process.env['VITE_LIB_VERSION'] = pkg.version
 
 export default defineConfig({
@@ -75,7 +79,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: 'lib/components/**/index.astro',
+          src: 'lib/components/**/*.astro',
           dest: '../astro',
           rename: (_name, _ext, fullPath) => relativeToComponents(fullPath),
           transform: (content, filePath) =>
@@ -131,6 +135,8 @@ function relativeToComponents(fullPath: string) {
  * the built one in the published package.
  */
 function getStylesheetMap() {
+  if (stylesheetMapCache) return stylesheetMapCache
+
   const map = new Map<string, string>()
 
   Object.entries(getComponentsEntries()).forEach(([name, entryPath]) => {
@@ -139,6 +145,7 @@ function getStylesheetMap() {
     map.set(source, resolve(__dirname, 'dist/components', name, 'styles.css'))
   })
 
+  stylesheetMapCache = map
   return map
 }
 

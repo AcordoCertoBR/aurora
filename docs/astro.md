@@ -102,15 +102,27 @@ Todas as props HTML passam adiante (`id`, `data-*`, `aria-*`, `class`), então o
 
 O `Header.Navbar` também troca o `renderItem` do React por `data`: ele renderiza o `NavbarLink` sozinho, e o slot default fica para item customizado.
 
-## O componente `Icon`
+## Ícones
 
-Os ícones da Aurora são componentes React gerados a partir dos SVGs de `lib/assets/icons/`. Em Astro não dá para usá-los, e gerar centenas de `.astro` equivalentes não se paga hoje. Em vez disso existe um `Icon` Astro (`@consumidor-positivo/aurora/astro/Icon/index.astro`) que recebe o markup cru e reproduz o mesmo wrapper (`div.au-icon`, com as classes de `size`, `color` e nome):
+O `npm run icons` gera, para cada SVG de `lib/assets/icons/<coleção>/`, duas coisas na mesma pasta de saída: o componente React (`IconChevronDown.tsx`) e o Astro (`IconChevronDown.astro`). Os dois saem do mesmo markup, então não há como um divergir do outro.
 
 ```astro
-<Icon markup={SVG} name="IconChevronDown" aria-hidden="true" />
+---
+import IconChevronDown from '@consumidor-positivo/aurora/astro/icons/default/IconChevronDown.astro'
+---
+
+<IconChevronDown size="large" color="success" />
 ```
 
-Header e Footer carregam inline o markup dos ícones que usam (chevron, menu, sino e as cinco redes sociais), já com `fill="currentColor"`.
+O `.astro` gerado é uma casca: ele passa o markup para o `Icon` (`lib/components/Icon/index.astro`), o primitivo escrito à mão que renderiza o `div.au-icon` com as classes de `size`, `color`, `rawColor` e nome. As props são as mesmas do React, menos `onClick`.
+
+O primitivo continua exportado (`@consumidor-positivo/aurora/astro/Icon/index.astro`) para quem precisar renderizar um SVG que não está na biblioteca:
+
+```astro
+<Icon markup={SVG_DO_PARCEIRO} name="IconParceiro" />
+```
+
+São 327 arquivos `.astro` no pacote (uns 600 kB de source). Como não passam por bundler, só pesa no build de quem importa.
 
 ## Tipagem
 
@@ -194,7 +206,7 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 - **`Tabs` renderiza todos os painéis**, escondendo os inativos com o atributo `hidden`, enquanto a versão React monta só o ativo. Conteúdo pesado em aba secundária pesa no HTML.
 - **`Button` em Astro não tem `loading`.** O spinner é um componente React de ícone; enquanto os ícones não tiverem versão Astro, o estado de carregamento fica de fora.
 - **`@deprecated` numa prop marca a prop inteira.** O `Button` React usa `@deprecated` no `type` para desencorajar só o valor `'link'`, e o efeito é um aviso em toda chamada de `<Button type="primary">`. A versão Astro descreve a restrição em texto em vez de usar a tag. O React continua com o aviso falso.
-- **O `Icon` Astro não isola ids de SVG.** O React sufixa `id`/`url(#…)` por instância; o Astro insere o markup como veio. Só importa para ícone que define id (o do YouTube define): duas instâncias do mesmo ícone na mesma página compartilhariam o id.
+- **Os ícones Astro não isolam ids de SVG.** O React sufixa `id`/`url(#…)` por instância (usa `useId`); o `Icon` Astro insere o markup como veio. Só importa para ícone que define id (o do YouTube define): duas instâncias do mesmo ícone na mesma página compartilhariam o id.
 - **Os dados do Footer estão duplicados.** `lib/components/Footer/data.tsx` é JSX e não vai no pacote publicado, então o `Footer/index.astro` repete os mapas de certificado, loja e rede social. Mudou URL de certificado, mude nos dois.
 - **O Footer troca `isMobile()` por breakpoint de CSS.** O React decide em runtime (`max-width: 767px`) onde renderizar o bloco de lojas e se a faixa de certificados leva borda. Saída estática não decide nada em runtime: o bloco de lojas vai nas duas posições e o `au-footer-full__stores-slot--mobile|--desktop` esconde uma com `display`, no breakpoint de 1024px, que é onde o resto do layout do footer já vira desktop.
 - **`Header` e `Footer` recebem a logo por slot.** A logo é componente React por marca (`Logo/ac`, `Logo/cp`); no Astro, o consumidor passa a própria marcação (`<slot name="logo">` no Footer, slot default no `Header.Logo`).

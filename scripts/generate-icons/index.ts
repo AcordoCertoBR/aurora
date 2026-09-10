@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import { rimrafSync } from 'rimraf'
 import { pascalCase } from 'change-case'
 import iconContentTemplate from './templates/iconContent'
+import astroIconContentTemplate from './templates/astroIconContent'
 import { iconsFolder, outputFolder } from './constants'
 import {
   formatSVG,
@@ -49,12 +50,12 @@ function createCollectionComponents(collection: string) {
     const formattedSvg = formatSVG(svgContent, {
       currentColor: isDefaultCollection,
     })
-    const reactComponent = iconContentTemplate(
-      componentName,
-      JSON.stringify(formattedSvg),
-    )
+    const markup = JSON.stringify(formattedSvg)
+    const reactComponent = iconContentTemplate(componentName, markup)
+    const astroComponent = astroIconContentTemplate(componentName, markup)
 
     fs.writeFileSync(destPath, reactComponent, 'utf8')
+    fs.writeFileSync(`${collectionPath}/${componentName}.astro`, astroComponent, 'utf8')
   })
 }
 
