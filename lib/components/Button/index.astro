@@ -1,0 +1,74 @@
+---
+import './styles.scss'
+
+export interface Props {
+  as?: 'button' | 'a'
+  href?: string
+  target?: string
+  color?: 'default'
+  disabled?: boolean
+  /** Stretches the button to fill the container width. */
+  expand?: 'x'
+  htmlType?: 'button' | 'submit' | 'reset'
+  size?: 'large' | 'medium'
+  /**
+   * Visual type.
+   * @deprecated the 'link' value — use the `LinkButton` component instead.
+   */
+  type?: 'primary' | 'outlined' | 'ghost' | 'link'
+  /** Inverted colors for colored backgrounds (Figma: Negative). */
+  negative?: boolean
+  /** Renders as a plain text button (class `btn-text`). */
+  btnText?: boolean
+  /** Icon-only round button (Figma: Style=Icon). */
+  round?: boolean
+  /** Border width modifier (`au-btn--border-*`). */
+  borderWidth?: string
+  class?: string
+  [key: string]: unknown
+}
+
+const {
+  as = 'button',
+  href,
+  target,
+  color = 'default',
+  disabled = false,
+  expand,
+  htmlType = 'button',
+  size = 'medium',
+  type = 'primary',
+  negative = false,
+  btnText = false,
+  round = false,
+  borderWidth = 'medium',
+  class: className,
+  ...rest
+} = Astro.props
+
+const isAnchor = as === 'a'
+const Tag = isAnchor ? 'a' : 'button'
+---
+
+<Tag
+  class:list={[
+    'au-btn',
+    `au-btn--type-${type}`,
+    `au-btn--size-${size}`,
+    `au-btn--color-${color}`,
+    `au-btn--border-${borderWidth}`,
+    expand && `au-btn--expand-${expand}`,
+    negative && 'au-btn--negative',
+    disabled && 'au-btn--disabled',
+    round && `au-btn--round-${size}`,
+    btnText && 'btn-text',
+    className,
+  ]}
+  href={isAnchor ? href : undefined}
+  target={isAnchor ? target : undefined}
+  type={isAnchor ? undefined : htmlType}
+  disabled={!isAnchor && disabled ? true : undefined}
+  aria-disabled={isAnchor && disabled ? 'true' : undefined}
+  {...rest}>
+  <slot />
+</Tag>

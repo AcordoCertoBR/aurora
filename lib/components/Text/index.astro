@@ -1,0 +1,67 @@
+---
+import './styles.scss'
+
+type TextVariant =
+  | 'display-large'
+  | 'display-medium'
+  | 'display-small'
+  | 'heading-big'
+  | 'heading-large'
+  | 'heading-medium'
+  | 'heading-small'
+  | 'heading-minimum'
+  | 'heading-micro'
+  | 'heading-nano'
+  | 'body-big'
+  | 'body-large'
+  | 'body-medium'
+  | 'body-small'
+  | 'caption'
+
+type TextWeight = 'bold' | 'semibold' | 'medium' | 'regular' | 'light'
+
+type TextColor = 'common' | 'secondary' | 'white'
+
+export interface Props {
+  as?: string
+  color?: TextColor
+  variant?: TextVariant
+  variantDesk?: TextVariant
+  weight?: TextWeight
+  /** Raw HTML string — the Astro counterpart of `dangerouslySetInnerHTML`. */
+  html?: string
+  class?: string
+  [key: string]: unknown
+}
+
+const {
+  as = 'p',
+  color = 'common',
+  variant = 'body-medium',
+  variantDesk,
+  weight = 'regular',
+  html,
+  class: className,
+  ...rest
+} = Astro.props
+
+const Tag = as as any
+const classes = [
+  'au-text',
+  `au-text--${variant}`,
+  variantDesk && `au-text--desk-${variantDesk}`,
+  `au-text--color-${color}`,
+  `au-text--weight-${weight}`,
+  className,
+]
+---
+
+{
+  html ? (
+    <Tag class:list={classes} set:html={html} {...rest} />
+  ) : (
+    <Tag class:list={classes} {...rest}>
+      <slot />
+    </Tag>
+  )
+}

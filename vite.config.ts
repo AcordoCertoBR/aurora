@@ -18,13 +18,16 @@ export default defineConfig({
     lib: {
       entry: {
         main: resolve(__dirname, 'lib/main.ts'),
+        'astro/runtime': resolve(__dirname, 'lib/astro/runtime/index.ts'),
         ...getComponentsEntries(),
       },
 
       fileName: (format, entryName) => {
         const isMainFile = entryName === 'main'
+        const isAstroFile = entryName.startsWith('astro/')
         const isIconFile = entryName.startsWith('Icon') && entryName !== 'Icon'
         if (isMainFile) return `main.${format}.js`
+        if (isAstroFile) return `${entryName}/index.${format}.js`
         if (isIconFile) {
           return `components/icons/${entryName}/index.${format}.js`
         }

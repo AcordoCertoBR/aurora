@@ -29,6 +29,9 @@ npm run lint
 # Build the library (output to dist/)
 npm run build
 
+# Copy/validate only the .astro components into dist/astro (runs inside build)
+npm run build:astro
+
 # Prebuild only (regenerate tokens + icons, required before build/dev/storybook)
 npm run prebuild
 
@@ -60,8 +63,27 @@ Each component lives in `lib/components/<ComponentName>/` and typically contains
 - `hooks.ts` — custom hooks (when needed)
 - `*.stories.tsx` — Storybook stories
 - `*.test.tsx` — Vitest + Testing Library tests
+- `index.astro` — the Astro version of the same component (optional; see below)
 
 Components with brand variants (e.g., Footer, Logo) have `ac/` and `cp/` subdirectories.
+
+### Astro components
+
+Aurora ships a second format of the same component for the static public pages
+(the public pages monorepo): `@consumidor-positivo/aurora/astro/<Name>/index.astro`.
+The `.astro` file lives in the component's own folder and reuses the same
+`styles.scss` as the React one. Unlike the public pages monorepo, the controller is
+**not** a separate `controller.ts` — it goes inline in the component's `<script>`,
+using `elementController` from `@consumidor-positivo/aurora/astro/runtime`
+(`lib/astro/runtime/`).
+
+`npm run build:astro` (part of `npm run build`) validates each file with
+`@astrojs/compiler`, copies it to `dist/astro/<path>/index.astro` and rewrites the
+`./styles.scss` import to the CSS Vite already emitted for the React component, so
+the consumer needs no Sass configuration.
+
+Today only `Button`, `Text` and `Tabs` (+ `Tabs/TabPanel`) have an `.astro` version.
+Full reference, conventions and gotchas: [docs/astro.md](docs/astro.md).
 
 ### CSS conventions
 
@@ -105,11 +127,14 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 
 ## Gotchas & tech debt
 
+- Componente Astro instalado via `npm install file:` quebra os `<script>` hoisted do Astro (`No cached compile metadata found`); teste sempre com `npm pack` + tarball (`docs/astro.md`).
+- `Button` em Astro não tem `loading`: o spinner depende de um ícone React e os ícones ainda não têm versão Astro (`lib/components/Button/index.astro`).
+- `Tabs` em Astro renderiza todos os painéis (esconde com `hidden`) e exige `active` explícito no `TabPanel` inicial (`lib/components/Tabs/TabPanel/index.astro:11`).
 - `Checkbox.Field` não tem prop de posição do controle (`Radio.Field` tem `direction: 'left' | 'right'`); o Figma prevê `Position: Left | Right` para ambos.
 
 ## Onde achar o resto (ponteiros)
 
-- **Referência longa & operação:** `docs/` — `docs/self-improvement.md` (protocolo que mantém os docs vivos) e `docs/observability.md` (onde investigar quando um componente quebra — Aurora é lib, não tem runtime próprio).
+- **Referência longa & operação:** `docs/` — `docs/astro.md` (o formato Astro: onde mora, como é publicado, gotchas), `docs/self-improvement.md` (protocolo que mantém os docs vivos) e `docs/observability.md` (onde investigar quando um componente quebra — Aurora é lib, não tem runtime próprio).
 - **Docs de negócio:** `.ai-docs/services/aurora.md` (o que é o design system, em linguagem de negócio — lido por design/produto via MCP `github-readonly`) e `.ai-docs/missions/` (mudanças não-triviais em voo). Aprofundar com `/cp-ai-doc`.
 - **Documentação no Storybook:** `lib/docs/*.mdx` (Configure, Patterns, Dependencies, Icons, DevelopingWithAI).
 - **Subagents read-only:** `.claude/agents/` (`code-reviewer`, `explorer`).

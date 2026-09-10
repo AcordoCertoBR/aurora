@@ -1,0 +1,126 @@
+---
+import './styles.scss'
+
+export interface TabItem {
+  tab: string
+  title: string
+}
+
+export interface Props {
+  tabs: TabItem[]
+  /** Hides the tab bar and renders only the panels. */
+  areTabsHidden?: boolean
+  initialTab?: string
+  class?: string
+}
+
+const { tabs, areTabsHidden = false, initialTab, class: className } = Astro.props
+
+const activeTab = initialTab ?? tabs[0]?.tab
+---
+
+<div
+  class:list={['au-tabs-root', className]}
+  data-element="au-tabs"
+  data-active-tab={activeTab}>
+  {
+    !areTabsHidden && (
+      <div class="au-tabs">
+        <div class="au-tabs__container">
+          <div class="au-tabs__btns" role="tablist">
+            {tabs.map((item) => (
+              <button
+                type="button"
+                role="tab"
+                id={`au-tab-${item.tab}`}
+                data-tab={item.tab}
+                aria-selected={item.tab === activeTab ? 'true' : 'false'}
+                aria-controls={`au-tabpanel-${item.tab}`}
+                tabindex={item.tab === activeTab ? 0 : -1}
+                class:list={[
+                  'au-tabs__btns-option',
+                  item.tab === activeTab && 'au-tabs__btns-option--active',
+                ]}>
+                {item.title}
+              </button>
+            ))}
+            <div
+              class="au-tabs__btns-indicator"
+              aria-hidden="true"
+              style="left: 0; width: 0"
+            />
+          </div>
+          {Astro.slots.has('right') && <slot name="right" />}
+        </div>
+      </div>
+    )
+  }
+  <slot />
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  elementController('au-tabs', ({ root, query, queryAll, on, emit }) => {
+    const ACTIVE_CLASS = 'au-tabs__btns-option--active'
+    const buttons = queryAll('[role="tab"]')
+    const panels = queryAll('[role="tabpanel"]')
+    const indicator = query('.au-tabs__btns-indicator')
+
+    function moveIndicator() {
+      const active = query(`.${ACTIVE_CLASS}`)
+      if (!indicator || !active) return
+      indicator.style.left = `${active.offsetLeft}px`
+      indicator.style.width = `${active.offsetWidth}px`
+    }
+
+    function activate(tab) {
+      if (!tab || root.dataset.activeTab === tab) return
+      root.dataset.activeTab = tab
+
+      buttons.forEach((button) => {
+        const isActive = button.dataset.tab === tab
+        button.classList.toggle(ACTIVE_CLASS, isActive)
+        button.setAttribute('aria-selected', String(isActive))
+        button.tabIndex = isActive ? 0 : -1
+      })
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.tab !== tab
+      })
+
+      moveIndicator()
+      emit('au:tabchange', { tab })
+    }
+
+    on('click', (event) => {
+      const button = event.target.closest('[role="tab"]')
+      if (!button) return
+      activate(button.dataset.tab)
+    })
+
+    on('keydown', (event) => {
+      const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End']
+      if (!keys.includes(event.key)) return
+
+      const current = buttons.indexOf(document.activeElement)
+      if (current === -1) return
+
+      event.preventDefault()
+
+      const last = buttons.length - 1
+      const next = {
+        ArrowLeft: current === 0 ? last : current - 1,
+        ArrowRight: current === last ? 0 : current + 1,
+        Home: 0,
+        End: last,
+      }[event.key]
+
+      buttons[next]?.focus()
+    })
+
+    on('global:resize', moveIndicator)
+
+    moveIndicator()
+  })
+</script>

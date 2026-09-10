@@ -1,0 +1,127 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Componentes Astro" />
+
+# Componentes Astro
+
+Além dos componentes React, a Aurora publica uma versão **Astro** de parte da biblioteca, pensada para os sites públicos estáticos. A marcação e o CSS são os mesmos; a diferença é que o componente Astro renderiza em build time, sem island e sem React no bundle.
+
+Use a versão Astro quando a página for estática. Use a React quando o componente estiver dentro de uma aplicação (área logada, formulários com estado).
+
+## Instalação
+
+Nada além do pacote:
+
+```bash
+npm install @consumidor-positivo/aurora
+```
+
+Não é preciso configurar Sass: o CSS já vai compilado, com os tokens resolvidos.
+
+## Importando
+
+O caminho é completo, com extensão:
+
+```astro
+---
+import Button from '@consumidor-positivo/aurora/astro/Button/index.astro'
+import Text from '@consumidor-positivo/aurora/astro/Text/index.astro'
+import Tabs from '@consumidor-positivo/aurora/astro/Tabs/index.astro'
+import TabPanel from '@consumidor-positivo/aurora/astro/Tabs/TabPanel/index.astro'
+---
+```
+
+## Componentes disponíveis
+
+### Button
+
+Mesmas props visuais do Button React (`type`, `size`, `expand`, `negative`, `round`, `btnText`, `borderWidth`, `color`, `disabled`). Props extras (`id`, `data-*`, `aria-*`) caem no elemento renderizado.
+
+```astro
+<Button type="primary" size="large" expand="x">Simular agora</Button>
+
+<Button as="a" href="/divida" target="_blank" type="outlined">
+  Ver minha dívida
+</Button>
+```
+
+Não existe `loading` na versão Astro: o spinner depende de um ícone React.
+
+### Text
+
+```astro
+<Text as="h1" variant="heading-large" variantDesk="display-small">
+  Negocie sua dívida
+</Text>
+
+<Text variant="body-medium" color="secondary">Sem taxa, sem pegadinha.</Text>
+```
+
+Para injetar HTML cru (o equivalente ao `dangerouslySetInnerHTML`), use a prop `html`. Ela substitui o conteúdo do slot:
+
+```astro
+<Text html={conteudoDoStoryblok} />
+```
+
+### Tabs
+
+A barra vem da prop `tabs`; os painéis vêm de `TabPanel`. O painel correspondente ao `initialTab` precisa de `active`, porque a marcação é gerada em build time.
+
+```astro
+---
+const tabs = [
+  { tab: 'dividas', title: 'Dívidas' },
+  { tab: 'credito', title: 'Crédito' },
+]
+---
+
+<Tabs tabs={tabs} initialTab="dividas">
+  <a slot="right" href="/ajuda">Preciso de ajuda</a>
+
+  <TabPanel tab="dividas" active>Conteúdo de dívidas</TabPanel>
+  <TabPanel tab="credito">Conteúdo de crédito</TabPanel>
+</Tabs>
+```
+
+Ao trocar de aba, o componente dispara `au:tabchange` com `{ tab }` no `detail`, borbulhando a partir da raiz. Dá para ouvir de fora para instrumentar:
+
+```astro
+<script>
+  document.addEventListener('au:tabchange', (event) => {
+    console.log(event.detail.tab)
+  })
+</script>
+```
+
+Todos os painéis vão para o HTML; os inativos ficam com o atributo `hidden`.
+
+## Runtime: elementController
+
+O JavaScript client-side dos componentes Astro da Aurora usa `elementController`, o mesmo padrão do runtime dos sites públicos. Ele fica exposto e pode ser usado nos componentes do próprio app:
+
+```astro
+<div data-element="meu-bloco">
+  <button class="meu-bloco__acao">Ok</button>
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  elementController('meu-bloco', ({ root, on, query, queryAll, emit }) => {
+    on('click', (event) => { /* escopado ao root */ })
+    const acao = query('.meu-bloco__acao')
+    on('global:resize', () => { /* escopado ao window */ })
+  })
+</script>
+```
+
+`on` devolve uma função para remover o listener, e o builder roda no máximo uma vez por elemento. Para adiar até o elemento aparecer na tela:
+
+```js
+elementController('meu-bloco', builder, { lazy: true, rootMargin: '200px' })
+```
+
+## Limites
+
+- Só `Button`, `Text` e `Tabs` têm versão Astro hoje. Para o resto, continue usando o React (com island) ou um componente local.
+- Uma lacuna na cobertura Astro é insumo para o chapter de design system: registre no PR o que faltou.
