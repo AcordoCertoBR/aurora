@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.2.0](https://github.com/AcordoCertoBR/aurora/compare/v1.1.0...v1.2.0) (2026-09-10)
+
+
+### Features
+
+* ✨ export Astro components alongside React ([8dd7948](https://github.com/AcordoCertoBR/aurora/commit/8dd7948138ad1bbabe55849a00a85be4ad368394))
+* ✨ generate an Astro component per icon ([97ac7a7](https://github.com/AcordoCertoBR/aurora/commit/97ac7a7c688849a7f7e1b8e182312680507acb86))
+* ✨ port Drawer, NavbarVertical and two Logos to Astro ([fa4ba52](https://github.com/AcordoCertoBR/aurora/commit/fa4ba52c19046fd7b04175fa43b7c6dd34afe3e3))
+* ✨ port Header and Footer to Astro ([4f48758](https://github.com/AcordoCertoBR/aurora/commit/4f48758c19ba9a1c1198f3917514db1e247245a1))
+* **astro:** exporta os componentes Astro (Button, Text, Tabs) ([3e68427](https://github.com/AcordoCertoBR/aurora/commit/3e68427dee9ffdc8a30bf62228204fb2d9473f80))
+
+
+### Bug Fixes
+
+* 🐛 keep test files out of the published package ([842524a](https://github.com/AcordoCertoBR/aurora/commit/842524a7f8e2bc201f654059465eebaf8ca7597d))
+* 🐛 make the NavbarVertical active state win on specificity ([4267b20](https://github.com/AcordoCertoBR/aurora/commit/4267b2055e94a1fe0f209e2e26222c22b5034d77))
+* 🐛 publish .astro components at the package root ([11beeef](https://github.com/AcordoCertoBR/aurora/commit/11beeef5009499bb8ecbeb85c1896c5c6d313be7))
+* 🐛 put the .astro files inside the TypeScript project ([e905840](https://github.com/AcordoCertoBR/aurora/commit/e905840fcbce7b0e030c6f6257065f3c0e6ceef0))
+* 🐛 stop class:list on a component from erasing its classes ([dad396d](https://github.com/AcordoCertoBR/aurora/commit/dad396d1a50b04daf91e65dafe2d6c0e01338c2d))
+* 🐛 type the Astro components and gate them with astro check ([391ef18](https://github.com/AcordoCertoBR/aurora/commit/391ef18d2fec1b7101fc17f39c08be6a8044cb2f))
+
 ## [1.1.0](https://github.com/AcordoCertoBR/aurora/compare/v1.0.0...v1.1.0) (2026-08-07)
 
 
