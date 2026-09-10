@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import dotenv from 'dotenv'
 import pkg from './package.json'
-import { resolve, dirname, basename, parse } from 'path'
+import { existsSync } from 'fs'
+import { resolve, dirname, basename, parse, relative, sep } from 'path'
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
 import glob from 'glob'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
@@ -70,6 +71,13 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
+          src: 'lib/components/**/index.astro',
+          dest: 'astro',
+          rename: (_name, _ext, fullPath) => relativeToComponents(fullPath),
+          transform: (content, filePath) =>
+            pointAstroStylesToBuiltCss(content, filePath),
+        },
+        {
           src: 'lib/core/styles/mixins.scss',
           dest: '.',
           transform: (content) =>
@@ -97,6 +105,41 @@ export default defineConfig({
     },
   },
 })
+
+const componentsDir = resolve(__dirname, 'lib/components')
+
+function relativeToComponents(fullPath: string) {
+  return relative(componentsDir, fullPath).split(sep).join('/')
+}
+
+/**
+ * `.astro` files ship as source, so their stylesheet import has to resolve
+ * inside `dist`. In the repo they import the same `styles.scss` the React
+ * component uses; here that becomes the CSS Vite already emitted for it, which
+ * is what spares the consumer any Sass configuration.
+ */
+function pointAstroStylesToBuiltCss(content: string, filePath: string) {
+  const componentPath = dirname(relativeToComponents(filePath))
+  const stylesheet = resolve(
+    __dirname,
+    'dist/components',
+    basename(componentPath),
+    'styles.css',
+  )
+
+  if (!existsSync(stylesheet)) {
+    return content.replace(/^import ['"]\.\/styles\.scss['"]\n/m, '')
+  }
+
+  const importPath = relative(
+    resolve(__dirname, 'dist/astro', componentPath),
+    stylesheet,
+  )
+    .split(sep)
+    .join('/')
+
+  return content.replace(/(['"])\.\/styles\.scss\1/, `'${importPath}'`)
+}
 
 function getComponentsEntries() {
   const dir = 'lib/components'

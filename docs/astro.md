@@ -24,7 +24,9 @@ Subcomponentes seguem a mesma regra (`lib/components/Tabs/TabPanel/index.astro`)
 
 ## O que é publicado
 
-O passo `npm run build:astro` roda depois do `vite build` e copia cada `lib/components/<caminho>/index.astro` para `dist/astro/<caminho>/index.astro`. O runtime compartilhado é um entry normal do Vite e sai em `dist/astro/runtime/`.
+Um `.astro` não passa por bundler: o Rollup não sabe parseá-lo, e compilá-lo aqui amarraria o pacote ao runtime interno de uma versão específica do Astro. O formato é publicado como **source**, e quem compila é o Astro do consumidor.
+
+Por isso não existe um entry do Vite para eles. O `vite.config.ts` copia cada `lib/components/<caminho>/index.astro` para `dist/astro/<caminho>/index.astro` com o `viteStaticCopy`, que já estava no config, no hook `writeBundle` (ou seja, depois do CSS já estar escrito). O runtime compartilhado, esse sim, é um entry normal do Vite e sai em `dist/astro/runtime/`.
 
 No `package.json`:
 
@@ -56,7 +58,7 @@ import './styles.scss'
 ---
 ```
 
-`scripts/build-astro/index.ts` reescreve esse import na cópia que vai para o `dist`, apontando para o CSS que o Vite já compilou para o componente React:
+O `transform` do `viteStaticCopy` (`pointAstroStylesToBuiltCss`, em `vite.config.ts`) reescreve esse import na cópia que vai para o `dist`, apontando para o CSS que o Vite já compilou para o componente React:
 
 ```astro
 ---
@@ -121,17 +123,14 @@ O runtime da Aurora é um port do runtime dos sites públicos com duas adições
 1. Escreva `lib/components/<Nome>/index.astro` espelhando as classes que o `index.tsx` gera. As classes `au-*` são o contrato; se as duas versões divergirem, o CSS deixa de servir para as duas.
 2. Importe `./styles.scss` no frontmatter.
 3. Se precisar de comportamento, adicione o `<script>` com `elementController` e um `data-element` na raiz.
-4. Rode `npm run check:astro` e valide num app Astro de verdade (ver **Como verificar** abaixo).
+4. Rode `npm run check:astro` e valide num app Astro de verdade (ver **Como verificar** abaixo). A cópia para o `dist` é automática: o glob do `viteStaticCopy` pega qualquer `index.astro` sob `lib/components/`.
 5. Commit como `feat:` — é contrato público novo.
 
 ## Como verificar
 
-Dois níveis automáticos:
+`npm run check:astro` (`astro check`) é o gate: faz parse e type check completos, incluindo o conteúdo dos `<script>`. Roda no CI.
 
-- `npm run check:astro` (`astro check`) faz o type check completo, incluindo o conteúdo dos `<script>`. Roda no CI.
-- `npm run build:astro` valida a sintaxe com `@astrojs/compiler` e falha o build se houver erro.
-
-Nenhum dos dois cobre renderização. Para mudanças não triviais, monte um projeto Astro descartável e instale o **tarball**:
+Ele não cobre renderização. Para mudanças não triviais, monte um projeto Astro descartável e instale o **tarball**:
 
 ```bash
 npm run build

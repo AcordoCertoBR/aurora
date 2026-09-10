@@ -32,9 +32,6 @@ npm run check:astro
 # Build the library (output to dist/)
 npm run build
 
-# Copy/validate only the .astro components into dist/astro (runs inside build)
-npm run build:astro
-
 # Prebuild only (regenerate tokens + icons, required before build/dev/storybook)
 npm run prebuild
 
@@ -80,10 +77,12 @@ The `.astro` file lives in the component's own folder and reuses the same
 using `elementController` from `@consumidor-positivo/aurora/astro/runtime`
 (`lib/astro/runtime/`).
 
-`npm run build:astro` (part of `npm run build`) validates each file with
-`@astrojs/compiler`, copies it to `dist/astro/<path>/index.astro` and rewrites the
-`./styles.scss` import to the CSS Vite already emitted for the React component, so
-the consumer needs no Sass configuration.
+`.astro` files are published as **source** — Rollup cannot parse them, and
+compiling them here would pin the package to one Astro version's internal
+runtime — so they get no Vite entry. `viteStaticCopy` copies each one to
+`dist/astro/<path>/index.astro` and rewrites its `./styles.scss` import to the CSS
+Vite already emitted for the React component, so the consumer needs no Sass
+configuration. Only the shared runtime is a real Vite entry.
 
 `astro.config.mjs` at the root exists only for this: Aurora is not an Astro site,
 and `srcDir` points into `.astro/` so the files Astro generates stay out of the
