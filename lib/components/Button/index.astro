@@ -49,6 +49,10 @@ const {
   round = false,
   borderWidth = 'medium',
   class: className,
+  // Astro passes `class:list` on a component through as a raw prop; without
+  // picking it up here it would land in `...rest` and overwrite the classes
+  // this component builds.
+  'class:list': classList,
   ...rest
 } = Astro.props
 
@@ -69,6 +73,7 @@ const Tag = isAnchor ? 'a' : 'button'
     round && `au-btn--round-${size}`,
     btnText && 'btn-text',
     className,
+    classList,
   ]}
   href={isAnchor ? href : undefined}
   target={isAnchor ? target : undefined}

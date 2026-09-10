@@ -25,6 +25,10 @@ const {
   color,
   rawColor,
   class: className,
+  // Astro passes `class:list` on a component through as a raw prop; without
+  // picking it up here it would land in `...rest` and overwrite the classes
+  // this component builds.
+  'class:list': classList,
   ...rest
 } = Astro.props
 ---
@@ -37,6 +41,7 @@ const {
     color && color !== 'default' && `au-icon--color-${color}`,
     size && size !== 'default' && `au-icon--size-${size}`,
     className,
+    classList,
   ]}
   style={rawColor ? `color: ${rawColor}` : undefined}
   {...rest}
