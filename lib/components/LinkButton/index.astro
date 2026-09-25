@@ -1,0 +1,54 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+type AnchorProps = Pick<HTMLAttributes<'a'>, 'href' | 'target'>
+
+/**
+ * The React `iconLeft` / `iconRight` props are the `icon-left` / `icon-right`
+ * slots, and the label is the default slot (falls back to "Link"). No
+ * `onClick`: every HTML attribute is forwarded, so hook the app on an `id` or
+ * `data-*`.
+ */
+export type Props = Omit<HTMLAttributes<'button'>, 'disabled' | 'type'> &
+  AnchorProps & {
+    as?: 'a' | 'button'
+    /**
+     * Token size (Figma: Link Button, Size). small = 14px text / 16px icons,
+     * medium = 16px / 20px, large = 20px / 20px.
+     */
+    size?: 'small' | 'medium' | 'large'
+    disabled?: boolean
+  }
+
+const {
+  as = 'button',
+  href,
+  target,
+  size = 'medium',
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+const isAnchor = as === 'a'
+const Tag = isAnchor ? 'a' : 'button'
+const hasLeft = Astro.slots.has('icon-left')
+const hasRight = Astro.slots.has('icon-right')
+---
+
+<Tag
+  class:list={[
+    'au-link-button',
+    `au-link-button--size-${size}`,
+    disabled && 'au-link-button--disabled',
+    className,
+  ]}
+  href={isAnchor ? href : undefined}
+  target={isAnchor ? target : undefined}
+  type={isAnchor ? undefined : 'button'}
+  disabled={!isAnchor && disabled ? true : undefined}
+  {...rest}>
+  {/* No whitespace around the label: React renders none, and it would show up in the text. */}
+  {hasLeft && <span class="au-link-button__icon" aria-hidden="true"><slot name="icon-left" /></span>}<slot>Link</slot>{hasRight && <span class="au-link-button__icon" aria-hidden="true"><slot name="icon-right" /></span>}
+</Tag>

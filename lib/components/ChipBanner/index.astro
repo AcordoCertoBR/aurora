@@ -1,0 +1,160 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../Text/index.astro'
+import IconPlay from '../icons/default/IconPlay.astro'
+import './styles.scss'
+
+/**
+ * The React version takes `onClick` and `onComplete`. Astro has no callback
+ * props: the controller emits `au:chipbannertoggle` (`detail: { isPlaying }`)
+ * on every click and `au:chipbannercomplete` when a non-looping ring finishes.
+ * `ariaLabel` is the plain `aria-label` attribute (a custom one stays fixed; the
+ * default swaps with the state) and `className` the plain `class`. Every HTML
+ * attribute is forwarded to the `<button>`.
+ */
+export type Props = Omit<HTMLAttributes<'button'>, 'type'> & {
+  /** Initial state: 'pause' starts playing (shows the pause control). */
+  type?: 'play' | 'pause'
+  /** Duration of one ring sweep. Without it there is no ring. */
+  timeInSeconds?: number
+  /** Restarts the ring forever instead of stopping after one sweep. */
+  loop?: boolean
+  negative?: boolean
+}
+
+const {
+  type = 'pause',
+  timeInSeconds,
+  loop = false,
+  negative = false,
+  'aria-label': ariaLabel,
+  class: className,
+  ...rest
+} = Astro.props
+
+const PAUSE_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.99995 2.66653C6.36793 2.66667 6.66622 2.96496 6.66636 3.33294V12.6665C6.66636 13.0346 6.36802 13.3328 5.99995 13.3329C5.63176 13.3329 5.33276 13.0347 5.33276 12.6665V3.33294C5.3329 2.96487 5.63185 2.66653 5.99995 2.66653Z" fill="currentColor"/>
+<path d="M9.99995 2.66653C10.3679 2.66667 10.6662 2.96496 10.6664 3.33294V12.6665C10.6664 13.0346 10.368 13.3328 9.99995 13.3329C9.63176 13.3329 9.33276 13.0347 9.33276 12.6665V3.33294C9.3329 2.96487 9.63185 2.66653 9.99995 2.66653Z" fill="currentColor"/>
+</svg>`
+
+const isPlaying = type === 'pause'
+const hasTimer = typeof timeInSeconds === 'number' && timeInSeconds > 0
+const label = isPlaying ? 'Pausar' : 'Reproduzir'
+const defaultAriaLabel = isPlaying ? 'Pausar reprodução' : 'Reproduzir conteúdo'
+
+// React swaps the icons. Only the active one is rendered; the other rides in
+// the `<template>` (with the controller settings), which the controller reads
+// and removes. The pause svg is inlined from ./pause.svg because only `.astro`
+// files are published, so a `?raw` import would not resolve in the consumer.
+---
+
+<button
+  type="button"
+  class:list={['au-chip-banner', negative && 'au-chip-banner--negative', className]}
+  aria-pressed={isPlaying ? 'true' : 'false'}
+  aria-label={ariaLabel ?? defaultAriaLabel}
+  data-element="au-chip-banner"
+  {...rest}>
+  <span class="au-chip-banner__icon" aria-hidden="true">
+    {isPlaying ? <span class="au-chip-banner__pause" set:html={PAUSE_SVG} /> : <IconPlay />}
+    {
+      hasTimer && (
+        <svg
+          class="au-chip-banner__ring"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          style={`visibility: ${isPlaying ? 'visible' : 'hidden'}`}>
+          <circle
+            class="au-chip-banner__ring-progress"
+            cx="12"
+            cy="12"
+            r="10"
+            fill="none"
+            style={{
+              'animation-duration': `${timeInSeconds}s`,
+              'animation-iteration-count': loop ? 'infinite' : 1,
+              'animation-play-state': isPlaying ? 'running' : 'paused',
+            }}
+          />
+        </svg>
+      )
+    }
+  </span>
+  <Text as="span" variant="body-medium" class="au-chip-banner__label">
+    {label}
+  </Text>
+  <template
+    data-au-chip-banner
+    data-loop={loop ? 'true' : undefined}
+    data-custom-label={ariaLabel ? 'true' : undefined}>
+    {isPlaying ? <IconPlay /> : <span class="au-chip-banner__pause" set:html={PAUSE_SVG} />}
+  </template>
+</button>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const PROGRESS_CLASS = 'au-chip-banner__ring-progress'
+  const LABELS = { playing: 'Pausar', paused: 'Reproduzir' }
+  const ARIA_LABELS = {
+    playing: 'Pausar reprodução',
+    paused: 'Reproduzir conteúdo',
+  }
+
+  elementController('au-chip-banner', ({ root, query, on, emit }) => {
+    const template = query<HTMLTemplateElement>(':scope > template[data-au-chip-banner]')
+    const iconBox = query<HTMLElement>(':scope > .au-chip-banner__icon')
+    const ring = query<SVGSVGElement>(':scope > .au-chip-banner__icon > .au-chip-banner__ring')
+    const label = query<HTMLElement>(':scope > .au-chip-banner__label')
+    const isLoop = template?.dataset.loop === 'true'
+    const hasCustomLabel = template?.dataset.customLabel === 'true'
+
+    const current = iconBox?.firstElementChild ?? null
+    const other = template?.content.firstElementChild ?? null
+    const startsPlaying = root.getAttribute('aria-pressed') === 'true'
+    const pause = startsPlaying ? current : other
+    const play = startsPlaying ? other : current
+    template?.remove()
+
+    const progress = () => ring?.querySelector<SVGCircleElement>(`.${PROGRESS_CLASS}`) ?? null
+
+    function setPlaying(isPlaying: boolean) {
+      const state = isPlaying ? 'playing' : 'paused'
+      root.setAttribute('aria-pressed', String(isPlaying))
+      if (!hasCustomLabel) root.setAttribute('aria-label', ARIA_LABELS[state])
+      if (label) label.textContent = LABELS[state]
+
+      const show = isPlaying ? pause : play
+      const hide = isPlaying ? play : pause
+      if (iconBox && show && hide && hide.isConnected) {
+        hide.replaceWith(show)
+      }
+      if (ring) ring.style.visibility = isPlaying ? 'visible' : 'hidden'
+
+      const circle = progress()
+      if (circle) circle.style.animationPlayState = isPlaying ? 'running' : 'paused'
+    }
+
+    // Replacing the circle restarts its animation from 0, which is what the
+    // React key bump does. Pausing only freezes it.
+    function resetRing() {
+      const circle = progress()
+      if (!circle) return
+      circle.replaceWith(circle.cloneNode(true))
+    }
+
+    on('click', () => {
+      const isPlaying = root.getAttribute('aria-pressed') !== 'true'
+      setPlaying(isPlaying)
+      emit('au:chipbannertoggle', { isPlaying })
+    })
+
+    on('animationend', (event) => {
+      const target = event.target as Element | null
+      if (!target?.classList.contains(PROGRESS_CLASS) || isLoop) return
+      setPlaying(false)
+      resetRing()
+      emit('au:chipbannercomplete')
+    })
+  })
+</script>

@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../Text/index.astro'
+import './styles.scss'
+
+/** Same props as React; every HTML attribute is forwarded to the root `div`. */
+export type Props = HTMLAttributes<'div'> & {
+  /** Shown in the greeting ("Olá, {name}"). */
+  name: string
+  /** Source of the two initials in the badge. */
+  fullName: string
+}
+
+const { name, fullName, class: className, ...rest } = Astro.props
+
+// Same rule as `lib/core/utils/getInitialLetters.ts`, inlined: a `.astro`
+// ships as source and `lib/core` is not published, so importing it would break
+// in the consumer.
+const initialLetters = fullName
+  ?.split(' ')
+  .map((part) => part[0])
+  .slice(0, 2)
+  .join('')
+---
+
+<div class:list={['au-profile-nav', className]} {...rest}>
+  <div class="au-profile-nav__badget">
+    <Text variant="heading-small" weight="medium">{initialLetters}</Text>
+  </div>
+  <div class="div">
+    <Text as="h3" variant="heading-micro" weight="bold">Olá, {name}</Text>
+    <Text color="secondary">Tudo bem?</Text>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconAlertOctagon from '../icons/default/IconAlertOctagon.astro'
+import IconAlertTriangle from '../icons/default/IconAlertTriangle.astro'
+import IconCheck from '../icons/default/IconCheck.astro'
+import IconInfo from '../icons/default/IconInfo.astro'
+import IconMoreHorizontal from '../icons/default/IconMoreHorizontal.astro'
+import {
+  COLOR_BRAND_CYAN_50,
+  COLOR_ERROR_50,
+  COLOR_INFO_50,
+  COLOR_NEUTRAL_60,
+  COLOR_SUCCESS_50,
+  COLOR_WARNING_50,
+} from '@consumidor-positivo/aurora/astro/tokens'
+import './styles.scss'
+
+// The same tokens React passes as `rawColor`.
+const STATUS_MAP = {
+  success: { label: 'Sucesso', icon: IconCheck, color: COLOR_SUCCESS_50 },
+  error: { label: 'Erro', icon: IconAlertOctagon, color: COLOR_ERROR_50 },
+  warning: { label: 'Atenção', icon: IconAlertTriangle, color: COLOR_WARNING_50 },
+  info: { label: 'Informação', icon: IconInfo, color: COLOR_INFO_50 },
+  support: { label: 'Mais informações', icon: IconMoreHorizontal, color: COLOR_BRAND_CYAN_50 },
+  neutral: { label: 'Neutro', icon: IconMoreHorizontal, color: COLOR_NEUTRAL_60 },
+}
+
+/**
+ * Same props as React, minus `icon` (declared but never rendered there). React
+ * `children` is the default slot, rendered after the content. Every HTML
+ * attribute is forwarded to the root `div`.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  status: 'info' | 'success' | 'error' | 'warning' | 'support' | 'neutral'
+  /** Round border, for a number badge. */
+  isNumberBadge?: boolean
+  variant?: 'regular' | 'strong'
+  text?: string
+  /** Renders only the status icon, labelled for assistive tech. */
+  iconOnly?: boolean
+}
+
+const {
+  status,
+  isNumberBadge = false,
+  variant = 'regular',
+  text,
+  iconOnly = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+const { label, icon: StatusIcon, color } = STATUS_MAP[status]
+---
+
+<div
+  class:list={[
+    'au-badgeState',
+    `au-badgeState--${status}`,
+    isNumberBadge && 'au-badgeState--border-circle',
+    iconOnly && 'au-badgeState--icon-only',
+    `au-badgeState--variant-${variant}`,
+    className,
+  ]}
+  aria-label={iconOnly ? label : undefined}
+  {...rest}>
+  <div class="au-badgeState__content">
+    {
+      iconOnly ? (
+        <span aria-hidden="true">
+          <StatusIcon rawColor={color} />
+        </span>
+      ) : (
+        <p class="au-badgeState__content-support-text">{text}</p>
+      )
+    }
+  </div>
+  <slot />
+</div>

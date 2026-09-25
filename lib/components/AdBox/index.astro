@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+const AD_LABEL = 'Publicidade'
+
+/**
+ * Same props as React (`className` is the plain `class`). The ad content is
+ * the default slot; every HTML attribute is forwarded to the `<aside>`.
+ */
+export type Props = HTMLAttributes<'aside'> & {
+  type?: 'content' | 'heading'
+}
+
+const { type = 'content', class: className, ...rest } = Astro.props
+---
+
+<aside
+  class:list={['au-ad-box', `au-ad-box--type-${type}`, className]}
+  aria-label={AD_LABEL}
+  {...rest}>
+  <div class="au-ad-box__heading">
+    <span class="au-ad-box__label">{AD_LABEL}</span>
+  </div>
+  <div class="au-ad-box__box">
+    <div class="au-ad-box__container"><slot /></div>
+  </div>
+</aside>

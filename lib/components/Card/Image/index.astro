@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../styles.scss'
+
+/**
+ * Same props as React. The attributes go to the wrapper `div` (where React
+ * puts `data-testid`); `src`, `alt` and the size go to the `<img>`, written
+ * like React writes it (an unset size comes out as `undefinedpx`).
+ */
+export type Props = HTMLAttributes<'div'> & {
+  src: string
+  alt?: string
+  /** Width in px. */
+  width?: number
+  /** Height in px. */
+  height?: number
+}
+
+const { src, alt, width, height, ...rest } = Astro.props
+
+const style = `width:${width}px;height:${height}px`
+---
+
+<div {...rest}>
+  <img style={style} src={src} alt={alt} />
+</div>

@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/**
+ * Same props as React. The trigger (React `children`) is the default slot;
+ * every HTML attribute is forwarded to the container.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  text: string
+  position?: 'top' | 'bottom' | 'left' | 'right'
+  /** Keeps the tooltip visible without hover. */
+  open?: boolean
+}
+
+const {
+  text,
+  position = 'top',
+  open = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+// Per instance, like React's `useId`.
+const tooltipId = `au-tooltip-${crypto.randomUUID().slice(0, 8)}`
+---
+
+<div
+  class:list={[
+    'tooltip-container',
+    `tooltip-${position}`,
+    open && 'tooltip-open',
+    className,
+  ]}
+  aria-describedby={tooltipId}
+  {...rest}>
+  <slot /><div id={tooltipId} class="tooltip" role="tooltip">{text}</div>
+</div>

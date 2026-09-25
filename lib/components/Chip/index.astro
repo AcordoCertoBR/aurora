@@ -1,0 +1,48 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Button from '../Button/index.astro'
+import IconChevronDown from '../icons/default/IconChevronDown.astro'
+import './styles.scss'
+
+type ButtonAttributes = Omit<HTMLAttributes<'button'>, 'type' | 'disabled' | 'color'>
+
+/**
+ * Built on the Astro `Button`, like React builds on `Button`. The React `icon`
+ * prop is the `icon` slot (ignored on `variant="order"`, which always shows the
+ * chevron). No `onClick`: every HTML attribute is forwarded to the `<button>`,
+ * so hook the app on an `id` or `data-*`.
+ */
+export type Props = ButtonAttributes & {
+  isActive: boolean
+  isDisabled?: boolean
+  label: string
+  variant?: 'filter' | 'order'
+}
+
+const {
+  isActive,
+  isDisabled = false,
+  label,
+  variant = 'filter',
+  class: className,
+  ...rest
+} = Astro.props
+
+const isOrder = variant === 'order'
+---
+
+<Button
+  class:list={[
+    'au-chip',
+    `au-chip--variant-${variant}`,
+    isActive && 'au-chip--active',
+    isDisabled && 'au-chip--disabled',
+    className,
+  ]}
+  type="outlined"
+  disabled={isDisabled}
+  {...rest}>
+  {!isOrder && <slot name="icon" />}
+  {label}
+  {isOrder && <IconChevronDown />}
+</Button>

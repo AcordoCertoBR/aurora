@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { BREAKPOINT_LG, BREAKPOINT_MD } from '@consumidor-positivo/aurora/astro/tokens'
+
+/**
+ * Same props and output as React: every `<img>` attribute goes to the
+ * `<img>`, and both `<source>` are always rendered (without `srcset` when the
+ * matching prop is missing, as React does).
+ */
+export type Props = HTMLAttributes<'img'> & {
+  /** Image used up to BREAKPOINT_MD (600px). */
+  srcMob?: string
+  /** Image used up to BREAKPOINT_LG (1024px). */
+  srcTablet?: string
+  /** Fallback `src` of the `<img>`. */
+  srcDesk?: string
+}
+
+const { srcMob, srcTablet, srcDesk, ...rest } = Astro.props
+---
+
+<picture>
+  <source media={`(max-width: ${BREAKPOINT_MD})`} srcset={srcMob} />
+  <source media={`(max-width: ${BREAKPOINT_LG})`} srcset={srcTablet} />
+  <img src={srcDesk} {...rest} />
+</picture>

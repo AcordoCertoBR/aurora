@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/** Same props as React; every HTML attribute is forwarded to the `<hr>`. */
+export type Props = HTMLAttributes<'hr'> & {
+  borderWidth?: 1 | 2
+  state?: 'visible' | 'invisible'
+}
+
+const {
+  borderWidth = 1,
+  state = 'visible',
+  class: className,
+  ...rest
+} = Astro.props
+---
+
+<hr
+  class:list={[
+    'au-divider',
+    borderWidth && `au-divider--width-${borderWidth}`,
+    state === 'invisible' && 'au-divider--invisible',
+    className,
+  ]}
+  {...rest}
+/>

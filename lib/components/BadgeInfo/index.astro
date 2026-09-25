@@ -1,0 +1,55 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconInfo from '../icons/default/IconInfo.astro'
+import {
+  COLOR_BRAND_CYAN_50,
+  COLOR_ERROR_50,
+  COLOR_INFO_50,
+  COLOR_NEUTRAL_70,
+  COLOR_SUCCESS_50,
+  COLOR_WARNING_50,
+} from '@consumidor-positivo/aurora/astro/tokens'
+import './styles.scss'
+
+// The same tokens React passes as `rawColor`.
+const STATUS_COLOR = {
+  success: COLOR_SUCCESS_50,
+  error: COLOR_ERROR_50,
+  warning: COLOR_WARNING_50,
+  info: COLOR_INFO_50,
+  progress: COLOR_BRAND_CYAN_50,
+  neutral: COLOR_NEUTRAL_70,
+}
+
+/**
+ * The React `customIcon` prop is the `icon` slot here: when filled, it replaces
+ * the default `IconInfo`. React `children` is the default slot, rendered after
+ * the content. Every HTML attribute is forwarded to the root `div`.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'color'> & {
+  status: 'info' | 'success' | 'error' | 'warning' | 'progress' | 'neutral'
+  color?: 'primary' | 'secondary'
+  text: string
+}
+
+const { status, color = 'primary', text, class: className, ...rest } = Astro.props
+---
+
+<div
+  class:list={[
+    'au-badgeInfo',
+    `au-badgeInfo--${status}`,
+    `au-badgeInfo--color-${color}`,
+    className,
+  ]}
+  {...rest}>
+  <div class="au-badgeInfo__content">
+    <div class="au-badgeInfo__content-icon" aria-hidden="true">
+      <slot name="icon">
+        <IconInfo rawColor={STATUS_COLOR[status]} />
+      </slot>
+    </div>
+    <p class="au-badgeInfo__content-support-text">{text}</p>
+  </div>
+  <slot />
+</div>
