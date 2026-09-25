@@ -28,6 +28,10 @@
       "types": "./dist/astro/runtime/index.d.ts",
       "import": "./dist/astro/runtime/index.es.js"
     },
+    "./astro/tokens": {
+      "types": "./dist/core/tokens/index.d.ts",
+      "import": "./dist/astro/tokens/index.es.js"
+    },
     "./astro/*": "./astro/*",
     "./global.css": "./dist/components/globalStyles/styles.css",
     "./package.json": "./package.json",

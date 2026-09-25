@@ -9,7 +9,8 @@
       "@components/*": ["./lib/components/*"],
       "@core/*": ["./lib/core/*"],
       "@assets/*": ["./lib/assets/*"],
-      "@consumidor-positivo/aurora/astro/runtime": ["./lib/astro/runtime"]
+      "@consumidor-positivo/aurora/astro/runtime": ["./lib/astro/runtime"],
+      "@consumidor-positivo/aurora/astro/tokens": ["./lib/core/tokens"]
     },
 
     /* Bundler mode */
