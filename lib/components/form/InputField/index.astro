@@ -1,0 +1,96 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import FieldRoot from '../Field/Root/index.astro'
+import FieldLabel from '../Field/Label/index.astro'
+import FieldInputHolder from '../Field/InputHolder/index.astro'
+import FieldInput from '../Field/Input/index.astro'
+import FieldMessage from '../Field/Message/index.astro'
+
+/**
+ * Same props as the React `InputField`, and the same split: `class` and
+ * `style` go on the `au-field` root, every other HTML attribute (`name`,
+ * `value`, `type`, `required`, `placeholder`, `data-*`...) lands on the
+ * `<input>`, as the React spreads its input props.
+ *
+ * Differences from React: `rightSlot` is the `right` named slot and a rich
+ * `label` goes in the `label` slot; `inputRef` and the `on*` callbacks have no
+ * counterpart (listen on the input through its `id` or a `data-*`). Like
+ * React, without `id` the label has no `for` and the input no `id`; the
+ * error/help message ids are generated (React's `useId`).
+ */
+export type Props = Omit<HTMLAttributes<'input'>, 'disabled'> & {
+  showOptionalLabel?: boolean
+  /** Marks the label as required. Pass `required` too for native validation. */
+  requiredInput?: boolean
+  success?: boolean
+  error?: boolean
+  errorMessage?: string
+  helpMessage?: string
+  label?: string
+  disabled?: boolean
+  /** Inline style of the `<input>` (`style` goes on the root). */
+  inputStyle?: HTMLAttributes<'input'>['style']
+  /** Opens the numeric keypad on mobile (`inputmode="numeric"`). */
+  numericKeypad?: boolean
+}
+
+const uid = crypto.randomUUID().slice(0, 8)
+
+const {
+  showOptionalLabel,
+  requiredInput,
+  success = false,
+  error = false,
+  errorMessage,
+  helpMessage,
+  label,
+  id,
+  disabled = false,
+  style,
+  class: className,
+  inputStyle,
+  numericKeypad = false,
+  ...rest
+} = Astro.props
+
+const errorId = error && errorMessage ? `au-field-${uid}-error` : undefined
+const helpId = helpMessage ? `au-field-${uid}-help` : undefined
+const describedBy = [errorId, helpId].filter(Boolean).join(' ') || undefined
+---
+
+<FieldRoot
+  style={style}
+  class={className}
+  success={success}
+  error={error}
+  disabled={disabled}>
+  <FieldLabel
+    text={label}
+    id={id}
+    showOptionalLabel={showOptionalLabel}
+    required={requiredInput}
+    success={success}
+    error={error}
+    disabled={disabled}>
+    <slot name="label" />
+  </FieldLabel>
+  <FieldInputHolder>
+    <FieldInput
+      id={id}
+      inputmode={numericKeypad ? 'numeric' : undefined}
+      disabled={disabled}
+      style={inputStyle}
+      aria-invalid={error ? 'true' : 'false'}
+      aria-describedby={describedBy}
+      {...rest}
+    />
+    <slot name="right" slot="right" />
+  </FieldInputHolder>
+  <FieldMessage
+    hasError={error}
+    errorMessage={errorMessage}
+    helpMessage={helpMessage}
+    errorId={errorId}
+    helpId={helpId}
+  />
+</FieldRoot>

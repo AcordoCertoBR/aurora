@@ -1,0 +1,29 @@
+---
+import '../styles.scss'
+
+/**
+ * Same props as the React `Field.Message`: the error wins over the help text,
+ * and nothing renders when neither applies.
+ */
+export type Props = {
+  hasError?: boolean
+  errorMessage?: string
+  helpMessage?: string
+  errorId?: string
+  helpId?: string
+}
+
+const { hasError, errorMessage, helpMessage, errorId, helpId } = Astro.props
+---
+
+{
+  hasError && errorMessage ? (
+    <p id={errorId} class="au-field__message au-field__message--error" role="alert">
+      {errorMessage}
+    </p>
+  ) : helpMessage ? (
+    <p id={helpId} class="au-field__message">
+      {helpMessage}
+    </p>
+  ) : null
+}

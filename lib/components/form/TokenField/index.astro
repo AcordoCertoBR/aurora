@@ -1,0 +1,211 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import FieldRoot from '../Field/Root/index.astro'
+import FieldLabel from '../Field/Label/index.astro'
+import FieldInput from '../Field/Input/index.astro'
+import FieldMessage from '../Field/Message/index.astro'
+import './styles.scss'
+
+/**
+ * Same props as the React `TokenField`. Every other HTML attribute (`id`,
+ * `data-*`, `style`) lands on the `au-field au-token-field` root; the React
+ * `data-testid` goes on the digits container instead.
+ *
+ * The digit handling is the component's own behavior, kept by an inline
+ * controller that follows the React hook step by step: a digit fills the first
+ * empty slot and moves to the next one, Backspace clears the current digit
+ * (and moves back when it was already empty), paste spreads the digits, and
+ * the optional `timer` counts down and clears the token when it hits zero. The
+ * React callbacks become events that bubble from the root, fired at the same
+ * moments: `au:tokenchange` and `au:tokencomplete` (both with `detail.value`)
+ * replace `onChange`/`onComplete`, and `au:tokentimer` (`detail.time`, from
+ * `timer` down to 1) replaces `onChangeTimer`.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'color'> & {
+  label?: string
+  disabled?: boolean
+  success?: boolean
+  error?: boolean
+  errorMessage?: string
+  helpMessage?: string
+  showOptionalLabel?: boolean
+  /** Number of digits. Defaults to 6. */
+  size?: number
+  type?: 'number' | 'password' | 'text'
+  /** Seconds until the token is cleared. */
+  timer?: number
+}
+
+const {
+  label,
+  disabled = false,
+  success = false,
+  error = false,
+  errorMessage,
+  helpMessage,
+  showOptionalLabel,
+  size = 6,
+  type,
+  timer,
+  class: className,
+  'data-testid': dataTestId,
+  ...rest
+} = Astro.props
+
+const digits = Array.from({ length: size }, (_, i) => i)
+---
+
+<FieldRoot
+  class:list={['au-token-field', className]}
+  success={success}
+  error={error}
+  disabled={disabled}
+  data-element="au-token-field"
+  data-timer={timer || undefined}
+  {...rest}>
+  <FieldLabel
+    text={label}
+    showOptionalLabel={showOptionalLabel}
+    success={success}
+    error={error}
+    disabled={disabled}
+  />
+  <div class="au-token-field__container" data-testid={dataTestId}>
+    {
+      digits.map((i) => (
+        <div>
+          <FieldInput
+            class="au-token-field__input"
+            type={type || 'number'}
+            value=""
+            disabled={disabled}
+            data-token-i={i}
+            inputmode="numeric"
+            autocomplete="one-time-code"
+          />
+        </div>
+      ))
+    }
+  </div>
+  <FieldMessage hasError={error} errorMessage={errorMessage} helpMessage={helpMessage} />
+</FieldRoot>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const TICK_MS = 1000
+
+  // Same check as the React hook (`inputtedValueIsValid`).
+  const isValid = (value: string) => !Number.isNaN(Number(value))
+
+  elementController('au-token-field', ({ root, queryAll, on, emit }) => {
+    const inputs = queryAll<HTMLInputElement>('[data-token-i]')
+    const size = inputs.length
+    const emptyTokens = () => inputs.map(() => '')
+    let tokens: string[] = emptyTokens()
+    // React's value tracker: an input event that leaves the value where it was
+    // last seen does not reach `onChange`.
+    const seen = inputs.map((input) => input.value)
+
+    const indexOf = (target: EventTarget | null) => {
+      const index = (target as HTMLElement | null)?.dataset?.tokenI
+      return index === undefined ? -1 : Number(index)
+    }
+
+    const focusAt = (index: number) => inputs[index]?.focus()
+
+    // React keeps every digit controlled: after any change event the DOM value
+    // goes back to the state, whether or not the state moved.
+    function syncInputs() {
+      inputs.forEach((input, i) => {
+        if (input.value !== tokens[i]) input.value = tokens[i]
+        seen[i] = input.value
+      })
+    }
+
+    // `setTokenMap` + the `[tokenMap]` effect: every set fires the callbacks,
+    // even when the digits did not change.
+    function setTokens(next: string[]) {
+      tokens = next
+      syncInputs()
+      const value = tokens.join('')
+      emit('au:tokenchange', { value })
+      if (value.length === size) emit('au:tokencomplete', { value })
+    }
+
+    on('input', (event) => {
+      const i = indexOf(event.target)
+      if (i < 0) return
+
+      let value = inputs[i].value
+      if (value === seen[i]) return
+      seen[i] = value
+      const isEmpty = value === ''
+
+      if (isValid(value)) {
+        let firstEmpty = tokens.findIndex((token) => token === '')
+
+        if (value.length > 1) {
+          firstEmpty = firstEmpty - 1
+          value = value[value.length - 1]
+        }
+
+        if (firstEmpty < 0) {
+          if (value) setTokens(tokens.map((token, j) => (j === i ? value : token)))
+          syncInputs()
+          return
+        }
+
+        setTokens(tokens.map((token, j) => (j === firstEmpty ? value : token)))
+        if (!isEmpty) focusAt(firstEmpty + 1)
+      }
+      syncInputs()
+    })
+
+    on('keyup', (event) => {
+      const i = indexOf(event.target)
+      if (i < 0) return
+      if (event.which !== 8 && event.key !== 'Backspace') return
+
+      const previous = inputs[i - 1]
+      // React reads the value before its re-render clears the digit.
+      const currentHadValue = !!inputs[i].value
+      setTokens(tokens.map((token, j) => (j === i ? '' : token)))
+      if (previous && !currentHadValue) previous.focus()
+    })
+
+    on('paste', (event) => {
+      if (indexOf(event.target) < 0) return
+      event.preventDefault()
+
+      const value = event.clipboardData?.getData('Text') ?? ''
+      if (isValid(value)) {
+        const pasted = value.split('').slice(0, size)
+        setTokens(inputs.map((_, i) => pasted[i] ?? ''))
+        focusAt(pasted.length)
+      } else {
+        setTokens(emptyTokens())
+      }
+    })
+
+    // The `[tokenMap]` effect also runs on mount.
+    setTokens(tokens)
+
+    const timer = Number(root.dataset.timer) || null
+    let time: number | null = timer
+    // The `[timerTime]` effect runs on mount too.
+    if (time) emit('au:tokentimer', { time })
+    if (timer) {
+      const interval = setInterval(() => {
+        time = time ? time - 1 : null
+        if (time) emit('au:tokentimer', { time })
+        if (time === 0) {
+          setTokens(emptyTokens())
+          focusAt(0)
+        }
+        // From here on the React updater only returns null: nothing observable.
+        if (!time) clearInterval(interval)
+      }, TICK_MS)
+    }
+  })
+</script>

@@ -1,0 +1,69 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../../../Text/index.astro'
+import '../styles.scss'
+
+/**
+ * Every HTML attribute lands on the `<textarea>`; the React `customClass` is
+ * the plain `class`, and `textareaRef` has no counterpart. `value` becomes the
+ * textarea's initial content. With `maxLength` the character counter is kept
+ * up to date by an inline controller on every `input`; like React, it starts
+ * at 0 even when there is an initial value.
+ */
+export type Props = Omit<HTMLAttributes<'textarea'>, 'maxlength'> & {
+  /** Allows the user to resize the textarea horizontally. Not mapped in Figma. */
+  horizontalResize?: boolean
+  /** Native `maxlength`; also turns the `n/max` counter on. */
+  maxLength?: number
+}
+
+const {
+  horizontalResize = false,
+  maxLength,
+  value,
+  class: className,
+  'class:list': classList,
+  ...rest
+} = Astro.props
+
+const initialValue = value == null ? '' : String(value)
+---
+
+<div
+  class="au-field__textarea-container"
+  data-element={maxLength ? 'au-field-textarea' : undefined}>
+  <textarea
+    class:list={[
+      'au-field__textarea',
+      className,
+      classList,
+      horizontalResize && 'au-field__textarea--horizontal-resize',
+    ]}
+    maxlength={maxLength}
+    {...rest}>{initialValue}</textarea>
+  {
+    maxLength && (
+      <Text variant="caption" class="au-field__char-counter" aria-live="polite">
+        {0}/{maxLength}
+      </Text>
+    )
+  }
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  elementController('au-field-textarea', ({ query, on }) => {
+    const textarea = query<HTMLTextAreaElement>('.au-field__textarea')
+    const counter = query('.au-field__char-counter')
+    if (!textarea || !counter) return
+
+    const update = () => {
+      counter.textContent = `${textarea.value.length}/${textarea.maxLength}`
+    }
+
+    // Like the React hook: only a change updates the count (not the initial
+    // value, not a form reset).
+    on('input', update)
+  })
+</script>

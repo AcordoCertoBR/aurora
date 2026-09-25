@@ -1,0 +1,80 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconAlertOctagon from '../../../icons/default/IconAlertOctagon.astro'
+import IconCheck from '../../../icons/default/IconCheck.astro'
+import IconSlash from '../../../icons/default/IconSlash.astro'
+import {
+  COLOR_ERROR_50,
+  COLOR_NEUTRAL_40,
+  COLOR_SUCCESS_50,
+} from '@consumidor-positivo/aurora/astro/tokens'
+import '../styles.scss'
+
+/**
+ * Same props as the React `Field.Label`. `id` is the id of the control the
+ * label points to (`for`), not the id of this element. Rich label content,
+ * the React `text` as a ReactNode, goes in the default slot; the label renders
+ * nothing when neither `text` nor the slot has content. Other HTML attributes
+ * land on the `au-field__header` wrapper.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'id'> & {
+  /** Id of the field control, rendered as the label's `for`. */
+  id?: string | null
+  /** Id of the `<label>` element itself, for `aria-labelledby`. */
+  labelId?: string | null
+  text?: string
+  required?: boolean
+  success?: boolean
+  error?: boolean
+  disabled?: boolean
+  /** Shows "(Opcional)" when the field is not required. Defaults to true. */
+  showOptionalLabel?: boolean
+}
+
+const {
+  id,
+  labelId,
+  text,
+  required = false,
+  success = false,
+  error = false,
+  disabled = false,
+  showOptionalLabel = true,
+  class: className,
+  ...rest
+} = Astro.props
+
+const slotted = Astro.slots.has('default')
+  ? (await Astro.slots.render('default')).trim()
+  : ''
+const hasText = !!text || !!slotted
+// Same precedence as React: success, then error, then disabled.
+const state = success ? 'success' : error ? 'error' : disabled ? 'disabled' : null
+---
+
+{
+  hasText && (
+    <div class:list={['au-field__header', className]} {...rest}>
+      <label id={labelId} for={id} class="au-field__header-label">
+        {text}
+        <Fragment set:html={slotted} />{' '}
+        {showOptionalLabel && !required && (
+          <span class="au-field__header-label--optional">(Opcional)</span>
+        )}
+        {!showOptionalLabel && required && (
+          <Fragment>
+            <strong class="au-field__header-label--required" aria-hidden="true">
+              *
+            </strong>
+            <span class="au-sr-only">obrigatório</span>
+          </Fragment>
+        )}
+      </label>
+      <div class="au-field__header-icon" aria-hidden="true">
+        {state === 'success' && <IconCheck rawColor={COLOR_SUCCESS_50} />}
+        {state === 'error' && <IconAlertOctagon rawColor={COLOR_ERROR_50} />}
+        {state === 'disabled' && <IconSlash rawColor={COLOR_NEUTRAL_40} />}
+      </div>
+    </div>
+  )
+}
