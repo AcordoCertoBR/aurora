@@ -1,0 +1,55 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+/**
+ * Same output as React. With `lazy` (the default) the `<img>` ships without
+ * `src`, like the React version before the image is seen: the controller keeps
+ * the URL and sets `src` when an IntersectionObserver (same options as React's
+ * `useLazyImage`) reports the image as intersecting. No `onClick`: HTML
+ * attributes are forwarded.
+ */
+export type Props = Omit<HTMLAttributes<'img'>, 'src' | 'draggable'> & {
+  src: string
+  lazy?: boolean
+  draggable?: boolean
+}
+
+const { lazy = true, src, draggable = false, ...rest } = Astro.props
+const draggableValue = draggable ? 'true' : 'false'
+---
+
+{
+  lazy ? (
+    <img
+      data-element="au-lazy-image"
+      data-au-lazy-src={src}
+      loading="lazy"
+      draggable={draggableValue}
+      {...rest}
+    />
+  ) : (
+    <img src={src} draggable={draggableValue} {...rest} />
+  )
+}
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  // Mirrors `useLazyImage` (lib/components/LazyImage/hooks.ts): no `src` until
+  // the observer (default options) sees the image, then observe no more.
+  elementController('au-lazy-image', ({ root }) => {
+    const src = root.dataset.auLazySrc
+    root.removeAttribute('data-au-lazy-src')
+    if (src === undefined) return
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        root.setAttribute('src', src)
+        observer.unobserve(root)
+      })
+    })
+
+    observer.observe(root)
+  })
+</script>

@@ -1,0 +1,257 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import {
+  COLOR_BRAND_CYAN_50,
+  COLOR_ERROR_50,
+  COLOR_INFO_50,
+  COLOR_NEUTRAL_60,
+  COLOR_NEUTRAL_70,
+  COLOR_SUCCESS_50,
+  COLOR_WARNING_50,
+} from '@consumidor-positivo/aurora/astro/tokens'
+import Text from '../Text/index.astro'
+import IconAlertCircle from '../icons/default/IconAlertCircle.astro'
+import IconAlertOctagon from '../icons/default/IconAlertOctagon.astro'
+import IconAlertTriangle from '../icons/default/IconAlertTriangle.astro'
+import IconCheck from '../icons/default/IconCheck.astro'
+import IconClock from '../icons/default/IconClock.astro'
+import IconInfo from '../icons/default/IconInfo.astro'
+import IconX from '../icons/default/IconX.astro'
+import './styles.scss'
+
+type AlertStatus =
+  | 'success'
+  | 'error'
+  | 'warning'
+  | 'info'
+  | 'timer'
+  | 'progress'
+  | 'neutral'
+
+/**
+ * Differences from React:
+ * - `title.content` and `text` are strings; for markup, use the `title` and
+ *   `text` slots instead. `customIcon` is the `icon` slot.
+ * - No callbacks. The controller emits, from the root, `au:alertaction` (the
+ *   action button was clicked), `au:countdownend` (the timer reached zero) and
+ *   `au:alertclose` (the close button was clicked, right before the alert is
+ *   removed from the page).
+ * - With `status="timer"`, the countdown settings and the action button (which
+ *   only appears once the countdown ends) travel in a `<template>` that the
+ *   controller reads and removes.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'title'> & {
+  showIcon?: boolean
+  /**
+   * Visual state (Figma: Alerts, States). 'timer' covers the Figma
+   * Running/Resend pair: Running while the countdown runs, Resend when it
+   * ends and the action button appears.
+   */
+  status?: AlertStatus
+  type?: 1 | 2
+  orientation?: 'horizontal' | 'vertical'
+  title?: { content?: string; weight?: 'bold' | 'normal' }
+  text?: string
+  /** Label of the action button. With `status="timer"` it shows when the countdown ends. */
+  actionButton?: { content?: string }
+  closeButton?: boolean
+  /** Seconds of the 'timer' countdown. */
+  countdown?: number
+}
+
+const {
+  showIcon = true,
+  status = 'info',
+  type = 1,
+  orientation = 'horizontal',
+  title,
+  text,
+  actionButton,
+  closeButton = false,
+  countdown = 59,
+  class: className,
+  ...rest
+} = Astro.props
+
+const isTimer = status === 'timer'
+const hasTitleSlot = Astro.slots.has('title')
+const hasTextSlot = Astro.slots.has('text')
+// Same conditions as React: the wrapper shows for any `title` object, the <h4>
+// only with content, and the <p> always goes with the wrapper.
+const hasTitle = !!title?.content || hasTitleSlot
+const hasText = !!text || hasTextSlot
+const hasCustomIcon = Astro.slots.has('icon')
+---
+
+<div
+  class:list={['au-alert', `au-alert--${status}--type-${type}`, className]}
+  data-element="au-alert"
+  {...rest}>
+  <div class="au-alert__content">
+    {
+      showIcon && (
+        <span aria-hidden="true">
+          {hasCustomIcon ? (
+            <slot name="icon" />
+          ) : status === 'success' ? (
+            <IconCheck rawColor={COLOR_SUCCESS_50} />
+          ) : status === 'error' ? (
+            <IconAlertOctagon rawColor={COLOR_ERROR_50} />
+          ) : status === 'warning' ? (
+            <IconAlertTriangle rawColor={COLOR_WARNING_50} />
+          ) : status === 'progress' ? (
+            <IconInfo rawColor={COLOR_BRAND_CYAN_50} />
+          ) : status === 'neutral' ? (
+            <IconAlertCircle rawColor={COLOR_NEUTRAL_60} />
+          ) : isTimer ? (
+            <div class="au-alert__timer">
+              <IconClock rawColor={COLOR_WARNING_50} />
+              <Text
+                class="au-alert__countdown"
+                variant="body-small"
+                weight="bold"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true">
+                {`${countdown}s`}
+              </Text>
+            </div>
+          ) : (
+            <IconInfo rawColor={COLOR_INFO_50} />
+          )}
+        </span>
+      )
+    }
+    <div class={`au-alert__container--${orientation}`}>
+      {
+        (!!title || hasTitleSlot || hasText) && (
+          <div>
+            {hasTitle && (
+              <h4
+                class:list={[
+                  'au-alert__title',
+                  `au-alert__title--${title?.weight}`,
+                  hasText && 'au-alert__title--with-text',
+                ]}>
+                {hasTitleSlot ? <slot name="title" /> : title?.content}
+              </h4>
+            )}
+            <p class="au-alert__support-text">
+              {hasTextSlot ? <slot name="text" /> : text}
+            </p>
+          </div>
+        )
+      }
+
+      <slot />
+
+      {
+        isTimer ? (
+          <template data-au-alert-timer data-countdown={String(countdown)}>
+            {actionButton && (
+              <button class="au-alert__action-btn" type="button">
+                {actionButton.content}
+              </button>
+            )}
+          </template>
+        ) : (
+          actionButton && (
+            <button class="au-alert__action-btn" type="button">
+              {actionButton.content}
+            </button>
+          )
+        )
+      }
+    </div>
+  </div>
+
+  {
+    closeButton && (
+      <button class="au-alert__close-btn" type="button" aria-label="Fechar">
+        <IconX rawColor={COLOR_NEUTRAL_70} />
+      </button>
+    )
+  }
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const TICK_MS = 1000
+
+  elementController('au-alert', ({ root, on, emit }) => {
+    const template = root.querySelector<HTMLTemplateElement>(
+      ':scope > .au-alert__content > [class^="au-alert__container--"] > template[data-au-alert-timer]',
+    )
+    const container = template?.parentElement ?? null
+    const countdown = Number(template?.dataset.countdown ?? 0)
+    // Detached while the countdown runs, like React, which does not render
+    // the button until it ends.
+    const actionButton =
+      (template?.content.firstElementChild as HTMLButtonElement | null) ?? null
+    const counter = root.querySelector<HTMLElement>(
+      ':scope > .au-alert__content > span > .au-alert__timer > .au-alert__countdown',
+    )
+    const timerBox = counter?.parentElement ?? null
+    template?.remove()
+
+    let timeLeft = countdown
+    let timer: ReturnType<typeof setInterval> | undefined
+
+    function setFinished(isFinished: boolean) {
+      if (counter && timerBox) {
+        if (isFinished) counter.remove()
+        else if (!counter.isConnected) timerBox.appendChild(counter)
+      }
+      if (actionButton && container) {
+        if (!isFinished) actionButton.remove()
+        else if (!actionButton.isConnected) container.appendChild(actionButton)
+      }
+    }
+
+    function startCountdown() {
+      clearInterval(timer)
+      if (counter) counter.textContent = `${timeLeft}s`
+      // React never counts down from zero (or less): it stays on "0s" with
+      // no action button.
+      if (timeLeft <= 0) return
+
+      timer = setInterval(() => {
+        timeLeft -= 1
+        if (timeLeft > 0) {
+          if (counter) counter.textContent = `${timeLeft}s`
+          return
+        }
+
+        clearInterval(timer)
+        setFinished(true)
+        emit('au:countdownend')
+      }, TICK_MS)
+    }
+
+    on('click', (event) => {
+      const target = event.target as Element | null
+      // A nested Alert in the default slot handles its own buttons.
+      if (target?.closest('.au-alert') !== root) return
+
+      if (target.closest('.au-alert__action-btn')) {
+        event.preventDefault()
+        if (template) {
+          timeLeft = countdown
+          setFinished(false)
+          startCountdown()
+        }
+        emit('au:alertaction')
+        return
+      }
+
+      if (target.closest('.au-alert__close-btn')) {
+        clearInterval(timer)
+        emit('au:alertclose')
+        root.remove()
+      }
+    })
+
+    if (template) startCountdown()
+  })
+</script>

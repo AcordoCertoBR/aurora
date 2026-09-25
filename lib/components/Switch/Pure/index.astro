@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/**
+ * Differences from React: the native checkbox is uncontrolled, `isActive` is
+ * only its initial state. No `activateCallBack`/`deactivateCallBack`: listen
+ * to the input's native `change` event (it bubbles to the root) and read
+ * `event.target.checked`.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  /** Initial state of the switch. */
+  isActive?: boolean
+  label: string
+  /** Id of the native checkbox, tied to the label. */
+  id: string
+  disabled?: boolean
+}
+
+const {
+  isActive = false,
+  label,
+  id,
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props
+---
+
+<div class:list={['au-switch', className]} {...rest}>
+  <label for={id} class="au-switch-label">
+    <span>{label}</span>
+    <div class="au-switch-container">
+      <input
+        id={id}
+        type="checkbox"
+        class="au-switch-checkbox"
+        checked={isActive}
+        role="switch"
+        disabled={disabled}
+      />
+      <div class="au-switch-track">
+        <div class="au-switch-thumb"></div>
+      </div>
+    </div>
+  </label>
+</div>
