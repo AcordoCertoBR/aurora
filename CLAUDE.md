@@ -104,11 +104,18 @@ A page built only with Astro components must import the reset once, with
 `import '@consumidor-positivo/aurora/global.css'` — it never loads the React
 entry that carries `GlobalStyles`.
 
-Today `Button`, `Text`, `Icon`, `Tabs` (+ `Tabs/TabPanel`), `Header` (+ its nine
-parts), `Footer`, `Logo` (with the `ac/Tertiary` and `cp/Primary` variants),
-`Drawer` and `NavbarVertical` (+ its `Link`) have an `.astro` version. The
-`Drawer` has no `isOpen`/`handleOpen`: any element carrying
-`data-au-drawer-toggle="<drawer id>"` opens it.
+Every visual component has an `.astro` version that renders and behaves
+**exactly** like the React one (a component that can't match gets no `.astro`:
+`SelectField`, `Datepicker`), including all 20 `Logo/ac|cp` variants. React-only
+utilities (`Transition`, `IsMobile`, `misc/*`) and `Prototype/Carousel` stay
+React. Token values come from `@consumidor-positivo/aurora/astro/tokens` (the
+generated tokens as their own entry), never hex: `lib/astro/tokens/tokens.test.ts`
+fails on a hex literal in a `.astro`. The
+`Drawer` and `Modal` have no `isOpen`: any element carrying
+`data-au-drawer-toggle` / `data-au-modal-toggle="<id>"` opens them; callbacks
+become `au:*` events emitted from the root. An `.astro` finds its CSS through
+`recordEmittedStylesheets` in `vite.config.ts`, which reads the bundle (CSS
+asset names collide for nested entries, so the path can't be derived).
 Full reference, conventions and gotchas: [docs/astro.md](docs/astro.md).
 
 ### CSS conventions
@@ -156,7 +163,10 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 - No `exports` do `package.json`, a condição `types` tem que vir antes de `import`; com `import` na frente o subpath resolve como `any` no consumidor (`package.json:21`).
 - `Button` React marca `@deprecated` na prop `type` para desencorajar só o valor `'link'`, e isso gera aviso em toda chamada (`lib/components/Button/index.tsx:29`). A versão Astro evita a tag; o React continua com o falso positivo.
 - Componente Astro instalado via `npm install file:` quebra os `<script>` hoisted do Astro (`No cached compile metadata found`); teste sempre com `npm pack` + tarball (`docs/astro.md`).
-- `Button` em Astro não tem `loading`: o spinner depende de um ícone React e os ícones ainda não têm versão Astro (`lib/components/Button/index.astro`).
+- `export type Props = Omit<` quebrado em várias linhas quebra o compilador do Astro no build (`Expected ">" but found "$$Index"`) e o `astro check` não pega; mantenha numa linha ou use alias (`lib/components/Chip/index.astro:7`).
+- `.astro` não importa `lib/core` nem `.ts` irmão (só `.astro` é publicado). Token tem entry próprio (`astro/tokens`); helper não, então o `getInitialLetters` está copiado (`lib/components/ProfileNav/index.astro:16`).
+- A paridade Astro × React foi provada com um harness fora do repo (React via `react-dom`, Astro via `experimental_AstroContainer`, controllers em jsdom); não roda no CI, então mudou um componente, confira os dois lados (`docs/astro.md`, Paridade com o React).
+- Modal: o cabeçalho troca em 767px, mas o layout `full-screen` usa 600px (`belowMedium`); entre os dois sai SubHeader sem tela cheia, no React e no Astro (`lib/components/Modal/styles.scss`).
 - `Tabs` em Astro renderiza todos os painéis (esconde com `hidden`) e exige `active` explícito no `TabPanel` inicial (`lib/components/Tabs/TabPanel/index.astro:11`).
 - Passar `class:list` para um componente Astro da Aurora sobrescreve as classes internas dele (o Astro entrega a diretiva como prop crua). `Text`, `Button` e `Icon` mesclam; nos demais, use `class` (`lib/components/Text/index.astro:51`).
 - CSS de componente Astro não pode depender de ordem de folha: regra de estado que dispute com classe de token do `Text` precisa compor a especificidade (`lib/components/NavbarVertical/styles.scss:26`).

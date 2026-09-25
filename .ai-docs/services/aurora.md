@@ -37,7 +37,7 @@ Aurora não tem "produção" própria — ela executa **dentro** dos apps que a 
 - **Bundle enxuto:** componentes que exigem dependências pesadas (ex.: Carousel → `react-snap-carousel`) são opcionais e não entram por padrão.
 
 ## Cenários comuns
-- **"O botão do site público está diferente do botão do produto"** → os sites públicos (`www.consumidorpositivo.com.br`, `www.acordocerto.com.br`) usam a versão Astro dos componentes. Hoje existem nesse formato o botão, o texto, o ícone, as abas e — o que mais aparece para quem visita — o cabeçalho e o rodapé; o resto ainda é reimplementado localmente, e é aí que a diferença aparece.
+- **"O botão do site público está diferente do botão do produto"** → os sites públicos (`www.consumidorpositivo.com.br`, `www.acordocerto.com.br`) usam a versão Astro dos componentes. Quase todos os componentes visuais já existem nesse formato, inclusive formulários e todas as logos, e cada um fica exatamente igual à versão do produto. O seletor (SelectField) e o campo de data (Datepicker) não têm versão para o site público, porque não dá para reproduzir a busca e o calendário sem React. Se a página ainda usa React ou uma cópia local, a diferença vem daí: a troca é de cada time do site público (missão em `.ai-docs/missions/astro-cobertura-total.md`).
 - **"Quero um componente novo no design system"** → é criado seguindo o padrão (skill `/create-component`), documentado no Storybook e publicado numa nova versão.
 - **"O botão mudou de cor sem avisar"** → provavelmente o app atualizou a versão de Aurora; o que mudou está no `CHANGELOG.md`.
 - **"Posso usar Aurora no meu app novo?"** → sim, `npm install @consumidor-positivo/aurora`; ver README e Storybook.
@@ -67,4 +67,5 @@ Aurora não tem "produção" própria — ela executa **dentro** dos apps que a 
 - Padrões e desenvolvimento com IA: `lib/docs/Patterns.mdx`, `lib/docs/DevelopingWithAI.mdx`.
 
 ## Histórico de mudanças relevantes
+- 2026-09-24 — Versão Astro de todos os componentes visuais (missão "Páginas públicas sem React").
 - 2026-06-30 — Documento inicial criado no setup de IA do repo (`cp-repo-setup`).

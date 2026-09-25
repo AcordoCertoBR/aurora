@@ -26,7 +26,7 @@ Subcomponentes seguem a mesma regra (`lib/components/Tabs/TabPanel/index.astro`)
 
 Um `.astro` não passa por bundler: o Rollup não sabe parseá-lo, e compilá-lo aqui amarraria o pacote ao runtime interno de uma versão específica do Astro. O formato é publicado como **source**, e quem compila é o Astro do consumidor.
 
-Por isso não existe um entry do Vite para eles. O `vite.config.ts` copia cada `lib/components/<caminho>/index.astro` para `astro/<caminho>/index.astro` com o `viteStaticCopy`, que já estava no config, no hook `writeBundle` (ou seja, depois do CSS já estar escrito). O runtime compartilhado, esse sim, é um entry normal do Vite e sai em `dist/astro/runtime/`.
+Por isso não existe um entry do Vite para eles. O `vite.config.ts` copia cada `.astro` de `lib/components/` (o `index.astro` de cada pasta e as variantes nomeadas, como `Logo/ac/Primary.astro`) para o mesmo caminho sob `astro/` com o `viteStaticCopy`, que já estava no config, no hook `writeBundle` (ou seja, depois do CSS já estar escrito). O runtime compartilhado, esse sim, é um entry normal do Vite e sai em `dist/astro/runtime/`.
 
 Os `.astro` ficam em `astro/` na **raiz do pacote**, fora do `dist`, e é o `astro` no `files` que os publica. O motivo está no gotcha do `moduleResolution` abaixo: para os dois resolvedores concordarem, o caminho físico tem que ser igual ao caminho exportado. Como o `astro/` é gerado no build, ele está no `.gitignore` e o `npm run build` roda `rimraf astro` antes do Vite.
 
@@ -72,7 +72,9 @@ import '../../dist/components/Button/styles.css'
 
 Isso é o que evita exigir do consumidor injetar `variables.scss` e `mixins.scss` no `additionalData` do Sass. O CSS chega com os tokens já resolvidos, e um app que use as duas versões do mesmo componente carrega a mesma folha uma vez só.
 
-A reescrita vale para **qualquer** import relativo de `.scss`, não só o `./styles.scss` do próprio componente: o `getStylesheetMap()` monta o de-para lendo os entries do Vite (fonte `<pasta do entry>/styles.scss` → `dist/components/<entry>/styles.css`). É assim que o `Icon` Astro, que mora em `lib/components/Icon/`, alcança o CSS de `lib/components/icons/styles.scss`, emitido como `dist/components/Icon/styles.css`. Import sem contrapartida emitida (caso do `TabPanel`, que herda o estilo do pai) é removido na cópia.
+A reescrita vale para **qualquer** import relativo de `.scss`, não só o `./styles.scss` do próprio componente. O de-para sai do próprio bundle: o plugin `recordEmittedStylesheets` (`vite.config.ts`) anota, no `generateBundle`, qual CSS cada chunk emitiu para cada `styles.scss` que contém, e a cópia dos `.astro` (que roda depois, no `writeBundle`) consulta esse mapa. É assim que as partes de um barrel acham o CSS: `Card/Root` importa `../styles.scss` e sai apontando para `dist/components/Card/styles.css`, e `form/Field/Root` para o `Field/styles2.css` que o bundler escolheu.
+
+O caminho não dá para deduzir do nome do entry: o CSS é nomeado pelo basename do chunk, então entries aninhados colidem e ganham número na ordem do build (`form/Field`, `Checkbox/Field` e `Radio/Field` viram `Field/styles{,2,3}.css`). Import sem contrapartida emitida é removido na cópia.
 
 ### O reset global
 
@@ -124,6 +126,64 @@ O controller cuida do `aria-expanded` do gatilho e emite `au:draweropen` / `au:d
 
 Duas coisas o Astro faz e o React não: fecha no clique do backdrop e no `Esc`. São adições deliberadas — a marcação e o CSS continuam os mesmos, só o fechar tem mais caminhos.
 
+## Paridade com o React
+
+Regra da biblioteca: **o `.astro` renderiza e se comporta exatamente como o React.** Componente que não consegue ficar igual não ganha versão Astro. É por isso que `SelectField` e `Datepicker` não têm: a lista customizada com busca e o calendário (`react-aria-components`) não têm equivalente estático fiel.
+
+"Igual" quer dizer: com as mesmas props, o DOM depois do controller rodar é o mesmo do React (tags, classes, atributos, estilos inline, texto), incluindo as esquisitices do React (`au-alert__title--undefined`, `width: undefinedpx` no `Card`, `<p>` vazio). As únicas diferenças aceitas são as mecânicas do formato:
+
+- callback vira atributo repassado, `data-*` fixo ou evento `au:*` (ver **Eventos**);
+- `ReactNode` vira slot;
+- atributos de wiring do controller (`data-element`, `data-au-controller-ran`) e ids gerados.
+
+O que o React decide em runtime o controller decide igual, com a mesma regra:
+- o `Modal` fechado sai da página (o React renderiza `null`) e fica um comentário no lugar;
+- no `full-screen`, o `Modal` escolhe entre SubHeader e X a cada abertura com o mesmo `matchMedia` do `isMobile()`;
+- o `LazyImage` segura o `src` até o IntersectionObserver ver a imagem, com as mesmas opções do `useLazyImage`;
+- o `Alert` só insere o botão de ação quando o timer zera.
+
+Quem ainda não está na DOM fica num `<template>` que o controller lê e remove.
+
+A paridade foi provada com um harness que renderiza os dois lados (React com `react-dom`, Astro com `experimental_AstroContainer`), roda o controller em jsdom e compara a árvore, inclusive depois de cliques, digitação e timers. O harness não está no repo nem no CI; se um componente mudar, a paridade precisa ser conferida de novo.
+
+## Modal sem callback
+
+Mesmo modelo do Drawer: qualquer `data-au-modal-toggle="<id do modal>"` na página abre e fecha, com `aria-expanded` e `aria-controls` no gatilho. `closeButton` (padrão `true`) faz o papel do `onClose` do React: sem ele não há X, e o `closeOnBackdropClick` não fecha. Não fecha no `Esc`, porque o React não fecha. Emite `au:modalopen` / `au:modalclose` com `{ id }`.
+
+## Formulário
+
+Os campos compõem as partes de `form/Field/*` (cada uma com o seu `.astro`), e o `...rest` vai no elemento de formulário, como o React espalha as props de input.
+
+`CheckboxGroup` e `RadioGroup` recebem `options` (cada item são as props de um Field) em vez de clonar filhos, porque o Astro não inspeciona o slot. A marcação que sai é a mesma do React. O slot default aceita Field customizado, que precisa trazer o próprio `name`.
+
+## Eventos
+
+Onde o React recebe callback, o Astro emite um `CustomEvent` que borbulha a partir da raiz:
+
+| Componente | Eventos |
+|---|---|
+| `Alert` | `au:alertclose`, `au:alertaction`, `au:countdownend` |
+| `ChipBanner` | `au:chipbannertoggle`, `au:chipbannercomplete` |
+| `Modal` | `au:modalopen`, `au:modalclose` |
+| `SpecialButton` | `au:confirm` |
+| `EmailField` | `au:emailselect` |
+| `PasswordField` | `au:passwordtoggle` |
+| `TokenField` | `au:tokenchange`, `au:tokencomplete`, `au:tokentimer` |
+
+`Switch`, `Checkbox` e `Radio` usam o `change` nativo. Botão que só chama callback do app sai com `data-*` fixo: `data-au-sub-header="return|help"`, `data-au-partner-banner="button"`, `data-au-notifications-bar="link|delete"`.
+
+## Tokens
+
+Os tokens gerados (`lib/core/tokens/.cache/tokens.ts`, a mesma fonte do React) saem também como entry próprio, `@consumidor-positivo/aurora/astro/tokens`, com pasta-proxy para `moduleResolution: "node"`, como o runtime. O frontmatter do `.astro` importa dali, nunca escreve o valor:
+
+```astro
+---
+import { COLOR_SUCCESS_50 } from '@consumidor-positivo/aurora/astro/tokens'
+---
+```
+
+O import roda só no build do consumidor; nada vai para o cliente. No repo, o `tsconfig.json` aponta o specifier para `lib/core/tokens`.
+
 ## Ícones
 
 O `npm run icons` gera, para cada SVG de `lib/assets/icons/<coleção>/`, duas coisas na mesma pasta de saída: o componente React (`IconChevronDown.tsx`) e o Astro (`IconChevronDown.astro`). Os dois saem do mesmo markup, então não há como um divergir do outro.
@@ -161,7 +221,7 @@ export type Props = Omit<HTMLAttributes<'button'>, 'type' | 'disabled'> &
 
 **O `<script>` é TypeScript.** O Astro type-checa o conteúdo da tag, então `event.target.closest(...)` e `event.key` não compilam sem narrowing. O runtime ajuda: `on` é sobrecarregado por nome de evento, então `on('keydown', (event) => event.key)` já recebe um `KeyboardEvent`.
 
-**O import do runtime resolve pelo source, não pelo `dist`.** O `tsconfig.json` mapeia `@consumidor-positivo/aurora/astro/runtime` para `lib/astro/runtime`, senão o check dependeria de um `dist` recém-buildado para ver os tipos certos.
+**Os imports do runtime e dos tokens resolvem pelo source, não pelo `dist`.** O `tsconfig.json` mapeia `@consumidor-positivo/aurora/astro/runtime` para `lib/astro/runtime` e `.../astro/tokens` para `lib/core/tokens`, senão o check dependeria de um `dist` recém-buildado para ver os tipos certos.
 
 ## Controller inline
 
@@ -196,10 +256,10 @@ O runtime da Aurora é um port do runtime dos sites públicos com duas adições
 
 ## Adicionando um componente novo
 
-1. Escreva `lib/components/<Nome>/index.astro` espelhando as classes que o `index.tsx` gera. As classes `au-*` são o contrato; se as duas versões divergirem, o CSS deixa de servir para as duas.
+1. Escreva `lib/components/<Nome>/index.astro` renderizando exatamente o que o `index.tsx` gera (ver **Paridade com o React**). As classes `au-*` são o contrato; se as duas versões divergirem, o CSS deixa de servir para as duas. Token vem de `@consumidor-positivo/aurora/astro/tokens`, nunca em hex.
 2. Importe `./styles.scss` no frontmatter.
 3. Se precisar de comportamento, adicione o `<script>` com `elementController` e um `data-element` na raiz.
-4. Rode `npm run check:astro` e valide num app Astro de verdade (ver **Como verificar** abaixo). A cópia para o `dist` é automática: o glob do `viteStaticCopy` pega qualquer `index.astro` sob `lib/components/`.
+4. Rode `npm run check:astro` e valide num app Astro de verdade (ver **Como verificar** abaixo). A cópia é automática: o glob do `viteStaticCopy` pega qualquer `.astro` sob `lib/components/`.
 5. Commit como `feat:` — é contrato público novo.
 
 ## Como verificar
@@ -226,7 +286,15 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 - **`set:html` não pode ser condicional.** A diretiva sempre substitui o conteúdo, então um `set:html={undefined}` apaga o `<slot />`. `Text` resolve isso ramificando a tag inteira (`lib/components/Text/index.astro:59`).
 - **`Tabs` exige `active` explícito no painel inicial.** O Astro não sabe qual painel corresponde ao `initialTab` na hora de renderizar o `TabPanel`, e resolver isso só no controller causaria flash de todos os painéis abertos. O consumidor marca `<TabPanel tab="x" active>`.
 - **`Tabs` renderiza todos os painéis**, escondendo os inativos com o atributo `hidden`, enquanto a versão React monta só o ativo. Conteúdo pesado em aba secundária pesa no HTML.
-- **`Button` em Astro não tem `loading`.** O spinner é um componente React de ícone; enquanto os ícones não tiverem versão Astro, o estado de carregamento fica de fora.
+- **`export type Props = Omit<` quebrado em várias linhas quebra o compilador, e o `astro check` não pega.** O build falha com `Expected ">" but found "$$Index"`. Mantenha o `Omit<...>` numa linha só ou use um alias (`lib/components/Chip/index.astro:7`).
+- **Um `.astro` não importa `lib/core` nem `.ts` irmão.** Só os `.astro` vão no pacote. Token tem entry próprio (ver **Tokens**); helper não, então o `getInitialLetters` está copiado em `lib/components/ProfileNav/index.astro:16`. Mudou o helper, mude a cópia.
+- **`hidden` não esconde elemento cuja classe define `display`.** E mesmo quando esconde, o React não renderiza o nó, então a paridade pede tirar da DOM: o `Alert` fecha com `root.remove()`, e `ChipBanner`, `SpecialButton` e `Alert` guardam o que ainda não aparece em `<template>`.
+- **`Astro.slots.has()` é `true` para slot repassado por um pai, mesmo vazio.** `form/Field/InputHolder/index.astro:15` e `form/Field/Label/index.astro:49` renderizam o slot e testam o texto.
+- **O `Card` escreve `undefinedpx`.** O React monta o `style` com todos os tamanhos, definidos ou não, e o Astro replica a string literal. O browser descarta os inválidos.
+- **Componente usado com `slot="x"` recebe `slot` como prop.** Se ele espalha `...rest`, o atributo `slot` aparece no HTML. `NotificationsBar/List` descarta; nos outros é um atributo inerte fora de shadow DOM.
+- **Dois breakpoints no Modal.** O cabeçalho troca em 767px (o do `isMobile()`), mas o layout `full-screen` usa `belowMedium` (600px), então entre 600 e 767px sai o SubHeader sem o container em tela cheia. O React tem o mesmo descompasso.
+- **`Esc` fecha todos os drawers abertos**, não só o de cima. O `Modal` não fecha no `Esc`, como no React.
+- **As logos cp `PrimaryFillWhite`, `PrimaryFullWhite`, `PrimaryLogoWhite`, `PrimaryNegative` e `PrimaryWhite` usam `clipPath id="a"`.** Duas na mesma página compartilham o id, igual ao React. Só é inofensivo enquanto os recortes forem iguais.
 - **`@deprecated` numa prop marca a prop inteira.** O `Button` React usa `@deprecated` no `type` para desencorajar só o valor `'link'`, e o efeito é um aviso em toda chamada de `<Button type="primary">`. A versão Astro descreve a restrição em texto em vez de usar a tag. O React continua com o aviso falso.
 - **`class:list` num componente sobrescreve as classes dele.** O Astro passa a diretiva como prop crua; se o componente espalha `...rest` no elemento, ela cai depois do `class:list` interno e apaga tudo. Foi assim que os links do `NavbarVertical` perderam as classes `au-text` e saíram com o azul default do browser. `Text`, `Button` e `Icon` agora capturam `'class:list'` das props e mesclam; nos outros, passe `class`.
 - **Componente Astro não pode depender de ordem de folha.** No React todo o CSS entra na ordem do `main.ts`; compondo `.astro`, cada componente traz a própria folha na ordem em que é importado. Onde uma classe de estado disputa com uma de token do `Text` (mesma especificidade, 0-1-0), o resultado inverte: `au-navbar-vertical__link--is-active` perdia para `au-text--color-common`. A regra de estado tem que compor (`&--is-active.au-text`), não contar com a ordem.
@@ -249,5 +317,14 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 | `Logo` + `Logo/ac/Tertiary`, `Logo/cp/Primary` | estático |
 | `Drawer` | controller inline |
 | `NavbarVertical` + `NavbarVertical/Link` | controller inline no `Link` |
+| `Logo`: as 20 variantes de `ac/` e `cp/` | estático |
+| `LazyImage` | controller (IntersectionObserver, como o React) |
+| `AdBox`, `BadgeInfo`, `BadgeState`, `Card/*` (`Root`, `Container`, `Emphasis`, `Image`, `Tag`), `Chip`, `Container`, `Divider`, `Image`, `LinkButton`, `NotificationsBar` (+ `List`, `Link`), `PartnerBanner`, `ProfileNav`, `ProgressBar`, `Skeleton`, `Spinner`, `SubHeader`, `Switch/Pure`, `Tooltip` | estático |
+| `Alert`, `ChipBanner`, `Modal`, `SpecialButton`, `Switch/Card` | controller inline |
+| `form/Field/*`, `InputField`, `Checkbox` (`Field`, `Group`), `Radio` (`Field`, `Group`) | estático |
+| `form/Field/TextArea`, `TextareaField` | controller só do contador (`maxLength`) |
+| `EmailField`, `PasswordField`, `TokenField` | controller inline |
 
-O resto da biblioteca ainda é só React. Converter é incremental: cada componente novo é um `.astro` a mais na pasta que já existe.
+Ficam só em React: `SelectField` e `Datepicker` (não ficam iguais, ver **Paridade com o React**), os utilitários sem sentido em Astro (`Transition`, `IsMobile`, `misc/Conditional`, `misc/Portal`, `misc/DynamicTagComponent`) e o `Prototype/Carousel`. O `Header/Wrap` é o `Header/index.astro`.
+
+Os componentes anteriores a essa regra (`Tabs`, `Drawer`, `Footer`, `Header`) têm diferenças documentadas nos gotchas (todos os painéis no HTML, `Esc` e backdrop no Drawer, breakpoint de CSS no Footer) e não passaram pelo harness de paridade.
