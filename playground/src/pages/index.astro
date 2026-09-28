@@ -1,37 +1,149 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import Text from '@components/Text/index.astro'
+import Button from '@components/Button/index.astro'
+import BadgeInfo from '@components/BadgeInfo/index.astro'
+import IconChevronRight from '@components/icons/default/IconChevronRight.astro'
 
 // Every file in `pages/components/` is a page; add one and it shows up here.
+// The description is optional; a page without one gets the generic line.
+const descriptions: Record<string, string> = {
+  alert: 'Status, orientação, botão de ação, fechar e contagem regressiva.',
+  button: 'Tipos, tamanhos, loading, negativo, redondo e como âncora.',
+  card: 'Root, Container, Emphasis, Image e Tag compostos em ofertas.',
+  form: 'InputField, SelectField e Datepicker com seus estados.',
+  header: 'Header completo com Drawer e NavbarVertical, e a versão simples.',
+  modal: 'Aberto por data-au-modal-toggle: lateral, centralizado e tela cheia.',
+  tabs: 'Abas com painel inicial e slot à direita.',
+  text: 'Variantes, pesos, cores, tag responsiva e HTML interno.',
+}
 const pages = Object.keys(import.meta.glob('./components/*.astro'))
   .map((path) => path.replace('./components/', '').replace('.astro', ''))
   .sort()
 ---
 
-<Layout title="índice">
-  <ul class="index">
+<Layout title="Componentes Astro" description="Os mesmos componentes do Storybook, renderizados pelo Astro direto de lib/">
+  <section class="hero">
+    <BadgeInfo status="info" text={`${pages.length} páginas de exemplo`} />
+    <Text as="h2" variant="heading-medium" variantDesk="heading-big" weight="bold">
+      Veja o componente Astro antes de publicar
+    </Text>
+    <Text variant="body-large" color="secondary" class="hero__lead">
+      Cada página renderiza os arquivos <code>.astro</code> de <code>lib/</code> sem build da lib. O que aparece aqui é o que a página pública vai receber, com a mesma marcação e o mesmo CSS do React.
+    </Text>
+    <div class="hero__actions">
+      <Button as="a" href={`/components/${pages[0]}`}>Começar por {pages[0]}</Button>
+      <Button as="a" href="https://github.com/AcordoCertoBR/aurora/blob/main/docs/astro.md" target="_blank" type="outlined">Ler docs/astro.md</Button>
+    </div>
+  </section>
+
+  <ul class="grid">
     {pages.map((slug) => (
-      <li><a href={`/components/${slug}`}>{slug}</a></li>
+      <li>
+        <a class="card" href={`/components/${slug}`}>
+          <span class="card__name">{slug}</span>
+          <span class="card__desc">{descriptions[slug] ?? 'Exemplos do componente em Astro.'}</span>
+          <span class="card__cta">Abrir <IconChevronRight size="small" aria-hidden="true" /></span>
+        </a>
+      </li>
     ))}
   </ul>
+
+  <section class="howto">
+    <Text as="h3" variant="heading-small" weight="bold">Adicionar um exemplo</Text>
+    <ol>
+      <li>Crie um arquivo em <code>playground/src/pages/components/</code>, com o nome do componente.</li>
+      <li>Importe o componente por <code>@components/&lt;Nome&gt;/index.astro</code>.</li>
+      <li>Envolva cada caso em <code>&lt;Example name="..."&gt;</code>. A página entra no menu sozinha.</li>
+    </ol>
+  </section>
 </Layout>
 
-<style>
-  .index {
+<style lang="scss">
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-200;
+    max-width: 680px;
+    margin-bottom: $spacing-500;
+  }
+  .hero__lead code,
+  .howto code {
+    padding: 1px 6px;
+    border-radius: $border-radius-small;
+    background: $color-neutral-20;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9em;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-100;
+  }
+
+  .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: $spacing-200;
     list-style: none;
+    margin-bottom: $spacing-500;
   }
-  .index a {
-    display: block;
-    padding: 12px 16px;
-    background: #fff;
-    border-radius: 8px;
-    font: 600 14px/1 monospace;
-    color: #0048db;
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-100;
+    height: 100%;
+    padding: $spacing-300;
+    background: $color-neutral-00;
+    border: 1px solid $color-neutral-20;
+    border-radius: $border-radius-big;
+    box-shadow: $shadow-01;
+    color: inherit;
     text-decoration: none;
+    transition: transform 120ms, box-shadow 120ms, border-color 120ms;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: $color-brand-blue-50;
+      box-shadow: $shadow-03;
+      .card__cta { color: $color-brand-blue-50; }
+    }
   }
-  .index a:hover {
-    background: #dfe6f5;
+  .card__name {
+    font-family: $font-title;
+    font-size: $font-size-p1;
+    font-weight: $font-weight-semibold;
+    text-transform: capitalize;
+  }
+  .card__desc {
+    flex: 1;
+    font-size: $font-size-p3;
+    line-height: 1.45;
+    color: $color-neutral-50;
+  }
+  .card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: $font-size-p3;
+    font-weight: $font-weight-semibold;
+    color: $color-neutral-50;
+  }
+
+  .howto {
+    max-width: 680px;
+    padding: $spacing-300;
+    background: $color-neutral-00;
+    border: 1px solid $color-neutral-20;
+    border-radius: $border-radius-big;
+
+    ol {
+      margin-top: $spacing-200;
+      padding-left: $spacing-300;
+      font-size: $font-size-p2;
+      line-height: 1.6;
+      color: $color-neutral-50;
+    }
   }
 </style>

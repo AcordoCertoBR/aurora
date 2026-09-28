@@ -4,7 +4,7 @@ import Example from '../../components/Example.astro'
 import Alert from '@components/Alert/index.astro'
 ---
 
-<Layout title="Alert">
+<Layout title="Alert" description="Status, orientação, botão de ação, fechar e contagem regressiva">
   <Example name="info"><Alert status="info" title={{ content: 'Informação', weight: 'bold' }} text="Texto de apoio do alerta." /></Example>
   <Example name="success type 2"><Alert status="success" type={2} title={{ content: 'Tudo certo', weight: 'bold' }} text="Acordo fechado com sucesso." /></Example>
   <Example name="error"><Alert status="error" title={{ content: 'Erro' }} text="Não foi possível concluir." /></Example>

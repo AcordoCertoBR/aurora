@@ -110,7 +110,9 @@ npm run playground:astro         # http://localhost:4321
 npm run playground:astro:build   # build estático das mesmas páginas
 ```
 
-Para adicionar um exemplo, crie um arquivo em `playground/src/pages/components/`, importe o componente por `@components/<Nome>/index.astro` e envolva cada caso em `Example`. A página nova entra no índice sozinha. O CI faz o build do playground, então cada exemplo também é um teste de compilação.
+O menu lateral lista as páginas e, na página aberta, os exemplos dela. O botão "Mobile" mostra a mesma página num frame de 375px, para ver o comportamento mobile (drawer, select em tela cheia, calendário) sem redimensionar a janela.
+
+Para adicionar um exemplo, crie um arquivo em `playground/src/pages/components/`, importe o componente por `@components/<Nome>/index.astro` e envolva cada caso em `Example`. A página nova entra no menu sozinha. O CI faz o build do playground, então cada exemplo também é um teste de compilação.
 
 ## Testes
 
