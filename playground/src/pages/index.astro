@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+// Every file in `pages/components/` is a page; add one and it shows up here.
+const pages = Object.keys(import.meta.glob('./components/*.astro'))
+  .map((path) => path.replace('./components/', '').replace('.astro', ''))
+  .sort()
+---
+
+<Layout title="índice">
+  <ul class="index">
+    {pages.map((slug) => (
+      <li><a href={`/components/${slug}`}>{slug}</a></li>
+    ))}
+  </ul>
+</Layout>
+
+<style>
+  .index {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    list-style: none;
+  }
+  .index a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 8px;
+    font: 600 14px/1 monospace;
+    color: #0048db;
+    text-decoration: none;
+  }
+  .index a:hover {
+    background: #dfe6f5;
+  }
+</style>

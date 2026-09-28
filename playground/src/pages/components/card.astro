@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import CardRoot from '@components/Card/Root/index.astro'
+import CardContainer from '@components/Card/Container/index.astro'
+import CardEmphasis from '@components/Card/Emphasis/index.astro'
+import CardImage from '@components/Card/Image/index.astro'
+import CardTag from '@components/Card/Tag/index.astro'
+import Text from '@components/Text/index.astro'
+import Button from '@components/Button/index.astro'
+import IconGift from '@components/icons/default/IconGift.astro'
+import { COLOR_INFO_50 } from '@consumidor-positivo/aurora/astro/tokens'
+
+const IMG = 'https://assets.consumidorpositivo.com.br/f/114280/106x88/54c054bb14/cards-latampass-black.png'
+---
+
+<Layout title="Card">
+  <Example name="container" bg="gray">
+    <CardRoot width={280} height={200}>
+      <CardContainer justifyContent="center" alignItems="center"><Text variant="heading-small">Hello world!</Text></CardContainer>
+    </CardRoot>
+  </Example>
+  <Example name="offer" bg="gray">
+    <CardRoot maxWidth={308} hoverShadow>
+      <CardContainer gap={16} alignItems="center">
+        <CardTag color="secondary"><IconGift slot="icon" rawColor={COLOR_INFO_50} size="small" />Até 3,5 pontos/dólar</CardTag>
+        <CardImage src={IMG} alt="Cartão Black" />
+        <CardContainer alignItems="center"><Text variant="heading-micro" weight="bold">Cartão Black</Text></CardContainer>
+        <CardEmphasis height={111} content={[{ title: 'Anuidade', description: 'Grátis por gastos' }, { title: 'Benefício', description: 'Pré-venda de ingressos de eventos' }]} />
+        <CardContainer gap={8}>
+          <Button expand="x">Pedir cartão</Button>
+          <Button expand="x" type="outlined">Ver detalhes</Button>
+        </CardContainer>
+      </CardContainer>
+    </CardRoot>
+  </Example>
+  <Example name="small secondary" bg="gray">
+    <CardRoot maxWidth={288} border={false} color="secondary" paddingLess>
+      <CardContainer gap={16}>
+        <CardContainer direction="row" alignItems="center" gap={16}>
+          <CardImage height={64} src={IMG} alt="Cartão Black" />
+          <CardContainer>
+            <Text variant="heading-micro" weight="bold">Cartão Black</Text>
+            <Text variant="body-small" color="secondary">Viagens com experiência e benefícios exclusivos!</Text>
+          </CardContainer>
+        </CardContainer>
+        <CardContainer direction="row" alignItems="center" justifyContent="space-between" gap={8}>
+          <Button type="outlined">Ver detalhes</Button>
+          <Button>Pedir cartão</Button>
+        </CardContainer>
+      </CardContainer>
+    </CardRoot>
+  </Example>
+</Layout>

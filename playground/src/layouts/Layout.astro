@@ -1,0 +1,59 @@
+---
+// The reset the React entry carries through `GlobalStyles`; an Astro-only
+// page imports it once (published as `@consumidor-positivo/aurora/global.css`).
+import '@core/styles/GlobalStyles.scss'
+
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Aurora playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Source+Sans+3:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      body {
+        background: #e9edf5;
+        font-family: 'Source Sans 3', sans-serif;
+      }
+      .pg-header {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        padding: 16px;
+        border-bottom: 1px solid #d0d5e0;
+        background: #fff;
+      }
+      .pg-header a {
+        font: 600 14px/1 monospace;
+        color: #0048db;
+      }
+      .pg-header h1 {
+        font: 600 14px/1 monospace;
+        color: #555;
+      }
+      .pg-main {
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="pg-header">
+      <a href="/">aurora / astro</a>
+      <h1>{title}</h1>
+    </header>
+    <main class="pg-main">
+      <slot />
+    </main>
+  </body>
+</html>

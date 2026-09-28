@@ -1,0 +1,45 @@
+---
+/**
+ * One example on a playground page: a caption and a white surface with the
+ * component inside, like a Storybook story. `bg` swaps the surface for the
+ * brand blue (negative variants) or a light gray (cards); `tall` reserves
+ * room for overlays that open below the component (select, calendar).
+ */
+interface Props {
+  name: string
+  bg?: 'dark' | 'gray'
+  tall?: boolean
+}
+
+const { name, bg, tall = false } = Astro.props
+---
+
+<section class:list={['example', bg && `example--${bg}`, tall && 'example--tall']}>
+  <p class="example__name">{name}</p>
+  <div class="example__surface"><slot /></div>
+</section>
+
+<style>
+  .example {
+    margin: 0 0 32px;
+  }
+  .example__name {
+    margin: 0 0 6px;
+    font: 600 12px/1 monospace;
+    color: #555;
+  }
+  .example__surface {
+    padding: 16px;
+    background: #fff;
+    min-height: 40px;
+  }
+  .example--dark .example__surface {
+    background: #0048db;
+  }
+  .example--gray .example__surface {
+    background: #f1f1f1;
+  }
+  .example--tall .example__surface {
+    min-height: 420px;
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import Tabs from '@components/Tabs/index.astro'
+import TabPanel from '@components/Tabs/TabPanel/index.astro'
+import Button from '@components/Button/index.astro'
+
+const tabs = [
+  { title: 'Dívidas', tab: 'debts' },
+  { title: 'Acordos', tab: 'agreements' },
+  { title: 'Contas', tab: 'bills' },
+]
+---
+
+<Layout title="Tabs">
+  <Example name="default" bg="gray">
+    <Tabs tabs={tabs} initialTab="debts">
+      <TabPanel tab="debts" active><p>Visualize todas as dívidas encontradas no seu CPF.</p></TabPanel>
+      <TabPanel tab="agreements"><p>Acompanhe os acordos em andamento.</p></TabPanel>
+      <TabPanel tab="bills"><p>Veja suas contas cadastradas.</p></TabPanel>
+    </Tabs>
+  </Example>
+  <Example name="right slot" bg="gray">
+    <Tabs tabs={tabs} initialTab="agreements">
+      <Button slot="right" size="medium" type="outlined">Filtrar</Button>
+      <TabPanel tab="debts"><p>Visualize todas as dívidas encontradas no seu CPF.</p></TabPanel>
+      <TabPanel tab="agreements" active><p>Acompanhe os acordos em andamento.</p></TabPanel>
+      <TabPanel tab="bills"><p>Veja suas contas cadastradas.</p></TabPanel>
+    </Tabs>
+  </Example>
+</Layout>

@@ -33,7 +33,13 @@
   // outside any project and fell back to a config without `moduleResolution`,
   // where `astro/types` cannot resolve. `astro check` builds its own program
   // and never hit it.
-  "include": ["lib", "scripts", "lib/**/*.astro", ".astro/types.d.ts"],
+  "include": [
+    "lib",
+    "scripts",
+    "lib/**/*.astro",
+    "playground/**/*.astro",
+    ".astro/types.d.ts"
+  ],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

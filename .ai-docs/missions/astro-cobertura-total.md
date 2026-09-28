@@ -27,6 +27,8 @@ Ficam de fora, como diz o pitch, os utilitários que só existem em React (Trans
 
 O caminho de cada formato e as limitações estão em `docs/astro.md`.
 
+Como o Storybook não renderiza Astro, o repo ganhou um playground (`npm run playground`, PR separado): um site Astro mínimo com uma página por componente, que faz para o formato Astro o que o Storybook faz para o React. O CI faz o build dele, então cada exemplo também é um teste de compilação.
+
 ## Decisão (25/09/2026)
 
 A missão inclui as páginas públicas: Gisele cria a versão Astro de todos os componentes no Aurora, depois o Kauan troca os componentes em todas as páginas públicas (mono-public-pages) e o Tim valida. Apetite de 10 dias úteis, como missão secundária, com ok do Lucas Rodrigues no canal `#_temp-missao-aurora-astro`. Este PR cobre só a parte do Aurora.
