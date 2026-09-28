@@ -1,0 +1,53 @@
+---
+import Button from '../../../Button/index.astro'
+import CalendarHeader from '../CalendarHeader/index.astro'
+import './styles.scss'
+
+/**
+ * The calendar dialog of the Datepicker. The React version renders the grid
+ * with `react-aria-components` (`Calendar`, `CalendarGrid`, `CalendarCell`);
+ * this is the same markup, with the parts react-aria computes at render time
+ * (title, weekday names, the day cells and their `data-*` state) left for the
+ * Datepicker controller to fill, since they depend on the browser locale and
+ * on the focused month. Only rendered inside the Datepicker `<template>`.
+ */
+export type Props = {
+  minYear: number
+  maxYear: number
+  month: number
+  year: number
+}
+
+const { minYear, maxYear, month, year } = Astro.props
+
+const uid = crypto.randomUUID().slice(0, 8)
+// Stand in for the `useId()` react-aria gives the calendar and the grid.
+const calendarId = `au-datepicker-${uid}-calendar`
+const gridId = `au-datepicker-${uid}-grid`
+// The inline style of react-aria's `VisuallyHidden`.
+const visuallyHidden =
+  'border: 0; clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; white-space: nowrap'
+---
+
+<div class="au-datepicker__calendar">
+  <div class="au-datepicker__calendar-backdrop"></div>
+  <div class="au-datepicker__calendar-card">
+    <div class="au-datepicker__calendar-base" data-rac="" id={calendarId} role="application">
+      <div style={visuallyHidden}><h2></h2></div>
+      <CalendarHeader minYear={minYear} maxYear={maxYear} month={month} year={year} />
+      <table id={gridId} role="grid" cellpadding="0" class="au-datepicker__calendar-grid">
+        <thead aria-hidden="true" class="react-aria-CalendarGridHeader">
+          <tr>
+            {Array.from({ length: 7 }).map(() => <th class="au-datepicker__calendar-weekday"></th>)}
+          </tr>
+        </thead>
+        <tbody class="react-aria-CalendarGridBody"></tbody>
+      </table>
+      <div style={visuallyHidden}><button tabindex="-1"></button></div>
+    </div>
+    <div class="au-datepicker__calendar-actions-dock">
+      <Button type="outlined" class="au-datepicker__calendar-cancel" expand="x">Cancelar</Button>
+      <Button expand="x">Confirmar</Button>
+    </div>
+  </div>
+</div>

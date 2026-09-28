@@ -128,7 +128,7 @@ Duas coisas o Astro faz e o React não: fecha no clique do backdrop e no `Esc`. 
 
 ## Paridade com o React
 
-Regra da biblioteca: **o `.astro` renderiza e se comporta exatamente como o React.** Componente que não consegue ficar igual não ganha versão Astro. É por isso que o `Datepicker` não tem: o campo, a máscara e os seletores de mês e ano são código próprio, mas a grade do calendário vem do `react-aria-components`, que gera ids, `aria-label` por célula e navegação por teclado que um controller só reproduziria reescrevendo a biblioteca. O `SelectField`, que não usa `react-aria`, tem versão Astro com o mesmo DOM e o mesmo comportamento.
+Regra da biblioteca: **o `.astro` renderiza e se comporta exatamente como o React.** Componente que não consegue ficar igual não ganha versão Astro. Hoje todo componente visual tem a sua: o `SelectField`, que não usa `react-aria`, e o `Datepicker`, cuja grade de calendário é uma cópia fiel do que o `react-aria-components` 1.17 renderiza (ver **Datepicker**).
 
 "Igual" quer dizer: com as mesmas props, o DOM depois do controller rodar é o mesmo do React (tags, classes, atributos, estilos inline, texto), incluindo as esquisitices do React (`au-alert__title--undefined`, `width: undefinedpx` no `Card`, `<p>` vazio). As únicas diferenças aceitas são as mecânicas do formato:
 
@@ -158,6 +158,16 @@ O `SelectField` React é escrito à mão (wrapper `combobox`, `input`, `ul` de o
 
 Com `fullScreenOptions`, o React abre a lista num `Modal` via `createPortal` no mobile (`isMobile()`, decidido na renderização). O `.astro` renderiza o `Modal` no fim da marcação com `portal`, e o controller decide com o mesmo `matchMedia` ao rodar: no mobile remove a `ul` e abre o modal por `au:modalcontrol`; no desktop o modal fica fechado e fora da página, só o comentário do placeholder sobra no `body`.
 
+## Datepicker
+
+O `DatepickerField` React é código próprio quase inteiro (máscara DD/MM/YYYY, validação de mínimo e máximo, botão do calendário, backdrop, seletores de mês e ano, Cancelar e Confirmar no mobile, portal abaixo de 600px, clique fora acima), e o `.astro` porta isso passo a passo. A grade de dias é a parte que no React vem do `react-aria-components` (`Calendar`, `CalendarGrid`, `CalendarCell`); o controller Astro gera exatamente o que a versão 1.17.0 renderiza: a `div` `role="application"` com o `h2` escondido, a `table` `role="grid"` com o `thead` `aria-hidden`, uma `div` `role="button"` por dia com `aria-label` completo (`Intl.DateTimeFormat`, "Hoje, ..." e "... selecionado" das strings do react-aria), o `tabindex` circulante, os `data-*` que o CSS usa (`data-selected`, `data-disabled`, `data-today`, `data-focused`, `data-hovered`, `data-focus-visible`, `data-outside-month`), o botão "Próximo" escondido no fim e a região `aria-live` que anuncia a data selecionada e a troca de mês.
+
+O teclado é o do react-aria: setas, Home, End, PageUp e PageDown (com Shift, um ano), Enter e espaço. O foco segue a regra da célula do react-aria: quando uma data vira a focada com o calendário focado, a célula toma o foco de onde estiver, inclusive do campo ao completar uma data digitada; na montagem o foco do campo vence; o clique de mouse num dia não move o foco. `data-focus-visible` aparece com teclado e some ao mover o mouse.
+
+O calendário fica num `<template>` enquanto fechado (o React não o renderiza) e entra na página ao abrir, com a classe `--visible` 100ms depois e a remoção 200ms depois de fechar. Abaixo de 600px, com `withPortal`, ele vai para `#au-portal > div` no `body`, como o `Portal` React. As strings vêm de uma cópia dos dicionários pt-BR e en-US do react-aria, escolhidas por `navigator.language` como o `useLocale`; outro idioma cai em en-US. `onChange` vira `au:datechange` (`detail.value`, a data ou `null` quando a digitada é inválida) e `onBlur` vira `au:dateblur`. `format` não tem contraparte. `defaultValue="now"` nasce vazio no HTML e o controller preenche o dia do navegador.
+
+Como a grade é uma cópia do react-aria 1.17.0, que o `package.json` fixa, subir essa dependência exige rodar o harness de paridade de novo.
+
 ## Formulário
 
 Os campos compõem as partes de `form/Field/*` (cada uma com o seu `.astro`), e o `...rest` vai no elemento de formulário, como o React espalha as props de input.
@@ -176,6 +186,7 @@ Onde o React recebe callback, o Astro emite um `CustomEvent` que borbulha a part
 | `SpecialButton` | `au:confirm` |
 | `EmailField` | `au:emailselect` |
 | `SelectField` | `au:selectchange`, `au:selectblur` |
+| `Datepicker` | `au:datechange`, `au:dateblur` |
 | `PasswordField` | `au:passwordtoggle` |
 | `TokenField` | `au:tokenchange`, `au:tokencomplete`, `au:tokentimer` |
 
@@ -333,7 +344,8 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 | `form/Field/*`, `InputField`, `Checkbox` (`Field`, `Group`), `Radio` (`Field`, `Group`) | estático |
 | `form/Field/TextArea`, `TextareaField` | controller só do contador (`maxLength`) |
 | `EmailField`, `PasswordField`, `TokenField`, `SelectField` | controller inline |
+| `Datepicker` (+ `Calendar`, `CalendarHeader`, `Segment`) | controller inline no campo; as partes são marcação estática que ele preenche |
 
-Ficam só em React: `Datepicker` (não fica igual, ver **Paridade com o React**), os utilitários sem sentido em Astro (`Transition`, `IsMobile`, `misc/Conditional`, `misc/Portal`, `misc/DynamicTagComponent`) e o `Prototype/Carousel`. O `Header/Wrap` é o `Header/index.astro`.
+Ficam só em React: os utilitários sem sentido em Astro (`Transition`, `IsMobile`, `misc/Conditional`, `misc/Portal`, `misc/DynamicTagComponent`) e o `Prototype/Carousel`. O `Header/Wrap` é o `Header/index.astro`.
 
 Os componentes anteriores a essa regra (`Tabs`, `Drawer`, `Footer`, `Header`) têm diferenças documentadas nos gotchas (todos os painéis no HTML, `Esc` e backdrop no Drawer, breakpoint de CSS no Footer) e não passaram pelo harness de paridade.

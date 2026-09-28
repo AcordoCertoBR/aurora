@@ -21,7 +21,7 @@ Todo componente visual da Aurora ganha uma versão Astro, com o `npm run check:a
 
 Os componentes da lista do pitch, as 18 variantes de Logo que faltavam e o `loading` do Button Astro.
 
-A regra é paridade exata: a versão Astro renderiza e se comporta igual à React, e isso foi provado componente a componente com um harness que compara os dois lados. O Datepicker não fica igual (a grade do calendário depende do react-aria-components) e por isso fica sem versão Astro; o SelectField, que é código próprio, ganhou versão Astro em 28/09/2026 com o mesmo DOM e comportamento. As cores vêm dos mesmos tokens do React, nunca escritas à mão.
+A regra é paridade exata: a versão Astro renderiza e se comporta igual à React, e isso foi provado componente a componente com um harness que compara os dois lados. O SelectField (código próprio) e o Datepicker (cuja grade é uma cópia fiel do que o react-aria-components 1.17 renderiza) ganharam versão Astro em 28/09/2026, com o mesmo DOM e comportamento provados no harness. Todo componente visual da Aurora tem versão Astro. As cores vêm dos mesmos tokens do React, nunca escritas à mão.
 
 Ficam de fora, como diz o pitch, os utilitários que só existem em React (Transition, IsMobile, Conditional, Portal, DynamicTagComponent) e o Carousel, que ainda é protótipo.
 
@@ -33,4 +33,4 @@ A missão inclui as páginas públicas: Gisele cria a versão Astro de todos os 
 
 ## Em aberto
 
-- `DatepickerField` está na lista do pitch (esforço alto) e ficou sem versão Astro pela regra de paridade: a grade do calendário é do react-aria-components. Falta o ok do Tim para a exclusão, ou uma grade escrita à mão com diferenças assumidas (ids, aria-label por célula e teclado), ou a island React só na página do help center que usa o campo.
+- Nenhum componente ficou de fora. A grade do Datepicker Astro é uma cópia do react-aria-components 1.17.0; subir essa dependência exige rodar o harness de paridade de novo.

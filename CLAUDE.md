@@ -105,8 +105,9 @@ A page built only with Astro components must import the reset once, with
 entry that carries `GlobalStyles`.
 
 Every visual component has an `.astro` version that renders and behaves
-**exactly** like the React one (a component that can't match gets no `.astro`:
-`Datepicker`), including all 20 `Logo/ac|cp` variants and the `SelectField`. React-only
+**exactly** like the React one, including all 20 `Logo/ac|cp` variants, the
+`SelectField` and the `Datepicker` (whose calendar grid is a copy of what
+`react-aria-components` 1.17 renders). React-only
 utilities (`Transition`, `IsMobile`, `misc/*`) and `Prototype/Carousel` stay
 React. Token values come from `@consumidor-positivo/aurora/astro/tokens` (the
 generated tokens as their own entry), never hex: `lib/astro/tokens/tokens.test.ts`
@@ -181,6 +182,9 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 - Paridade Astro × React medida em 28/09/2026 com um harness Playwright fora do repo (`~/Documents/aurora-parity-harness`): 666 comparações, relatório na página da missão no Notion.
 - `SelectField` Astro lê a seleção inicial do `li` marcado com `--selected`, não do `<select hidden>`: um `<select>` sem `selected` devolve a primeira opção como valor, e o React trata isso como nada selecionado (`lib/components/form/SelectField/index.astro`, `selectedIndex`). Os `li` são atualizados no lugar, nunca recriados: um `li` novo sob o mouse parado dispara `mouseenter` e destaca a opção, o que o React (keyed por índice) não faz.
 - `Modal` Astro: `portal` move o modal para o `body` na inicialização e `au:modalcontrol` (evento em `document`, `detail: { id, open }`) abre e fecha por código; é o que o `SelectField` usa no modo tela cheia (`lib/components/Modal/index.astro`).
+- `Datepicker` Astro copia o DOM que o `react-aria-components` 1.17.0 gera para a grade (roles, `aria-label` por dia via `Intl`, `tabindex` circulante, `data-focused|selected|disabled|today|hovered|focus-visible|outside-month`, `data-rac`, anúncio em região `aria-live`). Subir o react-aria exige reconferir a paridade no harness (`lib/components/form/Datepicker/index.astro`).
+- `Datepicker` Astro: as strings do calendário (rótulo do dia, "Hoje,", "Data selecionada:") vêm de uma cópia dos dicionários pt-BR e en-US do react-aria; outro idioma do navegador cai em en-US, enquanto o React tem todos os idiomas do react-aria. `defaultValue="now"` nasce vazio no HTML e o controller preenche o dia do navegador. `format` não tem contraparte (só DD/MM/YYYY).
+- O foco no calendário React segue o `useEffect` da célula do react-aria: a célula que vira a focada rouba o foco de onde estiver (do próprio campo, inclusive, ao digitar uma data completa), menos na montagem, quando o foco do campo vence; um clique de mouse num dia não move o foco (`preventFocusOnPress`), e `data-focus-visible` some ao mover o mouse. O controller Astro replica cada uma dessas regras; mudar uma quebra a paridade.
 
 ## Onde achar o resto (ponteiros)
 

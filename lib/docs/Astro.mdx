@@ -258,7 +258,7 @@ elementController('meu-bloco', builder, { lazy: true, rootMargin: '200px' })
 
 ## Limites
 
-- A versão Astro renderiza e se comporta exatamente como a React. Componente que não fica igual não ganha versão Astro: é o caso do `Datepicker` (use o React com island). Também ficam só em React os utilitários que não fazem sentido em Astro (`Transition`, `IsMobile`, `Conditional`, `Portal`, `DynamicTagComponent`) e o `Prototype/Carousel`.
+- A versão Astro renderiza e se comporta exatamente como a React. Hoje todo componente visual tem versão Astro, inclusive `SelectField` e `Datepicker`. Ficam só em React os utilitários que não fazem sentido em Astro (`Transition`, `IsMobile`, `Conditional`, `Portal`, `DynamicTagComponent`) e o `Prototype/Carousel`.
 - As 20 variantes de logo têm versão Astro (`astro/Logo/ac/<Nome>.astro`, `astro/Logo/cp/<Nome>.astro`).
 - Os tokens de design estão em `@consumidor-positivo/aurora/astro/tokens`, os mesmos do React, para usar no frontmatter.
 - Os ícones têm um `.astro` por ícone, gerado junto com o React (`astro/icons/default/IconChevronDown.astro`). Para um SVG de fora da biblioteca, use o `Icon` e passe o markup.

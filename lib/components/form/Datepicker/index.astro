@@ -1,0 +1,756 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import InputField from '../InputField/index.astro'
+import DatepickerCalendar from './Calendar/index.astro'
+import IconCalendar from '../../icons/default/IconCalendar.astro'
+import { COLOR_NEUTRAL_40 } from '@consumidor-positivo/aurora/astro/tokens'
+import './styles.scss'
+
+export type AUCalendarDateShape = { day: number; month: number; year: number }
+export type DefaultValue = 'empty' | 'now' | AUCalendarDateShape
+
+type FieldProps = Pick<
+  HTMLAttributes<'input'>,
+  'id' | 'name' | 'required' | 'autocomplete' | 'style' | 'class'
+>
+
+/**
+ * Same props and markup as the React `DatepickerField`: an `InputField` with
+ * the DD/MM/YYYY mask and the calendar dialog. The React grid comes from
+ * `react-aria-components` 1.17; the inline controller reproduces its markup
+ * (roles, `aria-label` per day from `Intl`, roving `tabindex`, the `data-*`
+ * states the stylesheet uses), its keyboard (arrows, Home, End, PageUp,
+ * PageDown, Enter, space) and its live-region announcements, on top of the
+ * Aurora hooks it ports step by step: the mask and validation, the month and
+ * year pickers, the mobile sheet with Cancel and Confirm, the portal below
+ * 600px and the outside click above it.
+ *
+ * Differences from React: `value` is the initial date; `onChange` becomes
+ * `au:datechange` (`detail.value`, the date or `null` for an invalid one) and
+ * `onBlur` becomes `au:dateblur` (`detail.value`), both bubbling from the root.
+ * `format` has no counterpart: only the DD/MM/YYYY adapter ships. With
+ * `defaultValue="now"` the field starts empty in the HTML and the controller
+ * fills today, since "now" is the browser's day, not the build's. The
+ * calendar strings follow the browser language like react-aria; pt-BR and
+ * en-US are bundled, other languages fall back to en-US. Every other HTML
+ * attribute goes to the `<input>`, as the React spreads its props.
+ */
+export type Props = FieldProps & {
+  label?: string
+  showOptionalLabel?: boolean
+  requiredInput?: boolean
+  success?: boolean
+  error?: boolean
+  errorMessage?: string
+  helpMessage?: string
+  disabled?: boolean
+  /** Use the calendar dialog to pick a date. */
+  calendar?: boolean
+  placeholder?: string
+  /** Initial date. */
+  value?: AUCalendarDateShape | null
+  /** Default date, as the React uncontrolled mode. */
+  defaultValue?: DefaultValue
+  /** Makes the calendar dialog the top z-indexed item on the page (below 600px). */
+  withPortal?: boolean
+  /** Min allowed date, defaults to 1900-01-01. */
+  minValue?: AUCalendarDateShape
+  /** Max allowed date, defaults to 2100-12-31. */
+  maxValue?: AUCalendarDateShape
+}
+
+const {
+  calendar = true,
+  placeholder,
+  disabled = false,
+  value,
+  defaultValue = 'empty',
+  withPortal = true,
+  minValue = { day: 1, month: 1, year: 1900 },
+  maxValue = { day: 31, month: 12, year: 2100 },
+  ...rest
+} = Astro.props
+
+const pad = (n: number) => String(n).padStart(2, '0')
+const toString = (date: AUCalendarDateShape) => `${pad(date.day)}/${pad(date.month)}/${date.year}`
+const toIso = (date: AUCalendarDateShape) => `${date.year}-${pad(date.month)}-${pad(date.day)}`
+
+// Same precedence as `useDatepicker`: `value` wins, then a dated `defaultValue`.
+const initial: AUCalendarDateShape | null =
+  value && value.day ? value : typeof defaultValue === 'object' ? defaultValue : null
+const inputDate = initial ? toString(initial) : ''
+const focused = initial ?? null
+---
+
+<div
+  class="au-datepicker"
+  data-element="au-datepicker"
+  data-au-datepicker-min={toIso(minValue)}
+  data-au-datepicker-max={toIso(maxValue)}
+  data-au-datepicker-selected={initial ? toIso(initial) : undefined}
+  data-au-datepicker-now={defaultValue === 'now' && !initial ? '' : undefined}
+  data-au-datepicker-portal={withPortal ? '' : undefined}
+  data-au-datepicker-calendar={calendar ? '' : undefined}>
+  <InputField
+    class="au-datepicker__input"
+    {...rest}
+    maxlength={10}
+    value={inputDate}
+    type="tel"
+    disabled={disabled}
+    placeholder={placeholder || 'DD/MM/YYYY'}>
+    {
+      calendar && (
+        <button
+          slot="right"
+          type="button"
+          class="au-datepicker__calendar-holder"
+          aria-label="Abrir calendário">
+          <IconCalendar rawColor={disabled ? COLOR_NEUTRAL_40 : undefined} />
+        </button>
+      )
+    }
+  </InputField>
+  {
+    calendar && (
+      <template data-au-datepicker-calendar>
+        <DatepickerCalendar
+          minYear={minValue.year}
+          maxYear={maxValue.year}
+          month={focused?.month ?? 1}
+          year={focused?.year ?? minValue.year}
+        />
+      </template>
+    )
+  }
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  type DateShape = { day: number; month: number; year: number }
+
+  // ---------------------------------------------------------------------------
+  // Dates. Plain gregorian arithmetic, the subset of @internationalized/date
+  // the React Datepicker uses.
+  const BREAKPOINT_MD = '600px'
+  const above = (breakpoint: string) => window.matchMedia(`screen and (min-width: ${breakpoint})`).matches
+  const pad = (n: number) => String(n).padStart(2, '0')
+  const toNative = (d: DateShape) => new Date(d.year, d.month - 1, d.day)
+  const fromNative = (n: Date): DateShape => ({ day: n.getDate(), month: n.getMonth() + 1, year: n.getFullYear() })
+  const daysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate()
+  const compare = (a: DateShape, b: DateShape) => a.year - b.year || a.month - b.month || a.day - b.day
+  const isSameDay = (a: DateShape | null | undefined, b: DateShape | null | undefined) => !!a && !!b && compare(a, b) === 0
+  const addDays = (d: DateShape, days: number) => fromNative(new Date(d.year, d.month - 1, d.day + days))
+  // `CalendarDate.add({months})` keeps the day and constrains it to the month.
+  const addMonths = (d: DateShape, months: number) => {
+    const total = d.year * 12 + (d.month - 1) + months
+    const year = Math.floor(total / 12)
+    const month = (total % 12) + 1
+    return { year, month, day: Math.min(d.day, daysInMonth(year, month)) }
+  }
+  const addYears = (d: DateShape, years: number) => ({
+    year: d.year + years,
+    month: d.month,
+    day: Math.min(d.day, daysInMonth(d.year + years, d.month)),
+  })
+  const startOfMonth = (d: DateShape): DateShape => ({ ...d, day: 1 })
+  const endOfMonth = (d: DateShape): DateShape => ({ ...d, day: daysInMonth(d.year, d.month) })
+  const today = () => fromNative(new Date())
+  const parseIso = (iso: string): DateShape => {
+    const [year, month, day] = iso.split('-').map(Number)
+    return { year, month, day }
+  }
+
+  // First day of the week per region (CLDR, as @internationalized/date ships
+  // it; regions that start on Sunday are omitted).
+  const WEEK_START: Record<string, number> = { '001': 1, AD: 1, AE: 6, AF: 6, AI: 1, AL: 1, AM: 1, AN: 1, AR: 1, AT: 1, AU: 1, AX: 1, AZ: 1, BA: 1, BE: 1, BG: 1, BH: 6, BM: 1, BN: 1, BY: 1, CH: 1, CL: 1, CM: 1, CN: 1, CR: 1, CY: 1, CZ: 1, DE: 1, DJ: 6, DK: 1, DZ: 6, EC: 1, EE: 1, EG: 6, ES: 1, FI: 1, FJ: 1, FO: 1, FR: 1, GB: 1, GE: 1, GF: 1, GP: 1, GR: 1, HR: 1, HU: 1, IE: 1, IQ: 6, IR: 6, IS: 1, IT: 1, JO: 6, KG: 1, KW: 6, KZ: 1, LB: 1, LI: 1, LK: 1, LT: 1, LU: 1, LV: 1, LY: 6, MC: 1, MD: 1, ME: 1, MK: 1, MN: 1, MQ: 1, MV: 5, MY: 1, NL: 1, NO: 1, NZ: 1, OM: 6, PL: 1, QA: 6, RE: 1, RO: 1, RS: 1, RU: 1, SD: 6, SE: 1, SI: 1, SK: 1, SM: 1, SY: 6, TJ: 1, TM: 1, TR: 1, UA: 1, UY: 1, UZ: 1, VA: 1, VN: 1, XK: 1 }
+  function getWeekStart(locale: string) {
+    try {
+      const inst = new Intl.Locale(locale)
+      const info = (inst as unknown as { getWeekInfo?: () => { firstDay: number } }).getWeekInfo?.()
+      if (info) return info.firstDay % 7
+      const region = inst.maximize().region
+      return region ? WEEK_START[region] || 0 : 0
+    } catch {
+      return 0
+    }
+  }
+
+  // The react-aria calendar strings the Datepicker reaches.
+  const STRINGS: Record<string, Record<string, string>> = {
+    'pt-BR': {
+      next: 'Próximo',
+      minimumDate: 'Primeira data disponível',
+      maximumDate: 'Última data disponível',
+      dateSelected: '{date} selecionado',
+      todayDate: 'Hoje, {date}',
+      todayDateSelected: 'Hoje, {date} selecionado',
+      selectedDateDescription: 'Data selecionada: {date}',
+    },
+    'en-US': {
+      next: 'Next',
+      minimumDate: 'First available date',
+      maximumDate: 'Last available date',
+      dateSelected: '{date} selected',
+      todayDate: 'Today, {date}',
+      todayDateSelected: 'Today, {date} selected',
+      selectedDateDescription: 'Selected Date: {date}',
+    },
+  }
+
+  // Same DOM as react-aria's LiveAnnouncer, created on first use.
+  let announcerNode: HTMLElement | null = null
+  function announce(message: string, assertiveness: 'assertive' | 'polite' = 'assertive', timeout = 7000) {
+    if (!announcerNode) {
+      announcerNode = document.createElement('div')
+      announcerNode.dataset.liveAnnouncer = 'true'
+      Object.assign(announcerNode.style, {
+        border: '0',
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: '1px',
+        margin: '-1px',
+        overflow: 'hidden',
+        padding: '0',
+        position: 'absolute',
+        width: '1px',
+        whiteSpace: 'nowrap',
+      })
+      for (const live of ['assertive', 'polite']) {
+        const log = document.createElement('div')
+        log.setAttribute('role', 'log')
+        log.setAttribute('aria-live', live)
+        log.setAttribute('aria-relevant', 'additions')
+        announcerNode.appendChild(log)
+      }
+      document.body.prepend(announcerNode)
+    }
+    const log = announcerNode.children[assertiveness === 'assertive' ? 0 : 1]
+    const node = document.createElement('div')
+    node.textContent = message
+    log.appendChild(node)
+    if (message !== '') window.setTimeout(() => node.remove(), timeout)
+  }
+
+  // react-aria's interaction modality: keyboard focus shows `data-focus-visible`.
+  let modality: 'keyboard' | 'pointer' = 'pointer'
+  const toPointer = () => {
+    modality = 'pointer'
+    document.querySelectorAll('.au-datepicker__calendar-day[data-focus-visible]').forEach((cell) => cell.removeAttribute('data-focus-visible'))
+  }
+  document.addEventListener('keydown', () => { modality = 'keyboard' }, true)
+  document.addEventListener('pointerdown', toPointer, true)
+  document.addEventListener('pointermove', toPointer, true)
+
+  // ---------------------------------------------------------------------------
+  elementController('au-datepicker', ({ root, query, emit }) => {
+    const input = query<HTMLInputElement>('.au-field__input')
+    const template = query<HTMLTemplateElement>('template[data-au-datepicker-calendar]')
+    if (!input) return
+    const field = input
+
+    // Controller settings only; React's root carries no such attributes.
+    const minValue = parseIso(root.dataset.auDatepickerMin ?? '1900-01-01')
+    const maxValue = parseIso(root.dataset.auDatepickerMax ?? '2100-12-31')
+    const withPortal = root.hasAttribute('data-au-datepicker-portal')
+    const hasCalendar = root.hasAttribute('data-au-datepicker-calendar')
+    const startsNow = root.hasAttribute('data-au-datepicker-now')
+    let selectedDate: DateShape | null = root.dataset.auDatepickerSelected ? parseIso(root.dataset.auDatepickerSelected) : null
+    for (const name of ['min', 'max', 'selected', 'now', 'portal', 'calendar']) root.removeAttribute(`data-au-datepicker-${name}`)
+
+    const disabled = field.disabled
+    const locale = navigator.language || 'en-US'
+    const strings = STRINGS[locale] ?? STRINGS[locale.split('-')[0] === 'pt' ? 'pt-BR' : 'en-US']
+    const t = (key: string, date = '') => strings[key].replace('{date}', date)
+    const monthFormatter = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' })
+    const dayLabelFormatter = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+    const dayNumberFormatter = new Intl.DateTimeFormat(locale, { day: 'numeric' })
+    const weekdayFormatter = new Intl.DateTimeFormat(locale, { weekday: 'short' })
+    const weekStart = getWeekStart(locale)
+
+    // ---- the field (useDatepicker) -----------------------------------------
+    const format = {
+      placeholder: 'DD/MM/YYYY',
+      maskDate(dateStr: string) {
+        let fmt = dateStr.replace(/\D/g, '')
+        if (fmt.length > 2) fmt = `${fmt.slice(0, 2)}/${fmt.slice(2)}`
+        if (fmt.length > 5) fmt = `${fmt.slice(0, 5)}/${fmt.slice(5)}`
+        return fmt
+      },
+      validateFormat: (dateStr: string) => /^\d{2}\/\d{2}\/\d{4}$/.test(dateStr),
+      toCalendarDate(dateStr: string): DateShape {
+        const [day, month, year] = dateStr.split('/').map(Number)
+        return { day, month, year }
+      },
+      toString: (d: DateShape) => `${pad(d.day)}/${pad(d.month)}/${d.year}`,
+      validate(dateStr: string) {
+        const [day, month, year] = dateStr.split('/').map(Number)
+        const date = new Date(year, month - 1, day)
+        const olderThanMin = date < toNative(minValue)
+        const exceedsMax = date > toNative(maxValue)
+        return date.getDate() === day && date.getMonth() + 1 === month && date.getFullYear() === year && !olderThanMin && !exceedsMax
+      },
+    }
+
+    // `isMobileInputWithCalendar`, computed once like the React `useMemo`.
+    if (!above(BREAKPOINT_MD) && hasCalendar) field.setAttribute('inputmode', 'none')
+
+    if (startsNow && !selectedDate) {
+      selectedDate = today()
+      field.value = format.toString(selectedDate)
+    }
+
+    let isCalendarVisible = false
+
+    function handleLoseFocus(event: MouseEvent) {
+      if (!root.contains(event.target as Node)) {
+        closeCalendar()
+        document.removeEventListener('mousedown', handleLoseFocus)
+      }
+    }
+    // `useOutsideClick` with the MD breakpoint: only above it.
+    function listenOutsideClick() {
+      if (!above(BREAKPOINT_MD)) return
+      document.addEventListener('mousedown', handleLoseFocus)
+    }
+
+    function handleInputChange() {
+      const maskedValue = format.maskDate(field.value)
+      field.value = maskedValue
+      if (!format.validateFormat(maskedValue)) return
+      const isDateValid = format.validate(maskedValue)
+      const newFieldValue = isDateValid ? format.toCalendarDate(maskedValue) : null
+      selectedDate = newFieldValue
+      // The React calendar only follows a dated `value` (`if (!value) return`),
+      // so an invalid date leaves the previous selection in the calendar.
+      if (newFieldValue) calendar?.setValue(newFieldValue)
+      emit('au:datechange', { value: newFieldValue })
+      if (!isDateValid) field.value = ''
+    }
+
+    function openCalendar() {
+      if (!isCalendarVisible && disabled) return
+      listenOutsideClick()
+      if (isCalendarVisible) return
+      isCalendarVisible = true
+      calendar?.show()
+    }
+
+    function closeCalendar() {
+      if (!isCalendarVisible) return
+      isCalendarVisible = false
+      calendar?.hide()
+    }
+
+    function updateDateFromCalendar(pickerDate: DateShape) {
+      selectedDate = pickerDate
+      field.value = format.toString(pickerDate)
+      calendar?.setValue(pickerDate)
+      emit('au:datechange', { value: pickerDate })
+    }
+
+    field.addEventListener('input', handleInputChange)
+    field.addEventListener('focus', openCalendar)
+    field.addEventListener('blur', () => emit('au:dateblur', { value: selectedDate }))
+    query<HTMLButtonElement>('.au-datepicker__calendar-holder')?.addEventListener('click', () => field.focus())
+
+    // ---- the calendar (useCalendar + react-aria) ---------------------------
+    type Calendar = {
+      show(): void
+      hide(): void
+      setValue(date: DateShape | null): void
+    }
+
+    const calendar: Calendar | null = template ? createCalendar(template) : null
+
+    function createCalendar(template: HTMLTemplateElement): Calendar {
+      const calendarEl = template.content.firstElementChild as HTMLElement
+      template.remove()
+      const base = calendarEl.querySelector<HTMLElement>('.au-datepicker__calendar-base')!
+      const title = base.querySelector<HTMLElement>(':scope > div > h2')!
+      const grid = base.querySelector<HTMLTableElement>('table')!
+      const headerCells = Array.from(grid.querySelectorAll<HTMLElement>('thead th'))
+      const body = grid.querySelector<HTMLElement>('tbody')!
+      const hiddenNext = base.querySelector<HTMLButtonElement>(':scope > div:last-child > button')!
+      const prevButton = base.querySelector<HTMLButtonElement>('.au-datepicker__header > button:first-child')!
+      const nextButton = base.querySelector<HTMLButtonElement>('.au-datepicker__header > button:last-child')!
+      const segments = Array.from(base.querySelectorAll<HTMLElement>('.au-datepicker__segment'))
+      const cancelButton = calendarEl.querySelector<HTMLButtonElement>('.au-datepicker__calendar-cancel')!
+      const confirmButton = calendarEl.querySelector<HTMLButtonElement>('.au-datepicker__calendar-actions-dock > button:last-child')!
+      const backdrop = calendarEl.querySelector<HTMLElement>('.au-datepicker__calendar-backdrop')!
+
+      // react-stately calendar state.
+      let value: DateShape | null = selectedDate
+      let focusedDate: DateShape = constrain(value ?? today())
+      let startDate: DateShape = startOfMonth(focusedDate)
+      let isFocused = true // `autoFocus`
+      let mounted = false
+      let enterTimer: number | undefined
+      let leaveTimer: number | undefined
+      let lastRange = ''
+      let lastSelectedDescription = ''
+      let showing = false
+      let lastFocusKey = ''
+      const portalDoor = document.createElement('div')
+
+      function constrain(date: DateShape) {
+        if (compare(date, minValue) < 0) return minValue
+        if (compare(date, maxValue) > 0) return maxValue
+        return date
+      }
+      const isInvalid = (date: DateShape) => compare(date, minValue) < 0 || compare(date, maxValue) > 0
+      const endDate = () => endOfMonth(startDate)
+      const isCellDisabled = (date: DateShape) => compare(date, startDate) < 0 || compare(date, endDate()) > 0 || isInvalid(date)
+      const isSelected = (date: DateShape) => value !== null && isSameDay(date, value) && !isCellDisabled(date)
+      const rangeDescription = () => monthFormatter.format(toNative(startDate))
+      const selectedDescription = () => (value ? t('selectedDateDescription', dayLabelFormatter.format(toNative(value))) : '')
+
+      function setFocusedDate(date: DateShape) {
+        focusedDate = constrain(date)
+        if (compare(focusedDate, startDate) < 0 || compare(focusedDate, endDate()) > 0) startDate = startOfMonth(focusedDate)
+        render()
+      }
+      // `focusNextPage` / `focusPreviousPage`, one month per page.
+      function focusPage(direction: 1 | -1) {
+        focusedDate = constrain(addMonths(focusedDate, direction))
+        startDate = startOfMonth(constrain(addMonths(startDate, direction)))
+        render()
+      }
+      function setValue(next: DateShape | null) {
+        value = next
+        if (next) focusedDate = constrain(next)
+        if (compare(focusedDate, startDate) < 0 || compare(focusedDate, endDate()) > 0) startDate = startOfMonth(focusedDate)
+        render()
+      }
+      function selectDate(date: DateShape, byPointer = false) {
+        // `calendarChange`: on desktop the pick is final and closes; on mobile
+        // it only moves the selection until "Confirmar".
+        value = constrain(date)
+        focusedDate = value
+        if (!byPointer) isFocused = true
+        render()
+        if (!above(BREAKPOINT_MD)) return
+        triggerChange(value)
+      }
+      function triggerChange(date: DateShape) {
+        updateDateFromCalendar(date)
+        closeCalendar()
+      }
+
+      // ---- rendering ---------------------------------------------------------
+      function weekdays() {
+        const start = addDays(today(), -((toNative(today()).getDay() - weekStart + 7) % 7))
+        return Array.from({ length: 7 }, (_, i) => {
+          const day = weekdayFormatter.format(toNative(addDays(start, i)))
+          // `fmtWeekday` in `useCalendar`.
+          return `${day.charAt(0).toUpperCase()}${day.slice(1)}`.replace('.', '')
+        })
+      }
+      function datesInWeek(weekIndex: number): DateShape[] {
+        const from = addDays(startDate, weekIndex * 7)
+        const offset = (toNative(from).getDay() - weekStart + 7) % 7
+        const first = addDays(from, -offset)
+        return Array.from({ length: 7 }, (_, i) => addDays(first, i))
+      }
+      function weeksInMonth() {
+        const offset = (toNative(startDate).getDay() - weekStart + 7) % 7
+        return Math.ceil((offset + daysInMonth(startDate.year, startDate.month)) / 7)
+      }
+      function cellLabel(date: DateShape) {
+        let label = dayLabelFormatter.format(toNative(date))
+        const selected = isSelected(date)
+        if (isSameDay(date, today())) label = t(selected ? 'todayDateSelected' : 'todayDate', label)
+        else if (selected) label = t('dateSelected', label)
+        if (isSameDay(date, minValue)) label += `, ${t('minimumDate')}`
+        else if (isSameDay(date, maxValue)) label += `, ${t('maximumDate')}`
+        return label
+      }
+
+      const cells = new Map<string, HTMLElement>()
+      const segmentResets: Array<() => void> = []
+      function renderGrid() {
+        const weeks = weeksInMonth()
+        const rows = Array.from(body.children) as HTMLTableRowElement[]
+        while (rows.length > weeks) rows.pop()!.remove()
+        cells.clear()
+        for (let w = 0; w < weeks; w++) {
+          let row = rows[w]
+          if (!row) {
+            row = document.createElement('tr')
+            body.appendChild(row)
+          }
+          const dates = datesInWeek(w)
+          const tds = Array.from(row.children) as HTMLTableCellElement[]
+          while (tds.length > 7) tds.pop()!.remove()
+          dates.forEach((date, i) => {
+            let td = tds[i]
+            if (!td) {
+              td = document.createElement('td')
+              td.setAttribute('role', 'gridcell')
+              td.appendChild(createCell())
+              row!.appendChild(td)
+            }
+            renderCell(td, date)
+          })
+        }
+      }
+      function createCell() {
+        const cell = document.createElement('div')
+        cell.dataset.reactAriaPressable = 'true'
+        cell.setAttribute('role', 'button')
+        cell.className = 'au-datepicker__calendar-day'
+        cell.dataset.rac = ''
+        // useHover (mouse only) and usePress with `preventFocusOnPress`: the
+        // press never moves focus, the pick happens on release.
+        let pressing = false
+        cell.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch' && !cell.hasAttribute('aria-disabled')) cell.dataset.hovered = 'true' })
+        cell.addEventListener('pointerleave', () => { delete cell.dataset.hovered; pressing = false })
+        cell.addEventListener('mousedown', (e) => e.preventDefault())
+        cell.addEventListener('pointerdown', () => { pressing = !cell.hasAttribute('aria-disabled') })
+        cell.addEventListener('pointerup', () => {
+          if (!pressing) return
+          pressing = false
+          const date = cellDate(cell)
+          if (date) selectDate(date, true)
+        })
+        cell.addEventListener('pointercancel', () => { pressing = false })
+        cell.addEventListener('focus', () => {
+          const date = cellDate(cell)
+          if (date && !cell.hasAttribute('aria-disabled')) {
+            focusedDate = date
+            isFocused = true
+            render()
+          }
+        })
+        cell.addEventListener('contextmenu', (e) => e.preventDefault())
+        return cell
+      }
+      const cellDate = (cell: HTMLElement) => (cell.dataset.auDate ? parseIso(cell.dataset.auDate) : null)
+      function renderCell(td: HTMLTableCellElement, date: DateShape) {
+        const cell = td.firstElementChild as HTMLElement
+        const disabledCell = isCellDisabled(date)
+        const selected = isSelected(date)
+        const outsideMonth = date.month !== startDate.month || date.year !== startDate.year
+        const focusedCell = isFocused && isSameDay(date, focusedDate) && !outsideMonth
+        const iso = `${date.year}-${pad(date.month)}-${pad(date.day)}`
+        cell.dataset.auDate = iso
+        cells.set(iso, cell)
+
+        setAttr(td, 'aria-disabled', disabledCell ? 'true' : null)
+        setAttr(td, 'aria-selected', selected ? 'true' : null)
+
+        setAttr(cell, 'tabindex', disabledCell ? null : isSameDay(date, focusedDate) ? '0' : '-1')
+        setAttr(cell, 'aria-disabled', disabledCell ? 'true' : null)
+        setAttr(cell, 'aria-label', cellLabel(date))
+        setAttr(cell, 'data-focused', focusedCell ? 'true' : null)
+        setAttr(cell, 'data-disabled', disabledCell ? 'true' : null)
+        setAttr(cell, 'data-focus-visible', focusedCell && modality === 'keyboard' && document.activeElement === cell ? 'true' : null)
+        setAttr(cell, 'data-outside-visible-range', outsideMonth ? 'true' : null)
+        setAttr(cell, 'data-outside-month', outsideMonth ? 'true' : null)
+        setAttr(cell, 'data-selected', selected ? 'true' : null)
+        setAttr(cell, 'data-today', isSameDay(date, today()) ? 'true' : null)
+        const text = dayNumberFormatter.formatToParts(toNative(date)).find((p) => p.type === 'day')?.value ?? String(date.day)
+        if (cell.textContent !== text) cell.textContent = text
+      }
+      function setAttr(el: Element, name: string, val: string | null) {
+        if (val === null) el.removeAttribute(name)
+        else if (el.getAttribute(name) !== val) el.setAttribute(name, val)
+      }
+
+      function renderSegments() {
+        segments.forEach((segment, index) => {
+          const current = index === 0 ? focusedDate.month : focusedDate.year
+          const button = segment.querySelector<HTMLButtonElement>('.au-datepicker__segment-input')!
+          const items = Array.from(segment.querySelectorAll<HTMLLIElement>('.au-datepicker__segment-list-item'))
+          let label = ''
+          items.forEach((item) => {
+            const active = Number(item.dataset.auValue) === current
+            item.classList.toggle('au-datepicker__segment-list-item--active', active)
+            item.setAttribute('aria-selected', String(active))
+            if (active) label = item.textContent?.trim() ?? ''
+          })
+          if (button.firstChild?.nodeType === 3) {
+            if (button.firstChild.nodeValue !== label) button.firstChild.nodeValue = label
+          } else button.prepend(label)
+        })
+      }
+
+      function render() {
+        const range = rangeDescription()
+        base.setAttribute('aria-label', range)
+        title.textContent = range
+        grid.setAttribute('aria-label', range)
+        hiddenNext.setAttribute('aria-label', t('next'))
+        hiddenNext.disabled = isInvalid(addDays(endDate(), 1))
+        weekdays().forEach((day, i) => { if (headerCells[i].textContent !== day) headerCells[i].textContent = day })
+        renderGrid()
+        renderSegments()
+        confirmButton.classList.toggle('au-btn--disabled', value === null)
+        confirmButton.disabled = value === null
+
+        // react-aria announces the visible range when it changes with the
+        // grid unfocused, and the selected date whenever it changes.
+        if (mounted && range !== lastRange && !isFocused) announce(range)
+        lastRange = range
+        const description = selectedDescription()
+        if (mounted && description !== lastSelectedDescription && description) announce(description, 'polite', 4000)
+        lastSelectedDescription = description
+
+        // The react-aria cell effect: when a cell becomes the focused one
+        // while the calendar is focused, it takes DOM focus wherever it was
+        // (the field included), except on mount, where the field's own focus
+        // wins.
+        const focusKey = isFocused ? `${focusedDate.year}-${pad(focusedDate.month)}-${pad(focusedDate.day)}` : ''
+        const focused = focusKey ? cells.get(focusKey) : undefined
+        if (focused && focusKey !== lastFocusKey && !showing && document.activeElement !== focused) {
+          focused.focus({ preventScroll: true })
+          setAttr(focused, 'data-focus-visible', modality === 'keyboard' ? 'true' : null)
+        }
+        lastFocusKey = focusKey
+      }
+
+      // ---- keyboard (useCalendarGrid) ----------------------------------------
+      grid.addEventListener('keydown', (event) => {
+        const stop = () => { event.preventDefault(); event.stopPropagation() }
+        switch (event.key) {
+          case 'Enter':
+          case ' ':
+            event.preventDefault()
+            selectDate(focusedDate)
+            break
+          case 'PageUp':
+            stop()
+            if (event.shiftKey) setFocusedDate(addYears(focusedDate, -1))
+            else setFocusedDate(addMonths(focusedDate, -1))
+            break
+          case 'PageDown':
+            stop()
+            if (event.shiftKey) setFocusedDate(addYears(focusedDate, 1))
+            else setFocusedDate(addMonths(focusedDate, 1))
+            break
+          case 'End':
+            stop()
+            setFocusedDate(endOfMonth(focusedDate))
+            break
+          case 'Home':
+            stop()
+            setFocusedDate(startOfMonth(focusedDate))
+            break
+          case 'ArrowLeft':
+            stop()
+            setFocusedDate(addDays(focusedDate, -1))
+            break
+          case 'ArrowUp':
+            stop()
+            setFocusedDate(addDays(focusedDate, -7))
+            break
+          case 'ArrowRight':
+            stop()
+            setFocusedDate(addDays(focusedDate, 1))
+            break
+          case 'ArrowDown':
+            stop()
+            setFocusedDate(addDays(focusedDate, 7))
+            break
+        }
+      })
+      grid.addEventListener('focusin', () => { isFocused = true; render() })
+      grid.addEventListener('focusout', () => { isFocused = false; render() })
+
+      // ---- header (useCalendarHeader + useSegment) ---------------------------
+      prevButton.addEventListener('click', () => focusPage(-1))
+      nextButton.addEventListener('click', () => focusPage(1))
+      segments.forEach((segment, index) => {
+        const button = segment.querySelector<HTMLButtonElement>('.au-datepicker__segment-input')!
+        const list = segment.querySelector<HTMLElement>('.au-datepicker__segment-list')!
+        let open = false
+        const setOpen = (next: boolean) => {
+          open = next
+          segment.classList.toggle('au-datepicker__segment--open', open)
+          button.setAttribute('aria-expanded', String(open))
+          if (open) list.querySelector<HTMLElement>('.au-datepicker__segment-list-item--active')?.scrollIntoView({ block: 'center', inline: 'center' })
+        }
+        const outside = (event: MouseEvent) => {
+          if (segment.contains(event.target as Node)) return
+          setOpen(false)
+          document.removeEventListener('mousedown', outside)
+        }
+        segmentResets.push(() => { if (open) setOpen(false); document.removeEventListener('mousedown', outside) })
+        button.addEventListener('click', () => {
+          setOpen(true)
+          if (above(BREAKPOINT_MD)) document.addEventListener('mousedown', outside)
+        })
+        segment.querySelectorAll<HTMLButtonElement>('.au-datepicker__segment-list-header button').forEach((close) => close.addEventListener('click', () => setOpen(false)))
+        list.addEventListener('click', (event) => {
+          const item = (event.target as Element | null)?.closest<HTMLElement>('.au-datepicker__segment-list-item')
+          if (!item) return
+          const picked = Number(item.dataset.auValue)
+          const next = index === 0
+            ? { year: focusedDate.year, month: picked, day: Math.min(focusedDate.day, daysInMonth(focusedDate.year, picked)) }
+            : { year: picked, month: focusedDate.month, day: Math.min(focusedDate.day, daysInMonth(picked, focusedDate.month)) }
+          setFocusedDate(next)
+          setOpen(false)
+        })
+      })
+
+      cancelButton.addEventListener('click', closeCalendar)
+      confirmButton.addEventListener('click', () => { if (value) triggerChange(value) })
+      backdrop.addEventListener('click', closeCalendar)
+
+      // ---- mount / unmount (useCalendar delays + PortalHolder) ---------------
+      function mount() {
+        if (mounted) return
+        mounted = true
+        if (!above(BREAKPOINT_MD) && withPortal) {
+          let portalRoot = document.getElementById('au-portal')
+          if (!portalRoot) {
+            portalRoot = document.createElement('div')
+            portalRoot.id = 'au-portal'
+            document.body.appendChild(portalRoot)
+          }
+          portalRoot.appendChild(portalDoor)
+          portalDoor.appendChild(calendarEl)
+        } else {
+          root.appendChild(calendarEl)
+        }
+      }
+      function unmount() {
+        if (!mounted) return
+        mounted = false
+        calendarEl.remove()
+        portalDoor.remove()
+        cells.clear()
+        // React mounts a fresh calendar every time: no hover left over and
+        // every picker closed.
+        body.querySelectorAll<HTMLElement>('[data-hovered]').forEach((cell) => { delete cell.dataset.hovered })
+        segmentResets.forEach((reset) => reset())
+      }
+
+      return {
+        show() {
+          window.clearTimeout(leaveTimer)
+          // `defaultFocusDate` → `setFocusedDate` on the header effect.
+          if (value) { focusedDate = constrain(value); startDate = startOfMonth(focusedDate) }
+          isFocused = true
+          lastRange = rangeDescription()
+          lastSelectedDescription = selectedDescription()
+          showing = true
+          render()
+          showing = false
+          lastFocusKey = `${focusedDate.year}-${pad(focusedDate.month)}-${pad(focusedDate.day)}`
+          mount()
+          enterTimer = window.setTimeout(() => calendarEl.classList.add('au-datepicker__calendar--visible'), 100)
+        },
+        hide() {
+          window.clearTimeout(enterTimer)
+          calendarEl.classList.remove('au-datepicker__calendar--visible')
+          leaveTimer = window.setTimeout(unmount, 200)
+        },
+        setValue(next) {
+          setValue(next)
+        },
+      }
+    }
+  })
+</script>
