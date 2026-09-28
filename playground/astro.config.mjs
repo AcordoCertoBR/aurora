@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config'
 // straight from `lib/`, so a change can be seen in a browser without building
 // and packing the library. It is the Astro-side equivalent of Storybook.
 //
-// Run it from the repo root: `npm run playground`. The aliases mirror the
+// Run it from the repo root: `npm run playground:astro`. The aliases mirror the
 // `tsconfig.json` paths (Astro only picks those up with a `baseUrl`, which the
 // library tsconfig does not set): `@components` and `@core` point at the
 // source, and the `@consumidor-positivo/aurora/astro/*` self-imports of the

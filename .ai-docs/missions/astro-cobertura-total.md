@@ -27,7 +27,7 @@ Ficam de fora, como diz o pitch, os utilitários que só existem em React (Trans
 
 O caminho de cada formato e as limitações estão em `docs/astro.md`.
 
-Como o Storybook não renderiza Astro, o repo ganhou um playground (`npm run playground`, PR separado): um site Astro mínimo com uma página por componente, que faz para o formato Astro o que o Storybook faz para o React. O CI faz o build dele, então cada exemplo também é um teste de compilação.
+Como o Storybook não renderiza Astro, o repo ganhou um playground (`npm run playground:astro`, PR separado): um site Astro mínimo com uma página por componente, que faz para o formato Astro o que o Storybook faz para o React. O CI faz o build dele, então cada exemplo também é um teste de compilação.
 
 ## Decisão (25/09/2026)
 

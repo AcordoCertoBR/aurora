@@ -31,7 +31,7 @@ import '@consumidor-positivo/aurora/global.css'
 O Storybook não renderiza `.astro`. Para ver os componentes Astro no navegador, rode o playground do repo:
 
 ```bash
-npm run playground   # http://localhost:4321
+npm run playground:astro   # http://localhost:4321
 ```
 
 Ele lista uma página por componente (`playground/src/pages/components/`), renderizando os arquivos de `lib/` direto. Para adicionar um exemplo, crie um arquivo nessa pasta e importe o componente por `@components/<Nome>/index.astro`; a página nova entra no índice sozinha. O CI faz o build do playground, então cada exemplo também é um teste de compilação.
