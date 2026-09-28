@@ -106,7 +106,7 @@ entry that carries `GlobalStyles`.
 
 Every visual component has an `.astro` version that renders and behaves
 **exactly** like the React one (a component that can't match gets no `.astro`:
-`SelectField`, `Datepicker`), including all 20 `Logo/ac|cp` variants. React-only
+`Datepicker`), including all 20 `Logo/ac|cp` variants and the `SelectField`. React-only
 utilities (`Transition`, `IsMobile`, `misc/*`) and `Prototype/Carousel` stay
 React. Token values come from `@consumidor-positivo/aurora/astro/tokens` (the
 generated tokens as their own entry), never hex: `lib/astro/tokens/tokens.test.ts`
@@ -171,6 +171,16 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 - Passar `class:list` para um componente Astro da Aurora sobrescreve as classes internas dele (o Astro entrega a diretiva como prop crua). `Text`, `Button` e `Icon` mesclam; nos demais, use `class` (`lib/components/Text/index.astro:51`).
 - CSS de componente Astro não pode depender de ordem de folha: regra de estado que dispute com classe de token do `Text` precisa compor a especificidade (`lib/components/NavbarVertical/styles.scss:26`).
 - `Checkbox.Field` não tem prop de posição do controle (`Radio.Field` tem `direction: 'left' | 'right'`); o Figma prevê `Position: Left | Right` para ambos.
+- `Header.Profile` Astro: o `span` do badge sem `count` carrega espaço em branco do template e sai com 18px em vez dos 12px do React (`lib/components/Header/Profile/index.astro:55`). Expressão de texto dentro de `span` pequeno tem que ficar na mesma linha das tags.
+- Footer completo entre 768 e 1023px: o React decide o bloco de lojas e a borda dos certificados com `isMobile()` (767px), o Astro com o breakpoint de 1024px do CSS; nessa faixa os dois divergem (`lib/components/Footer/styles.scss:202`).
+- Tabs React deixa 32px (24px no mobile) abaixo do painel quando a aba ativa não é a última: os painéis inativos são `div` vazias com `margin-top`. O Astro esconde com `hidden` e não tem o espaço (`lib/components/Tabs/styles.scss:68`).
+- NavbarVertical: no React, clicar num link do dropdown também alterna o grupo; o controller Astro ignora esses cliques de propósito (`lib/components/NavbarVertical/Link/index.astro:94`).
+- O `Icon` React descarta qualquer prop não declarada, inclusive o `aria-hidden="true"` que Drawer, Header, Alert, SubHeader, Modal e SpecialButton passam; o `Icon` Astro repassa. O atributo só existe no lado Astro (`lib/components/icons/Icon.tsx:34`).
+- `Text` com `dangerouslySetInnerHTML` embrulha o HTML num `div` extra; o `html` do Astro injeta direto (`lib/components/Text/index.tsx:31`).
+- Componente Astro passado com `slot="x"` espalha o atributo `slot` no HTML final via `...rest` (Icon, Logo, Text, Button). Inerte, mas aparece em 15 componentes; `NotificationsBar/List/index.astro:25` mostra como descartar.
+- Paridade Astro × React medida em 28/09/2026 com um harness Playwright fora do repo (`~/Documents/aurora-parity-harness`): 666 comparações, relatório na página da missão no Notion.
+- `SelectField` Astro lê a seleção inicial do `li` marcado com `--selected`, não do `<select hidden>`: um `<select>` sem `selected` devolve a primeira opção como valor, e o React trata isso como nada selecionado (`lib/components/form/SelectField/index.astro`, `selectedIndex`). Os `li` são atualizados no lugar, nunca recriados: um `li` novo sob o mouse parado dispara `mouseenter` e destaca a opção, o que o React (keyed por índice) não faz.
+- `Modal` Astro: `portal` move o modal para o `body` na inicialização e `au:modalcontrol` (evento em `document`, `detail: { id, open }`) abre e fecha por código; é o que o `SelectField` usa no modo tela cheia (`lib/components/Modal/index.astro`).
 
 ## Onde achar o resto (ponteiros)
 

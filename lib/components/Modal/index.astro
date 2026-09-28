@@ -24,6 +24,12 @@ type ModalLayoutMobile = 'default' | 'centralized' | 'full-screen'
  * - React picks the mobile SubHeader with `isMobile()` (max-width 767px) each
  *   time it renders. With `layoutMobile="full-screen"`, the SubHeader rides in
  *   a `<template>` and the controller makes the same choice on every open.
+ * - `portal` moves the modal to `document.body` when the controller runs, the
+ *   counterpart of a React `createPortal(<Modal />, document.body)`.
+ * - Besides the toggles, a `CustomEvent('au:modalcontrol', { detail: { id,
+ *   open? } })` dispatched on `document` opens (`open: true`), closes
+ *   (`open: false`) or toggles (no `open`) the modal with that `id`, for
+ *   components that drive a modal from their own controller.
  */
 export type Props = HTMLAttributes<'div'> & {
   id: string
@@ -44,6 +50,8 @@ export type Props = HTMLAttributes<'div'> & {
   mobileModalTitle?: string
   /** Renders the help button in the mobile full-screen SubHeader. */
   helpButton?: boolean
+  /** Moves the modal to `document.body` once the controller runs. */
+  portal?: boolean
 }
 
 const {
@@ -55,6 +63,7 @@ const {
   layoutDesktop = 'default',
   mobileModalTitle = 'Título',
   helpButton = false,
+  portal = false,
   'aria-label': ariaLabel,
   class: className,
   ...rest
@@ -78,6 +87,7 @@ const isFullScreenMobile = layoutMobile === 'full-screen'
   aria-label={ariaLabel ?? mobileModalTitle}
   data-element="au-modal"
   data-au-modal-close-on-backdrop={closeButton && closeOnBackdropClick ? 'true' : undefined}
+  data-au-modal-portal={portal ? '' : undefined}
   {...rest}>
   <div class="au-modal__container">
     <div class="au-modal__header">
@@ -168,6 +178,11 @@ const isFullScreenMobile = layoutMobile === 'full-screen'
     document.querySelectorAll(toggleSelector).forEach((trigger) => {
       trigger.setAttribute('aria-controls', root.id)
     })
+    // Controller setting only; React's root carries no such attribute.
+    if (root.hasAttribute('data-au-modal-portal')) {
+      root.removeAttribute('data-au-modal-portal')
+      document.body.appendChild(root)
+    }
     setOpen(isOpen(), true)
 
     on('click', (event) => {
@@ -187,6 +202,12 @@ const isFullScreenMobile = layoutMobile === 'full-screen'
       const trigger = (event.target as Element | null)?.closest(toggleSelector)
       if (!trigger) return
       setOpen(!isOpen())
+    })
+
+    on('global:au:modalcontrol', (event) => {
+      const detail = (event as CustomEvent<{ id?: string; open?: boolean }>).detail
+      if (!detail || detail.id !== root.id) return
+      setOpen(detail.open ?? !isOpen())
     })
   })
 </script>

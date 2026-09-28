@@ -21,12 +21,16 @@ Todo componente visual da Aurora ganha uma versão Astro, com o `npm run check:a
 
 Os componentes da lista do pitch, as 18 variantes de Logo que faltavam e o `loading` do Button Astro.
 
-A regra é paridade exata: a versão Astro renderiza e se comporta igual à React, e isso foi provado componente a componente com um harness que compara os dois lados. O SelectField e o Datepicker não ficam iguais (a busca e o calendário dependem de React) e por isso ficam sem versão Astro. As cores vêm dos mesmos tokens do React, nunca escritas à mão.
+A regra é paridade exata: a versão Astro renderiza e se comporta igual à React, e isso foi provado componente a componente com um harness que compara os dois lados. O Datepicker não fica igual (a grade do calendário depende do react-aria-components) e por isso fica sem versão Astro; o SelectField, que é código próprio, ganhou versão Astro em 28/09/2026 com o mesmo DOM e comportamento. As cores vêm dos mesmos tokens do React, nunca escritas à mão.
 
 Ficam de fora, como diz o pitch, os utilitários que só existem em React (Transition, IsMobile, Conditional, Portal, DynamicTagComponent) e o Carousel, que ainda é protótipo.
 
 O caminho de cada formato e as limitações estão em `docs/astro.md`.
 
+## Decisão (25/09/2026)
+
+A missão inclui as páginas públicas: Gisele cria a versão Astro de todos os componentes no Aurora, depois o Kauan troca os componentes em todas as páginas públicas (mono-public-pages) e o Tim valida. Apetite de 10 dias úteis, como missão secundária, com ok do Lucas Rodrigues no canal `#_temp-missao-aurora-astro`. Este PR cobre só a parte do Aurora.
+
 ## Em aberto
 
-A decisão do pitch continua pendente: a missão cobre só o Aurora ou também troca os componentes nas páginas públicas (mono-public-pages, central de ajuda com cerca de 236 páginas)? Este PR cobre só o Aurora.
+- `DatepickerField` está na lista do pitch (esforço alto) e ficou sem versão Astro pela regra de paridade: a grade do calendário é do react-aria-components. Falta o ok do Tim para a exclusão, ou uma grade escrita à mão com diferenças assumidas (ids, aria-label por célula e teclado), ou a island React só na página do help center que usa o campo.

@@ -128,7 +128,7 @@ Duas coisas o Astro faz e o React não: fecha no clique do backdrop e no `Esc`. 
 
 ## Paridade com o React
 
-Regra da biblioteca: **o `.astro` renderiza e se comporta exatamente como o React.** Componente que não consegue ficar igual não ganha versão Astro. É por isso que `SelectField` e `Datepicker` não têm: a lista customizada com busca e o calendário (`react-aria-components`) não têm equivalente estático fiel.
+Regra da biblioteca: **o `.astro` renderiza e se comporta exatamente como o React.** Componente que não consegue ficar igual não ganha versão Astro. É por isso que o `Datepicker` não tem: o campo, a máscara e os seletores de mês e ano são código próprio, mas a grade do calendário vem do `react-aria-components`, que gera ids, `aria-label` por célula e navegação por teclado que um controller só reproduziria reescrevendo a biblioteca. O `SelectField`, que não usa `react-aria`, tem versão Astro com o mesmo DOM e o mesmo comportamento.
 
 "Igual" quer dizer: com as mesmas props, o DOM depois do controller rodar é o mesmo do React (tags, classes, atributos, estilos inline, texto), incluindo as esquisitices do React (`au-alert__title--undefined`, `width: undefinedpx` no `Card`, `<p>` vazio). As únicas diferenças aceitas são as mecânicas do formato:
 
@@ -146,9 +146,17 @@ Quem ainda não está na DOM fica num `<template>` que o controller lê e remove
 
 A paridade foi provada com um harness que renderiza os dois lados (React com `react-dom`, Astro com `experimental_AstroContainer`), roda o controller em jsdom e compara a árvore, inclusive depois de cliques, digitação e timers. O harness não está no repo nem no CI; se um componente mudar, a paridade precisa ser conferida de novo.
 
+Em 28/09/2026 a paridade foi medida de novo, agora no browser: um projeto Astro com `@astrojs/react` renderiza cada caso nos dois formatos na mesma página, e o Playwright compara print (pixelmatch) e DOM normalizada depois de cada interação, em desktop e mobile (tablet para Header, Footer e Modal). Foram 614 comparações em 40 componentes; 598 saíram idênticas em pixel. As diferenças que sobraram estão nos gotchas do `CLAUDE.md` (badge do `Header.Profile`, Footer em tablet, espaço do Tabs, sublink do NavbarVertical, `aria-hidden` dos ícones, `div` do `Text` com HTML, atributo `slot`) e no relatório da missão no Notion. O harness continua fora do repo.
+
 ## Modal sem callback
 
-Mesmo modelo do Drawer: qualquer `data-au-modal-toggle="<id do modal>"` na página abre e fecha, com `aria-expanded` e `aria-controls` no gatilho. `closeButton` (padrão `true`) faz o papel do `onClose` do React: sem ele não há X, e o `closeOnBackdropClick` não fecha. Não fecha no `Esc`, porque o React não fecha. Emite `au:modalopen` / `au:modalclose` com `{ id }`.
+Mesmo modelo do Drawer: qualquer `data-au-modal-toggle="<id do modal>"` na página abre e fecha, com `aria-expanded` e `aria-controls` no gatilho. Um componente que controla o próprio modal (o `SelectField` em tela cheia) dispara `document.dispatchEvent(new CustomEvent('au:modalcontrol', { detail: { id, open }, bubbles: true }))`; sem `open` o modal alterna. A prop `portal` move o modal para o `document.body` quando o controller roda, o equivalente do `createPortal` do React. `closeButton` (padrão `true`) faz o papel do `onClose` do React: sem ele não há X, e o `closeOnBackdropClick` não fecha. Não fecha no `Esc`, porque o React não fecha. Emite `au:modalopen` / `au:modalclose` com `{ id }`.
+
+## SelectField
+
+O `SelectField` React é escrito à mão (wrapper `combobox`, `input`, `ul` de opções e um `<select hidden>` com o `name` para o formulário), então o `.astro` reproduz o mesmo DOM e o controller segue o hook passo a passo: abre no clique, ArrowUp/ArrowDown pulando opção desabilitada, Enter, Escape, filtro por rótulo com `autocomplete`, opção destacada acompanhando o mouse, altura da lista calculada pelo espaço abaixo, clique fora fechando só com uma opção destacada e o atraso de 500ms antes de fechar depois da escolha. `value` é a seleção inicial; `onChange` vira `au:selectchange` (`detail.value`, disparado na escolha e em cada tecla com `autocomplete`, como o callback React) e `onBlur` vira `au:selectblur` (`detail.target`, a opção que o React devolve), 200ms depois do blur.
+
+Com `fullScreenOptions`, o React abre a lista num `Modal` via `createPortal` no mobile (`isMobile()`, decidido na renderização). O `.astro` renderiza o `Modal` no fim da marcação com `portal`, e o controller decide com o mesmo `matchMedia` ao rodar: no mobile remove a `ul` e abre o modal por `au:modalcontrol`; no desktop o modal fica fechado e fora da página, só o comentário do placeholder sobra no `body`.
 
 ## Formulário
 
@@ -167,6 +175,7 @@ Onde o React recebe callback, o Astro emite um `CustomEvent` que borbulha a part
 | `Modal` | `au:modalopen`, `au:modalclose` |
 | `SpecialButton` | `au:confirm` |
 | `EmailField` | `au:emailselect` |
+| `SelectField` | `au:selectchange`, `au:selectblur` |
 | `PasswordField` | `au:passwordtoggle` |
 | `TokenField` | `au:tokenchange`, `au:tokencomplete`, `au:tokentimer` |
 
@@ -323,8 +332,8 @@ Rodar `astro check` do lado do consumidor é o único jeito de saber que os tipo
 | `Alert`, `ChipBanner`, `Modal`, `SpecialButton`, `Switch/Card` | controller inline |
 | `form/Field/*`, `InputField`, `Checkbox` (`Field`, `Group`), `Radio` (`Field`, `Group`) | estático |
 | `form/Field/TextArea`, `TextareaField` | controller só do contador (`maxLength`) |
-| `EmailField`, `PasswordField`, `TokenField` | controller inline |
+| `EmailField`, `PasswordField`, `TokenField`, `SelectField` | controller inline |
 
-Ficam só em React: `SelectField` e `Datepicker` (não ficam iguais, ver **Paridade com o React**), os utilitários sem sentido em Astro (`Transition`, `IsMobile`, `misc/Conditional`, `misc/Portal`, `misc/DynamicTagComponent`) e o `Prototype/Carousel`. O `Header/Wrap` é o `Header/index.astro`.
+Ficam só em React: `Datepicker` (não fica igual, ver **Paridade com o React**), os utilitários sem sentido em Astro (`Transition`, `IsMobile`, `misc/Conditional`, `misc/Portal`, `misc/DynamicTagComponent`) e o `Prototype/Carousel`. O `Header/Wrap` é o `Header/index.astro`.
 
 Os componentes anteriores a essa regra (`Tabs`, `Drawer`, `Footer`, `Header`) têm diferenças documentadas nos gotchas (todos os painéis no HTML, `Esc` e backdrop no Drawer, breakpoint de CSS no Footer) e não passaram pelo harness de paridade.
