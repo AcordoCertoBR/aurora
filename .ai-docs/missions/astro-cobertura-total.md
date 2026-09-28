@@ -33,6 +33,10 @@ Como o Storybook não renderiza Astro, o repo ganhou um playground (`npm run pla
 
 A missão inclui as páginas públicas: Gisele cria a versão Astro de todos os componentes no Aurora, depois o Kauan troca os componentes em todas as páginas públicas (mono-public-pages) e o Tim valida. Apetite de 10 dias úteis, como missão secundária, com ok do Lucas Rodrigues no canal `#_temp-missao-aurora-astro`. Este PR cobre só a parte do Aurora.
 
+## Tarefas no GitHub
+
+PRs: #301 (componentes) e #302 (playground). Issues da missão, com a label `mission:aurora-astro`: #303 (dois diffs pequenos no Astro), #304 (decidir Tabs e NavbarVertical com o Tim), #305 (`aria-*` no Icon React e `slot` vazando no Astro) e #306 (harness de paridade no CI). Melhorias fora do escopo da missão que a revisão sugeriu: #307 a #315.
+
 ## Em aberto
 
 - Nenhum componente ficou de fora. A grade do Datepicker Astro é uma cópia do react-aria-components 1.17.0; subir essa dependência exige rodar o harness de paridade de novo.
