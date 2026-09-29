@@ -1,0 +1,57 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Button from '../Button/index.astro'
+import Container from '../Container/index.astro'
+import Text from '../Text/index.astro'
+import IconChevronLeft from '../icons/default/IconChevronLeft.astro'
+import IconHelpCircle from '../icons/default/IconHelpCircle.astro'
+import './styles.scss'
+
+/**
+ * The React version takes `handleReturn` and `handleHelpInfo`. Astro has no
+ * callback props, so each button carries `data-au-sub-header="return"` /
+ * `="help"` for the page's own `<script>`. `showHelp` renders the help
+ * button, the same way React renders it when `handleHelpInfo` is passed.
+ * Every HTML attribute is forwarded to the root `div`.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  title: string
+  /** Shows the help button as a `data-au-sub-header="help"` button. */
+  showHelp?: boolean
+}
+
+const { title, showHelp = false, class: className, ...rest } = Astro.props
+---
+
+<div
+  class:list={['au-sub-header', showHelp && 'au-sub-header--with-help', className]}
+  {...rest}>
+  <Container class="au-sub-header__container">
+    <Button
+      class="au-sub-header__button"
+      type="ghost"
+      aria-label="Voltar"
+      data-au-sub-header="return">
+      <IconChevronLeft />
+    </Button>
+    <Text
+      class="au-sub-header__title"
+      variant="heading-micro"
+      variantDesk="heading-small"
+      weight="bold"
+      as="div">
+      {title}
+    </Text>
+    {
+      showHelp && (
+        <Button
+          class="au-sub-header__button"
+          type="ghost"
+          aria-label="Ajuda"
+          data-au-sub-header="help">
+          <IconHelpCircle />
+        </Button>
+      )
+    }
+  </Container>
+</div>

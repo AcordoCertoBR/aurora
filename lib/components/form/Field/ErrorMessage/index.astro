@@ -1,0 +1,20 @@
+---
+import '../styles.scss'
+
+/** Same props as the React `Field.ErrorMessage`. */
+export type Props = {
+  hasError?: boolean
+  message?: string
+  id?: string
+}
+
+const { hasError, message, id } = Astro.props
+---
+
+{
+  hasError && message && (
+    <p id={id} class="au-field__message au-field__message--error" role="alert">
+      {message}
+    </p>
+  )
+}

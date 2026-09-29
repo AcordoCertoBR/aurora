@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../styles.scss'
+
+/**
+ * Same props as React. `gap` and `width` are inline `style`, written like
+ * React writes them (an unset one comes out as `undefinedpx`, which the
+ * browser drops), so a `style` passed here is ignored. Every HTML attribute is forwarded.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'style'> & {
+  direction?: 'column' | 'row'
+  alignItems?: 'center' | 'start'
+  justifyContent?: 'center' | 'space-between'
+  /** Gap in px. */
+  gap?: number
+  /** Width in px. */
+  width?: number
+}
+
+const {
+  direction,
+  alignItems,
+  justifyContent,
+  gap,
+  width,
+  class: className,
+  ...rest
+} = Astro.props
+
+const style = `gap:${gap}px;width:${width}px`
+---
+
+<div
+  class:list={[
+    'au-card__container',
+    direction && `au-card__container--direction-${direction}`,
+    alignItems && `au-card__container--align-items-${alignItems}`,
+    justifyContent && `au-card__container--justify-content-${justifyContent}`,
+    className,
+  ]}
+  {...rest}
+  style={style}>
+  <slot />
+</div>

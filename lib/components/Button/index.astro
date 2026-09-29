@@ -1,5 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
+import IconLoader from '../icons/default/IconLoader.astro'
 import './styles.scss'
 
 type AuroraButtonProps = {
@@ -9,6 +10,12 @@ type AuroraButtonProps = {
   /** Stretches the button to fill the container width. */
   expand?: 'x'
   htmlType?: 'button' | 'submit' | 'reset'
+  /**
+   * Shows the spinner in place of the content and disables the button.
+   * As in React, with `as="a"` it only adds the class: the link keeps its
+   * content and stays clickable.
+   */
+  loading?: boolean
   size?: 'large' | 'medium'
   /**
    * Visual type. Avoid `'link'`: use the `LinkButton` component instead
@@ -42,6 +49,7 @@ const {
   disabled = false,
   expand,
   htmlType = 'button',
+  loading = false,
   size = 'medium',
   type = 'primary',
   negative = false,
@@ -70,6 +78,7 @@ const Tag = isAnchor ? 'a' : 'button'
     expand && `au-btn--expand-${expand}`,
     negative && 'au-btn--negative',
     disabled && 'au-btn--disabled',
+    loading && 'au-btn--loading',
     round && `au-btn--round-${size}`,
     btnText && 'btn-text',
     className,
@@ -78,8 +87,7 @@ const Tag = isAnchor ? 'a' : 'button'
   href={isAnchor ? href : undefined}
   target={isAnchor ? target : undefined}
   type={isAnchor ? undefined : htmlType}
-  disabled={!isAnchor && disabled ? true : undefined}
-  aria-disabled={isAnchor && disabled ? 'true' : undefined}
+  disabled={!isAnchor && (disabled || loading) ? true : undefined}
   {...rest}>
-  <slot />
+  {!isAnchor && loading ? <IconLoader /> : <slot>Button component</slot>}
 </Tag>

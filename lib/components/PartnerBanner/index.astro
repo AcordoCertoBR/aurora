@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../Text/index.astro'
+import './styles.scss'
+
+/**
+ * The React `icon` prop is the `icon` slot (and still adds
+ * `au-partner-banner--with-icon`); `ariaLabel` is the plain `aria-label`
+ * attribute and `className` the plain `class`. No `onButtonClick`: the button
+ * carries `data-au-partner-banner="button"` for the page's own `<script>`.
+ * Every HTML attribute is forwarded to the `<aside>`.
+ */
+export type Props = HTMLAttributes<'aside'> & {
+  text: string
+  btnText: string
+}
+
+const { text, btnText, class: className, ...rest } = Astro.props
+
+const hasIcon = Astro.slots.has('icon')
+---
+
+<aside
+  class:list={[
+    'au-partner-banner',
+    hasIcon && 'au-partner-banner--with-icon',
+    className,
+  ]}
+  {...rest}>
+  {
+    hasIcon && (
+      <div class="au-partner-banner__icon" aria-hidden="true">
+        <slot name="icon" />
+      </div>
+    )
+  }
+  <div class="au-partner-banner__content">
+    <Text
+      as="p"
+      variant="body-small"
+      color="secondary"
+      class="au-partner-banner__text">
+      {text}
+    </Text>
+    <button
+      type="button"
+      class="au-partner-banner__button"
+      data-au-partner-banner="button">
+      <Text as="span" variant="body-small" weight="semibold">{btnText}</Text>
+    </button>
+  </div>
+</aside>

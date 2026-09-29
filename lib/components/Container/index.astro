@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/**
+ * The React `customClass` prop is the plain `class` attribute here; every
+ * other HTML attribute is forwarded to the `div`.
+ */
+export type Props = HTMLAttributes<'div'>
+
+const { class: className, ...rest } = Astro.props
+---
+
+<div class:list={['au-container', className]} {...rest}>
+  <slot />
+</div>

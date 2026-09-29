@@ -1,9 +1,8 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import dotenv from 'dotenv'
 import pkg from './package.json'
-import { existsSync } from 'fs'
 import { resolve, dirname, basename, parse, relative, sep } from 'path'
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
 import glob from 'glob'
@@ -11,9 +10,9 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 dotenv.config()
 
-// Built once and reused: the copy transform runs for every `.astro` file, and
-// there are hundreds of generated icons.
-let stylesheetMapCache: Map<string, string> | null = null
+// Filled by `recordEmittedStylesheets` in `generateBundle`, before the copy
+// transform reads it in `writeBundle`. Source `styles.scss` → emitted CSS files.
+const stylesheetMap = new Map<string, string[]>()
 
 process.env['VITE_LIB_VERSION'] = pkg.version
 
@@ -25,6 +24,10 @@ export default defineConfig({
         main: resolve(__dirname, 'lib/main.ts'),
         globalStyles: resolve(__dirname, 'lib/core/styles/globalStyles.ts'),
         'astro/runtime': resolve(__dirname, 'lib/astro/runtime/index.ts'),
+        // The same generated tokens the React components import, for the
+        // `.astro` frontmatter: only `.astro` files ship as source, so they
+        // cannot reach `lib/core` the way the React components do.
+        'astro/tokens': resolve(__dirname, 'lib/core/tokens/index.ts'),
         ...getComponentsEntries(),
       },
 
@@ -76,6 +79,7 @@ export default defineConfig({
       exclude: ['**/*.stories.tsx', '**/*.test.ts', '**/*.test.tsx'],
     }),
     libInjectCss(),
+    recordEmittedStylesheets(),
     viteStaticCopy({
       targets: [
         {
@@ -91,6 +95,11 @@ export default defineConfig({
           // the `exports` field and needs a real directory on disk.
           src: 'lib/astro/runtime/package.proxy.json',
           dest: '../astro/runtime',
+          rename: () => 'package.json',
+        },
+        {
+          src: 'lib/astro/tokens/package.proxy.json',
+          dest: '../astro/tokens',
           rename: () => 'package.json',
         },
         {
@@ -130,27 +139,39 @@ function relativeToComponents(fullPath: string) {
 }
 
 /**
- * Maps each component's source `styles.scss` to the CSS Vite emits for it, so a
- * `.astro` file can import any component stylesheet by its source path and get
+ * Maps each component's source `styles.scss` to the CSS Vite emitted for it, so
+ * a `.astro` file can import any component stylesheet by its source path and get
  * the built one in the published package.
+ *
+ * Read from the bundle, not derived from the entry name: CSS assets are named
+ * after the chunk's basename, so nested entries collide and get numbered in
+ * build order (`form/Field`, `Checkbox/Field` and `Radio/Field` all land in
+ * `Field/styles{,2,3}.css`), and a stylesheet shared by a barrel lands in
+ * whatever chunk the bundler picked.
  */
-function getStylesheetMap() {
-  if (stylesheetMapCache) return stylesheetMapCache
-
-  const map = new Map<string, string>()
-
-  Object.entries(getComponentsEntries()).forEach(([name, entryPath]) => {
-    const source = resolve(__dirname, dirname(entryPath), 'styles.scss')
-    const emitted = resolve(__dirname, 'dist/components', name, 'styles.css')
-    // Both ends have to exist: a component whose CSS the bundler folded into a
-    // shared chunk has no stylesheet of its own to point at, and emitting the
-    // import anyway breaks the consumer's build.
-    if (!existsSync(source) || !existsSync(emitted)) return
-    map.set(source, emitted)
-  })
-
-  stylesheetMapCache = map
-  return map
+function recordEmittedStylesheets(): Plugin {
+  const componentsDir = resolve(__dirname, 'lib/components')
+  return {
+    name: 'aurora:record-emitted-stylesheets',
+    generateBundle(_options, bundle) {
+      stylesheetMap.clear()
+      Object.values(bundle).forEach((output) => {
+        if (output.type !== 'chunk') return
+        const emitted = [...(output.viteMetadata?.importedCss ?? [])]
+        if (!emitted.length) return
+        output.moduleIds
+          .filter(
+            (id) =>
+              id.startsWith(componentsDir) && basename(id) === 'styles.scss',
+          )
+          .forEach((id) => {
+            const files = stylesheetMap.get(id) ?? []
+            emitted.forEach((file) => files.includes(file) || files.push(file))
+            stylesheetMap.set(id, files)
+          })
+      })
+    },
+  }
 }
 
 /**
@@ -161,7 +182,6 @@ function getStylesheetMap() {
  * emitted counterpart is dropped (a part that inherits the parent's styles).
  */
 function pointAstroStylesToBuiltCss(content: string, filePath: string) {
-  const stylesheets = getStylesheetMap()
   const copiedDir = resolve(
     __dirname,
     'astro',
@@ -172,11 +192,15 @@ function pointAstroStylesToBuiltCss(content: string, filePath: string) {
     /^import (['"])(\.[^'"]*\.scss)\1\n/gm,
     (_line, _quote, specifier) => {
       const source = resolve(dirname(filePath), specifier)
-      const stylesheet = stylesheets.get(source)
-      if (!stylesheet) return ''
+      const stylesheets = stylesheetMap.get(source) ?? []
 
-      const importPath = relative(copiedDir, stylesheet).split(sep).join('/')
-      return `import '${importPath}'\n`
+      return stylesheets
+        .map((file) => {
+          const emitted = resolve(__dirname, 'dist', file)
+          const importPath = relative(copiedDir, emitted).split(sep).join('/')
+          return `import '${importPath}'\n`
+        })
+        .join('')
     },
   )
 }

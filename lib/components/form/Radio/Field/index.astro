@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/**
+ * Same as React: every attribute except `class` goes to the native
+ * `<input type="radio">` (`name`, `value`, `checked`, `required`, `data-*`…),
+ * so listen to its native `change` event instead of `onChange`. Like React's
+ * `className`, `class` lands on the input and replaces `au-radio-field__input`
+ * (`style` also goes to the input).
+ */
+export type Props = Omit<HTMLAttributes<'input'>, 'type'> & {
+  direction?: 'left' | 'right'
+  label?: string
+  error?: boolean
+  type?: 'radio'
+}
+
+const {
+  type = 'radio',
+  direction = 'left',
+  label,
+  error = false,
+  id,
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+// The React version falls back to `Math.random()`; here it is fixed at render.
+const safeId = id ?? `au-radio-${crypto.randomUUID().slice(0, 8)}`
+---
+
+<div
+  class:list={[
+    'au-radio-field',
+    direction === 'left' && 'au-radio-field--left-direction',
+    direction === 'right' && 'au-radio-field--right-direction',
+    disabled && 'au-radio-field--disabled',
+    error && 'au-radio-field--error',
+  ]}>
+  <input
+    class={className ?? 'au-radio-field__input'}
+    type={type}
+    id={safeId}
+    disabled={disabled}
+    {...rest}
+  />
+  <label class="au-radio-field__label" for={safeId}>
+    {label}
+  </label>
+</div>

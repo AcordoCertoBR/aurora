@@ -1,0 +1,390 @@
+---
+// The reset the React entry carries through `GlobalStyles`; an Astro-only
+// page imports it once (published as `@consumidor-positivo/aurora/global.css`).
+import '@core/styles/GlobalStyles.scss'
+import LogoBadgetCP from '@components/Logo/cp/Badget.astro'
+import IconChevronRight from '@components/icons/default/IconChevronRight.astro'
+
+interface Props {
+  title: string
+  /** One line under the title, shown in the top bar. */
+  description?: string
+}
+
+const { title, description } = Astro.props
+
+// Every file in `pages/components/` is a page; add one and it shows up in the
+// sidebar. The index page uses the same list.
+const pages = Object.keys(import.meta.glob('../pages/components/*.astro'))
+  .map((path) => path.split('/').pop()!.replace('.astro', ''))
+  .sort()
+const current = Astro.url.pathname.replace(/\/$/, '')
+const isActive = (slug: string) => current.endsWith(`/components/${slug}`)
+---
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Aurora playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Source+Sans+3:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Inside the mobile frame (an iframe of the same page) the shell is
+      // hidden and only the examples render; see `.is-framed` below.
+      if (window.self !== window.top) document.documentElement.classList.add('is-framed')
+    </script>
+  </head>
+  <body>
+    <div class="pg">
+      <aside class="pg-sidebar">
+        <a class="pg-brand" href="/">
+          <LogoBadgetCP class="pg-brand__logo" />
+          <span class="pg-brand__text">
+            <strong>Aurora</strong>
+            <span>playground · astro</span>
+          </span>
+        </a>
+
+        <nav class="pg-nav" aria-label="Componentes">
+          <p class="pg-nav__title">Componentes</p>
+          <ul class="pg-nav__list">
+            {pages.map((slug) => (
+              <li>
+                <a class:list={['pg-nav__link', isActive(slug) && 'pg-nav__link--active']} href={`/components/${slug}`} aria-current={isActive(slug) ? 'page' : undefined}>
+                  {slug}
+                  <IconChevronRight size="small" aria-hidden="true" />
+                </a>
+                {isActive(slug) && <ul class="pg-nav__examples" data-pg-examples />}
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <footer class="pg-sidebar__footer">
+          <a href="https://github.com/AcordoCertoBR/aurora/blob/main/docs/astro.md" target="_blank" rel="noopener">docs/astro.md</a>
+          <span>React fica no Storybook</span>
+        </footer>
+      </aside>
+
+      <div class="pg-body">
+        <header class="pg-topbar">
+          <div class="pg-topbar__heading">
+            <h1 class="pg-topbar__title">{title}</h1>
+            {description && <p class="pg-topbar__description">{description}</p>}
+          </div>
+          <div class="pg-viewport" role="group" aria-label="Largura da tela" data-pg-viewport>
+            <button type="button" class="pg-viewport__btn pg-viewport__btn--active" data-viewport="desktop" aria-pressed="true">Desktop</button>
+            <button type="button" class="pg-viewport__btn" data-viewport="mobile" aria-pressed="false">Mobile · 375</button>
+          </div>
+        </header>
+
+        <main class="pg-content" data-pg-content>
+          <slot />
+        </main>
+
+        <div class="pg-frame" data-pg-frame hidden>
+          <div class="pg-frame__device">
+            <iframe class="pg-frame__iframe" title={`${title} a 375px`} data-pg-iframe></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Sidebar: list the examples of the current page as anchors.
+      const list = document.querySelector<HTMLUListElement>('[data-pg-examples]')
+      if (list) {
+        const examples = document.querySelectorAll<HTMLElement>('[data-pg-content] .example[id]')
+        examples.forEach((example) => {
+          const name = example.querySelector('.example__name')?.textContent ?? example.id
+          const li = document.createElement('li')
+          const a = document.createElement('a')
+          a.href = `#${example.id}`
+          a.textContent = name
+          li.appendChild(a)
+          list.appendChild(li)
+        })
+        if (!examples.length) list.remove()
+      }
+
+      // Viewport toggle: "Mobile" swaps the examples for an iframe of this
+      // same page at 375px (the frame hides the shell through `.is-framed`).
+      const group = document.querySelector<HTMLElement>('[data-pg-viewport]')
+      const content = document.querySelector<HTMLElement>('[data-pg-content]')
+      const frame = document.querySelector<HTMLElement>('[data-pg-frame]')
+      const iframe = document.querySelector<HTMLIFrameElement>('[data-pg-iframe]')
+      const KEY = 'aurora-playground-viewport'
+
+      const apply = (viewport: string) => {
+        if (!group || !content || !frame || !iframe) return
+        const mobile = viewport === 'mobile'
+        if (mobile && !iframe.src) iframe.src = location.pathname
+        content.hidden = mobile
+        frame.hidden = !mobile
+        group.querySelectorAll<HTMLButtonElement>('[data-viewport]').forEach((btn) => {
+          const active = btn.dataset.viewport === viewport
+          btn.classList.toggle('pg-viewport__btn--active', active)
+          btn.setAttribute('aria-pressed', String(active))
+        })
+        try { localStorage.setItem(KEY, viewport) } catch { /* private mode */ }
+      }
+
+      group?.addEventListener('click', (event) => {
+        const btn = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-viewport]')
+        if (btn?.dataset.viewport) apply(btn.dataset.viewport)
+      })
+
+      // The choice is shared with the iframe (same origin), so the framed
+      // copy must not apply it, or it would hide its own examples.
+      const framed = window.self !== window.top
+      let saved = 'desktop'
+      try { saved = localStorage.getItem(KEY) ?? 'desktop' } catch { /* private mode */ }
+      if (saved === 'mobile' && !framed) apply('mobile')
+    </script>
+
+    <style is:global lang="scss">
+      body {
+        background: $color-brand-blue-00;
+        color: $color-neutral-70;
+        font-family: $font-body;
+      }
+
+      .pg {
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .pg-sidebar {
+        position: sticky;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: $spacing-300 $spacing-200;
+        background: $color-neutral-00;
+        border-right: 1px solid $color-neutral-20;
+        overflow-y: auto;
+      }
+
+      .pg-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 $spacing-100 $spacing-300;
+        color: inherit;
+        text-decoration: none;
+      }
+      .pg-brand__logo {
+        flex: none;
+      }
+      .pg-brand__text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+      }
+      .pg-brand__text strong {
+        font-family: $font-title;
+        font-size: $font-size-p1;
+        font-weight: $font-weight-semibold;
+      }
+      .pg-brand__text span {
+        font-size: $font-size-p4;
+        color: $color-neutral-50;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .pg-nav {
+        flex: 1;
+      }
+      .pg-nav__title {
+        padding: 0 $spacing-100;
+        margin-bottom: $spacing-100;
+        font-size: $font-size-p4;
+        font-weight: $font-weight-semibold;
+        color: $color-neutral-50;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .pg-nav__list,
+      .pg-nav__examples {
+        list-style: none;
+      }
+      .pg-nav__link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px $spacing-100;
+        border-radius: $border-radius-medium;
+        font-size: $font-size-p2;
+        font-weight: $font-weight-medium;
+        color: $color-neutral-70;
+        text-decoration: none;
+        text-transform: capitalize;
+        transition: background 120ms;
+
+        .au-icon {
+          opacity: 0;
+          transition: opacity 120ms;
+        }
+        &:hover {
+          background: $color-neutral-10;
+          .au-icon { opacity: 1; }
+        }
+      }
+      .pg-nav__link--active {
+        background: $color-brand-blue-00;
+        color: $color-brand-blue-50;
+        .au-icon { opacity: 1; }
+      }
+      .pg-nav__examples {
+        margin: 4px 0 $spacing-100;
+        padding-left: $spacing-200;
+        border-left: 2px solid $color-neutral-20;
+
+        a {
+          display: block;
+          padding: 5px $spacing-100;
+          font-size: $font-size-p3;
+          color: $color-neutral-50;
+          text-decoration: none;
+          border-radius: $border-radius-small;
+          &:hover {
+            color: $color-brand-blue-50;
+            background: $color-neutral-10;
+          }
+        }
+      }
+
+      .pg-sidebar__footer {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: $spacing-300 $spacing-100 0;
+        font-size: $font-size-p4;
+        color: $color-neutral-50;
+
+        a {
+          color: $color-brand-blue-50;
+          font-weight: $font-weight-semibold;
+          text-decoration: none;
+          &:hover { text-decoration: underline; }
+        }
+      }
+
+      /* Body */
+      .pg-body {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .pg-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-200;
+        padding: $spacing-200 $spacing-400;
+        background: rgba($color-brand-blue-00, 0.88);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid $color-neutral-20;
+      }
+      .pg-topbar__title {
+        font-family: $font-title;
+        font-size: $font-size-h6;
+        font-weight: $font-weight-semibold;
+        line-height: 1.2;
+      }
+      .pg-topbar__description {
+        margin-top: 2px;
+        font-size: $font-size-p3;
+        color: $color-neutral-50;
+      }
+
+      .pg-viewport {
+        display: inline-flex;
+        flex: none;
+        padding: 3px;
+        background: $color-neutral-00;
+        border: 1px solid $color-neutral-20;
+        border-radius: $border-radius-pill;
+      }
+      .pg-viewport__btn {
+        padding: 6px 14px;
+        border: 0;
+        border-radius: $border-radius-pill;
+        background: transparent;
+        font: $font-weight-semibold $font-size-p3 $font-body;
+        color: $color-neutral-50;
+        cursor: pointer;
+        &:hover { color: $color-neutral-70; }
+      }
+      .pg-viewport__btn--active {
+        background: $color-brand-blue-50;
+        color: $color-neutral-00;
+      }
+
+      .pg-content {
+        flex: 1;
+        padding: $spacing-400;
+      }
+
+      .pg-frame {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding: $spacing-400;
+      }
+      .pg-frame[hidden],
+      .pg-content[hidden] {
+        display: none;
+      }
+      .pg-frame__device {
+        padding: 12px;
+        background: $color-neutral-70;
+        border-radius: 36px;
+        box-shadow: $shadow-04;
+      }
+      .pg-frame__iframe {
+        display: block;
+        width: 375px;
+        height: 740px;
+        border: 0;
+        border-radius: 26px;
+        background: $color-neutral-00;
+      }
+
+      /* Inside the mobile iframe: only the examples. */
+      .is-framed {
+        .pg { display: block; }
+        .pg-sidebar, .pg-topbar, .pg-frame { display: none; }
+        .pg-content { padding: $spacing-200; }
+        body { background: $color-neutral-00; }
+      }
+
+      @include belowMedium {
+        .pg { grid-template-columns: 1fr; }
+        .pg-sidebar {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid $color-neutral-20;
+        }
+        .pg-nav__list { display: flex; flex-wrap: wrap; gap: 4px; }
+        .pg-nav__link .au-icon, .pg-nav__examples, .pg-sidebar__footer { display: none; }
+        .pg-topbar, .pg-content, .pg-frame { padding-left: $spacing-200; padding-right: $spacing-200; }
+        .pg-viewport { display: none; }
+      }
+    </style>
+  </body>
+</html>

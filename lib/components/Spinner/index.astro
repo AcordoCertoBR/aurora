@@ -1,0 +1,75 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { COLOR_BRAND_BLUE_40, COLOR_NEUTRAL_00 } from '@consumidor-positivo/aurora/astro/tokens'
+import './styles.scss'
+
+const SIZE_MAP = {
+  small: 16,
+  medium: 20,
+  large: 32,
+}
+
+/**
+ * Same props as React; every HTML attribute is forwarded to the root `div`.
+ * The size is an inline `style`, so a `style` passed here is ignored.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'style'> & {
+  /**
+   * Token size (Figma: Spinner, ↕ Size). small = 16px, medium = 20px, large = 32px.
+   */
+  size?: 'small' | 'medium' | 'large'
+  /** White spinner for colored backgrounds (Figma: Negative). */
+  negative?: boolean
+}
+
+const {
+  size = 'medium',
+  negative = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+// Per instance, like React's `useId`: two spinners on the same page must not
+// share the gradient.
+const gradientId = `au-spinner-gradient-${crypto.randomUUID().slice(0, 8)}`
+const px = SIZE_MAP[size]
+const color = negative ? COLOR_NEUTRAL_00 : COLOR_BRAND_BLUE_40
+---
+
+<div
+  class:list={[
+    'au-spinner',
+    `au-spinner--size-${size}`,
+    negative && 'au-spinner--negative',
+    className,
+  ]}
+  role="status"
+  aria-live="polite"
+  aria-label="Carregando"
+  {...rest}
+  style={`width: ${px}px; height: ${px}px`}>
+  <svg
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 64 64"
+    width={px}
+    height={px}
+    color={color}>
+    <defs>
+      <linearGradient
+        id={gradientId}
+        gradientUnits="objectBoundingBox"
+        x1="10%"
+        y1="0%"
+        x2="90%"
+        y2="10%">
+        <stop offset="0" stop-color={color} stop-opacity="1"></stop>
+        <stop offset="1" stop-color={color} stop-opacity="0"></stop>
+      </linearGradient>
+    </defs>
+    <g stroke-width="7" stroke-linecap="round" fill="none">
+      <path stroke={color} d="M60,32 A28,28 0 1 1 4,32"></path>
+      <path d="M60,32 A28,28.5 0 1 0 4,32" stroke={`url(#${gradientId})`}></path>
+    </g>
+  </svg>
+</div>

@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconChevronDown from '../../../icons/default/IconChevronDown.astro'
+import IconChevronLeft from '../../../icons/default/IconChevronLeft.astro'
+import IconX from '../../../icons/default/IconX.astro'
+import './styles.scss'
+
+export type SegmentItem = { label: string; value: number }
+
+/**
+ * The month/year picker of the Datepicker calendar header. Static markup only:
+ * the Datepicker controller keeps the current label, the selected option and
+ * the open state in sync (React does it in `useSegment`).
+ */
+export type Props = HTMLAttributes<'div'> & {
+  mobileTitle: string
+  options: SegmentItem[]
+  currentValue: number
+}
+
+const { mobileTitle, options, currentValue, class: className, ...rest } = Astro.props
+const current = options.find((option) => option.value === currentValue)
+---
+
+<div class:list={['au-datepicker__segment', className]} {...rest}>
+  <button
+    type="button"
+    class="au-datepicker__segment-input"
+    role="combobox"
+    aria-haspopup="listbox"
+    aria-expanded="false">{current?.label}<IconChevronDown /></button>
+  <div class="au-datepicker__segment-list-holder">
+    <div class="au-datepicker__segment-list-header">
+      <button type="button" aria-label="Voltar"><IconChevronLeft /></button>
+      <h4 class="au-datepicker__segment-title">{mobileTitle}</h4>
+      <button type="button" aria-label="Fechar"><IconX /></button>
+    </div>
+    <ul class="au-datepicker__segment-list" role="listbox">
+      {
+        options.map((option) => (
+          <li
+            role="option"
+            aria-selected={option.value === currentValue ? 'true' : 'false'}
+            class:list={[
+              'au-datepicker__segment-list-item',
+              option.value === currentValue && 'au-datepicker__segment-list-item--active',
+            ]}
+            data-au-value={option.value}>{option.label}</li>
+        ))
+      }
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import PureSwitch from '../Pure/index.astro'
+import './styles.scss'
+
+/**
+ * Differences from React: `isActive` is only the initial state, and the
+ * controller keeps the wrapper classes (`--active`, `--fade-out`) in sync with
+ * the checkbox. No callbacks: listen to the native `change` event, which
+ * bubbles to the root. `fadeOutDelayInSeconds` is dropped (React declares it
+ * but never reads it; the delay is the 1s in the stylesheet).
+ */
+export type Props = HTMLAttributes<'div'> & {
+  label: string
+  id: string
+  /** Initial state of the switch. */
+  isActive?: boolean
+  disabled?: boolean
+  /** Collapses and fades the card out once the switch is on. */
+  shouldFadeOutAfterActivate?: boolean
+}
+
+const {
+  label,
+  id,
+  isActive = false,
+  disabled = false,
+  shouldFadeOutAfterActivate = false,
+  class: className,
+  ...rest
+} = Astro.props
+---
+
+<div
+  class:list={['au-card-switch', className]}
+  data-element="au-card-switch"
+  data-fade-out={shouldFadeOutAfterActivate ? 'true' : undefined}
+  {...rest}>
+  <div
+    class:list={[
+      'au-card-switch-wrapper',
+      shouldFadeOutAfterActivate && isActive && 'au-card-switch-wrapper--fade-out',
+      isActive && 'au-card-switch-wrapper--active',
+    ]}>
+    <PureSwitch isActive={isActive} label={label} id={id} disabled={disabled} />
+  </div>
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const ACTIVE_CLASS = 'au-card-switch-wrapper--active'
+  const FADE_OUT_CLASS = 'au-card-switch-wrapper--fade-out'
+
+  elementController('au-card-switch', ({ root, query, on }) => {
+    const wrapper = query<HTMLElement>('.au-card-switch-wrapper')
+    const fadesOut = root.dataset.fadeOut === 'true'
+    // Controller setting only; React's root carries no such attribute.
+    root.removeAttribute('data-fade-out')
+
+    on('change', (event) => {
+      const input = event.target as HTMLInputElement | null
+      if (!wrapper || !input?.matches('.au-switch-checkbox')) return
+
+      wrapper.classList.toggle(ACTIVE_CLASS, input.checked)
+      wrapper.classList.toggle(FADE_OUT_CLASS, fadesOut && input.checked)
+    })
+  })
+</script>

@@ -1,0 +1,57 @@
+---
+import IconChevronLeft from '../../../icons/default/IconChevronLeft.astro'
+import IconChevronRight from '../../../icons/default/IconChevronRight.astro'
+import Segment from '../Segment/index.astro'
+import './styles.scss'
+
+/**
+ * Month navigation of the Datepicker calendar: previous month, the month and
+ * year pickers, next month. Same markup as the React `CalendarHeader`; the
+ * Datepicker controller drives it.
+ */
+export type Props = {
+  /** Year of the first option in the year picker. */
+  minYear: number
+  /** Year of the last option in the year picker. */
+  maxYear: number
+  /** Month (1-12) and year shown when the calendar opens. */
+  month: number
+  year: number
+}
+
+const { minYear, maxYear, month, year } = Astro.props
+
+// Same lists as `useCalendarHeader`.
+const monthsOptions = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+].map((label, index) => ({ label, value: index + 1 }))
+
+const yearsOptions = Array.from({ length: maxYear - minYear + 1 }, (_, index) => ({
+  label: String(minYear + index),
+  value: minYear + index,
+}))
+---
+
+<div class="au-datepicker__header">
+  <button class="au-datepicker__header-navigation-btn" aria-label="Mês anterior">
+    <IconChevronLeft />
+  </button>
+  <div class="au-datepicker__header-segments">
+    <Segment currentValue={month} mobileTitle="Escolha o mês" options={monthsOptions} />
+    <Segment currentValue={year} mobileTitle="Escolha o ano" options={yearsOptions} />
+  </div>
+  <button class="au-datepicker__header-navigation-btn" aria-label="Próximo">
+    <IconChevronRight />
+  </button>
+</div>

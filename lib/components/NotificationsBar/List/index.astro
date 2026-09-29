@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../../Text/index.astro'
+import NotificationsBarLink from '../Link/index.astro'
+import type { NotificationsBarLinkItem } from '../Link/index.astro'
+import '../styles.scss'
+
+/**
+ * `NotificationsBar.List` in React. `dataSource` + `renderItem` become `data`:
+ * the list renders a `NotificationsBar/Link` per item. For custom items (an
+ * icon, other markup), put `NotificationsBar/Link`s in the default slot,
+ * rendered after `data`.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'title'> & {
+  title: string
+  data?: NotificationsBarLinkItem[]
+}
+
+const {
+  title,
+  data = [],
+  class: className,
+  // Astro hands a component its own `slot="recents|olds"` as a prop; spread
+  // into `...rest` it would render as a stray `slot` attribute.
+  slot: _slot,
+  ...rest
+} = Astro.props
+---
+
+<div class:list={['au-notifications-bar__section', className]} {...rest}>
+  <Text as="h3" variant="body-medium" weight="bold">
+    {title}
+  </Text>
+  <div class="au-notifications-bar__list">
+    {data.map((item) => <NotificationsBarLink {...item} />)}
+    <slot />
+  </div>
+</div>

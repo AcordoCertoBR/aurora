@@ -1,0 +1,213 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import SubHeader from '../SubHeader/index.astro'
+import IconX from '../icons/default/IconX.astro'
+import './styles.scss'
+
+type ModalLayout = 'default' | 'centralized'
+type ModalLayoutMobile = 'default' | 'centralized' | 'full-screen'
+
+/**
+ * Differences from React:
+ * - No `isOpen`/`onClose`. Any element carrying
+ *   `data-au-modal-toggle="<id>"` toggles this modal, from anywhere on the
+ *   page. `closeButton` stands for React's `onClose`: it renders the close
+ *   button (and the SubHeader back button), which close the modal, and lets
+ *   `closeOnBackdropClick` work. The root emits `au:modalopen` /
+ *   `au:modalclose` with `{ id }`.
+ * - Like React, which renders nothing while closed, the controller takes the
+ *   closed modal out of the page and puts it back when it opens.
+ * - `headerContent` and `content` are the `header` slot and the default slot.
+ * - `ariaLabel` is the native `aria-label`.
+ * - `handleHelpInfo` becomes `helpButton`: the SubHeader help button carries
+ *   `data-au-sub-header="help"` for the page's own `<script>`.
+ * - React picks the mobile SubHeader with `isMobile()` (max-width 767px) each
+ *   time it renders. With `layoutMobile="full-screen"`, the SubHeader rides in
+ *   a `<template>` and the controller makes the same choice on every open.
+ * - `portal` moves the modal to `document.body` when the controller runs, the
+ *   counterpart of a React `createPortal(<Modal />, document.body)`.
+ * - Besides the toggles, a `CustomEvent('au:modalcontrol', { detail: { id,
+ *   open? } })` dispatched on `document` opens (`open: true`), closes
+ *   (`open: false`) or toggles (no `open`) the modal with that `id`, for
+ *   components that drive a modal from their own controller.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  id: string
+  /** Renders the modal already open. */
+  open?: boolean
+  /**
+   * Calls the close (React `onClose`) when the backdrop (area outside the
+   * container) is clicked. Needs `closeButton`, as React needs `onClose`.
+   */
+  closeOnBackdropClick?: boolean
+  /**
+   * Renders the close button (and the SubHeader back button). React renders
+   * them only when `onClose` is passed.
+   */
+  closeButton?: boolean
+  layoutMobile?: ModalLayoutMobile
+  layoutDesktop?: ModalLayout
+  mobileModalTitle?: string
+  /** Renders the help button in the mobile full-screen SubHeader. */
+  helpButton?: boolean
+  /** Moves the modal to `document.body` once the controller runs. */
+  portal?: boolean
+}
+
+const {
+  id,
+  open = false,
+  closeOnBackdropClick = false,
+  closeButton = true,
+  layoutMobile = 'default',
+  layoutDesktop = 'default',
+  mobileModalTitle = 'Título',
+  helpButton = false,
+  portal = false,
+  'aria-label': ariaLabel,
+  class: className,
+  ...rest
+} = Astro.props
+
+const isFullScreenMobile = layoutMobile === 'full-screen'
+---
+
+<div
+  id={id}
+  class:list={[
+    'au-modal',
+    open && 'au-modal--is-open',
+    isFullScreenMobile && 'au-modal--mobile-full-screen',
+    layoutMobile === 'centralized' && 'au-modal--mobile-centralized',
+    layoutDesktop === 'centralized' && 'au-modal--desktop-centralized',
+    className,
+  ]}
+  role="dialog"
+  aria-modal="true"
+  aria-label={ariaLabel ?? mobileModalTitle}
+  data-element="au-modal"
+  data-au-modal-close-on-backdrop={closeButton && closeOnBackdropClick ? 'true' : undefined}
+  data-au-modal-portal={portal ? '' : undefined}
+  {...rest}>
+  <div class="au-modal__container">
+    <div class="au-modal__header">
+      {
+        closeButton && (
+          <button class="au-modal__header-close" aria-label="Fechar">
+            <IconX class="au-modal__header-close-icon" />
+          </button>
+        )
+      }
+      <slot name="header" />
+      {
+        isFullScreenMobile && (
+          <template data-au-modal-mobile-header>
+            {closeButton && (
+              <SubHeader title={mobileModalTitle} showHelp={helpButton} />
+            )}
+          </template>
+        )
+      }
+    </div>
+    <div class="au-modal__content">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const OPEN_CLASS = 'au-modal--is-open'
+  // Same rule as `isMobile()` (lib/core/utils/isMobile.ts).
+  const MOBILE_QUERY = 'screen and (max-width:767px)'
+
+  elementController('au-modal', ({ root, on, emit }) => {
+    const toggleSelector = `[data-au-modal-toggle="${root.id}"]`
+    const closesOnBackdrop = root.dataset.auModalCloseOnBackdrop === 'true'
+    root.removeAttribute('data-au-modal-close-on-backdrop')
+
+    const header = root.querySelector<HTMLElement>(
+      ':scope > .au-modal__container > .au-modal__header',
+    )
+    const template = header?.querySelector<HTMLTemplateElement>(
+      ':scope > template[data-au-modal-mobile-header]',
+    )
+    // Full-screen mobile: React renders either the close button + header
+    // content or the SubHeader, never both.
+    const desktopNodes = header
+      ? Array.from(header.childNodes).filter((node) => node !== template)
+      : []
+    const mobileNodes = template ? Array.from(template.content.childNodes) : []
+    template?.remove()
+
+    function pickHeader() {
+      if (!header || !template) return
+      const isMobile = window.matchMedia(MOBILE_QUERY).matches
+      const [show, hide] = isMobile
+        ? [mobileNodes, desktopNodes]
+        : [desktopNodes, mobileNodes]
+      hide.forEach((node) => node.parentNode === header && header.removeChild(node))
+      show.forEach((node) => header.appendChild(node))
+    }
+
+    // React renders nothing while closed: the closed modal leaves the page
+    // and this marker keeps its place.
+    const placeholder = document.createComment('au-modal')
+    const isOpen = () => root.classList.contains(OPEN_CLASS)
+
+    function setOpen(open: boolean, silent = false) {
+      document
+        .querySelectorAll(toggleSelector)
+        .forEach((trigger) => trigger.setAttribute('aria-expanded', String(open)))
+
+      if (open) {
+        pickHeader()
+        root.classList.add(OPEN_CLASS)
+        if (placeholder.parentNode) placeholder.replaceWith(root)
+        if (!silent) emit('au:modalopen', { id: root.id })
+        return
+      }
+
+      root.classList.remove(OPEN_CLASS)
+      // Emitted while still in the page, so the event reaches `document`.
+      if (!silent) emit('au:modalclose', { id: root.id })
+      if (root.parentNode) root.replaceWith(placeholder)
+    }
+
+    document.querySelectorAll(toggleSelector).forEach((trigger) => {
+      trigger.setAttribute('aria-controls', root.id)
+    })
+    // Controller setting only; React's root carries no such attribute.
+    if (root.hasAttribute('data-au-modal-portal')) {
+      root.removeAttribute('data-au-modal-portal')
+      document.body.appendChild(root)
+    }
+    setOpen(isOpen(), true)
+
+    on('click', (event) => {
+      const target = event.target as Element | null
+      // The backdrop is the root itself; the container swallows its own clicks.
+      if (target === root) {
+        if (closesOnBackdrop) setOpen(false)
+        return
+      }
+      const close = target?.closest(
+        '.au-modal__header-close, .au-sub-header [data-au-sub-header="return"]',
+      )
+      if (close && header?.contains(close)) setOpen(false)
+    })
+
+    on('global:click', (event) => {
+      const trigger = (event.target as Element | null)?.closest(toggleSelector)
+      if (!trigger) return
+      setOpen(!isOpen())
+    })
+
+    on('global:au:modalcontrol', (event) => {
+      const detail = (event as CustomEvent<{ id?: string; open?: boolean }>).detail
+      if (!detail || detail.id !== root.id) return
+      setOpen(detail.open ?? !isOpen())
+    })
+  })
+</script>

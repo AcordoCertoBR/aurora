@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../styles.scss'
+
+/**
+ * The bare `au-field__input`. Every HTML attribute lands on the `<input>`;
+ * the React `customclass` is the plain `class`, and `inputRef` has no
+ * counterpart (select the element by `id` or a `data-*` attribute).
+ */
+export type Props = HTMLAttributes<'input'>
+
+const { class: className, 'class:list': classList, ...rest } = Astro.props
+---
+
+<input class:list={['au-field__input', className, classList]} {...rest} />

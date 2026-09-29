@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../styles.scss'
+
+/**
+ * Same props as React. The React `icon` prop is the `icon` slot and the label
+ * is the default slot. Every HTML attribute is forwarded to the root `div`.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'color'> & {
+  color?: 'primary' | 'secondary'
+}
+
+const { color = 'primary', class: className, ...rest } = Astro.props
+---
+
+<div
+  class:list={[
+    'au-card__tag',
+    color === 'primary' && 'au-card__tag--primary',
+    color === 'secondary' && 'au-card__tag--secondary',
+    className,
+  ]}
+  {...rest}>
+  <span aria-hidden="true"><slot name="icon" /></span>
+  <span><slot /></span>
+</div>

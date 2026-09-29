@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../styles.scss'
+
+/**
+ * The React `rightSideSlot` is the `right` named slot here. The
+ * `au-field__right-slot` wrapper only renders when that slot has content, so a
+ * parent can forward the slot unconditionally.
+ */
+export type Props = HTMLAttributes<'div'>
+
+const { class: className, ...rest } = Astro.props
+
+const right = Astro.slots.has('right')
+  ? (await Astro.slots.render('right')).trim()
+  : ''
+---
+
+<div class:list={['au-field__input-holder', className]} {...rest}>
+  <slot />
+  {
+    right && (
+      <div class="au-field__right-slot">
+        <Fragment set:html={right} />
+      </div>
+    )
+  }
+</div>

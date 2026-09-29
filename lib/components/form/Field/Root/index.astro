@@ -1,0 +1,37 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../styles.scss'
+
+/**
+ * Same states as the React `Field.Root`. The React `customclass` is the plain
+ * `class` here, and every other HTML attribute (`id`, `style`, `data-*`) lands
+ * on the root `div`.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  disabled?: boolean
+  success?: boolean
+  error?: boolean
+}
+
+const {
+  disabled = false,
+  success = false,
+  error = false,
+  class: className,
+  'class:list': classList,
+  ...rest
+} = Astro.props
+---
+
+<div
+  class:list={[
+    'au-field',
+    className,
+    classList,
+    disabled && 'au-field--disabled',
+    success && 'au-field--success',
+    error && 'au-field--error',
+  ]}
+  {...rest}>
+  <slot />
+</div>

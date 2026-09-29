@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/**
+ * `NotificationsBar.Root` in React. `renderRecents` and `renderOlds` become
+ * the `recents` and `olds` slots, rendered in that order (the stylesheet
+ * highlights the first section as the unread one). The default slot comes
+ * last, for anything else.
+ */
+export type Props = HTMLAttributes<'div'>
+
+const { class: className, ...rest } = Astro.props
+---
+
+<div
+  class:list={['au-notifications-bar', className]}
+  role="region"
+  aria-label="Notificações"
+  {...rest}>
+  <slot name="recents" />
+  <slot name="olds" />
+  <slot />
+</div>

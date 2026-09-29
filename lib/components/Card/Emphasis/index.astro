@@ -1,0 +1,39 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../../Text/index.astro'
+import '../styles.scss'
+
+export type CardEmphasisItem = { title: string; description?: string }
+
+/**
+ * Same props as React. `height` / `maxHeight` are inline `style`, written
+ * like React writes them (an unset one comes out as `undefinedpx`, which the
+ * browser drops), so a `style` passed here is ignored. Every HTML attribute is forwarded.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'style'> & {
+  content: CardEmphasisItem[]
+  /** Height in px. */
+  height?: number
+  /** Max height in px. */
+  maxHeight?: number
+}
+
+const { content, height, maxHeight, class: className, ...rest } = Astro.props
+
+const style = `height:${height}px;max-height:${maxHeight}px`
+---
+
+<div class:list={['au-card__emphasis', className]} {...rest} style={style}>
+  {
+    content?.map((item) => (
+      <div class="au-card__emphasis-container">
+        <Text variant="body-small" color="secondary">
+          {item.title}
+        </Text>
+        <Text variant="body-small" weight="semibold">
+          {item.description}
+        </Text>
+      </div>
+    ))
+  }
+</div>

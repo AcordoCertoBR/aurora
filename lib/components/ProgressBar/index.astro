@@ -1,0 +1,70 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../Text/index.astro'
+import './styles.scss'
+
+/** Same props as React; every HTML attribute is forwarded to the root `div`. */
+export type Props = HTMLAttributes<'div'> & {
+  /** Shows a continuous bar with a percentage instead of step segments. */
+  percentageMode?: boolean
+  stepName: string
+  currentStep: number
+  totalSteps: number
+}
+
+const {
+  percentageMode = false,
+  stepName,
+  currentStep,
+  totalSteps,
+  class: className,
+  ...rest
+} = Astro.props
+
+const safeCurrentStep = Math.max(1, Math.min(currentStep, totalSteps))
+const percentageWidth = (safeCurrentStep / totalSteps) * 100
+const roundedPercentage = Math.round(percentageWidth)
+
+const progressText = percentageMode
+  ? `${roundedPercentage}%`
+  : `${safeCurrentStep} de ${totalSteps}`
+---
+
+<div
+  class:list={['au-progress-bar', className]}
+  role="progressbar"
+  aria-valuenow={percentageMode ? roundedPercentage : safeCurrentStep}
+  aria-valuemin={percentageMode ? 0 : 1}
+  aria-valuemax={percentageMode ? 100 : totalSteps}
+  aria-label={stepName}
+  {...rest}>
+  {
+    percentageMode ? (
+      <div class="au-progress-bar__bar">
+        <div
+          style={`width: ${percentageWidth}%`}
+          class="au-progress-bar__bar-filled"
+        />
+      </div>
+    ) : (
+      <div class="au-progress-bar__steps">
+        {Array.from({ length: totalSteps }).map((_, index) => (
+          <div class="au-progress-bar__step-container">
+            <div
+              class:list={[
+                'au-progress-bar__step-filled',
+                index < safeCurrentStep &&
+                  'au-progress-bar__step-filled--is-active',
+              ]}
+            />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="au-progress-bar__text">
+    <Text as="span" variant="body-medium">{stepName}</Text>
+    <Text as="span" variant="body-medium">{progressText}</Text>
+  </div>
+</div>

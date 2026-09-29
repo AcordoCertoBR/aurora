@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import InputField from '@components/form/InputField/index.astro'
+import SelectField from '@components/form/SelectField/index.astro'
+import DatepickerField from '@components/form/Datepicker/index.astro'
+import IconSearch from '@components/icons/default/IconSearch.astro'
+
+const options = [
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Disabled Option', disabled: true },
+  { value: 'option4', label: 'Option 4' },
+  { value: 'option5', label: 'Option 5' },
+]
+---
+
+<Layout title="Form" description="InputField, SelectField e Datepicker com seus estados">
+  <Example name="InputField default"><InputField id="in1" label="Nome" placeholder="Digite seu nome" name="nome" /></Example>
+  <Example name="InputField required"><InputField id="in2" label="CPF" requiredInput showOptionalLabel={false} required name="cpf" /></Example>
+  <Example name="InputField success"><InputField id="in3" label="E-mail" success value="ok@x.com" helpMessage="Tudo certo" /></Example>
+  <Example name="InputField error"><InputField id="in4" label="Telefone" error errorMessage="Telefone inválido" value="11" /></Example>
+  <Example name="InputField disabled"><InputField id="in5" label="Desabilitado" disabled value="x" /></Example>
+  <Example name="InputField right slot"><InputField id="in6" label="Buscar"><IconSearch slot="right" /></InputField></Example>
+
+  <Example name="SelectField default" bg="gray" tall><SelectField label="Select Label" options={options} style="max-width: 272px" name="sel1" /></Example>
+  <Example name="SelectField autocomplete" bg="gray" tall><SelectField label="Autocomplete" placeholder="Digite para filtrar" options={options} autocomplete style="max-width: 272px" /></Example>
+  <Example name="SelectField error" bg="gray"><SelectField label="Error Select" options={options} error errorMessage="Mensagem de erro" style="max-width: 272px" /></Example>
+
+  <Example name="Datepicker default" bg="gray" tall><DatepickerField label="Data" defaultValue={{ day: 15, month: 9, year: 2026 }} /></Example>
+  <Example name="Datepicker empty" bg="gray" tall><DatepickerField label="Data" placeholder="Digite a data" helpMessage="Formato DD/MM/AAAA" /></Example>
+  <Example name="Datepicker disabled" bg="gray"><DatepickerField label="Desabilitado" disabled defaultValue={{ day: 1, month: 1, year: 2026 }} /></Example>
+</Layout>

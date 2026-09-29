@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import './styles.scss'
+
+/**
+ * Same props as React; every HTML attribute is forwarded to the `div`. The
+ * size is an inline `style`, so a `style` passed here is ignored.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'color' | 'style'> & {
+  active?: boolean
+  shape?: 'default' | 'square' | 'circle'
+  color?: 'primary' | 'secondary'
+  /** Fills the container width when no `width` is given. */
+  block?: boolean
+  /** Width in px. Defaults to 80px (or 100% with `block`). */
+  width?: number
+  /** Height in px. Defaults to 28px. */
+  height?: number
+}
+
+const {
+  active = true,
+  shape = 'default',
+  color = 'primary',
+  block = false,
+  width,
+  height,
+  class: className,
+  ...rest
+} = Astro.props
+
+const style = {
+  height: height ? `${height}px` : '28px',
+  width: width ? `${width}px` : block ? '100%' : '80px',
+}
+---
+
+<div
+  class:list={[
+    'au-skeleton',
+    active && 'au-skeleton--active',
+    shape === 'square' && 'au-skeleton--shape-square',
+    shape === 'circle' && 'au-skeleton--shape-circle',
+    color === 'secondary' && 'au-skeleton--color-secondary',
+    className,
+  ]}
+  aria-hidden="true"
+  {...rest}
+  style={style}>
+</div>

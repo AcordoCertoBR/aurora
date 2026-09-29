@@ -1,0 +1,85 @@
+---
+/**
+ * One example on a playground page: a caption bar and a surface with the
+ * component inside, like a Storybook story. `bg` swaps the surface for the
+ * brand blue (negative variants) or a light gray (cards); `tall` reserves
+ * room for overlays that open below the component (select, calendar).
+ * The `id` (from `name`) feeds the "examples" list in the sidebar.
+ */
+interface Props {
+  name: string
+  /** One line about what the example shows. */
+  note?: string
+  bg?: 'dark' | 'gray'
+  tall?: boolean
+}
+
+const { name, note, bg, tall = false } = Astro.props
+const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+---
+
+<section class:list={['example', bg && `example--${bg}`, tall && 'example--tall']} id={id}>
+  <header class="example__bar">
+    <span class="example__name">{name}</span>
+    {note && <span class="example__note">{note}</span>}
+    {bg && <span class="example__chip">{bg === 'dark' ? 'fundo escuro' : 'fundo cinza'}</span>}
+  </header>
+  <div class="example__surface"><slot /></div>
+</section>
+
+<style lang="scss">
+  .example {
+    margin: 0 0 $spacing-300;
+    background: $color-neutral-00;
+    border: 1px solid $color-neutral-20;
+    border-radius: $border-radius-big;
+    box-shadow: $shadow-01;
+    overflow: hidden;
+    scroll-margin-top: 88px;
+  }
+  .example__bar {
+    display: flex;
+    align-items: center;
+    gap: $spacing-100;
+    padding: 10px $spacing-200;
+    border-bottom: 1px solid $color-neutral-20;
+    background: $color-neutral-10;
+  }
+  .example__name {
+    font-family: $font-title;
+    font-size: $font-size-p3;
+    font-weight: $font-weight-semibold;
+    color: $color-neutral-70;
+  }
+  .example__note {
+    font-size: $font-size-p3;
+    color: $color-neutral-50;
+  }
+  .example__chip {
+    margin-left: auto;
+    padding: 2px 10px;
+    border-radius: $border-radius-pill;
+    background: $color-neutral-20;
+    font-size: $font-size-p4;
+    font-weight: $font-weight-semibold;
+    color: $color-neutral-50;
+    white-space: nowrap;
+  }
+  .example__surface {
+    padding: $spacing-300;
+    min-height: 40px;
+    background-color: $color-neutral-00;
+    background-image: radial-gradient($color-neutral-20 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .example--dark .example__surface {
+    background-color: $color-brand-blue-50;
+    background-image: radial-gradient(rgba($color-neutral-00, 0.18) 1px, transparent 1px);
+  }
+  .example--gray .example__surface {
+    background-color: $color-neutral-10;
+  }
+  .example--tall .example__surface {
+    min-height: 440px;
+  }
+</style>

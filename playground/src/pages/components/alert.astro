@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import Alert from '@components/Alert/index.astro'
+---
+
+<Layout title="Alert" description="Status, orientação, botão de ação, fechar e contagem regressiva">
+  <Example name="info"><Alert status="info" title={{ content: 'Informação', weight: 'bold' }} text="Texto de apoio do alerta." /></Example>
+  <Example name="success type 2"><Alert status="success" type={2} title={{ content: 'Tudo certo', weight: 'bold' }} text="Acordo fechado com sucesso." /></Example>
+  <Example name="error"><Alert status="error" title={{ content: 'Erro' }} text="Não foi possível concluir." /></Example>
+  <Example name="warning"><Alert status="warning" text="Atenção ao prazo." /></Example>
+  <Example name="vertical with action"><Alert status="info" orientation="vertical" title={{ content: 'Título', weight: 'bold' }} text="Com botão de ação." actionButton={{ content: 'Ação' }} /></Example>
+  <Example name="closable"><Alert status="success" closeButton title={{ content: 'Fechável', weight: 'normal' }} text="Clique no X." /></Example>
+  <Example name="timer"><Alert status="timer" countdown={30} title={{ content: 'Reenviar código', weight: 'bold' }} text="Aguarde para reenviar." actionButton={{ content: 'Reenviar' }} /></Example>
+</Layout>

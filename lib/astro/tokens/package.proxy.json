@@ -1,0 +1,6 @@
+{
+  "main": "../../dist/astro/tokens/index.es.js",
+  "module": "../../dist/astro/tokens/index.es.js",
+  "types": "../../dist/core/tokens/index.d.ts",
+  "sideEffects": false
+}

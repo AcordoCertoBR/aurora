@@ -1,0 +1,81 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import FieldRoot from '../Field/Root/index.astro'
+import FieldLabel from '../Field/Label/index.astro'
+import FieldTextArea from '../Field/TextArea/index.astro'
+import FieldMessage from '../Field/Message/index.astro'
+
+/**
+ * Same props as the React `TextAreaField`, and the same split: `class` and
+ * `style` go on the `au-field` root, every other HTML attribute (`name`,
+ * `value`, `rows`, `placeholder`, `data-*`...) lands on the `<textarea>`.
+ *
+ * Differences from React: `textareaRef` and the `on*` callbacks have no
+ * counterpart. As in React, `required` only marks the label (it does not
+ * reach the `<textarea>`), and the message is not tied to the textarea.
+ */
+export type Props = Omit<HTMLAttributes<'textarea'>, 'disabled' | 'maxlength'> & {
+  showOptionalLabel?: boolean
+  success?: boolean
+  error?: boolean
+  errorMessage?: string
+  helpMessage?: string
+  label?: string
+  disabled?: boolean
+  required?: boolean
+  maxLength?: number
+  /** Inline style of the `<textarea>` (`style` goes on the root). */
+  textAreaStyle?: HTMLAttributes<'textarea'>['style']
+  /** Allows the user to resize the textarea horizontally. Not mapped in Figma. */
+  horizontalResize?: boolean
+}
+
+const {
+  showOptionalLabel,
+  required = false,
+  success = false,
+  error = false,
+  errorMessage,
+  helpMessage,
+  label,
+  id,
+  disabled = false,
+  style,
+  class: className,
+  textAreaStyle,
+  maxLength,
+  horizontalResize = false,
+  ...rest
+} = Astro.props
+
+---
+
+<FieldRoot
+  style={style}
+  class={className}
+  success={success}
+  error={error}
+  disabled={disabled}>
+  <FieldLabel
+    text={label}
+    id={id}
+    required={required}
+    showOptionalLabel={showOptionalLabel}
+    success={success}
+    error={error}
+    disabled={disabled}
+  />
+  <FieldTextArea
+    id={id}
+    disabled={disabled}
+    style={textAreaStyle}
+    maxLength={maxLength}
+    horizontalResize={horizontalResize}
+    {...rest}
+  />
+  <FieldMessage
+    hasError={error}
+    errorMessage={errorMessage}
+    helpMessage={helpMessage}
+  />
+</FieldRoot>

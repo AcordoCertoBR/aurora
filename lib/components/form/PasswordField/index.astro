@@ -1,0 +1,123 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import FieldRoot from '../Field/Root/index.astro'
+import FieldLabel from '../Field/Label/index.astro'
+import FieldInput from '../Field/Input/index.astro'
+import FieldErrorMessage from '../Field/ErrorMessage/index.astro'
+import './styles.scss'
+
+/**
+ * Same props as the React `PasswordField`, and the same split: `class` and
+ * `style` go on the `au-field` root, every other HTML attribute (`name`,
+ * `autocomplete`, `required`, `data-*`...) lands on the `<input>`.
+ *
+ * The show/hide toggle is the component's own behavior, kept by an inline
+ * controller: it flips the input between `password` and `text`, the button
+ * text between "mostrar" and "ocultar", `aria-pressed` and `aria-label`, and
+ * emits `au:passwordtoggle` (`detail.visible`) from the root. `inputRef` and
+ * the `on*` callbacks have no counterpart. Like the React version, the input
+ * only gets an `id` when one is passed, and an explicit `type` wins over the
+ * toggle (React spreads it after the computed type), so the input then stays
+ * `password` while the button still flips.
+ */
+export type Props = Omit<HTMLAttributes<'input'>, 'type' | 'disabled'> & {
+  type?: 'password'
+  showOptionalLabel?: boolean
+  /** Marks the label as required. Pass `required` too for native validation. */
+  requiredInput?: boolean
+  success?: boolean
+  error?: boolean
+  errorMessage?: string
+  label?: string
+  disabled?: boolean
+  /** Opens the numeric keypad on mobile (`inputmode="numeric"`). */
+  numericKeypad?: boolean
+}
+
+const uid = crypto.randomUUID().slice(0, 8)
+
+const {
+  showOptionalLabel,
+  requiredInput,
+  success = false,
+  error = false,
+  errorMessage,
+  label,
+  id: idProp,
+  disabled = false,
+  style,
+  class: className,
+  numericKeypad = false,
+  ...rest
+} = Astro.props
+
+const id = idProp
+
+// Stands in for the React `useId()` of the error message.
+const errorId = error && errorMessage ? `au-password-${uid}-error` : undefined
+// React spreads `type` after the computed one, so a passed `type` is fixed.
+const fixedType = rest.type !== undefined
+---
+
+<FieldRoot
+  style={style}
+  class={className}
+  success={success}
+  error={error}
+  disabled={disabled}
+  data-element="au-password-field"
+  data-au-password-fixed-type={fixedType ? '' : undefined}>
+  <FieldLabel
+    text={label}
+    id={id}
+    required={requiredInput}
+    showOptionalLabel={showOptionalLabel}
+    success={success}
+    error={error}
+    disabled={disabled}
+  />
+  <div class="au-password-field__container">
+    <FieldInput
+      class="au-password-field__input"
+      type="password"
+      id={id}
+      inputmode={numericKeypad ? 'numeric' : undefined}
+      disabled={disabled}
+      aria-invalid={error ? 'true' : 'false'}
+      aria-describedby={errorId}
+      {...rest}
+    />
+    <button
+      class="au-password-field__btn"
+      type="button"
+      disabled={disabled}
+      aria-label="Mostrar senha"
+      aria-pressed="false">
+      mostrar
+    </button>
+  </div>
+  <FieldErrorMessage hasError={error} message={errorMessage} id={errorId} />
+</FieldRoot>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  elementController('au-password-field', ({ root, query, on, emit }) => {
+    const input = query<HTMLInputElement>('.au-password-field__input')
+    const button = query<HTMLButtonElement>('.au-password-field__btn')
+    if (!input || !button) return
+
+    on('click', (event) => {
+      if (!(event.target as Element | null)?.closest('.au-password-field__btn')) return
+
+      const visible = button.getAttribute('aria-pressed') !== 'true'
+      if (!root.hasAttribute('data-au-password-fixed-type')) {
+        input.type = visible ? 'text' : 'password'
+      }
+      button.textContent = visible ? 'ocultar' : 'mostrar'
+      button.setAttribute('aria-label', visible ? 'Ocultar senha' : 'Mostrar senha')
+      button.setAttribute('aria-pressed', String(visible))
+      emit('au:passwordtoggle', { visible })
+    })
+  })
+</script>

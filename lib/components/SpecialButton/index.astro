@@ -1,0 +1,331 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import IconArrowRight from '../icons/default/IconArrowRight.astro'
+import IconCheck from '../icons/default/IconCheck.astro'
+import IconLoader from '../icons/default/IconLoader.astro'
+import IconSlash from '../icons/default/IconSlash.astro'
+import './styles.scss'
+
+/**
+ * The React version takes `onConfirm`. Astro has no callback props: the
+ * controller emits `au:confirm` from the root (the `<button>` for 'press', the
+ * wrapper for 'slider') once the hold finishes or the knob passes 70% of the
+ * track, and then puts the component in the success state. The label is the
+ * default slot; the slider hint is the `hint` slot (falls back to
+ * `incompleteHint`). Every HTML attribute is forwarded to the
+ * `.au-special-button` element; `style` is not, because it carries the CSS
+ * variables the controller drives.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'style'> & {
+  /**
+   * Interaction mode: 'press' is hold-to-confirm (Figma: Press Button),
+   * 'slider' is swipe-to-confirm (Figma: Swipe Button).
+   */
+  type?: 'press' | 'slider'
+  disabled?: boolean
+  loading?: boolean
+  /** Renders already confirmed. The component also enters it after a completed interaction. */
+  success?: boolean
+  /** Press only: time in milliseconds the user must keep pressing to confirm. */
+  holdDuration?: number
+  /** Press only: stretches the button to fill the container width. */
+  expand?: 'x'
+  /** Slider only: visual variant (Figma: Swipe Button, ◇ Type Primary | Secondary). */
+  variant?: 'primary' | 'secondary'
+  /** Slider only: renders an empty skeleton placeholder. */
+  skeleton?: boolean
+  /**
+   * Slider only: accessible label for the draggable knob. Enter or Space on
+   * the focused knob confirms directly (keyboard alternative to the swipe).
+   */
+  knobAriaLabel?: string
+  /** Slider only: text shown below the button after an incomplete drag. */
+  incompleteHint?: string
+}
+
+const {
+  type = 'press',
+  disabled = false,
+  loading = false,
+  success = false,
+  holdDuration = 1500,
+  expand,
+  variant = 'primary',
+  skeleton = false,
+  knobAriaLabel = 'Arraste para confirmar',
+  incompleteHint = 'Arraste até o final para confirmar ação',
+  class: className,
+  ...rest
+} = Astro.props
+
+const isSlider = type === 'slider'
+---
+
+{
+  isSlider ? (
+    <div class="au-special-button-wrapper" data-element="au-special-button">
+      <div
+        class:list={[
+          'au-special-button',
+          'au-special-button--type-slider',
+          `au-special-button--variant-${variant}`,
+          disabled && 'au-special-button--disabled',
+          loading && 'au-special-button--loading',
+          success && 'au-special-button--success',
+          skeleton && 'au-special-button--skeleton',
+          className,
+        ]}
+        {...rest}
+        style="--au-special-button-progress: 0">
+        {loading && <IconLoader />}
+        {!loading && !skeleton && (
+          <Fragment>
+            <span class="au-special-button__label">
+              <slot>Slide to action</slot>
+            </span>
+            <button
+              type="button"
+              class="au-special-button__knob"
+              aria-label={knobAriaLabel}
+              disabled={disabled}>
+              {success ? (
+                <IconCheck />
+              ) : disabled ? (
+                <IconSlash />
+              ) : (
+                <IconArrowRight />
+              )}
+            </button>
+          </Fragment>
+        )}
+      </div>
+      {!loading && !skeleton && !success && (
+        <template data-au-special-button="hint">
+          <span class="au-special-button__hint" role="status">
+            <slot name="hint">{incompleteHint}</slot>
+          </span>
+        </template>
+      )}
+      {!loading && !skeleton && !success && !disabled && (
+        <template data-au-special-button="check">
+          <IconCheck />
+        </template>
+      )}
+    </div>
+  ) : (
+    <button
+      type="button"
+      class:list={[
+        'au-special-button',
+        'au-special-button--type-press',
+        disabled && 'au-special-button--disabled',
+        loading && 'au-special-button--loading',
+        success && 'au-special-button--success',
+        expand && `au-special-button--expand-${expand}`,
+        className,
+      ]}
+      disabled={disabled || loading}
+      aria-busy={loading ? 'true' : 'false'}
+      data-element="au-special-button"
+      {...rest}
+      style={`--au-special-button-duration: ${holdDuration}ms`}>
+      <span class="au-special-button__fill" aria-hidden="true" />
+      {loading ? (
+        <IconLoader />
+      ) : (
+        <span class="au-special-button__label">
+          {disabled && <IconSlash />}
+          <slot>Hold to confirm</slot>
+        </span>
+      )}
+    </button>
+  )
+}
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+  import type { ControllerContext } from '@consumidor-positivo/aurora/astro/runtime'
+
+  const KNOB_SIZE = 40
+  const TRACK_PADDING = 4
+  // Figma (Behavior): from ~70% of the track the action already counts as
+  // confirmed and the button completes on its own.
+  const CONFIRM_THRESHOLD = 0.7
+  const COMPLETE_ANIMATION_MS = 400
+  const DEFAULT_HOLD_MS = 1500
+
+  const CLASS = {
+    holding: 'au-special-button--holding',
+    dragging: 'au-special-button--dragging',
+    completing: 'au-special-button--completing',
+    disabled: 'au-special-button--disabled',
+    loading: 'au-special-button--loading',
+    success: 'au-special-button--success',
+    skeleton: 'au-special-button--skeleton',
+  }
+
+  const isActivationKey = (key: string) => key === 'Enter' || key === ' '
+
+  function hasAny(element: Element, ...classes: string[]) {
+    return classes.some((name) => element.classList.contains(name))
+  }
+
+  function setupPress({ root, on, emit }: ControllerContext) {
+    // Read back from the CSS variable the markup already carries.
+    const holdDuration =
+      parseFloat(root.style.getPropertyValue('--au-special-button-duration')) ||
+      DEFAULT_HOLD_MS
+    let timer: number | undefined
+
+    const isHolding = () => root.classList.contains(CLASS.holding)
+    const isInteractive = () =>
+      !hasAny(root, CLASS.disabled, CLASS.loading, CLASS.success)
+
+    function startHold() {
+      if (!isInteractive() || isHolding()) return
+      root.classList.add(CLASS.holding)
+      timer = window.setTimeout(() => {
+        root.classList.remove(CLASS.holding)
+        root.classList.add(CLASS.success)
+        emit('au:confirm')
+      }, holdDuration)
+    }
+
+    function cancelHold() {
+      if (!isHolding()) return
+      window.clearTimeout(timer)
+      root.classList.remove(CLASS.holding)
+    }
+
+    on('pointerdown', startHold)
+    on('pointerup', cancelHold)
+    on('pointerleave', cancelHold)
+    on('pointercancel', cancelHold)
+
+    on('keydown', (event) => {
+      if (!isActivationKey(event.key) || event.repeat) return
+      event.preventDefault()
+      startHold()
+    })
+
+    on('keyup', (event) => {
+      if (isActivationKey(event.key)) cancelHold()
+    })
+  }
+
+  function setupSlider({ root, query, emit }: ControllerContext) {
+    const container = query<HTMLElement>('.au-special-button')
+    const knob = query<HTMLButtonElement>('.au-special-button__knob')
+    const hintTemplate = query<HTMLTemplateElement>(
+      'template[data-au-special-button="hint"]',
+    )
+    const checkTemplate = query<HTMLTemplateElement>(
+      'template[data-au-special-button="check"]',
+    )
+    // React renders the hint and the success icon only when needed: keep
+    // them in memory and take the templates out of the page.
+    const hintMarkup = hintTemplate?.content.firstElementChild ?? null
+    const checkIcon = checkTemplate?.content.firstElementChild ?? null
+    hintTemplate?.remove()
+    checkTemplate?.remove()
+    if (!container || !knob) return
+
+    let startX = 0
+    let dragX = 0
+    let hint: Element | null = null
+
+    const isDragging = () => container.classList.contains(CLASS.dragging)
+    const isInteractive = () =>
+      !hasAny(
+        container,
+        CLASS.disabled,
+        CLASS.loading,
+        CLASS.success,
+        CLASS.skeleton,
+        CLASS.completing,
+      )
+
+    function maxDrag() {
+      return container!.clientWidth - KNOB_SIZE - TRACK_PADDING * 2
+    }
+
+    function setDragX(value: number) {
+      dragX = value
+      const max = maxDrag()
+      knob!.style.transform = value > 0 ? `translateX(${value}px)` : ''
+      container!.style.setProperty(
+        '--au-special-button-progress',
+        String(max > 0 ? value / max : 0),
+      )
+    }
+
+    function showHint(isVisible: boolean) {
+      if (!isVisible) {
+        hint?.remove()
+        hint = null
+        return
+      }
+      if (hint || !hintMarkup) return
+      hint = hintMarkup.cloneNode(true) as Element
+      root.append(hint)
+    }
+
+    function confirm() {
+      container!.classList.add(CLASS.success)
+      showHint(false)
+      if (checkIcon) knob!.replaceChildren(checkIcon.cloneNode(true))
+      emit('au:confirm')
+    }
+
+    function complete() {
+      container!.classList.remove(CLASS.dragging)
+      container!.classList.add(CLASS.completing)
+      showHint(false)
+      setDragX(maxDrag())
+      window.setTimeout(() => {
+        container!.classList.remove(CLASS.completing)
+        setDragX(0)
+        confirm()
+      }, COMPLETE_ANIMATION_MS)
+    }
+
+    function endDrag() {
+      if (!isDragging()) return
+      container!.classList.remove(CLASS.dragging)
+      if (dragX > 0) showHint(true)
+      setDragX(0)
+    }
+
+    knob.addEventListener('pointerdown', (event) => {
+      if (!isInteractive()) return
+      container.classList.add(CLASS.dragging)
+      startX = event.clientX
+      knob.setPointerCapture?.(event.pointerId)
+    })
+
+    knob.addEventListener('pointermove', (event) => {
+      if (!isDragging()) return
+      const max = maxDrag()
+      const next = Math.min(Math.max(event.clientX - startX, 0), max)
+      setDragX(next)
+      if (max > 0 && next >= max * CONFIRM_THRESHOLD) complete()
+    })
+
+    knob.addEventListener('pointerup', endDrag)
+    knob.addEventListener('pointercancel', endDrag)
+
+    knob.addEventListener('keydown', (event) => {
+      if (!isInteractive() || !isActivationKey(event.key)) return
+      event.preventDefault()
+      confirm()
+    })
+  }
+
+  elementController('au-special-button', (context) => {
+    if (context.root.classList.contains('au-special-button--type-press')) {
+      setupPress(context)
+    } else {
+      setupSlider(context)
+    }
+  })
+</script>

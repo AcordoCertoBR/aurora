@@ -1,0 +1,70 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../../Text/index.astro'
+import '../styles.scss'
+
+export type NotificationsBarLinkItem = {
+  title: string
+  createdAt?: string
+  isUnread?: boolean
+  /** Renders the "Excluir" button (React renders it when `onDelete` is passed). */
+  deletable?: boolean
+}
+
+/**
+ * `NotificationsBar.Link` in React. No `onClick`/`onDelete`: the item button
+ * carries `data-au-notifications-bar="link"` and the delete button
+ * `data-au-notifications-bar="delete"`, so the page's own `<script>` can wire
+ * them. `Icon` is the `icon` slot.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'title'> & NotificationsBarLinkItem
+
+const {
+  title,
+  createdAt,
+  isUnread = false,
+  deletable = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+const timestampId = `au-notifications-bar-${crypto.randomUUID().slice(0, 8)}`
+---
+
+<div class:list={['au-notifications-bar__item', className]} {...rest}>
+  <button
+    type="button"
+    class="au-notifications-bar__link"
+    data-au-notifications-bar="link"
+    aria-describedby={createdAt ? timestampId : undefined}>
+    {
+      Astro.slots.has('icon') && (
+        <span aria-hidden="true">
+          <slot name="icon" />
+        </span>
+      )
+    }
+    <Text as="span" variant="body-medium" weight="regular">
+      {isUnread && <span class="au-sr-only">não lida — </span>}
+      {title}
+    </Text>
+  </button>
+  <div class="au-notifications-bar__actions">
+    <Text as="span" id={timestampId} variant="body-small">
+      {createdAt}
+    </Text>
+    {
+      deletable && (
+        <button
+          type="button"
+          class="au-notifications-bar__delete-btn"
+          data-au-notifications-bar="delete"
+          aria-label={`Excluir: ${title}`}>
+          <Text as="span" variant="body-small" weight="semibold">
+            Excluir
+          </Text>
+        </button>
+      )
+    }
+  </div>
+</div>

@@ -1,0 +1,561 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import FieldRoot from '../Field/Root/index.astro'
+import FieldLabel from '../Field/Label/index.astro'
+import FieldMessage from '../Field/Message/index.astro'
+import Modal from '../../Modal/index.astro'
+import Text from '../../Text/index.astro'
+import IconCheck from '../../icons/default/IconCheck.astro'
+import IconChevronDown from '../../icons/default/IconChevronDown.astro'
+import IconSearch from '../../icons/default/IconSearch.astro'
+import IconSlash from '../../icons/default/IconSlash.astro'
+import { COLOR_NEUTRAL_40 } from '@consumidor-positivo/aurora/astro/tokens'
+import './styles.scss'
+
+export type SelectOption = {
+  value: string
+  label: string
+  disabled?: boolean
+}
+
+/**
+ * Same props and markup as the React `SelectField`, which is hand-written
+ * (combobox wrapper, input, listbox, hidden `<select>` for the form). The
+ * inline controller follows the React hook step by step: toggle on click,
+ * ArrowUp/ArrowDown skipping disabled options, Enter, Escape, the label filter
+ * with `autocomplete`, the highlighted option that follows the mouse, the
+ * dropdown height computed from the space below, the outside click that closes
+ * the list, and the 500ms delay before closing after a pick.
+ *
+ * Differences from React: `value` is the initial selection (change it through
+ * the hidden `<select>` or a pick); `onChange` becomes `au:selectchange`
+ * (`detail.value`, fired on a pick and on every keystroke with `autocomplete`,
+ * like the React callback) and `onBlur` becomes `au:selectblur`
+ * (`detail.target`, the option React hands back), both bubbling from the
+ * `au-field` root 200ms after the blur like React. `register` has no
+ * counterpart: the `<select hidden name>` is in the form either way. With
+ * `fullScreenOptions`, the options list opens in a `Modal` on mobile
+ * (`isMobile()`, max-width 767px, decided when the controller runs, as React
+ * decides on render); the modal rides at the end of the markup and moves
+ * itself to `document.body`, like the React portal. `class` and `style` go on
+ * the `au-field` root (and `class` also on `au-field__select`, as React does);
+ * `data-testid` goes on the combobox wrapper; other HTML attributes land on
+ * the root.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'style' | 'placeholder'> & {
+  label?: string
+  options: SelectOption[]
+  showOptionalLabel?: boolean
+  disabled?: boolean
+  required?: boolean
+  error?: boolean
+  errorMessage?: string
+  helpMessage?: string
+  placeholder?: string
+  /** Initial selected value. */
+  value?: string
+  /** Name of the hidden `<select>` submitted with the form. */
+  name?: string
+  /** Lets the user type to filter the options by label. */
+  autocomplete?: boolean
+  /** Text of the single option shown when the filter matches nothing. */
+  EmptyText?: string
+  /** On mobile, opens the options list in a full-screen modal. Not mapped in Figma. */
+  fullScreenOptions?: boolean
+  htmlType?: 'text' | 'number'
+  style?: HTMLAttributes<'div'>['style']
+}
+
+const uid = crypto.randomUUID().slice(0, 8)
+
+const {
+  label,
+  options,
+  showOptionalLabel,
+  error = false,
+  errorMessage,
+  helpMessage,
+  disabled = false,
+  required = false,
+  value,
+  style,
+  class: className,
+  placeholder,
+  name,
+  autocomplete = false,
+  EmptyText = 'Nada encontrado',
+  fullScreenOptions = false,
+  htmlType = 'text',
+  'data-testid': dataTestId,
+  ...rest
+} = Astro.props
+
+// Stand in for the React `useId()` calls.
+const labelId = `au-select-${uid}-label`
+const errorId = error && errorMessage ? `au-select-${uid}-error` : undefined
+const modalId = `au-select-${uid}-modal`
+
+// Same initial state as the React hook.
+const selected = {
+  value: value || '',
+  label: value ? options.find((option) => option.value === value)?.label || '' : '',
+}
+
+const optionClasses = (option: SelectOption, prefix: string) => [
+  prefix,
+  option.value === selected.value && `${prefix}--selected`,
+  option.disabled && `${prefix}--disabled`,
+]
+---
+
+<FieldRoot
+  style={style}
+  class={className}
+  error={error}
+  disabled={disabled}
+  data-element="au-select-field"
+  data-au-select-autocomplete={autocomplete ? '' : undefined}
+  data-au-select-fullscreen={fullScreenOptions ? modalId : undefined}
+  data-au-select-empty-text={EmptyText}
+  {...rest}>
+  <FieldLabel
+    text={label}
+    labelId={labelId}
+    showOptionalLabel={showOptionalLabel}
+    required={required}
+    error={error}
+    disabled={disabled}
+  />
+  <div
+    class:list={[
+      'au-field__select',
+      disabled && 'au-field__select--disabled',
+      required && 'au-field__select--required',
+      error && 'au-field__select--error',
+      className,
+    ]}>
+    <div
+      class="au-field__select-wrapper"
+      data-testid={dataTestId}
+      tabindex={disabled ? -1 : 0}
+      role="combobox"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-labelledby={labelId}
+      aria-describedby={errorId}>
+      <input
+        class="au-field__select-input"
+        value={selected.label}
+        placeholder={placeholder || 'Selecionar...'}
+        readonly={!autocomplete}
+        disabled={disabled}
+        type={htmlType}
+        aria-labelledby={labelId}
+      />
+      <div class="au-field__select-icon" aria-hidden="true">
+        <IconChevronDown />
+      </div>
+    </div>
+    <ul
+      class="au-field__select-options"
+      role="listbox"
+      aria-live="polite"
+      tabindex="-1"
+      style="max-height: 0px; overflow-y: auto">
+      {
+        options.length === 0 ? (
+          <li class="au-field__select-option au-field__select-option--empty">{EmptyText}</li>
+        ) : (
+          options.map((option) => (
+            <li
+              class:list={optionClasses(option, 'au-field__select-option')}
+              role="option"
+              aria-selected={option.value === selected.value ? 'true' : 'false'}
+              aria-disabled={option.disabled ? 'true' : undefined}>
+              {option.label}
+              {option.disabled ? <IconSlash /> : option.value === selected.value ? <IconCheck /> : null}
+            </li>
+          ))
+        )
+      }
+    </ul>
+    <select hidden disabled={disabled} name={name}>
+      {options.map((option) => (
+        <option value={option.value} selected={option.value === selected.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  </div>
+  <FieldMessage
+    hasError={error}
+    errorMessage={errorMessage}
+    helpMessage={helpMessage}
+    errorId={errorId}
+  />
+  <template data-au-select-icons><IconSlash /><IconCheck /></template>
+</FieldRoot>
+{
+  fullScreenOptions && (
+    <Modal id={modalId} portal>
+      <Fragment slot="header">
+        <div>
+          <Text as="label" variant="heading-small" weight="bold">
+            {label}
+          </Text>
+          <div
+            class="au-field__fullscreen-options-select-search-bar"
+            tabindex={disabled ? -1 : 0}
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-labelledby={labelId}>
+            <input
+              class="au-field__select-input"
+              value={selected.label}
+              placeholder="Buscar"
+              disabled={disabled}
+              type={htmlType}
+              aria-label="Buscar"
+            />
+            <div class="au-field__select-icon" aria-hidden="true">
+              <IconSearch rawColor={COLOR_NEUTRAL_40} />
+            </div>
+          </div>
+        </div>
+      </Fragment>
+      <div class="au-field__fullscreen-options-select-options" role="listbox">
+        {options.map((option) => (
+          <li
+            class:list={optionClasses(option, 'au-field__fullscreen-options-select-option')}
+            role="option"
+            aria-selected={option.value === selected.value ? 'true' : 'false'}
+            aria-disabled={option.disabled ? 'true' : undefined}>
+            {option.label}
+            {option.disabled ? <IconSlash /> : option.value === selected.value ? <IconCheck /> : null}
+          </li>
+        ))}
+      </div>
+    </Modal>
+  )
+}
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  type Option = { value: string; label: string; disabled?: boolean }
+
+  const CLOSE_DELAY_MS = 500
+  const BLUR_DELAY_MS = 200
+  const MIN_DROPDOWN_HEIGHT = 212
+  // Same rule as `isMobile()` (lib/core/utils/isMobile.ts).
+  const MOBILE_QUERY = 'screen and (max-width:767px)'
+  const OPTION_CLASS = 'au-field__select-option'
+  const FULLSCREEN_OPTION_CLASS = 'au-field__fullscreen-options-select-option'
+
+  elementController('au-select-field', ({ root, query, on, emit }) => {
+    const selectBox = query<HTMLDivElement>('.au-field__select')
+    const wrapperBox = query<HTMLDivElement>('.au-field__select-wrapper')
+    const inputEl = query<HTMLInputElement>('.au-field__select-wrapper > .au-field__select-input')
+    const listboxEl = query<HTMLUListElement>('.au-field__select-options')
+    const nativeEl = query<HTMLSelectElement>('select[hidden]')
+    const template = query<HTMLTemplateElement>('template[data-au-select-icons]')
+    if (!selectBox || !wrapperBox || !inputEl || !listboxEl || !nativeEl || !template) return
+    const select = selectBox as HTMLDivElement
+    const wrapper = wrapperBox as HTMLDivElement
+    const input = inputEl as HTMLInputElement
+    const listbox = listboxEl as HTMLUListElement
+    const nativeSelect = nativeEl as HTMLSelectElement
+
+    // The icons React renders inside an option ride in a template, taken out
+    // of the page here.
+    const [slashIcon, checkIcon] = Array.from(template.content.children)
+    template.remove()
+
+    // Controller settings only; React's root carries no such attributes.
+    const autocomplete = root.hasAttribute('data-au-select-autocomplete')
+    const modalId = root.dataset.auSelectFullscreen
+    const emptyText = root.dataset.auSelectEmptyText ?? 'Nada encontrado'
+    root.removeAttribute('data-au-select-autocomplete')
+    root.removeAttribute('data-au-select-fullscreen')
+    root.removeAttribute('data-au-select-empty-text')
+
+    const fullScreenOptions = !!modalId
+    // React reads `isMobile()` on render; the same media query, once, here.
+    const fullScreenEnabled = fullScreenOptions && window.matchMedia(MOBILE_QUERY).matches
+    const disabled = input.disabled
+
+    // The options come from the markup: value and label from the hidden
+    // `<select>`, `disabled` from the listbox items (both share the order).
+    const items = Array.from(listbox.querySelectorAll<HTMLLIElement>(`.${OPTION_CLASS}`))
+    const options: Option[] = Array.from(nativeSelect.options).map((option, index) => ({
+      value: option.value,
+      label: option.label,
+      disabled: items[index]?.getAttribute('aria-disabled') === 'true' || undefined,
+    }))
+
+    // React state. The initial selection comes from the markup (the item
+    // rendered with `--selected`): a `<select>` with no `selected` option
+    // reports its first option as the value, which React does not treat as a
+    // selection either.
+    const selectedIndex = items.findIndex((item) => item.classList.contains(`${OPTION_CLASS}--selected`))
+    let isOpen = false
+    let selected: Option =
+      selectedIndex === -1
+        ? { value: '', label: '' }
+        : { value: options[selectedIndex].value, label: options[selectedIndex].label }
+    let activeIndex: number | null = null
+    let searchValue = ''
+    let lastActiveIndex: number | null = null
+
+    // Full-screen modal parts, resolved once the modal is in the page.
+    let modalRoot: HTMLElement | null = null
+    let searchBar: HTMLDivElement | null = null
+    let searchInput: HTMLInputElement | null = null
+    let fullscreenList: HTMLElement | null = null
+
+    if (fullScreenEnabled) {
+      // React renders no `<ul>` in this mode and keeps the input read-only.
+      listbox.remove()
+      input.readOnly = true
+    }
+
+    const filteredOptions = () =>
+      autocomplete || fullScreenOptions
+        ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
+        : options
+
+    const comboboxes = () => (searchBar ? [wrapper, searchBar] : [wrapper])
+    const reference = () => (fullScreenEnabled && searchBar ? searchBar : wrapper)
+
+    // React keys the items by index and updates them in place, so a mouse
+    // resting over the list does not get a new `mouseenter`. Same here: the
+    // `li` elements are reused and only their attributes change.
+    const itemIndex = new WeakMap<HTMLLIElement, number>()
+    function syncItems(list: HTMLElement, filtered: Option[], prefix: string) {
+      const current = Array.from(list.children) as HTMLLIElement[]
+      while (current.length > filtered.length) current.pop()!.remove()
+      filtered.forEach((option, index) => {
+        let item = current[index]
+        if (!item || !itemIndex.has(item)) {
+          const created = document.createElement('li')
+          created.addEventListener('pointerup', () => {
+            const target = filteredOptions()[itemIndex.get(created) ?? -1]
+            if (target) selectOption(target.value, target.disabled)
+          })
+          created.addEventListener('mouseenter', () => {
+            activeIndex = itemIndex.get(created) ?? null
+            render()
+          })
+          if (item) item.replaceWith(created)
+          else list.appendChild(created)
+          item = created
+          current[index] = item
+        }
+        itemIndex.set(item, index)
+        item.className = [
+          prefix,
+          activeIndex === index && `${prefix}--highlighted`,
+          option.value === selected.value && `${prefix}--selected`,
+          option.disabled && `${prefix}--disabled`,
+        ]
+          .filter(Boolean)
+          .join(' ')
+        item.setAttribute('role', 'option')
+        item.setAttribute('aria-selected', String(option.value === selected.value))
+        if (option.disabled) item.setAttribute('aria-disabled', 'true')
+        else item.removeAttribute('aria-disabled')
+        const icon = option.disabled ? slashIcon : option.value === selected.value ? checkIcon : null
+        const iconName = icon?.className ?? ''
+        const currentIcon = item.querySelector<HTMLElement>('.au-icon')
+        if (item.firstChild?.nodeType !== 3) item.prepend(option.label)
+        else if (item.firstChild.nodeValue !== option.label) item.firstChild.nodeValue = option.label
+        if (currentIcon && currentIcon.className !== iconName) currentIcon.remove()
+        if (icon && item.querySelector('.au-icon') === null) item.appendChild(icon.cloneNode(true))
+      })
+    }
+
+    function render() {
+      const filtered = filteredOptions()
+      const active = activeIndex !== null ? filtered[activeIndex] : undefined
+
+      select.classList.toggle('au-field__select--open', isOpen)
+      listbox.classList.toggle('au-field__select-options--open', isOpen)
+      comboboxes().forEach((box) => {
+        box.setAttribute('aria-expanded', String(isOpen))
+        if (active) box.setAttribute('aria-activedescendant', active.value)
+        else box.removeAttribute('aria-activedescendant')
+      })
+
+      // React: `value={(!fullScreenOptionsEnabled ? searchValue : null) || selectedOption.label}`
+      const inputValue = (!fullScreenEnabled ? searchValue : '') || selected.label
+      if (input.value !== inputValue) input.value = inputValue
+      if (searchInput) {
+        const searchInputValue = searchValue || selected.label
+        if (searchInput.value !== searchInputValue) searchInput.value = searchInputValue
+      }
+      // React's controlled `<select value>` leaves the selection alone when no
+      // option matches (an empty value included).
+      if (selected.value && nativeSelect.value !== selected.value) nativeSelect.value = selected.value
+
+      if (listbox.isConnected) {
+        if (filtered.length === 0) {
+          const empty = document.createElement('li')
+          empty.className = `${OPTION_CLASS} ${OPTION_CLASS}--empty`
+          empty.textContent = emptyText
+          listbox.replaceChildren(empty)
+        } else {
+          syncItems(listbox, filtered, OPTION_CLASS)
+        }
+      }
+      if (fullscreenList) syncItems(fullscreenList, filtered, FULLSCREEN_OPTION_CLASS)
+
+      // The `[activeOptionIndex]` effect: scroll the highlighted option into view.
+      if (activeIndex !== lastActiveIndex) {
+        lastActiveIndex = activeIndex
+        const list: HTMLElement = fullscreenList ?? listbox
+        list.querySelector<HTMLElement>('[class*="--highlighted"]')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }
+    }
+
+    function setOpen(open: boolean) {
+      isOpen = open
+      if (fullScreenEnabled && modalId) {
+        document.dispatchEvent(
+          new CustomEvent('au:modalcontrol', { detail: { id: modalId, open }, bubbles: true }),
+        )
+        if (open) bindModal()
+      }
+      render()
+    }
+
+    function toggleDropdown() {
+      if (!isOpen) {
+        const box = reference()
+        const { bottom } = box.getBoundingClientRect()
+        let totalPadding = 0
+        let parent: HTMLElement | null = box.parentElement
+        while (parent) {
+          totalPadding += parseFloat(window.getComputedStyle(parent).paddingBottom || '0')
+          parent = parent.parentElement
+        }
+        const availableSpaceBelow = window.innerHeight - bottom - totalPadding
+        listbox.style.maxHeight = `${Math.max(availableSpaceBelow, MIN_DROPDOWN_HEIGHT)}px`
+
+        const selectedIndex = options.findIndex((option) => option.value === selected.value)
+        activeIndex = selectedIndex !== -1 ? selectedIndex : null
+      }
+      setOpen(!isOpen)
+    }
+
+    function findNextAvailableIndex(currentIndex: number, direction: 'down' | 'up') {
+      const filtered = filteredOptions()
+      const step = direction === 'down' ? 1 : -1
+      let nextIndex = (currentIndex + step + filtered.length) % filtered.length
+      while (filtered[nextIndex]?.disabled) {
+        nextIndex = (nextIndex + step + filtered.length) % filtered.length
+      }
+      return nextIndex
+    }
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (disabled) return
+      const filtered = filteredOptions()
+      const actions: Record<string, () => void> = {
+        Enter: () => {
+          if (!isOpen) {
+            toggleDropdown()
+            return
+          }
+          if (activeIndex !== null && !filtered[activeIndex].disabled) {
+            event.preventDefault()
+            selectOption(filtered[activeIndex].value, filtered[activeIndex].disabled)
+          }
+        },
+        ArrowDown: () => {
+          event.preventDefault()
+          activeIndex = findNextAvailableIndex(activeIndex !== null ? activeIndex : -1, 'down')
+          if (!isOpen) toggleDropdown()
+          else render()
+        },
+        ArrowUp: () => {
+          event.preventDefault()
+          activeIndex = findNextAvailableIndex(activeIndex !== null ? activeIndex : filtered.length, 'up')
+          if (!isOpen) toggleDropdown()
+          else render()
+        },
+        Escape: () => setOpen(false),
+      }
+      actions[event.key]?.()
+    }
+
+    function selectOption(optionValue: string, optionDisabled?: boolean) {
+      if (optionDisabled) return
+      const option = options.find((candidate) => candidate.value === optionValue)
+      if (option) selected = { value: option.value, label: option.label }
+      activeIndex = null
+      searchValue = ''
+      render()
+      window.setTimeout(() => setOpen(false), CLOSE_DELAY_MS)
+      emit('au:selectchange', { value: optionValue })
+    }
+
+    function onInput(event: Event) {
+      const value = (event.target as HTMLInputElement).value
+      searchValue = value
+      emit('au:selectchange', { value })
+      if (value === '') selected = { value: '', label: '' }
+      if (!isOpen) setOpen(true)
+      else render()
+    }
+
+    function onBlur(event: FocusEvent) {
+      const target = event.target as HTMLInputElement | null
+      window.setTimeout(() => {
+        const elementValue = target?.value ?? ''
+        const fromLabel = options.find((option) => option.label === elementValue)
+        const customValue = fullScreenEnabled ? { value: '', label: '' } : { value: elementValue, label: '' }
+        emit('au:selectblur', { target: selected.value ? selected : fromLabel || customValue })
+      }, BLUR_DELAY_MS)
+    }
+
+    function bindModal() {
+      if (modalRoot || !modalId) return
+      modalRoot = document.getElementById(modalId)
+      if (!modalRoot) return
+      searchBar = modalRoot.querySelector<HTMLDivElement>('.au-field__fullscreen-options-select-search-bar')
+      searchInput = searchBar?.querySelector<HTMLInputElement>('.au-field__select-input') ?? null
+      fullscreenList = modalRoot.querySelector<HTMLElement>('.au-field__fullscreen-options-select-options')
+      searchBar?.addEventListener('keydown', onKeyDown)
+      searchBar?.addEventListener('focusout', onBlur)
+      searchInput?.addEventListener('input', onInput)
+    }
+
+    on('click', (event) => {
+      if ((event.target as Element | null)?.closest('.au-field__select-wrapper')) toggleDropdown()
+    })
+    wrapper.addEventListener('keydown', onKeyDown)
+    wrapper.addEventListener('focusout', onBlur)
+    input.addEventListener('input', onInput)
+    nativeSelect.addEventListener('change', () => selectOption(nativeSelect.value))
+
+    // React: `document.addEventListener('pointerup', ...)` while open, closing
+    // only when an option is highlighted.
+    on('global:pointerup', (event) => {
+      if (!isOpen) return
+      const clickedOutside = !reference().contains(event.target as Node) && activeIndex !== null
+      if (clickedOutside) setOpen(false)
+    })
+
+    // The modal's own X (React `onClose={onCloseOptions}`).
+    on('global:au:modalclose', (event) => {
+      const detail = (event as CustomEvent<{ id?: string }>).detail
+      if (fullScreenEnabled && detail?.id === modalId && isOpen) {
+        isOpen = false
+        render()
+      }
+    })
+
+    render()
+  })
+</script>

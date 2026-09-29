@@ -1,0 +1,68 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { COLOR_NEUTRAL_00 } from '@consumidor-positivo/aurora/astro/tokens'
+import IconCheck from '../../../icons/default/IconCheck.astro'
+import FieldErrorMessage from '../../Field/ErrorMessage/index.astro'
+import './styles.scss'
+
+/**
+ * Same as React: every attribute except `style` and `class` goes to the
+ * native `<input type="checkbox">` (`name`, `value`, `checked`, `required`,
+ * `data-*`…), so listen to its native `change` event instead of `onChange`.
+ * Like React's `className`, `class` lands on the input and replaces
+ * `au-checkbox__input`.
+ * A string `label` is rendered as HTML, like React's `dangerouslySetInnerHTML`;
+ * for markup built from components, use the `label` slot.
+ */
+export type Props = Omit<HTMLAttributes<'input'>, 'type'> & {
+  label?: string
+  error?: boolean
+  errorMessage?: string
+}
+
+const {
+  label,
+  error = false,
+  errorMessage,
+  disabled = false,
+  id,
+  style,
+  class: className,
+  ...rest
+} = Astro.props
+
+// The React version falls back to `Math.random()`; here it is fixed at render.
+const safeId = id ?? `au-checkbox-${crypto.randomUUID().slice(0, 8)}`
+const hasLabelSlot = Astro.slots.has('label')
+---
+
+<div
+  class:list={[
+    'au-checkbox',
+    error && 'au-checkbox--error',
+    disabled && 'au-checkbox--disabled',
+  ]}
+  style={style}>
+  <label for={safeId} class="au-checkbox__holder">
+    <input
+      class={className ?? 'au-checkbox__input'}
+      type="checkbox"
+      id={safeId}
+      disabled={disabled}
+      {...rest}
+    />
+    <span class="au-checkbox__check">
+      <IconCheck rawColor={COLOR_NEUTRAL_00} size="small" />
+    </span>
+    {
+      hasLabelSlot ? (
+        <span class="au-checkbox__label">
+          <slot name="label" />
+        </span>
+      ) : (
+        <span class="au-checkbox__label" set:html={label ?? ''} />
+      )
+    }
+  </label>
+  <FieldErrorMessage hasError={error} message={errorMessage} />
+</div>

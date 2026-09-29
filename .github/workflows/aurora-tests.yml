@@ -31,6 +31,9 @@ jobs:
       - name: Type check .astro components
         run: npm run check:astro
 
+      - name: Build the Astro playground (compiles the example pages)
+        run: npx astro build --config playground/astro.config.mjs
+
       - name: Run tests (coverage)
         run: npm run test:coverage -- --run
 

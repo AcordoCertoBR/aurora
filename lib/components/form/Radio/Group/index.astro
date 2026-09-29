@@ -1,0 +1,78 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Text from '../../../Text/index.astro'
+import RadioField from '../Field/index.astro'
+import type { Props as RadioFieldProps } from '../Field/index.astro'
+import FieldErrorMessage from '../../Field/ErrorMessage/index.astro'
+import './styles.scss'
+
+/**
+ * React clones its children to inject `name`, `error`, `defaultChecked`,
+ * `onChange` and `onFocus`. Astro cannot touch slotted children, so:
+ * - pass the fields as `options` and the group renders each `Radio/Field`
+ *   with the group's `name` and `error`, checked when its `value` matches
+ *   `defaultValue` (an option's own props win, like React; also like React,
+ *   an option without `value` is checked when there is no `defaultValue`,
+ *   since `undefined === undefined`);
+ * - or put your own `Radio/Field`s in the default slot, rendered after the
+ *   `options`; those must carry `name` (and `error`) themselves.
+ * No `onChange`/`onFocus`: the native `change`/`focusin` events bubble to the
+ * root.
+ */
+export type Props = HTMLAttributes<'div'> & {
+  options?: RadioFieldProps[]
+  name?: string
+  defaultValue?: string | number
+  orientation?: 'horizontal' | 'vertical'
+  label?: string
+  error?: boolean
+  errorMessage?: string
+  required?: boolean
+}
+
+const {
+  options = [],
+  name,
+  defaultValue,
+  orientation = 'vertical',
+  label,
+  error = false,
+  errorMessage,
+  required = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+const safeName = name || `au-radio-group-${crypto.randomUUID().slice(0, 8)}`
+---
+
+<div
+  class:list={[
+    'au-radio-group',
+    orientation === 'horizontal' && 'au-radio-group--horizontal',
+    className,
+  ]}
+  {...rest}>
+  {
+    label && (
+      <Text variant="body-small" weight="semibold" color="secondary">
+        {label}{' '}
+        {required && <span class="au-radio-group__label--required">*</span>}
+      </Text>
+    )
+  }
+  <div class="au-radio-group__fields">
+    {
+      options.map((option) => (
+        <RadioField
+          name={safeName}
+          error={error}
+          checked={defaultValue === option.value}
+          {...option}
+        />
+      ))
+    }
+    <slot />
+  </div>
+  <FieldErrorMessage hasError={error} message={errorMessage} />
+</div>

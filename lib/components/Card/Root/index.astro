@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import '../styles.scss'
+
+/**
+ * Same props as React, minus `ref`. Sizes are inline `style`, written like React
+ * writes them (an unset size comes out as `undefinedpx`, which the browser
+ * drops), so a `style` passed here is ignored. Every HTML attribute is forwarded.
+ */
+export type Props = Omit<HTMLAttributes<'div'>, 'color' | 'style'> & {
+  border?: boolean
+  color?: 'primary' | 'secondary'
+  /** Width in px. */
+  width?: number
+  /** Height in px. */
+  height?: number
+  /** Max width in px. */
+  maxWidth?: number
+  /** Max height in px. */
+  maxHeight?: number
+  paddingLess?: boolean
+  hoverShadow?: boolean
+}
+
+const {
+  border = true,
+  color = 'primary',
+  width,
+  height,
+  maxWidth,
+  maxHeight,
+  paddingLess = false,
+  hoverShadow = false,
+  class: className,
+  ...rest
+} = Astro.props
+
+const style = `width:${width}px;height:${height}px;max-width:${maxWidth}px;max-height:${maxHeight}px`
+---
+
+<div
+  class:list={[
+    'au-card__root',
+    !border && 'au-card__root--border-none',
+    color === 'secondary' && 'au-card__root--color-secondary',
+    hoverShadow && 'au-card__root--with-hover-shadow',
+    paddingLess && 'au-card__root--paddingless',
+    className,
+  ]}
+  {...rest}
+  style={style}>
+  <slot />
+</div>

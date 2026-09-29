@@ -1,0 +1,237 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import FieldRoot from '../Field/Root/index.astro'
+import FieldLabel from '../Field/Label/index.astro'
+import FieldInputHolder from '../Field/InputHolder/index.astro'
+import FieldInput from '../Field/Input/index.astro'
+import FieldMessage from '../Field/Message/index.astro'
+import './styles.scss'
+
+/**
+ * Same props as the React `EmailField`, and the same split: `class` and
+ * `style` go on the `au-field` root, every other HTML attribute (`name`,
+ * `value`, `required`, `autocomplete`, `data-*`...) lands on the `<input>`.
+ *
+ * The domain autocomplete is the component's own behavior, kept by an inline
+ * controller with the same domain list and keys as the React hook (ArrowUp,
+ * ArrowDown, Enter, Escape). The React `onChange(value)` has no counterpart:
+ * listen to the input's native `input` event (also fired when a suggestion is
+ * picked) or to `au:emailselect` (`detail.value`, the completed e-mail), which
+ * bubbles from the root. `rightSlot` is the `right` named slot; `inputRef` has
+ * no counterpart. Like the React version, the input only gets an `id` when one
+ * is passed.
+ */
+export type Props = Omit<HTMLAttributes<'input'>, 'type' | 'disabled'> & {
+  showOptionalLabel?: boolean
+  /** Marks the label as required. Pass `required` too for native validation. */
+  requiredInput?: boolean
+  success?: boolean
+  error?: boolean
+  errorMessage?: string
+  helpMessage?: string
+  label?: string
+  disabled?: boolean
+  /** Inline style of the `<input>` (`style` goes on the root). */
+  inputStyle?: HTMLAttributes<'input'>['style']
+}
+
+const uid = crypto.randomUUID().slice(0, 8)
+
+const {
+  showOptionalLabel,
+  requiredInput,
+  success = false,
+  error = false,
+  errorMessage,
+  helpMessage,
+  label,
+  id: idProp,
+  disabled = false,
+  style,
+  class: className,
+  inputStyle,
+  ...rest
+} = Astro.props
+
+const id = idProp
+
+// Stands in for the React `useId()` of the listbox.
+const listboxId = `au-email-${uid}-listbox`
+---
+
+<FieldRoot
+  style={style}
+  class={className}
+  success={success}
+  error={error}
+  disabled={disabled}
+  data-element="au-email-field">
+  <FieldLabel
+    text={label}
+    id={id}
+    showOptionalLabel={showOptionalLabel}
+    required={requiredInput}
+    success={success}
+    error={error}
+    disabled={disabled}
+  />
+  <FieldInputHolder>
+    <FieldInput
+      id={id}
+      type="email"
+      disabled={disabled}
+      style={inputStyle}
+      role="combobox"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-autocomplete="list"
+      aria-controls={listboxId}
+      {...rest}
+    />
+    <ul
+      id={listboxId}
+      class="au-field__input-autocomplete"
+      tabindex="-1"
+      role="listbox"
+      style="overflow-y: auto">
+    </ul>
+    <slot name="right" slot="right" />
+  </FieldInputHolder>
+  <FieldMessage
+    hasError={error}
+    errorMessage={errorMessage}
+    helpMessage={helpMessage}
+  />
+</FieldRoot>
+
+<script>
+  import { elementController } from '@consumidor-positivo/aurora/astro/runtime'
+
+  // Same list, same order, as the React hook (`EmailField/hook.ts`).
+  const EMAIL_DOMAINS = [
+    'gmail.com',
+    'hotmail.com',
+    'yahoo.com',
+    'outlook.com',
+    'yahoo.com.br',
+    'uol.com.br',
+    'ig.com.br',
+    'terra.com.br',
+    'aol.com',
+    'live.com',
+    'msn.com',
+  ]
+  const OPEN_CLASS = 'au-field__input-autocomplete--open'
+  const OPTION_CLASS = 'au-field__input-option'
+
+  elementController('au-email-field', ({ query, on, emit }) => {
+    const input = query<HTMLInputElement>('.au-field__input')
+    const listbox = query<HTMLUListElement>('.au-field__input-autocomplete')
+    if (!input || !listbox) return
+
+    let suggestions: string[] = []
+    let activeIndex = -1
+    let isOpen = false
+    let isSelecting = false
+
+    const optionId = (index: number) => `${listbox.id}-option-${index}`
+
+    function syncActiveDescendant() {
+      if (isOpen && activeIndex >= 0) {
+        input!.setAttribute('aria-activedescendant', optionId(activeIndex))
+      } else {
+        input!.removeAttribute('aria-activedescendant')
+      }
+    }
+
+    function setOpen(open: boolean) {
+      isOpen = open
+      listbox!.classList.toggle(OPEN_CLASS, open)
+      input!.setAttribute('aria-expanded', String(open))
+      syncActiveDescendant()
+    }
+
+    function setActive(index: number) {
+      activeIndex = index
+      Array.from(listbox!.children).forEach((option, i) => {
+        option.setAttribute('aria-selected', String(i === index))
+      })
+      syncActiveDescendant()
+    }
+
+    function renderSuggestions(next: string[]) {
+      suggestions = next
+      activeIndex = -1
+      listbox!.replaceChildren(
+        ...next.map((suggestion, index) => {
+          const option = document.createElement('li')
+          option.id = optionId(index)
+          option.className = OPTION_CLASS
+          option.setAttribute('role', 'option')
+          option.setAttribute('aria-selected', 'false')
+          option.textContent = suggestion
+          return option
+        }),
+      )
+    }
+
+    function update(value: string) {
+      const atIndex = value.indexOf('@')
+      if (atIndex < 0) {
+        renderSuggestions([])
+        setOpen(false)
+        return
+      }
+
+      const domainPart = value.slice(atIndex + 1)
+      const filtered = EMAIL_DOMAINS.filter((domain) => domain.startsWith(domainPart))
+      renderSuggestions(filtered)
+      const isComplete = filtered.some((domain) => value.endsWith(domain))
+      setOpen(filtered.length > 0 && !isComplete)
+    }
+
+    function select(suggestion: string) {
+      const atIndex = input!.value.indexOf('@')
+      if (atIndex > -1) {
+        const value = input!.value.slice(0, atIndex + 1) + suggestion
+        input!.value = value
+        // Lets the app's own `input` listeners see the completed value.
+        isSelecting = true
+        input!.dispatchEvent(new Event('input', { bubbles: true }))
+        isSelecting = false
+        emit('au:emailselect', { value })
+      }
+      renderSuggestions([])
+      setOpen(false)
+    }
+
+    on('input', (event) => {
+      if (isSelecting || event.target !== input) return
+      update(input.value)
+    })
+
+    on('click', (event) => {
+      const option = (event.target as Element | null)?.closest<HTMLElement>(
+        `.${OPTION_CLASS}`,
+      )
+      if (option && listbox.contains(option)) select(option.textContent ?? '')
+    })
+
+    on('keydown', (event) => {
+      if (event.target !== input || !isOpen || suggestions.length === 0) return
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault()
+        setActive((activeIndex + 1) % suggestions.length)
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault()
+        setActive(activeIndex <= 0 ? suggestions.length - 1 : activeIndex - 1)
+      } else if (event.key === 'Enter' && activeIndex >= 0) {
+        event.preventDefault()
+        select(suggestions[activeIndex])
+      } else if (event.key === 'Escape') {
+        setOpen(false)
+      }
+    })
+  })
+</script>
