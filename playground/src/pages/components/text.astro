@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import Text from '@components/Text/index.astro'
+---
+
+<Layout title="Text" description="Variantes, pesos, cores, tag responsiva e HTML interno">
+  <Example name="variants">
+    <Text variant="display-large">display-large</Text>
+    <Text variant="heading-big">heading-big</Text>
+    <Text variant="heading-medium">heading-medium</Text>
+    <Text variant="heading-small">heading-small</Text>
+    <Text variant="heading-micro">heading-micro</Text>
+    <Text variant="body-large">body-large</Text>
+    <Text variant="body-medium">body-medium</Text>
+    <Text variant="body-small">body-small</Text>
+    <Text variant="caption">caption</Text>
+  </Example>
+  <Example name="weights">
+    <Text weight="light">light</Text>
+    <Text weight="regular">regular</Text>
+    <Text weight="medium">medium</Text>
+    <Text weight="semibold">semibold</Text>
+    <Text weight="bold">bold</Text>
+  </Example>
+  <Example name="colors" bg="gray">
+    <Text color="common">common</Text>
+    <Text color="secondary">secondary</Text>
+    <Text color="white">white</Text>
+  </Example>
+  <Example name="responsive heading">
+    <Text as="h2" variant="heading-micro" variantDesk="heading-large" weight="bold">Título responsivo</Text>
+  </Example>
+  <Example name="html"><Text as="div" html="Com <strong>HTML</strong> interno" /></Example>
+</Layout>

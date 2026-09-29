@@ -29,6 +29,10 @@ npm run lint
 # Type check the .astro components (also runs in CI)
 npm run check:astro
 
+# Astro playground: renders the .astro components from lib/ in a browser (port 4321)
+npm run playground:astro        # runs prebuild first
+npm run playground:astro:build  # static build of the same pages; also runs in CI
+
 # Build the library (output to dist/)
 npm run build
 
@@ -91,7 +95,11 @@ specifier through the `astro/runtime/package.json` proxy folder the build copies
 `astro.config.mjs` at the root exists only for this: Aurora is not an Astro site,
 and `srcDir` points into `.astro/` so the files Astro generates stay out of the
 repo root. `npm run check:astro` (`astro check`, gated in CI) type-checks the `.astro` files,
-including the contents of their `<script>` tags. Props are typed with
+including the contents of their `<script>` tags. `playground/` is the Astro counterpart of
+Storybook: a small Astro site (`npm run playground:astro`, its own `astro.config.mjs`) with one page
+per component under `playground/src/pages/components/`, rendering the `.astro` files straight
+from `lib/` through Vite aliases. CI builds it, which compiles every example page and catches
+the compiler errors `astro check` misses. Props are typed with
 `HTMLAttributes` from `astro/types`, never an open `[key: string]: unknown` index.
 The runtime self-import resolves through a `tsconfig.json` path alias pointing at
 `lib/astro/runtime`, so the check does not depend on a freshly built `dist`.

@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import Header from '@components/Header/index.astro'
+import HeaderLogo from '@components/Header/Logo/index.astro'
+import HeaderNavigation from '@components/Header/Navigation/index.astro'
+import HeaderNavbar from '@components/Header/Navbar/index.astro'
+import HeaderActions from '@components/Header/Actions/index.astro'
+import HeaderButton from '@components/Header/Button/index.astro'
+import HeaderProfile from '@components/Header/Profile/index.astro'
+import HeaderHamburger from '@components/Header/Hamburger/index.astro'
+import Drawer from '@components/Drawer/index.astro'
+import NavbarVertical from '@components/NavbarVertical/index.astro'
+import NavbarVerticalLink from '@components/NavbarVertical/Link/index.astro'
+import Button from '@components/Button/index.astro'
+import LogoPrimaryCP from '@components/Logo/cp/Primary.astro'
+import LogoBadgetCP from '@components/Logo/cp/Badget.astro'
+import LogoPrimaryAC from '@components/Logo/ac/Primary.astro'
+
+const navData = [
+  { name: 'Início', href: '#inicio' },
+  { name: 'Quem somos', href: '#quem' },
+  { name: 'Crédito', href: '#credito', active: true, dropdown: [{ name: 'Cartões de crédito', href: '#cartoes' }, { name: 'Empréstimos', href: '#emprestimos', active: true }] },
+  { name: 'Blog', href: '#blog' },
+]
+---
+
+<Layout title="Header" description="Header completo com Drawer e NavbarVertical, e a versão simples">
+  <Example name="full, with drawer (hamburger opens it)">
+    <Header>
+      <HeaderLogo><LogoBadgetCP slot="mobile" /><LogoPrimaryCP slot="desktop" /></HeaderLogo>
+      <HeaderNavigation><HeaderNavbar data={navData} /></HeaderNavigation>
+      <HeaderActions divider>
+        <HeaderButton>Entrar</HeaderButton>
+        <HeaderProfile fullName="Fulano Silva" notifications={{ visible: true, hasUnread: true, count: 3 }} />
+        <HeaderHamburger controls="menu" data-au-drawer-toggle="menu" />
+      </HeaderActions>
+    </Header>
+    <Drawer id="menu">
+      <LogoPrimaryCP slot="header" />
+      <NavbarVertical>
+        {navData.map((link) => <NavbarVerticalLink {...link} />)}
+        <Fragment slot="actions">
+          <Button expand="x" as="a" href="#cadastro">Cadastrar</Button>
+        </Fragment>
+      </NavbarVertical>
+    </Drawer>
+  </Example>
+  <Example name="simple, Acordo Certo">
+    <Header>
+      <HeaderLogo><LogoPrimaryAC /></HeaderLogo>
+      <HeaderActions>
+        <Button size="medium">Consultar CPF</Button>
+      </HeaderActions>
+    </Header>
+  </Example>
+</Layout>

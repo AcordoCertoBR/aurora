@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import Button from '@components/Button/index.astro'
+import IconPlus from '@components/icons/default/IconPlus.astro'
+---
+
+<Layout title="Button" description="Tipos, tamanhos, loading, negativo, redondo e como âncora">
+  <Example name="primary"><Button>Continuar</Button></Example>
+  <Example name="outlined"><Button type="outlined">Continuar</Button></Example>
+  <Example name="ghost"><Button type="ghost">Continuar</Button></Example>
+  <Example name="large"><Button size="large">Continuar</Button></Example>
+  <Example name="disabled"><Button disabled>Continuar</Button></Example>
+  <Example name="loading"><Button loading>Continuar</Button></Example>
+  <Example name="expand"><Button expand="x">Continuar</Button></Example>
+  <Example name="negative" bg="dark"><Button negative>Continuar</Button></Example>
+  <Example name="negative outlined" bg="dark"><Button negative type="outlined">Continuar</Button></Example>
+  <Example name="round"><Button round aria-label="Adicionar"><IconPlus /></Button></Example>
+  <Example name="anchor"><Button as="a" href="#x" target="_blank">Link</Button></Example>
+  <Example name="border thin"><Button type="outlined" borderWidth="thin">Continuar</Button></Example>
+</Layout>

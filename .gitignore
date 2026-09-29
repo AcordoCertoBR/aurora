@@ -20,6 +20,10 @@ dist
 
 # .astro components copied out of lib/ at build time (npm run build)
 /astro/
+
+# playground (npm run playground:astro): built site and the env.d.ts Astro writes
+/playground/dist/
+/playground/src/env.d.ts
 dist-ssr
 *.local
 storybook-static

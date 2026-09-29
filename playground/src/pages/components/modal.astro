@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Example from '../../components/Example.astro'
+import Modal from '@components/Modal/index.astro'
+import Button from '@components/Button/index.astro'
+import Text from '@components/Text/index.astro'
+
+const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+---
+
+<Layout title="Modal" description="Aberto por data-au-modal-toggle: lateral, centralizado e tela cheia">
+  <Example name="default">
+    <Button data-au-modal-toggle="m1">Abrir modal</Button>
+    <Modal id="m1" mobileModalTitle="Título do modal">
+      <Fragment slot="header"><Text variant="heading-small" weight="bold">Título do modal</Text><Text variant="body-small">Texto de apoio</Text></Fragment>
+      <div style="margin: 16px 0">{lorem}</div>
+    </Modal>
+  </Example>
+  <Example name="centralized, closes on backdrop">
+    <Button data-au-modal-toggle="m2" type="outlined">Abrir modal</Button>
+    <Modal id="m2" mobileModalTitle="Título do modal" layoutDesktop="centralized" layoutMobile="centralized" closeOnBackdropClick>
+      <Fragment slot="header"><Text variant="heading-small" weight="bold">Título do modal</Text><Text variant="body-small">Texto de apoio</Text></Fragment>
+      <div style="margin: 16px 0">{lorem}</div>
+    </Modal>
+  </Example>
+  <Example name="full screen on mobile">
+    <Button data-au-modal-toggle="m3" type="ghost">Abrir modal</Button>
+    <Modal id="m3" mobileModalTitle="Título do modal" layoutMobile="full-screen" helpButton>
+      <Fragment slot="header"><Text variant="heading-small" weight="bold">Título do modal</Text><Text variant="body-small">Texto de apoio</Text></Fragment>
+      <div style="margin: 16px 0">{lorem}</div>
+    </Modal>
+  </Example>
+</Layout>
