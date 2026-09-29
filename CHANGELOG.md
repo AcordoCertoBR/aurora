@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/AcordoCertoBR/aurora/compare/v1.2.0...v1.3.0) (2026-09-29)
+
+
+### Features
+
+* ✨ port Alert, Modal, Switch, NotificationsBar and LazyImage to Astro ([6398d05](https://github.com/AcordoCertoBR/aurora/commit/6398d05a40b4d0e90e56ef7b19299de0438d4452))
+* ✨ port every Logo variant and Button loading to Astro ([6446708](https://github.com/AcordoCertoBR/aurora/commit/6446708d521e1d2bfaa686f4ae635c6e79b03b3f))
+* ✨ port SelectField to Astro and let a controller drive the Modal ([f0aa958](https://github.com/AcordoCertoBR/aurora/commit/f0aa9581d28a393bfce781528a25323f02e64394))
+* ✨ port the Datepicker to Astro with a react-aria-faithful calendar ([54bb2db](https://github.com/AcordoCertoBR/aurora/commit/54bb2db48d26721389b3cc18b2512200aa8c3f27))
+* ✨ port the form fields to Astro ([bac2d0c](https://github.com/AcordoCertoBR/aurora/commit/bac2d0ccf6683bf360bbdfb704075c686d25da3d))
+* ✨ port the visual components to Astro ([fb22962](https://github.com/AcordoCertoBR/aurora/commit/fb2296252c666609ab2e26454ebad5844d6351e0))
+* ✨ publish tokens for Astro and map built CSS from the bundle ([719b730](https://github.com/AcordoCertoBR/aurora/commit/719b730faa9472be03a62810eeead10ca8b7feec))
+* **astro:** todos os componentes visuais ganham versão Astro ([b9f01b3](https://github.com/AcordoCertoBR/aurora/commit/b9f01b37170ada9521a354a5cbb83fd5a85afff6))
+
 ## [1.2.0](https://github.com/AcordoCertoBR/aurora/compare/v1.1.0...v1.2.0) (2026-09-10)
 
 
