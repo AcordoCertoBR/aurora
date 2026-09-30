@@ -221,6 +221,22 @@ Brain central: repo `AcordoCertoBR/claude-org-context` (consulte via GitHub MCP 
 - As org-skills (`cp-*`) já estão no harness — não recrie contexto base aqui.
 - Aurora é consumida por apps externos das duas marcas (cp/ac); trate o contrato público (props, classes `au-`, tokens) como compromisso versionado.
 
+## Repo público: nada privado da empresa entra aqui (OBRIGATÓRIO)
+
+`AcordoCertoBR/aurora` é **público** no GitHub e o pacote é público no npm. Tudo que o agente escreve aqui fica visível para qualquer pessoa: arquivo commitado, mensagem de commit, título e descrição de PR, comentário de revisão, issue, changelog. Vale para o que o agente escreve e para o que ele copia de uma fonte interna (Slack, Notion, Databricks, Drive, e-mail).
+
+Nunca coloque neste repo, em nenhum desses lugares:
+- dado pessoal de cliente ou funcionário (CPF, e-mail, telefone, nome de cliente, qualquer dado a nível de CPF);
+- nome de parceiro ligado a contrato, termo comercial, comissão, preço;
+- receita, faturamento, meta, forecast, VPL, volume de leads ou acordos, qualquer número de negócio, mesmo agregado;
+- link interno (Notion, Slack, Drive, Databricks, Datadog, Figma privado), nome de canal do Slack, hostname ou URL de sistema interno, nome de tabela do lake. Exceção: o registro de missão em `.ai-docs/missions/` segue a convenção da org (`cp-mission`) e pode trazer o link do pitch no Notion, o canal da missão, os PRs e issues e quem participa;
+- segredo, token, chave, variável de ambiente com valor;
+- e-mail corporativo e organograma (quem reporta a quem, squad, capacidade).
+
+O que entra é o que explica a mudança **na biblioteca**: o que o componente faz, por que mudou, como testar. Fora do registro de missão, contexto de negócio fica no nível do "por quê" e aponta a fonte interna pelo nome ("o pitch da missão, no Notion"), não pela URL. Nome de colega que fez ou revisou o trabalho pode aparecer; e-mail, não.
+
+Na dúvida, não escreva e pergunte antes de commitar. Se um número for indispensável para justificar a mudança, descreva a ordem de grandeza sem o valor. Antes de abrir um PR, releia título, descrição e commits com essa lista na mão; a skill `/create-pr` e o agente `code-reviewer` fazem essa passada.
+
 ## Protocolo de auto-melhoria (OBRIGATÓRIO — ver `docs/self-improvement.md`)
 
 Este setup é vivo. Ao trabalhar neste repo, mantenha-o verdadeiro:
