@@ -276,11 +276,16 @@ O runtime da Aurora é um port do runtime dos sites públicos com duas adições
 
 ## Adicionando um componente novo
 
+A skill `/create-component` gera os dois formatos e a página do playground de uma vez. À mão, o caminho é:
+
 1. Escreva `lib/components/<Nome>/index.astro` renderizando exatamente o que o `index.tsx` gera (ver **Paridade com o React**). As classes `au-*` são o contrato; se as duas versões divergirem, o CSS deixa de servir para as duas. Token vem de `@consumidor-positivo/aurora/astro/tokens`, nunca em hex.
 2. Importe `./styles.scss` no frontmatter.
 3. Se precisar de comportamento, adicione o `<script>` com `elementController` e um `data-element` na raiz.
-4. Rode `npm run check:astro` e valide num app Astro de verdade (ver **Como verificar** abaixo). A cópia é automática: o glob do `viteStaticCopy` pega qualquer `.astro` sob `lib/components/`.
-5. Commit como `feat:` — é contrato público novo.
+4. Crie a página em `playground/src/pages/components/<nome>.astro`, um `Example` por story.
+5. Rode `npx vitest run lib/astro/parity` (o teste de pareamento, que também roda no `pre-commit` do husky e barra o commit sem o par: todo `index.tsx` que renderiza marcação precisa do `index.astro` ao lado, e todo `index.astro` precisa de um React correspondente; utilitário React-only entra em `REACT_ONLY` com o motivo), `npm run check:astro` e valide num app Astro de verdade (ver **Como verificar** abaixo). A cópia é automática: o glob do `viteStaticCopy` pega qualquer `.astro` sob `lib/components/`.
+6. Commit como `feat:` — é contrato público novo.
+
+Mudou um lado de um par já existente? O hook `.claude/hooks/astro-parity-reminder.py` avisa o agente de que o outro lado precisa da mesma mudança; a paridade em si ainda é conferida à mão (ver **Paridade com o React**).
 
 ## Como verificar
 

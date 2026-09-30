@@ -1,0 +1,4 @@
+# Astro × React pairing: every index.tsx that renders markup needs its
+# index.astro (and vice versa). Runs in under a second; the CI runs the same
+# test in the full suite.
+npx vitest run lib/astro/parity --reporter=dot

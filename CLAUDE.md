@@ -127,6 +127,18 @@ become `au:*` events emitted from the root. An `.astro` finds its CSS through
 asset names collide for nested entries, so the path can't be derived).
 Full reference, conventions and gotchas: [docs/astro.md](docs/astro.md).
 
+Pairing is enforced: `lib/astro/parity/pairing.test.ts` fails when an
+`index.tsx` that renders markup has no `index.astro` beside it, or an
+`index.astro` has no React counterpart. React-only utilities are listed in
+`REACT_ONLY` with the reason; `.astro` files whose React lives elsewhere
+(`Header/index.astro` ↔ `Header/Wrap/index.tsx`, `Tabs/TabPanel`) in
+`ASTRO_COUNTERPART`. The same test runs as the husky `pre-commit` hook
+(`.husky/pre-commit`), so a commit with an unpaired component fails locally
+before it reaches CI. Editing one side of a pair triggers the
+`.claude/hooks/astro-parity-reminder.py` hook, which reminds the agent that the
+other side needs the same change. `/create-component` scaffolds both formats
+plus the playground page.
+
 ### CSS conventions
 
 All component classes use the `au-` prefix (e.g., `au-btn`, `au-icon`). Modifier classes follow BEM-like patterns: `au-btn--type-primary`, `au-btn--size-large`. SCSS token variables (e.g., `$color-brand-primary`) and mixins are globally injected by Vite via `additionalData` in [vite.config.ts](vite.config.ts) — no explicit imports needed in component SCSS files.
