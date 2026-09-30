@@ -25,7 +25,7 @@ Skills são comandos prontos que encapsulam tarefas recorrentes do projeto. Elas
 
 ### `/create-component`
 
-Cria a estrutura completa de um novo componente Aurora a partir do nome e das props fornecidos.
+Cria a estrutura completa de um novo componente Aurora a partir do nome e das props fornecidos, nos dois formatos que a biblioteca publica: React e Astro.
 
 **Como usar:**
 
@@ -33,7 +33,7 @@ Cria a estrutura completa de um novo componente Aurora a partir do nome e das pr
 /create-component
 ```
 
-Claude Code vai perguntar o nome do componente e suas props, depois gerar os 3 arquivos seguindo todos os padrões descritos em Padrões de Código.
+Claude Code vai perguntar o nome do componente e suas props, depois gerar os arquivos seguindo todos os padrões descritos em Padrões de Código e em `docs/astro.md`: o React (`index.tsx`, `styles.scss`, stories), o Astro (`index.astro`, renderizando o mesmo DOM com as mesmas props) e a página do componente no playground Astro.
 
 **Exemplo de interação:**
 
@@ -43,7 +43,9 @@ Claude Code vai perguntar o nome do componente e suas props, depois gerar os 3 a
   Props: status (success | error | warning | neutral), label (string)
 ```
 
-Resultado: `lib/components/StatusBadge/index.tsx`, `styles.scss`, `StatusBadge.stories.tsx` e export em `lib/main.ts` — tudo pronto para uso.
+Resultado: `lib/components/StatusBadge/index.tsx`, `styles.scss`, `StatusBadge.stories.tsx`, `index.astro`, `playground/src/pages/components/statusbadge.astro` e export em `lib/main.ts` — tudo pronto para uso.
+
+A versão Astro não é opcional: o teste `lib/astro/parity/pairing.test.ts` falha quando um `index.tsx` que renderiza marcação não tem `index.astro` ao lado (e vice-versa). Além disso, ao editar um dos lados de um componente, um hook do Claude Code (`.claude/hooks/astro-parity-reminder.py`) lembra que o outro precisa da mesma mudança.
 
 ### `/accessibility-audit`
 

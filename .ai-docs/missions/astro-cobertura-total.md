@@ -29,6 +29,8 @@ O caminho de cada formato e as limitações estão em `docs/astro.md`.
 
 Como o Storybook não renderiza Astro, o repo ganhou um playground (`npm run playground:astro`, PR separado): um site Astro mínimo com uma página por componente, que faz para o formato Astro o que o Storybook faz para o React. O CI faz o build dele, então cada exemplo também é um teste de compilação.
 
+Para a paridade não se perder depois da missão, o repo ganhou três guardas (29/09/2026): um teste que falha quando um componente tem só um dos formatos (`lib/astro/parity/pairing.test.ts`), um lembrete automático no Claude Code quando alguém edita um lado do par sem o outro, e a skill `/create-component` passou a gerar React, Astro e a página do playground de uma vez. A comparação do DOM dos dois lados a cada PR continua em aberto (issue #306).
+
 ## Decisão (25/09/2026)
 
 A missão inclui as páginas públicas: Gisele cria a versão Astro de todos os componentes no Aurora, depois o Kauan troca os componentes em todas as páginas públicas (mono-public-pages) e o Tim valida. Apetite de 10 dias úteis, como missão secundária, com ok do Lucas Rodrigues no canal `#_temp-missao-aurora-astro`. Este PR cobre só a parte do Aurora.

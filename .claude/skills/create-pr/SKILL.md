@@ -68,6 +68,8 @@ Cores: `capex:*` = `0E8A16` / `opex` = `5319E7`; `scope:*` = `D4C5F9`.
 
 ## Passo 6 — Descrição do PR + footer de missão
 Corpo: Summary · Changes · Breaking? (props/classes `au-`/tokens) · Testing. **Se o PR pertence a uma missão** (`.ai-docs/missions/`), some `Mission: <slug>` no footer.
+
+**O repo é público.** Antes do `gh pr create`, releia título, corpo e as mensagens de commit do branch contra a seção "Repo público" do `CLAUDE.md`: nada de dado pessoal, parceiro com termo comercial, número de negócio, link ou canal interno, e-mail corporativo, segredo. Contexto interno entra pelo nome da fonte, não pela URL; o registro de missão (`.ai-docs/missions/`) é a exceção e segue a convenção da org. Achou algo? Corrija antes de abrir o PR (o commit, com `git commit --amend` ou rebase, se já está na mensagem).
 ```bash
 gh pr create --repo "$REPO" --title "<title>" --body-file /tmp/pr-body.md \
   --label "capex:<slug>|opex" --label "<risco>" --label "priority: <p>" --label "front-end"

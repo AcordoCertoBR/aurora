@@ -13,6 +13,16 @@
             "statusMessage": "Checking for new skill..."
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/astro-parity-reminder.py 2>/dev/null || true",
+            "statusMessage": "Checking Astro/React parity..."
+          }
+        ]
       }
     ]
   }

@@ -15,5 +15,6 @@ Cheque especificamente, além de correção geral:
 - **Acessibilidade:** semântica, ARIA, foco e teclado nos componentes interativos.
 - **Testes & lint:** mudança de componente acompanhada de teste; lint roda com `--max-warnings 0`.
 - **Skill nova?** se adicionou `.claude/skills/<x>/SKILL.md`, há seção correspondente em `lib/docs/DevelopingWithAI.mdx`?
+- **Repo público:** o diff (inclusive docs, `.ai-docs/`, stories, testes e mensagens de commit) traz algo da seção "Repo público" do `CLAUDE.md`? Dado pessoal, parceiro com termo comercial, número de negócio, link ou canal interno (Notion, Slack, Databricks), e-mail corporativo, segredo. Qualquer ocorrência é severidade máxima. O registro de missão em `.ai-docs/missions/` é a exceção (link do pitch, canal da missão, PRs e participantes são esperados ali).
 
 Reporte por severidade. Não edite arquivos. Priorize: correção > simplificação/reuso > estilo. Cite `file:line`.
