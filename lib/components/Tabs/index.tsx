@@ -136,6 +136,7 @@ export const Tabs = ({
             id={`au-tabpanel-${tab}`}
             aria-labelledby={`au-tab-${tab}`}
             className={`au-tabs__children children-${tab}`}
+            hidden={activeTab !== tab}
             key={`au-tabs-${tab}`}>
             <If condition={activeTab === tab}>{children}</If>
           </div>
