@@ -51,6 +51,23 @@ describe('Tabs', () => {
     expect(screen.getByText('two content')).toBeInTheDocument()
   })
 
+  // An inactive panel used to stay in the layout as an empty box carrying the
+  // `margin-top` of `.au-tabs__children`, so the gap above the content grew
+  // with how far down the active tab was. It was also exposed to screen
+  // readers as an empty tabpanel. The Astro build already does this.
+  it('marks inactive panels as hidden', () => {
+    render(<Tabs tabs={tabs} initialTab="one" />)
+
+    expect(document.getElementById('au-tabpanel-one')).not.toHaveAttribute(
+      'hidden',
+    )
+    expect(document.getElementById('au-tabpanel-two')).toHaveAttribute('hidden')
+
+    // The panel element stays in the DOM: it is what each tab's
+    // `aria-controls` points at.
+    expect(document.querySelector('.children-two')).toBeTruthy()
+  })
+
   it('links tabs and panels with ARIA roles and attributes', () => {
     render(<Tabs tabs={tabs} initialTab="one" />)
 
