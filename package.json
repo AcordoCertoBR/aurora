@@ -12,7 +12,8 @@
   "sideEffects": [
     "*.scss",
     "*.css",
-    "*.astro"
+    "*.astro",
+    "./dist/components/globalStyles/index.es.js"
   ],
   "types": "./dist/main.d.ts",
   "files": [
