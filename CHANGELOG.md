@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.2](https://github.com/AcordoCertoBR/aurora/compare/v1.3.1...v1.3.2) (2026-10-15)
+
+
+### Bug Fixes
+
+* 🐛 keep the global stylesheet in app production builds ([54fdcf9](https://github.com/AcordoCertoBR/aurora/commit/54fdcf9e382682ecbfe0303028d22915cf28d4d9))
+* 🐛 keep the global stylesheet in app production builds ([c74e09a](https://github.com/AcordoCertoBR/aurora/commit/c74e09aecab4176d12618a0df16b516a63d655c7))
+
 ## [1.3.1](https://github.com/AcordoCertoBR/aurora/compare/v1.3.0...v1.3.1) (2026-10-15)
 
 
