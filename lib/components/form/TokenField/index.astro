@@ -133,6 +133,13 @@ const digits = Array.from({ length: size }, (_, i) => i)
       if (value.length === size) emit('au:tokencomplete', { value })
     }
 
+    // Same as the hook's `_fillTokens`: keeps only the digits.
+    function fillTokens(raw: string) {
+      const digits = raw.replace(/\D/g, '').slice(0, size).split('')
+      setTokens(inputs.map((_, i) => digits[i] ?? ''))
+      focusAt(digits.length)
+    }
+
     on('input', (event) => {
       const i = indexOf(event.target)
       if (i < 0) return
@@ -140,6 +147,14 @@ const digits = Array.from({ length: size }, (_, i) => i)
       let value = inputs[i].value
       if (value === seen[i]) return
       seen[i] = value
+
+      // On mobile the `one-time-code` autofill and the keyboard clipboard
+      // suggestion put the whole code in one input as an input, not a paste.
+      if (value.replace(/\D/g, '').length >= size) {
+        fillTokens(value)
+        return
+      }
+
       const isEmpty = value === ''
 
       if (isValid(value)) {
@@ -178,14 +193,7 @@ const digits = Array.from({ length: size }, (_, i) => i)
       if (indexOf(event.target) < 0) return
       event.preventDefault()
 
-      const value = event.clipboardData?.getData('Text') ?? ''
-      if (isValid(value)) {
-        const pasted = value.split('').slice(0, size)
-        setTokens(inputs.map((_, i) => pasted[i] ?? ''))
-        focusAt(pasted.length)
-      } else {
-        setTokens(emptyTokens())
-      }
+      fillTokens(event.clipboardData?.getData('text') ?? '')
     })
 
     // The `[tokenMap]` effect also runs on mount.

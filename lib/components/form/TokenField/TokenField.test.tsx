@@ -40,6 +40,43 @@ describe('TokenField', () => {
     expect((inputs[3] as HTMLInputElement).value).toBe('8')
   })
 
+  it('spreads a whole code typed into one input (mobile autofill)', () => {
+    const onComplete = vi.fn()
+    const { container } = render(
+      <TokenField size={4} onComplete={onComplete} />,
+    )
+    const inputs = container.querySelectorAll('input')
+
+    fireEvent.change(inputs[0], { target: { value: '1234' } })
+
+    expect([...inputs].map((input) => input.value)).toEqual([
+      '1',
+      '2',
+      '3',
+      '4',
+    ])
+    expect(onComplete).toHaveBeenCalledWith('1234')
+  })
+
+  it.each(['12 34', ' 1234', '12-34\n'])(
+    'pastes only the digits of %j',
+    (text) => {
+      const { container } = render(<TokenField size={4} />)
+      const inputs = container.querySelectorAll('input')
+
+      fireEvent.paste(inputs[0], {
+        clipboardData: { getData: () => text },
+      } as unknown as ClipboardEvent)
+
+      expect([...inputs].map((input) => input.value)).toEqual([
+        '1',
+        '2',
+        '3',
+        '4',
+      ])
+    },
+  )
+
   it('clears tokens and resets focus when timer reaches 0', async () => {
     vi.useFakeTimers()
     try {

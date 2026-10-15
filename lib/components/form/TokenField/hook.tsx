@@ -83,6 +83,13 @@ export const useTokenField = ({
     if (nextItem) nextItem.focus()
   }
 
+  // Keeps only the digits, so a code copied as "123 456" still fills in.
+  function _fillTokens(raw: string) {
+    const digits = raw.replace(/\D/g, '').slice(0, size).split('')
+    setTokenMap({ ..._getDefaultTokens(), ...digits })
+    _goToNextInput(digits.length - 1)
+  }
+
   function _resetFocus() {
     const firstItem =
       rootElementRef.current?.querySelector<HTMLInputElement>(
@@ -111,6 +118,14 @@ export const useTokenField = ({
   function onChangeNumber(e: React.ChangeEvent<HTMLInputElement>, i: number) {
     e.preventDefault()
     let value = e?.target?.value
+
+    // On mobile the `one-time-code` autofill and the keyboard clipboard
+    // suggestion put the whole code in one input as a change, not a paste.
+    if (value.replace(/\D/g, '').length >= size) {
+      _fillTokens(value)
+      return
+    }
+
     const isNumberValid = inputtedValueIsValid(value)
     const isEmpty = value === ''
 
@@ -139,17 +154,7 @@ export const useTokenField = ({
 
   function onPasteNumber(e: React.ClipboardEvent<HTMLInputElement>) {
     e.preventDefault()
-    const value = e.clipboardData.getData('Text')
-    const isNumberValid = inputtedValueIsValid(value)
-
-    if (isNumberValid) {
-      const arrValue = value.split('').slice(0, size)
-      setTokenMap({ ..._getDefaultTokens(), ...arrValue })
-
-      _goToNextInput(arrValue.length - 1)
-    } else {
-      setTokenMap(_getDefaultTokens())
-    }
+    _fillTokens(e.clipboardData.getData('text'))
   }
 
   return {
