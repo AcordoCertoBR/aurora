@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.1](https://github.com/AcordoCertoBR/aurora/compare/v1.3.0...v1.3.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **tabs:** painel inativo sai do layout e da árvore de acessibilidade ([29f3e5a](https://github.com/AcordoCertoBR/aurora/commit/29f3e5a9183090db85cc74ce226c2b295358fdf0))
+* **tabs:** painel inativo sai do layout e da árvore de acessibilidade ([f0ad8f3](https://github.com/AcordoCertoBR/aurora/commit/f0ad8f35d994eba35a3dd2ba3c65f8cfd14523be))
+* **token-field:** 🐛 fill every digit when the whole code lands in one input ([7344d28](https://github.com/AcordoCertoBR/aurora/commit/7344d2819101c92fdb8e7b2dba225ac106f53402))
+* **token-field:** 🐛 fill every digit when the whole code lands in one input ([9744a33](https://github.com/AcordoCertoBR/aurora/commit/9744a33f861d583b3d55c6d08036492df868d1db))
+
 ## [1.3.0](https://github.com/AcordoCertoBR/aurora/compare/v1.2.0...v1.3.0) (2026-09-29)
 
 
