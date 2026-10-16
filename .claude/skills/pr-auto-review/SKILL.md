@@ -107,9 +107,13 @@ Leia, nesta ordem:
 ## Step 3 — Postar o review
 
 1. Pegue o SHA do head: `gh pr view <num> --json headRefOid -q .headRefOid`.
-2. Monte `review.json`; o `body` é **só a linha de veredito**:
+2. Poste o review num comando `gh` só, com o JSON por stdin (heredoc). Não crie arquivo:
+   o workflow só libera `Bash(gh:*)`, `Read`, `Glob` e `Grep`, então não há como gravar um
+   `review.json`, e um comando que comece por outra coisa (`echo … |`) é negado. O `body` é
+   **só a linha de veredito**:
 
-   ```json
+   ```bash
+   gh api -X POST repos/{owner}/{repo}/pulls/<num>/reviews --input - <<'EOF'
    {
      "commit_id": "<headRefOid>",
      "event": "COMMENT",
@@ -118,9 +122,9 @@ Leia, nesta ordem:
        { "path": "lib/components/Header/styles.scss", "line": 42, "side": "RIGHT", "body": "[Sugestão] ..." }
      ]
    }
+   EOF
    ```
    PR limpo: `"body": "✅ Tudo certo — APROVAR"` e `"comments": []`.
-3. Poste: `gh api -X POST repos/{owner}/{repo}/pulls/<num>/reviews --input review.json`.
 
 **Ancoragem de linha.** Um 422 rejeita o review **inteiro**. Só ancore em linhas que aparecem
 no diff (de preferência adicionadas), com `line` no arquivo novo (lado RIGHT), lidas dos

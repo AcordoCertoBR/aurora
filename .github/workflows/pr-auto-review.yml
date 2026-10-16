@@ -45,7 +45,7 @@ jobs:
           fi
 
       - name: Run Claude PR review
-        uses: anthropics/claude-code-action@v1
+        uses: anthropics/claude-code-action@374f254f5efaf968abfe15d399fd90972e8138b9 # v1
         with:
           prompt: |
             Você é o revisor automático de PRs do Aurora, o design system (React + Astro) da Consumidor Positivo.
