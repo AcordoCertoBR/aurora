@@ -49,7 +49,7 @@ export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
           className={classNames('au-header__navbar-link', 'au-header__navbar-link--is-dropdown', {
             'au-header__navbar-link--is-active': active,
           })}>
-          <Text as="span" variant="heading-micro" weight="light">
+          <Text as="span" variant="heading-micro" weight="light" data-text={name}>
             {name}
           </Text>
           <IconChevronDown aria-hidden="true" />
@@ -62,6 +62,7 @@ export const HeaderNavbarLink = (navItem: NavbarDataProps) => {
           href={href}
           onClick={(ev) => handleItemClick(navItem, ev)}
           title={name}
+          data-text={name}
           className={classNames('au-header__navbar-link', {
             'au-header__navbar-link--is-active': active,
           })}>

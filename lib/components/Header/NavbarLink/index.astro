@@ -63,7 +63,7 @@ const panelId = dropdownId ?? `au-header-dropdown-${slug}`
           'au-header__navbar-link--is-dropdown',
           active && 'au-header__navbar-link--is-active',
         ]}>
-        <Text as="span" variant="heading-micro" weight="light">
+        <Text as="span" variant="heading-micro" weight="light" data-text={name}>
           {name}
         </Text>
         <IconChevronDown aria-hidden="true" />
@@ -75,6 +75,7 @@ const panelId = dropdownId ?? `au-header-dropdown-${slug}`
         weight="light"
         href={href}
         title={name}
+        data-text={name}
         class:list={[
           'au-header__navbar-link',
           active && 'au-header__navbar-link--is-active',

@@ -168,6 +168,35 @@
       font-weight: inherit;
     }
 
+    // Reserves both the light and the bold widths so hovering doesn't push the other items
+    &[data-text],
+    [data-text] {
+      display: inline-flex;
+      flex-direction: column;
+
+      &::before,
+      &::after {
+        content: attr(data-text);
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      // Keeps the label as the first item, so it still gives the baseline
+      &::before {
+        order: 1;
+        font-weight: 300;
+        letter-spacing: normal;
+      }
+
+      &::after {
+        font-weight: 700;
+        letter-spacing: -0.6px;
+      }
+    }
+
     &--is-dropdown {
       position: relative;
       display: flex;
