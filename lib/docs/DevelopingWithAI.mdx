@@ -107,6 +107,25 @@ Claude Code vai criar o branch, commitar o diff, abrir o PR e aplicar/criar as l
 - **Labels constitucionais** da org (consulta a skill `cp-capex` para o slug de custo).
 - **Nunca inclui arquivos gerados** (`lib/core/tokens/.cache/`, `lib/components/icons/`) no diff.
 
+### `/pr-auto-review`
+
+Revisa um pull request com os padrões do Aurora e posta os achados como comentários inline em PT-BR. Roda sozinha em todo PR contra a `main` aberto de um branch do próprio repo (workflow `.github/workflows/pr-auto-review.yml`) e também pode ser chamada à mão. O review é sempre só comentário: nunca aprova nem bloqueia o merge, a decisão continua com quem revisa.
+
+**Como usar:**
+
+```
+/pr-auto-review 327
+```
+
+Sem número, ela revisa o PR do branch atual. Para rodar de novo no GitHub, dispare o workflow **PR Auto Review** pela aba Actions informando o número do PR.
+
+**O que ela checa:**
+
+- **Contrato público × tipo do commit:** mudança em props, classes `au-` ou tokens precisa de `feat!:`/`BREAKING CHANGE:`.
+- **Paridade React × Astro:** mudou um lado do par, o outro precisa da mesma mudança; e as regras próprias do `.astro` (sem hex, sem import de `lib/core`).
+- **Tokens, arquivos gerados, acessibilidade e testes.**
+- **Repo público:** nada privado da empresa no diff, no título, na descrição ou nos commits.
+
 ---
 
 ## Subagents e contexto de organização

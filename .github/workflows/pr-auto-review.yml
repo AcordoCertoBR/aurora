@@ -1,0 +1,60 @@
+name: PR Auto Review
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to review'
+        required: true
+
+concurrency:
+  group: pr-review-${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    # Public repo: fork PRs get no secrets and must not drive an agent with write access
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.user.type != 'Bot' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Without it the action is skipped and the job still ends green
+      - name: Check Claude token
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          if [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+            echo "::error::CLAUDE_CODE_OAUTH_TOKEN is not available to this repository"
+            exit 1
+          fi
+
+      - name: Run Claude PR review
+        uses: anthropics/claude-code-action@v1
+        with:
+          prompt: |
+            Você é o revisor automático de PRs do Aurora, o design system (React + Astro) da Consumidor Positivo.
+            PR a revisar: #${{ github.event.pull_request.number || github.event.inputs.pr_number }} (base: main).
+            Execute a skill do repo `.claude/skills/pr-auto-review/SKILL.md` seguindo TODOS os passos (Step 0 ao Step 4).
+            Poste os achados como um único review inline (event = COMMENT) via `gh api`, comentários em PT-BR.
+            Não edite código, não faça commit, não rode build/deploy — só review.
+          claude_args: '--allowedTools "Bash(gh:*),Read,Glob,Grep"'
+          # Actions logs are public here
+          show_full_output: false
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}

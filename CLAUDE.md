@@ -212,6 +212,7 @@ Versioning and `CHANGELOG.md` are automated by **release-please** (`.github/work
 - **Docs de negócio:** `.ai-docs/services/aurora.md` (o que é o design system, em linguagem de negócio — lido por design/produto via MCP `github-readonly`) e `.ai-docs/missions/` (mudanças não-triviais em voo). Aprofundar com `/cp-ai-doc`.
 - **Documentação no Storybook:** `lib/docs/*.mdx` (Configure, Patterns, Dependencies, Icons, DevelopingWithAI).
 - **Subagents read-only:** `.claude/agents/` (`code-reviewer`, `explorer`).
+- **Review automático de PR:** `.github/workflows/pr-auto-review.yml` roda a skill `pr-auto-review` (Claude, só comentário) em todo PR contra a `main` aberto de branch do próprio repo; PR de fork fica de fora porque o repo é público.
 
 ## Contexto da organização (Consumidor Positivo)
 
