@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.3](https://github.com/AcordoCertoBR/aurora/compare/v1.3.2...v1.3.3) (2026-10-16)
+
+
+### Bug Fixes
+
+* 🐛 stop header navbar items from shifting on hover ([8762f74](https://github.com/AcordoCertoBR/aurora/commit/8762f74e151e6110cfdf2326314264f6f3dd4742))
+* 🐛 stop header navbar items from shifting on hover ([a58b0c6](https://github.com/AcordoCertoBR/aurora/commit/a58b0c67db813c57014dcff57b921b3aca34fc54))
+
 ## [1.3.2](https://github.com/AcordoCertoBR/aurora/compare/v1.3.1...v1.3.2) (2026-10-15)
 
 
